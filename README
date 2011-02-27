@@ -1,2 +1,5 @@
 SE2Projekt: HTML5Wiki
 =====================
+build/ - Everything related to builds on server side
+src/   - PHP Source folder
+web/   - HTML/CSS/JS Source folder
