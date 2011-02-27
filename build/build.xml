@@ -1,0 +1,23 @@
+<project basedir="." default="build" name="html5wiki">
+        <target name="checkout">
+                <exec dir="${basedir}/source" executable="git">
+                        <arg line="pull"></arg>
+                </exec>
+        </target>
+        <target name="php-documentor">
+                <exec dir="${basedir}/source" executable="phpdoc">
+                        <arg line="-ct type -ue on -t ${basedir}/build/api -tb /usr/share/php/data/phpUnderControl/data/phpdoc -o HTML:Phpuc:phpuc -d ."></arg>
+                </exec>
+        </target>
+        <target name="phpunit">
+                <exec failonerror="on" dir="${basedir}/source" executable="phpunit">
+                        <arg line="--log-junit ${basedir}/build/logs/phpunit.xml --coverage-clover ${basedir}/build/logs/phpunit.coverage.xml --coverage-html ${basedir}/build/coverage src/test"></arg>
+                </exec>
+        </target>
+        <target name="php-codesniffer">
+                <exec output="${basedir}/build/logs/checkstyle.xml" dir="${basedir}/source" executable="phpcs">
+                        <arg line="--report=checkstyle --standard=Zend ."></arg>
+                </exec>
+        </target>
+        <target depends="checkout,php-documentor,phpunit,php-codesniffer" name="build"></target>
+</project>
