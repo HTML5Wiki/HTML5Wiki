@@ -3,3 +3,12 @@ SE2Projekt: HTML5Wiki
 build/ - Everything related to builds on server side
 src/   - PHP Source folder
 web/   - HTML/CSS/JS Source folder
+
+
+Authors
+-------
+Alexandre Joly	ajoly@hsr.ch
+Manuel Alabor	malabor@hsr.ch
+Michael Weibel	mweibel@hsr.ch
+Nicolas Karrer	nkarrer@hsr.ch
+Roman Brechbühl	rbrechbu@hsr.ch
