@@ -1,0 +1,26 @@
+<cruisecontrol>
+	<project buildafterfailed="true" name="html5wiki">
+		<plugin classname="net.sourceforge.cruisecontrol.sourcecontrols.Git" name="git"></plugin>
+		<modificationset quietperiod="60">
+			<git localworkingcopy="projects/${project.name}/source/"></git>
+		</modificationset>
+		<schedule interval="60">
+			<ant buildfile="projects/${project.name}/source/build/build.xml" anthome="apache-ant-1.7.0"></ant>
+		</schedule>
+		<listeners>
+			<currentbuildstatuslistener file="logs/${project.name}/status.txt"></currentbuildstatuslistener>
+		</listeners>
+		<log dir="logs/${project.name}">
+			<merge dir="projects/${project.name}/build/logs/"></merge>
+		</log>
+		<publishers>
+			<artifactspublisher subdirectory="api" dest="artifacts/${project.name}" dir="projects/${project.name}/build/api"></artifactspublisher>
+			<artifactspublisher subdirectory="coverage" dest="artifacts/${project.name}" dir="projects/${project.name}/build/coverage"></artifactspublisher>
+			<execute command="phpuc graph logs/${project.name} artifacts/${project.name}"></execute>
+			<execute command="projects/${project.name}/source/build/updateToLatestBuild.sh /var/www/html5wiki/"></execute>
+			<email buildresultsurl="http://ci.vs01.openflex.net/cruisecontrol" spamwhilebroken="false" defaultsuffix="@vs01.openflex.net" returnname="HTML5Wiki Build Status" returnaddress="cruisecontrol@vs01.openflex.net" mailhost="localhost">
+				<failure reportwhenfixed="true" address="mweibel@hsr.ch"></failure>
+			</email>
+		</publishers>
+	</project>
+</cruisecontrol>
