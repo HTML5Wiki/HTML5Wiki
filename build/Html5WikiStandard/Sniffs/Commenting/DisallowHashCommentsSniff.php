@@ -6,12 +6,13 @@
  * {@link http://pear.php.net/manual/en/package.php.php-codesniffer.coding-standard-tutorial.php
  *  PHP CodeSniffer Coding Standard Tutorial}.
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    PHP_CodeSniffer Team
- * @author    Michael Weibel <mweibel@hsr.ch>
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @category   PHP
+ * @package    HTML5Wiki
+ * @subpackage PHP_CodeSniffer
+ * @author     PHP_CodeSniffer Team
+ * @author     Michael Weibel <mweibel@hsr.ch>
+ * @license    http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @link       http://pear.php.net/package/PHP_CodeSniffer
  */
 
 /**
@@ -24,12 +25,13 @@
  *  $hello = 'hello';
  * </code>
  *
- * @category  PHP
- * @package   PHP_CodeSniffer
- * @author    PHP_CodeSniffer Team
- * @author    Michael Weibel <mweibel@hsr.ch>
- * @license   http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
- * @link      http://pear.php.net/package/PHP_CodeSniffer
+ * @category   PHP
+ * @package    HTML5Wiki
+ * @subpackage PHP_CodeSniffer
+ * @author     PHP_CodeSniffer Team
+ * @author     Michael Weibel <mweibel@hsr.ch>
+ * @license    http://matrix.squiz.net/developer/tools/php_cs/licence BSD Licence
+ * @link       http://pear.php.net/package/PHP_CodeSniffer
  */
 class Html5WikiStandard_Sniffs_Commenting_DisallowHashCommentsSniff implements PHP_CodeSniffer_Sniff
 {
