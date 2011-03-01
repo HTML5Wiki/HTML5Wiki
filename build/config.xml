@@ -18,7 +18,7 @@
 			<artifactspublisher subdirectory="coverage" dest="artifacts/${project.name}" dir="projects/${project.name}/build/coverage"></artifactspublisher>
 			<execute command="phpuc graph logs/${project.name} artifacts/${project.name}"></execute>
 			<execute command="projects/${project.name}/source/build/updateToLatestBuild.sh /var/www/html5wiki/"></execute>
-			<email skipusers="false" buildresultsurl="http://ci.vs01.openflex.net/cruisecontrol" reportsuccess="fixes" spamwhilebroken="false" defaultsuffix="@vs01.openflex.net" returnname="HTML5Wiki Build Status" returnaddress="cruisecontrol@vs01.openflex.net" mailhost="localhost">
+			<email skipusers="false" buildresultsurl="http://ci.vs01.openflex.net/cruisecontrol" reportsuccess="fixes" spamwhilebroken="true" defaultsuffix="@vs01.openflex.net" returnname="HTML5Wiki Build Status" returnaddress="cruisecontrol@vs01.openflex.net" mailhost="localhost">
 			</email>
 		</publishers>
 	</project>
