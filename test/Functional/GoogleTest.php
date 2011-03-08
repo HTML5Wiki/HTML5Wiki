@@ -6,13 +6,13 @@
  * @copyright Html5Wiki 2011
  * @package Html5Wiki
  * @subpackage Test
- **/
+ */
 
-require '../../library/Html5Wiki/Test/SeleniumTestCase.php';
+require 'library/Html5Wiki/Test/SeleniumTestCase.php';
 
 /**
  * Google Test case (just for testing the selenium test case)
- **/
+ */
 class GoogleTest extends Html5Wiki_Test_SeleniumTestCase {
 	protected function setUp() {
 		$this->setBrowserUrl('http://www.google.com');
