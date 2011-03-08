@@ -11,7 +11,7 @@
 	</target>
 	<target name="phpunit">
 		<exec failonerror="on" dir="${basedir}/source" executable="phpunit">
-			<arg line="--log-junit ${basedir}/build/logs/phpunit.xml --coverage-clover ${basedir}/build/logs/phpunit.coverage.xml --coverage-html ${basedir}/build/coverage src/test"></arg>
+			<arg line="--log-junit ${basedir}/build/logs/phpunit.xml --coverage-clover ${basedir}/build/logs/phpunit.coverage.xml --coverage-html ${basedir}/build/coverage ${basedir}/source/test"></arg>
 		</exec>
 	</target>
 	<target name="php-codesniffer">
