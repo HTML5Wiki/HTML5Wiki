@@ -17,7 +17,7 @@ class Html5Wiki_Test_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCas
 	protected function setUp() {
 		$this->setBrowser("*firefox");
 		$this->setHost("selenium.openflex.net");
-		$this->setPort(4443);
+		$this->setPort(4444);
 	}
 }
 ?>

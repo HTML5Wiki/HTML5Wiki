@@ -22,7 +22,7 @@ class GoogleTest extends Html5Wiki_Test_SeleniumTestCase {
 		$this->open('http://www.google.com');
 		$this->type('q', 'selenium test');
 		$this->click('btnG');
-		$this->assertTrue("Expected URL redirect.", strpos($this->getBrowserUrl(), "selenium%20test"));
+		$this->assertTrue(strpos($this->getLocation(), "selenium+test") !== false, "Expected URL redirect");
 	}
 }
 
