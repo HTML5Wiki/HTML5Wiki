@@ -20,4 +20,3 @@ class Html5Wiki_Test_SeleniumTestCase extends PHPUnit_Extensions_SeleniumTestCas
 		$this->setPort(4444);
 	}
 }
-?>
