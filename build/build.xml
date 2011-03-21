@@ -11,7 +11,12 @@
 	</target>
 	<target name="phpunit">
 		<exec failonerror="on" dir="${basedir}/source" executable="phpunit">
-			<arg line="--log-junit ${basedir}/build/logs/phpunit.xml --coverage-clover ${basedir}/build/logs/phpunit.coverage.xml --coverage-html ${basedir}/build/coverage ${basedir}/source/test"></arg>
+			<arg line="--log-junit ${basedir}/build/logs/phpunit.xml --coverage-clover ${basedir}/build/logs/phpunit.coverage.xml --coverage-html ${basedir}/build/coverage test"></arg>
+		</exec>
+	</target>
+	<target name="php-depend">
+		<exec executable="pdepend" failonerror="on" dir="${basedir}/source">
+			<arg line="--phpunit-xml=${basedir}/build/logs/pdepend.xml --jdepend-chart=${basedir}/build/graph/10-dependencies.svg --overview-pyramid=${basedir}/build/graph/11-software-metrics-pyramid.svg ."/>
 		</exec>
 	</target>
 	<target name="php-codesniffer">
@@ -19,5 +24,5 @@
 			<arg line="--report=checkstyle --standard=${basedir}/source/build/Html5WikiStandard --encoding=utf-8 ."></arg>
 		</exec>
 	</target>
-	<target depends="checkout,php-documentor,phpunit,php-codesniffer" name="build"></target>
+	<target depends="checkout,php-documentor,phpunit,php-depend,php-codesniffer" name="build"></target>
 </project>
