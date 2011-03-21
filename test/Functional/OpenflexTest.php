@@ -13,7 +13,7 @@ require 'library/Html5Wiki/Test/SeleniumTestCase.php';
 /**
  * Openflex Test case (just for testing the selenium & ci)
  */
-class OpenflexTest extends Html5Wiki_Test_SeleniumTestCase {
+class Test_Functional_OpenflexTest extends Html5Wiki_Test_SeleniumTestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->setBrowserUrl('http://www.openflex.net');

@@ -7,7 +7,7 @@
  *  PHP CodeSniffer Coding Standard Tutorial}.
  *
  * @category   PHP
- * @package    HTML5Wiki
+ * @package    Html5Wiki
  * @subpackage PHP_CodeSniffer
  * @author     PHP_CodeSniffer Team
  * @author     Michael Weibel <mweibel@hsr.ch>
@@ -26,7 +26,7 @@
  * </code>
  *
  * @category   PHP
- * @package    HTML5Wiki
+ * @package    Html5Wiki
  * @subpackage PHP_CodeSniffer
  * @author     PHP_CodeSniffer Team
  * @author     Michael Weibel <mweibel@hsr.ch>

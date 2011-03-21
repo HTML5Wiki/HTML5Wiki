@@ -7,7 +7,7 @@
  * PHP version 5
  *
  * @category   PHP
- * @package    HTML5Wiki
+ * @package    Html5Wiki
  * @subpackage PHP_CodeSniffer
  * @author     Greg Sherwood <gsherwood@squiz.net>
  * @author     Marc McIntyre <mmcintyre@squiz.net>
@@ -23,7 +23,7 @@
  * Throws errors if spaces are used for indentation.
  *
  * @category   PHP
- * @package    HTML5Wiki
+ * @package    Html5Wiki
  * @subpackage PHP_CodeSniffer
  * @author     Greg Sherwood <gsherwood@squiz.net>
  * @author     Marc McIntyre <mmcintyre@squiz.net>
