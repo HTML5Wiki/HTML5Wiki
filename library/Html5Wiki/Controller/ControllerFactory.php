@@ -14,8 +14,8 @@
  * @author michael
  */
 class Html5Wiki_Controller_ControllerFactory {
-    public static function factory() {
-		
+	public static function factory() {
+
 	}
 }
 ?>

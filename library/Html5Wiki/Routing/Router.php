@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the HTML5Wiki Project.
  *
@@ -14,6 +15,7 @@
  * @author michael
  */
 class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
+
 	/**
 	 * Request object
 	 * 
@@ -24,7 +26,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Construct router -> creates a new request object and calls parse on it
 	 */
-    public function __construct() {
+	public function __construct() {
 		$this->request = new Html5Wiki_Routing_Request();
 		$this->request->parse();
 	}
@@ -44,5 +46,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	public function getRequest() {
 		return $this->request;
 	}
+
 }
+
 ?>

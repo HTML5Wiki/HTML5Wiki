@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the HTML5Wiki Project.
  *
@@ -66,7 +67,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	/**
 	 * Constructs a new request object
 	 */
-    public function __construct() {
+	public function __construct() {
 		
 	}
 
@@ -124,15 +125,15 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	public function getIpAddress() {
 		return $this->ipAddress;
 	}
-	
+
 	public function getController() {
-	 return $this->controller;
+		return $this->controller;
 	}
 
 	public function getAction() {
-	 return $this->action;
+		return $this->action;
 	}
 
-
 }
+
 ?>

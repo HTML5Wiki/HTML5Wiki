@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the HTML5Wiki Project.
  *
@@ -14,6 +15,7 @@
  * @author michael
  */
 class Html5Wiki_Controller_FrontController {
+
 	/**
 	 * Router object
 	 * @var Html5Wiki_Routing_Router
@@ -29,7 +31,7 @@ class Html5Wiki_Controller_FrontController {
 	/**
 	 * Creates a new router
 	 */
-    public function __construct() {
+	public function __construct() {
 		$router = new Html5Wiki_Routing_Router();
 		$router->route();
 	}
@@ -48,5 +50,7 @@ class Html5Wiki_Controller_FrontController {
 	public function getRouter() {
 		return $this->router;
 	}
+
 }
+
 ?>
