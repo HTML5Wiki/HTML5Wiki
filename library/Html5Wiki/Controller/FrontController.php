@@ -29,18 +29,27 @@ class Html5Wiki_Controller_FrontController {
 	private $controller = null;
 
 	/**
+	 * Base path of the whole application
+	 * @var string
+	 */
+	private $basePath = '';
+
+	/**
 	 * Creates a new router
 	 */
 	public function __construct() {
-		$router = new Html5Wiki_Routing_Router();
-		$router->route();
+		$this->router = new Html5Wiki_Routing_Router();
+		$this->router->route();
+
+		$this->basePath = realpath(dirname(__FILE__) . '../../../');
 	}
 
 	/**
 	 * Dispatches the request
 	 */
 	public function dispatch() {
-		$controller = Html5Wiki_Controller_ControllerFactory::factory();
+		$controller = Html5Wiki_Controller_ControllerFactory::factory($this->basePath, $this->router);
+		$controller->dispatch($this->router);
 	}
 
 	/**

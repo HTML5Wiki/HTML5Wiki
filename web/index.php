@@ -11,6 +11,12 @@ ob_start();
 
 error_reporting(E_ALL | E_STRICT);
 
+require '../library/Zend/Loader/Autoloader.php';
+
+$autoloader = Zend_Loader_Autoloader::getInstance();
+$autoloader->registerNamespace('Html5Wiki_');
+$autoloader->registerNamespace('Application_');
+
 $frontController = new Html5Wiki_Controller_FrontController();
 $frontController->dispatch();
 
