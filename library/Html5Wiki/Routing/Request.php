@@ -53,18 +53,6 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	private $ipAddress = '';
 
 	/**
-	 * Controller from path
-	 * @var string
-	 */
-	private $controller = '';
-
-	/**
-	 * Action from path
-	 * @var string
-	 */
-	private $action = '';
-
-	/**
 	 * Constructs a new request object
 	 */
 	public function __construct() {
@@ -125,15 +113,6 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	public function getIpAddress() {
 		return $this->ipAddress;
 	}
-
-	public function getController() {
-		return $this->controller;
-	}
-
-	public function getAction() {
-		return $this->action;
-	}
-
 }
 
 ?>

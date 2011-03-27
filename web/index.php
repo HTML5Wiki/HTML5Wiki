@@ -11,13 +11,18 @@ ob_start();
 
 error_reporting(E_ALL | E_STRICT);
 
+$basePath = realpath(dirname(__FILE__) . '/../');
+$libraryPath = $basePath . '/library/';
+$applicationPath = $basePath . '/application/';
+
+ini_set('include_path', get_include_path() . ':' . $applicationPath . ':' . $libraryPath);
+
 require '../library/Zend/Loader/Autoloader.php';
 
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace('Html5Wiki_');
-$autoloader->registerNamespace('Application_');
+$autoloader->registerNamespace(array('Html5Wiki_', 'Application_'));
 
-$frontController = new Html5Wiki_Controller_FrontController();
+$frontController = new Html5Wiki_Controller_FrontController($basePath, $libraryPath, $applicationPath);
 $frontController->dispatch();
 
 ob_end_flush();

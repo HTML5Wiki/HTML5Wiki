@@ -22,18 +22,23 @@ class Html5Wiki_Controller_ControllerFactory {
 	 * @param Html5Wiki_Routing_Interface_Router $router
 	 * @return AbstractController
 	 */
-	public static function factory($basePath, Html5Wiki_Routing_Interface_Router $router) {
-		if (!is_string($basePath)) {
+	public static function factory($applicationPath, Html5Wiki_Routing_Interface_Router $router) {
+		if (!is_string($applicationPath)) {
 			throw new Html5Wiki_Exception_InvalidArgumentException(
 						'Invalid argument supplied for ' . __CLASS__ . '::' . __FUNCTION__ . ' (Argument basePath).'
-						. ' String required but ' . gettype($basePath) . ' supplied.');
+						. ' String required but ' . gettype($applicationPath) . ' supplied.');
 		}
-		$controllerDirectory = new DirectoryIterator($basePath);
-		foreach($controllerDirectory as $file) {
-			$fileName = strtolower($file->getFilename());
-			if (strpos($fileName, $router->getRequest()->getController()) === 0) {
-				$controller = substr($fileName, 0, -4);
-				return new $controller;
+
+		$fileHandle = opendir($applicationPath);
+
+		while (false !== ($file = readdir($fileHandle))) {
+			if ($file != "." && $file != ".." && strpos($file, ".php") !== false) {
+				$fileName = strtolower($file);
+
+				if (strpos($fileName, $router->getController()) === 0) {
+					$controller = substr($fileName, 0, -4);
+					return new $controller;
+				}
 			}
 		}
 		throw new Html5Wiki_Exception('Could not found a controller for the current path.');

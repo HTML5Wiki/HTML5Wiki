@@ -22,6 +22,17 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 * @var Html5Wiki_Routing_Interface_Router
 	 */
 	private $request = null;
+	/**
+	 * Controller
+	 *
+	 * @var string
+	 */
+	private $controller = null;
+	/**
+	 * Action
+	 * @var string
+	 */
+	private $action = null;
 
 	/**
 	 * Construct router -> creates a new request object and calls parse on it
@@ -45,6 +56,14 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 */
 	public function getRequest() {
 		return $this->request;
+	}
+
+	public function getController() {
+		return $this->controller;
+	}
+
+	public function getAction() {
+		return $this->action;
 	}
 
 }

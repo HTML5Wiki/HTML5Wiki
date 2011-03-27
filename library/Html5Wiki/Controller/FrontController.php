@@ -37,18 +37,20 @@ class Html5Wiki_Controller_FrontController {
 	/**
 	 * Creates a new router
 	 */
-	public function __construct() {
+	public function __construct($basePath, $libraryPath, $applicationPath) {
 		$this->router = new Html5Wiki_Routing_Router();
 		$this->router->route();
 
-		$this->basePath = realpath(dirname(__FILE__) . '../../../');
+		$this->basePath = $basePath;
+		$this->libraryPath = $libraryPath;
+		$this->applicationPath = $applicationPath;
 	}
 
 	/**
 	 * Dispatches the request
 	 */
 	public function dispatch() {
-		$controller = Html5Wiki_Controller_ControllerFactory::factory($this->basePath, $this->router);
+		$controller = Html5Wiki_Controller_ControllerFactory::factory($this->applicationPath, $this->router);
 		$controller->dispatch($this->router);
 	}
 
