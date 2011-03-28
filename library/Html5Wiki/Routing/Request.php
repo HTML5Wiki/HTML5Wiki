@@ -85,7 +85,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->port = $_SERVER['SERVER_PORT'];
 		$this->https = !empty($_SERVER['HTTPS']);
 		$this->uri = $_SERVER['REQUEST_URI'];
-		$this->path = $_SERVER['PATH_INFO'];
+		$this->path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
 		$this->queryString = $_SERVER['QUERY_STRING'];
 		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$this->ipAddress = $_SERVER['REMOTE_ADDR'];

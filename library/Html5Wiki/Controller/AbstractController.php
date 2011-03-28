@@ -21,12 +21,19 @@ abstract class Html5Wiki_Controller_AbstractController {
 	 */
 	private $router = null;
 
+	/**
+	 * Template file
+	 * @var string
+	 */
+	private $templateFile = '';
+
 	public function __construct() {
-		
 	}
 
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
 		$this->router = $router;
+
+		$this->templateFile = strtolower($this->router->getController()) . '/' . strtolower($this->router->getAction()) . '.php';
 
 		$actionMethod = $this->router->getAction() . 'Action';
 

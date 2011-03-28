@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the HTML5Wiki Project.
  *
@@ -13,7 +14,16 @@
  *
  * @author michael
  */
-class Application_ApiController extends Html5Wiki_Controller_AbstractController {
-    public function render() {}
+class Application_WikiController extends Html5Wiki_Controller_AbstractController {
+
+	public function foobarAction() {
+		echo 'foo';
+	}
+
+	public function render() {
+		
+	}
+
 }
+
 ?>

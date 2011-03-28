@@ -13,11 +13,9 @@
  *
  * @author michael
  */
-class Application_WikiController extends Html5Wiki_Controller_AbstractController {
-    public function foobarAction() {
-		echo 'foo';
-	}
+class Application_ApiController extends Html5Wiki_Controller_AbstractController {
+	public function render() {
 
-	public function render() {}
+	}
 }
 ?>
