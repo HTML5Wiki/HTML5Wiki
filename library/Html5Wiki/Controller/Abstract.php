@@ -13,7 +13,7 @@
  *
  * @author michael
  */
-abstract class Html5Wiki_Controller_AbstractController {
+abstract class Html5Wiki_Controller_Abstract {
 
 	/**
 	 * default layout file

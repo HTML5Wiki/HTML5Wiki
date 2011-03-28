@@ -1,18 +1,11 @@
 <?php
-
 /**
- * This file is part of the HTML5Wiki Project.
+ * The router figures out the controller and action for the current page.
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Library
- */
-
-/**
- * Description of Router
- *
- * @author michael
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
+ * @subpackage Routing
  */
 class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 

@@ -1,20 +1,12 @@
 <?php
-
 /**
- * This file is part of the HTML5Wiki Project.
+ * Wiki controller
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Application
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Application
  */
-
-/**
- * Description of ApiController
- *
- * @author michael
- */
-class Application_WikiController extends Html5Wiki_Controller_AbstractController {
+class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	public function foobarAction() {
 		$this->template->assign('foo', 'bar');

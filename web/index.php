@@ -3,9 +3,8 @@
  * HTML5Wiki bootstrap file
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Web
+ * @copyright HTML5Wiki Team 2011
+ * @package Web
  */
 ob_start();
 
@@ -22,7 +21,7 @@ require '../library/Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->registerNamespace(array('Html5Wiki_', 'Application_'));
 
-$frontController = new Html5Wiki_Controller_FrontController($basePath, $libraryPath, $applicationPath);
+$frontController = new Html5Wiki_Controller_Front($basePath, $libraryPath, $applicationPath);
 $frontController->dispatch();
 
 ob_end_flush();

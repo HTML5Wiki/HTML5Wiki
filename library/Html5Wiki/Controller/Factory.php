@@ -1,19 +1,13 @@
 <?php
 /**
- * This file is part of the HTML5Wiki Project.
+ * Controller factory creates a new controller according to the informations from the router.
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Application
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
+ * @subpackage Controller
  */
-
-/**
- * Description of ControllerFactory
- *
- * @author michael
- */
-class Html5Wiki_Controller_ControllerFactory {
+class Html5Wiki_Controller_Factory {
 
 	const APPLICATION_NAMESPACE = 'Application_';
 

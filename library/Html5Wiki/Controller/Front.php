@@ -1,20 +1,13 @@
 <?php
-
 /**
- * This file is part of the HTML5Wiki Project.
+ * The FrontController sets the whole system up and dispatches the request
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Library
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
+ * @subpackage Controller
  */
-
-/**
- * Description of FrontController
- *
- * @author michael
- */
-class Html5Wiki_Controller_FrontController {
+class Html5Wiki_Controller_Front {
 
 	/**
 	 * Router object
@@ -47,7 +40,7 @@ class Html5Wiki_Controller_FrontController {
 	private $applicationPath = '';
 
 	/**
-	 * Creates a new router
+	 * Creates a new router and sets up basic paths
 	 */
 	public function __construct($basePath, $libraryPath, $applicationPath) {
 		$this->router = new Html5Wiki_Routing_Router();
@@ -62,7 +55,7 @@ class Html5Wiki_Controller_FrontController {
 	 * Dispatches the request
 	 */
 	public function dispatch() {
-		$this->controller = Html5Wiki_Controller_ControllerFactory::factory($this->applicationPath, $this->router);
+		$this->controller = Html5Wiki_Controller_Factory::factory($this->applicationPath, $this->router);
 		$this->controller->dispatch($this->router);
 		$this->controller->render();
 	}

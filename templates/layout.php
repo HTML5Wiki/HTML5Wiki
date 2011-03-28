@@ -6,5 +6,6 @@
 	</head>
 	<body>
 		<?= $this->decoratedContent ?>
+
 	</body>
 </html>

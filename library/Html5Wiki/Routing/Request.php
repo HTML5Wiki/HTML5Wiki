@@ -1,18 +1,11 @@
 <?php
-
 /**
- * This file is part of the HTML5Wiki Project.
+ * Request parses informations sent by the server
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Library
- */
-
-/**
- * Description of Request
- *
- * @author michael
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
+ * @subpackage Routing
  */
 class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 

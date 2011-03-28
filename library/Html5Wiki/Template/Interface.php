@@ -1,17 +1,11 @@
 <?php
 /**
- * This file is part of the HTML5Wiki Project.
+ * Template interface
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Library
- */
-
-/**
- * Description of Template interface
- *
- * @author michael
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
+ * @package Template
  */
 interface Html5Wiki_Template_Interface {
     public function render();

@@ -1,17 +1,10 @@
 <?php
 /**
- * This file is part of the HTML5Wiki Project.
+ * Basic exception class
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Library
- */
-
-/**
- * Description of Html5Wiki_Exception
- *
- * @author michael
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
  */
 class Html5Wiki_Exception extends Exception {
     //put your code here

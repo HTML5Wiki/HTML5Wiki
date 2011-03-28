@@ -1,18 +1,11 @@
 <?php
-
 /**
- * This file is part of the HTML5Wiki Project.
+ * PHP Templating decorator
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright Html5Wiki 2011
- * @package Html5Wiki
- * @subpackage Library
- */
-
-/**
- * Description of Template
- *
- * @author michael
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Library
+ * @subpackage Template
  */
 class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 
