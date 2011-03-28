@@ -22,6 +22,12 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	 * @var array
 	 */
 	protected $data = array();
+	
+	protected $decoratedTemplate = null;
+
+	public function __construct(Html5Wiki_Template_Interface $decoratedTemplate = null) {
+		$this->decoratedTemplate = $decoratedTemplate;
+	}
 
 	/**
 	 * Assigned Variables
@@ -37,6 +43,12 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		$this->data[$key] = $value;
 
 		return $this;
+	}
+
+	public function render() {
+		if ($this->decoratedTemplate instanceof Html5Wiki_Template_Interface) {
+			$this->decoratedTemplate->render();
+		}
 	}
 }
 ?>

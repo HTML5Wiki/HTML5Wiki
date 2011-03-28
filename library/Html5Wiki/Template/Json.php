@@ -10,8 +10,8 @@
  * @author michael
  */
 class Html5Wiki_Template_Json extends Html5Wiki_Template_Decorator {
-    public function render($templateFile) {
-		
+    public function render() {
+		$this->decoratedTemplate->render();
 	}
 }
 ?>

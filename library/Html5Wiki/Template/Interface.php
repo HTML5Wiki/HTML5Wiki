@@ -14,6 +14,6 @@
  * @author michael
  */
 interface Html5Wiki_Template_Interface {
-    public function render($templateFile);
+    public function render();
 }
 ?>

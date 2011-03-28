@@ -26,7 +26,7 @@ class Html5Wiki_Controller_ControllerFactory {
 	 */
 	public static function factory($applicationPath, Html5Wiki_Routing_Interface_Router $router) {
 		if (!is_string($applicationPath)) {
-			throw new Html5Wiki_Exception_InvalidArgumentException(
+			throw new Html5Wiki_Exception_InvalidArgument(
 						'Invalid argument supplied for ' . __CLASS__ . '::' . __FUNCTION__ . ' (Argument basePath).'
 						. ' String required but ' . gettype($applicationPath) . ' supplied.');
 		}
@@ -42,7 +42,7 @@ class Html5Wiki_Controller_ControllerFactory {
 				}
 			}
 		}
-		throw new Html5Wiki_Exception_404Exception('Could not found a controller for the current path.');
+		throw new Html5Wiki_Exception_404('Could not found a controller for the current path.');
 	}
 }
 ?>
