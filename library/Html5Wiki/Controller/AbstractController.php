@@ -22,12 +22,19 @@ abstract class Html5Wiki_Controller_AbstractController {
 	private $router = null;
 
 	/**
+	 * Template object
+	 * @var Html5Wiki_Template_Decorator
+	 */
+	protected $template = null;
+
+	/**
 	 * Template file
 	 * @var string
 	 */
 	private $templateFile = '';
 
 	public function __construct() {
+		$this->template = new Html5Wiki_Template_Php();
 	}
 
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
@@ -43,6 +50,8 @@ abstract class Html5Wiki_Controller_AbstractController {
 		throw new Html5Wiki_Exception_404Exception('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
 	}
 
-	abstract public function render();
+	public function render() {
+		$this->template->render($this->templateFile);
+	}
 }
 ?>

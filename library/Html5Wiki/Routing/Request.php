@@ -92,6 +92,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 
 		$this->arguments = explode("/", $this->path);
+
 		$this->post = $_POST;
 		$this->get = $_GET;
 

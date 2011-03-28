@@ -56,8 +56,8 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 */
 	public function route() {
 		$arguments = $this->request->getArguments();
-		$this->controller = isset($arguments[0]) && !empty($arguments[0]) ? $arguments[0] : self::DEFAULT_CONTROLLER;
-		$this->action     = count($arguments) > 2 ? $arguments[1] : self::DEFAULT_ACTION;
+		$this->controller = isset($arguments[1]) && !empty($arguments[1]) ? $arguments[1] : self::DEFAULT_CONTROLLER;
+		$this->action     = count($arguments) > 2 ? $arguments[2] : self::DEFAULT_ACTION;
 	}
 
 	/**

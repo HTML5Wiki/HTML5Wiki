@@ -64,6 +64,7 @@ class Html5Wiki_Controller_FrontController {
 	public function dispatch() {
 		$this->controller = Html5Wiki_Controller_ControllerFactory::factory($this->applicationPath, $this->router);
 		$this->controller->dispatch($this->router);
+		$this->controller->render();
 	}
 
 	/**

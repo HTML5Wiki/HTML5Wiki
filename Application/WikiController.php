@@ -17,13 +17,8 @@
 class Application_WikiController extends Html5Wiki_Controller_AbstractController {
 
 	public function foobarAction() {
-		echo 'foo';
+		$this->template->assign('foo', 'bar');
 	}
-
-	public function render() {
-		
-	}
-
 }
 
 ?>
