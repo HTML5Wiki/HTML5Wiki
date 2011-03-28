@@ -35,6 +35,18 @@ class Html5Wiki_Controller_FrontController {
 	private $basePath = '';
 
 	/**
+	 * Path to the library
+	 * @var string
+	 */
+	private $libraryPath = '';
+
+	/**
+	 * Application path
+	 * @var string
+	 */
+	private $applicationPath = '';
+
+	/**
 	 * Creates a new router
 	 */
 	public function __construct($basePath, $libraryPath, $applicationPath) {
@@ -50,8 +62,8 @@ class Html5Wiki_Controller_FrontController {
 	 * Dispatches the request
 	 */
 	public function dispatch() {
-		$controller = Html5Wiki_Controller_ControllerFactory::factory($this->applicationPath, $this->router);
-		$controller->dispatch($this->router);
+		$this->controller = Html5Wiki_Controller_ControllerFactory::factory($this->applicationPath, $this->router);
+		$this->controller->dispatch($this->router);
 	}
 
 	/**

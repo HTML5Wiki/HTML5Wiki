@@ -15,6 +15,8 @@
  */
 class Html5Wiki_Controller_ControllerFactory {
 
+	const APPLICATION_NAMESPACE = 'Application_';
+
 	/**
 	 *
 	 * @todo move basepath in config or somewhere else
@@ -31,17 +33,16 @@ class Html5Wiki_Controller_ControllerFactory {
 
 		$fileHandle = opendir($applicationPath);
 
-		while (false !== ($file = readdir($fileHandle))) {
-			if ($file != "." && $file != ".." && strpos($file, ".php") !== false) {
-				$fileName = strtolower($file);
+		while (false !== ($fileName = readdir($fileHandle))) {
+			if ($fileName != "." && $fileName != ".." && strpos($fileName, ".php") !== false) {
 
-				if (strpos($fileName, $router->getController()) === 0) {
-					$controller = substr($fileName, 0, -4);
+				if (stripos($fileName, $router->getController()) === 0) {
+					$controller = self::APPLICATION_NAMESPACE . substr($fileName, 0, -4);
 					return new $controller;
 				}
 			}
 		}
-		throw new Html5Wiki_Exception('Could not found a controller for the current path.');
+		throw new Html5Wiki_Exception_404Exception('Could not found a controller for the current path.');
 	}
 }
 ?>

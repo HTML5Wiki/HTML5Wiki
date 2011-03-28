@@ -13,6 +13,6 @@
  *
  * @author michael
  */
-class Html5Wiki_Exception_InvalidArgumentException extends InvalidArgumentException {
+class Html5Wiki_Exception_InvalidArgumentException extends Html5Wiki_Exception {
 }
 ?>

@@ -28,9 +28,14 @@ abstract class Html5Wiki_Controller_AbstractController {
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
 		$this->router = $router;
 
-		$actionMethod = $this->router->getRequest()->getAction() . 'Action';
+		$actionMethod = $this->router->getAction() . 'Action';
 
-		return $this->$actionMethod();
+		if (method_exists($this, $actionMethod)) {
+			return $this->$actionMethod();
+		}
+		throw new Html5Wiki_Exception_404Exception('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
 	}
+
+	abstract public function render();
 }
 ?>

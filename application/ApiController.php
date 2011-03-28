@@ -13,7 +13,7 @@
  *
  * @author michael
  */
-class Application_ApiController extends AbstractController {
-    //put your code here
+class Application_ApiController extends Html5Wiki_Controller_AbstractController {
+    public function render() {}
 }
 ?>

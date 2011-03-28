@@ -17,6 +17,16 @@
 class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 
 	/**
+	 * Default controller if none is supplied
+	 */
+	const DEFAULT_CONTROLLER = 'wiki';
+
+	/**
+	 * Default action if none is supplied
+	 */
+	const DEFAULT_ACTION     = 'index';
+
+	/**
 	 * Request object
 	 * 
 	 * @var Html5Wiki_Routing_Interface_Router
@@ -39,14 +49,15 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 */
 	public function __construct() {
 		$this->request = new Html5Wiki_Routing_Request();
-		$this->request->parse();
 	}
 
 	/**
 	 * Routes request according to informations from the request object
 	 */
 	public function route() {
-		
+		$arguments = $this->request->getArguments();
+		$this->controller = isset($arguments[0]) && !empty($arguments[0]) ? $arguments[0] : self::DEFAULT_CONTROLLER;
+		$this->action     = count($arguments) > 2 ? $arguments[1] : self::DEFAULT_ACTION;
 	}
 
 	/**
@@ -58,10 +69,18 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 		return $this->request;
 	}
 
+	/**
+	 * Get controller
+	 * @return string
+	 */
 	public function getController() {
 		return $this->controller;
 	}
 
+	/**
+	 * Get action
+	 * @return string
+	 */
 	public function getAction() {
 		return $this->action;
 	}

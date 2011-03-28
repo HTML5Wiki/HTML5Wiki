@@ -9,15 +9,11 @@
  */
 
 /**
- * Description of ApiController
+ * Description of 404Exception
  *
  * @author michael
  */
-class Application_WikiController extends Html5Wiki_Controller_AbstractController {
-    public function foobarAction() {
-		echo 'foo';
-	}
-
-	public function render() {}
+class Html5Wiki_Exception_404Exception extends Html5Wiki_Exception {
+    //put your code here
 }
 ?>
