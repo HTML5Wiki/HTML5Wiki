@@ -13,7 +13,7 @@ error_reporting(E_ALL | E_STRICT);
 
 $basePath = realpath(dirname(__FILE__) . '/../');
 $libraryPath = $basePath . '/library/';
-$applicationPath = $basePath . '/application/';
+$applicationPath = $basePath . '/Application/';
 
 ini_set('include_path', get_include_path() . ':' . $basePath . ':' . $libraryPath);
 
