@@ -16,6 +16,11 @@
 abstract class Html5Wiki_Controller_AbstractController {
 
 	/**
+	 * default layout file
+	 */
+	const DEFAULT_LAYOUT_FILE = 'layout.php';
+
+	/**
 	 * Router
 	 * @var Html5Wiki_Routing_Interface_Router
 	 */
@@ -33,8 +38,15 @@ abstract class Html5Wiki_Controller_AbstractController {
 	 */
 	private $templateFile = '';
 
+	/**
+	 * Layout file
+	 * @var string
+	 */
+	private $layoutFile = '';
+
 	public function __construct() {
 		$this->template = new Html5Wiki_Template_Php();
+		$this->layoutFile = self::DEFAULT_LAYOUT_FILE;
 	}
 
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
