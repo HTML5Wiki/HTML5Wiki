@@ -3,7 +3,7 @@
  * HTML5Wiki bootstrap file
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright HTML5Wiki Team 2011
+ * @copyright (c) HTML5Wiki Team 2011
  * @package Web
  */
 ob_start();

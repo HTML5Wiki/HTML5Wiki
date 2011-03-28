@@ -1,4 +1,5 @@
 <?php
+
 /**
  * The router figures out the controller and action for the current page.
  *
@@ -8,7 +9,6 @@
  * @subpackage Routing
  */
 class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
-
 	/**
 	 * Default controller if none is supplied
 	 */
@@ -17,7 +17,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Default action if none is supplied
 	 */
-	const DEFAULT_ACTION     = 'index';
+	const DEFAULT_ACTION = 'index';
 
 	/**
 	 * Request object
@@ -51,7 +51,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 		$arguments = $this->request->getArguments();
 
 		$this->controller = isset($arguments[1]) ? $arguments[1] : self::DEFAULT_CONTROLLER;
-		$this->action     = isset($arguments[2]) ? $arguments[2] : self::DEFAULT_ACTION;
+		$this->action = isset($arguments[2]) ? $arguments[2] : self::DEFAULT_ACTION;
 
 		$this->sanitizeControllerAndAction();
 	}
@@ -69,10 +69,18 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Get request object
 	 * 
-	 * @return Request
+	 * @return Html5Wiki_Routing_Interface_Request
 	 */
 	public function getRequest() {
 		return $this->request;
+	}
+
+	/**
+	 * Set request object
+	 * @param Html5Wiki_Routing_Interface_Request $request
+	 */
+	public function setRequest(Html5Wiki_Routing_Interface_Request $request) {
+		$this->request = $request;
 	}
 
 	/**

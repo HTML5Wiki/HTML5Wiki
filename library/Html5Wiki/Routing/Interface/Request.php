@@ -1,6 +1,6 @@
 <?php
 /**
- * Request interrface
+ * Request interface
  *
  * @author Michael Weibel <mweibel@hsr.ch>
  * @copyright (c) HTML5Wiki Team 2011
