@@ -92,12 +92,26 @@
 		background: no-repeat 6px 4px;
 		border: 1px solid;
 		border-top-width: 0;
-		
 	}
 	
 	.info { background-image: @icon_information; background-color: @info_color; border-color: darken(@info_color,20%); }
 	.error { background-image: @icon_exclamation; background-color: @error_color; border-color: darken(@error_color,20%); }
 	.question { color: black; background-image: @icon_question; background-color: @question_color; border-color: darken(@question_color,20%); }
+	
+	.options {
+		padding: 7px 0 4px 0;
+		.option {
+			font-size: 85%;
+			outline: none;
+			color: darken(#a9a9a9,25%);
+		}
+		
+		.button {
+			#buttons > .colored-button(#a9a9a9);
+			#buttons > .rounded-button;
+			margin-right: 7px;
+		}
+	}
 }
 
 

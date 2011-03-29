@@ -51,10 +51,11 @@
 	
 	
 	// Button-Mixins ----------------------------------------------------------
-	.colored-icon-button(@color) {
+	.colored-button(@color) {
 		#buttons > .simple-button;
-		#buttons > .icon-16-button;
+		#buttons > .bordered-button(@color);
 		
+		padding: 2px 4px;
 		color: darken(@color,18%);
 		background-color: lighten(@color,28%);
 		border-color: lighten(@color,8%);
@@ -65,7 +66,12 @@
 			lighten(@color,28%) 45%);
 
 		&:hover { #buttons > .hovered-button(@color); }
-		&:active { #buttons > .pressed-button(@color); }
+		&:active { #buttons > .pressed-button(@color); }		
+	}
+	
+	.colored-icon-button(@color) {
+		#buttons > .colored-button(@color);
+		#buttons > .icon-16-button;
 	}
 	
 	// Capsulebar-Mixins ------------------------------------------------------

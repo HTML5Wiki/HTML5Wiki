@@ -13,29 +13,52 @@
 	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
 	
 	<script type="text/javascript">
-		var messageBoxes = new Array();
-		
-		function showInfoMessage(message) {
+		/**
+		 * Info-Message-Demo
+		 */
+		function showInfoMessage() {
 			addMessageBox('info','Dies ist eine Informations-Meldung.');
 		}
 		
+		/**
+		 * Error-Message-Demo
+		 */
 		function showErrorMessage() {
 			addMessageBox('error','Dies ist eine Fehlermeldung!');
 		}
 		
+		/**
+		 * Question-Message-Demo
+		 */
 		function showQuestionMessage() {
 			var options = [
 				{
 					text : 'Ja'
-					,callback : function() { alert('Ja'); }
+					,button : true
+					,callback : function() { alert('Coole Sau ;)'); }
 				},{
-					text : 'Nein'
-					,callback : function() { alert('Nein'); }
+					text : 'Nein, das tu\' ich nicht.'
+					,callback : function() { alert('pf, schade, was?'); }
 				}
 			];
-			addMessageBox('question','Dies ist eine Frage', options);
+			addMessageBox('question','Gehörst du zum HTML5Wiki Team?', options);
 		}
 		
+		
+		
+		var messageBoxes = new Array();
+		/**
+		 * Fügt dem Array messageBoxes eine neue MessageBox hinzu und
+		 * zeigt mittels displayMessageBox() die (älteste anstehende)
+		 * MessageBox an.
+		 *
+		 * @param type		info, error oder question
+		 * @param message	Nachricht
+		 * @param options	Array mit Dictionaries:
+		 *                    text		Optionentext
+		 *                    callback	Callback-Funktion
+		 *                    button	Option als Button zeigen?
+		 */
 		function addMessageBox(type, message, options) {
 			var messageBox = createMessageBox(type, message, options);
 			messageBoxes = new Array(messageBox).concat(messageBoxes);
@@ -43,6 +66,11 @@
 			if($('.messagebox').size() == 0) displayMessageBox();
 		}
 		
+		/**
+		 * Prüft das Array messageBoxes auf anstehende MessageBoxen.
+		 * Ist eine vorhanden, wird diese aus dem Array entfernt und
+		 * angezeigt.
+		 */
 		function displayMessageBox() {
 			var latestBox = messageBoxes.pop();
 			
@@ -60,26 +88,53 @@
 			}
 		}
 		
+		/**
+		 * Erstellt eine MessageBox.
+		 *
+		 * @param type		info, error oder question
+		 * @param message	Nachricht
+		 * @param options	Array mit Dictionaries:
+		 *                    text		Optionentext
+		 *                    callback	Callback-Funktion
+		 *                    button	Option als Button zeigen?
+		 */
 		function createMessageBox(type, message, options) {
-			var content = $('<div class="message ' + type + '">' + message + '</div>');
-			
-			if(type == 'question') {
+			var messageOptions;
+			if(options != undefined && options.length > 0) {
+				messageOptions = $('<div class="options" />');
 				for(var i = 0, l = options.length; i < l; i++) {
-					var option = $('<a href="#">' + options[i]['text'] + '</a>');
-					$(option).click(options[i]['callback']);
-					$(content).append(option);
+					var showAsButton = options[i]['button'];
+					var optionClass = ' class="option"';
+					if(showAsButton) optionClass = ' class="button"';
+					
+					var option = $('<a href="#"' + optionClass + '>' + options[i]['text'] + '</a>');
+					
+					// Klick lässt zuerst MessageBox verschwinden.
+					// Anschliessend wird das Callback aus option['callback']
+					// ausgeführt.
+					// Anschliessend werden etwaige weitere MessageBoxen angezeigt.
+					$(option).bind('click', { callback : options[i]['callback'] }, function(event) {
+						$(this).parents('.messagebox').slideUp(function() {
+							$(this).remove();
+							event.data.callback();
+							displayMessageBox();
+						});
+					});
+					
+					$(messageOptions).append(option);
 				}
 			}
 			
 			
 			var messagebox = $('<div class="messagebox" />');
+			var content = $('<div class="message ' + type + '">' + message + '</div>');
 			$(messagebox).append('<div class="barshadow">&nbsp;</div>');
+			if(messageOptions) $(content).append(messageOptions);
 			$(messagebox).append(content);
 			$(messagebox).hide();
 			
 			return messagebox;
 		}
-		
 	</script>
 
 </head> 
@@ -107,11 +162,15 @@
 		</header>
 		
 		<section>
-			
-			<a href="#" class="button" onclick="showInfoMessage();">Info Message</a><br/>
-			<a href="#" class="button" onclick="showErrorMessage();">Error Message</a><br/>
-			<a href="#" class="button" onclick="showQuestionMessage();">Question</a>
-			
+			<p>
+				Use links below to see message-prototypes.<br/>
+				<em>Hint: Click fast to enqueue more than one messagebox into the queue.</em>
+			</p>
+			<p>
+				<a href="#" onclick="showInfoMessage();">Info Message</a></br>
+				<a href="#" onclick="showErrorMessage();">Error Message</a></br>
+				<a href="#" onclick="showQuestionMessage();">Question</a>
+			</p>
 		</section>
 	</article>
 	
