@@ -13,3 +13,9 @@
   -webkit-border-radius: @radius;
   border-radius: @radius;
 }
+
+.box-shadow(@h-offset, @v-offset, @blur, @color) {
+	-webkit-box-shadow: @h-offset @v-offset @blur @color;
+	-moz-box-shadow: @h-offset @v-offset @blur @color;
+	box-shadow: @h-offset @v-offset @blur @color;
+}
