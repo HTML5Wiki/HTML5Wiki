@@ -24,11 +24,20 @@
 		}
 		
 		function showQuestionMessage() {
-			addMessageBox('question','Dies ist eine Frage');
+			var options = [
+				{
+					text : 'Ja'
+					,callback : function() { alert('Ja'); }
+				},{
+					text : 'Nein'
+					,callback : function() { alert('Nein'); }
+				}
+			];
+			addMessageBox('question','Dies ist eine Frage', options);
 		}
 		
-		function addMessageBox(type, message) {
-			var messageBox = createMessageBox(type, message);
+		function addMessageBox(type, message, options) {
+			var messageBox = createMessageBox(type, message, options);
 			messageBoxes = new Array(messageBox).concat(messageBoxes);
 			
 			if($('.messagebox').size() == 0) displayMessageBox();
@@ -38,18 +47,34 @@
 			var latestBox = messageBoxes.pop();
 			
 			if(latestBox != undefined) {
-				$('.header-overall').before(latestBox);
-				$(latestBox).slideDown().delay(2000).slideUp(function() {
-					$(this).remove();
-					displayMessageBox();
-				});				
+				$('.header-overall').after(latestBox);
+				if($(latestBox).children('.question').size() == 0) {
+					$(latestBox).slideDown().delay(2000).slideUp(function() {
+						$(this).remove();
+						displayMessageBox();
+					});					
+				} else {
+					$(latestBox).slideDown();
+				}
+
 			}
 		}
 		
-		function createMessageBox(type, message) {
+		function createMessageBox(type, message, options) {
+			var content = $('<div class="message ' + type + '">' + message + '</div>');
+			
+			if(type == 'question') {
+				for(var i = 0, l = options.length; i < l; i++) {
+					var option = $('<a href="#">' + options[i]['text'] + '</a>');
+					$(option).click(options[i]['callback']);
+					$(content).append(option);
+				}
+			}
+			
+			
 			var messagebox = $('<div class="messagebox" />');
 			$(messagebox).append('<div class="barshadow">&nbsp;</div>');
-			$(messagebox).append('<div class="message ' + type + '">' + message + '</div>');
+			$(messagebox).append(content);
 			$(messagebox).hide();
 			
 			return messagebox;
