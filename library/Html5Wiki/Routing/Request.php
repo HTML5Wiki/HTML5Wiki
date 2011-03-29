@@ -34,6 +34,13 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @var path
 	 */
 	private $path = '';
+
+	/**
+	 * Base Path
+	 * @var string
+	 */
+	private $basePath = '';
+
 	/**
 	 * Query string
 	 * @var string
