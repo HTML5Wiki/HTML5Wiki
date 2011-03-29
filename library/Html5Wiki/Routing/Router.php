@@ -25,12 +25,14 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 * @var Html5Wiki_Routing_Interface_Router
 	 */
 	private $request = null;
+	
 	/**
 	 * Controller
 	 *
 	 * @var string
 	 */
 	private $controller = null;
+
 	/**
 	 * Action
 	 * @var string
