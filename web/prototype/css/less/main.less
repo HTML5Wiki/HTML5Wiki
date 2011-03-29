@@ -1,0 +1,49 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// Bundle: Main-CSS-File
+// Autor:  Manuel Alabor
+//
+@import "html5reset-1.6.1.css";
+@import "bundle-ressources";
+@import "bundle-buttons";
+
+.header-overall {
+	@logo_width: 153px;
+	@logo_height: 60px;
+	@header_padding_lr: 8px;
+	@header_padding_tb: 6px;
+	
+	font-family: @titlefont;
+	font-size: 85%;
+	background: @img_headerbackground repeat-x;
+	position: relative;
+	height: @logo_height;
+	padding: @header_padding_lr @header_padding_tb;
+	
+	.logo {
+		position: absolute;
+		background: @img_headerlogo no-repeat;
+		width: @logo_width;
+		height: @logo_height;
+	}
+	
+	.main-menu {
+		margin-left: @logo_width + @header_padding_lr;
+		margin-top: 20px;
+		.menu-items {
+			.button { #buttons > .header-icon-button }			
+			.item { float: left; list-style: none; margin-right: 10px; }
+			.home .button { background-image: @icon_house; }
+			.updates .button { background-image: @icon_timeline; }
+			.search { float: right; margin: 0; }
+		}
+	}
+}
+
+
+.hide { display: none; }
+.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
+.clearfix:after { clear: both; }
+.clearfix { zoom: 1; }

@@ -1,0 +1,40 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// Bundle: Buttons
+// Autor:  Manuel Alabor
+//
+// Dieses Bundle stellt alle Standardbuttons für das HTML5Wiki-GUI
+// zur Verfügung.
+//
+#buttons {
+	.simple-button() {
+		border-radius: 4px;
+		text-decoration: none;
+		border: 1px solid;
+	}
+	
+	.icon-16-button() {
+		background-repeat: no-repeat;
+		background-position: 3px 3px;
+		padding: 5px 6px 3px 22px;	
+	}
+	
+	.header-icon-button() {
+		#buttons > .simple-button;
+		#buttons > .icon-16-button;
+
+		color: darken(@primarycolor,5%);		
+		background-color: lighten(@primarycolor,28%);
+		border-color: lighten(@primarycolor,8%);
+
+		&:hover {
+			color: @primarycolor;
+			background-color: lighten(@primarycolor,32%);
+		}
+		&:active {
+			box-shadow: 0 0 5px rgba(255,255,255,0.8);
+		}
+	}
+}
