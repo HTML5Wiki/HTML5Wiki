@@ -84,7 +84,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 
-		$this->arguments = explode("/", $this->uri);
+		$this->arguments = explode(PATH_SEPARATOR, $this->uri);
 		$this->arguments = array_filter($this->arguments);
 
 		$this->post = $_POST;
