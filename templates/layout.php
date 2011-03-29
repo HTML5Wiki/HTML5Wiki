@@ -5,7 +5,7 @@
 		<title>Html5Wiki Prototype</title>
 	</head>
 	<body>
-		<?= $this->decoratedContent ?>
+		<?php echo $this->decoratedContent ?>
 
 	</body>
 </html>
