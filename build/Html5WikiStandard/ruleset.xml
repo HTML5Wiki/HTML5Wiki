@@ -5,7 +5,7 @@
 	<exclude-pattern>*/build/*\.sh</exclude-pattern>
 
 	<rule ref="Zend"></rule>
-	<rule ref="Zend.NamingConventions.ValidVariableName.PublicHasUnderscore">
+	<rule ref="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore">
 		<severity>0</severity>
 	</rule>
 	<rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine">

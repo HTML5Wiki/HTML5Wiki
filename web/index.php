@@ -14,7 +14,8 @@ $basePath = realpath(dirname(__FILE__) . '/../');
 $libraryPath = $basePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
 $applicationPath = $basePath . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR;
 
-ini_set('include_path', get_include_path() . PATH_SEPARATOR . $basePath . PATH_SEPARATOR . $libraryPath);
+$includePath = get_include_path() . PATH_SEPARATOR . $basePath . PATH_SEPARATOR . $libraryPath;
+ini_set('include_path', $includePath);
 
 require '../library/Zend/Loader/Autoloader.php';
 
