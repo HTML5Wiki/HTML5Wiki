@@ -32,12 +32,22 @@
 	
 	.main-menu {
 		margin-left: @logo_width + @header_padding_lr + 20px;
-		margin-top: 23px;
+		margin-top: 29px;
 		.menu-items {
-			.button { #buttons > .header-icon-button }			
-			.item { float: left; list-style: none; margin-right: 6px; }
-			.home .caption { background-image: @icon_house; }
-			.updates .caption { background-image: @icon_clock_history_frame; }
+			.item { float: left; list-style: none; margin-right: 3px; }
+			.tab {
+				color: black;
+				text-decoration: none;
+				background: 5px 5px no-repeat fadeout(#fff,40%);
+				padding: 7px 8px 4px 24px;
+				.border-radius(5px,5px,0,0);
+				
+				&:hover { background-color: fadeout(#fff,20%);}
+			}
+			.active { background-color: #fff; &:hover { background-color: #fff; } }
+			.home .tab { background-image: @icon_house; }
+			.updates .tab { background-image: @icon_clock_history_frame; }
+			.article .tab { background-image: @icon_page; }
 			.search { float: right; margin: 0; }
 		}
 	}
