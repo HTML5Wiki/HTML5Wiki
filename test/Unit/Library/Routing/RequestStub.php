@@ -23,6 +23,10 @@ class Test_Unit_Routing_RequestStub extends Html5Wiki_Routing_Request {
 	/**
 	 * Override parse so nothing gets parsed; do it with setters instead
 	 */
-    public function parse() {}
+	public function parse() {
+		
+	}
+
 }
+
 ?>
