@@ -6,6 +6,7 @@
 // Autor:  Manuel Alabor
 //
 @import "html5reset-1.6.1.css";
+@import "bundle-mixins";
 @import "bundle-ressources";
 @import "bundle-buttons";
 
@@ -30,13 +31,13 @@
 	}
 	
 	.main-menu {
-		margin-left: @logo_width + @header_padding_lr;
-		margin-top: 20px;
+		margin-left: @logo_width + @header_padding_lr + 20px;
+		margin-top: 23px;
 		.menu-items {
 			.button { #buttons > .header-icon-button }			
 			.item { float: left; list-style: none; margin-right: 10px; }
 			.home .button { background-image: @icon_house; }
-			.updates .button { background-image: @icon_timeline; }
+			.updates .button { background-image: @icon_clock_history_frame; }
 			.search { float: right; margin: 0; }
 		}
 	}
