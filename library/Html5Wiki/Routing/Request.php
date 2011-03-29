@@ -77,6 +77,12 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	private $arguments = array();
 
 	/**
+	 * $_SERVER variables
+	 * @var array
+	 */
+	private $serverVariables = array();
+
+	/**
 	 * POST Arguments
 	 * @var array
 	 */
@@ -92,28 +98,28 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * Constructs a new request object
 	 */
 	public function __construct() {
-
+		$this->serverVariables = $_SERVER;
 	}
 
 	/**
 	 * Parses server variables and sets them accordingly our use
 	 */
 	public function parse() {
-		$this->host = $_SERVER['SERVER_NAME'];
-		$this->port = $_SERVER['SERVER_PORT'];
-		$this->https = !empty($_SERVER['HTTPS']);
-		$this->uri = $_SERVER['REQUEST_URI'];
+		$this->host = $this->serverVariables['SERVER_NAME'];
+		$this->port = $this->serverVariables['SERVER_PORT'];
+		$this->https = !empty($this->serverVariables['HTTPS']);
+		$this->uri = $this->serverVariables['REQUEST_URI'];
 
-		$this->path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+		$this->path = isset($this->serverVariables['PATH_INFO']) ? $this->serverVariables['PATH_INFO'] : '';
 
-		$phpSelf = $_SERVER['PHP_SELF'];
+		$phpSelf = $this->serverVariables['PHP_SELF'];
 		$indexPhpPos = strpos($phpSelf, '/index.php');
 		$this->basePath = substr($phpSelf, 0, $indexPhpPos);
 
-		$this->queryString = $_SERVER['QUERY_STRING'];
-		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
-		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
-		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
+		$this->queryString = $this->serverVariables['QUERY_STRING'];
+		$this->userAgent = $this->serverVariables['HTTP_USER_AGENT'];
+		$this->ipAddress = $this->serverVariables['REMOTE_ADDR'];
+		$this->requestMethod = $this->serverVariables['REQUEST_METHOD'];
 
 		// strip base path & index.php from request uri to get only the relevant parts
 		$arguments = str_replace($this->basePath, '', str_replace('/index.php', '', $this->uri));
@@ -122,6 +128,15 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 
 		$this->post = $_POST;
 		$this->get = $_GET;
+	}
+
+
+	/**
+	 *
+	 * @return array
+	 */
+	public function getServerVariables() {
+		return $this->serverVariables;
 	}
 
 	/**
@@ -162,6 +177,14 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 */
 	public function getPath() {
 		return $this->path;
+	}
+
+	/**
+	 *
+	 * @return string
+	 */
+	public function getBasePath() {
+		return $this->basePath;
 	}
 
 	/**
@@ -226,6 +249,14 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 */
 	public function getGet($key, $default = null) {
 		return isset($this->get[$key]) ? $this->get[$key] : $default;
+	}
+
+	/**
+	 *
+	 * @param array $serverVariables
+	 */
+	public function setServerVariables($serverVariables) {
+		$this->serverVariables = $serverVariables;
 	}
 
 	/**
