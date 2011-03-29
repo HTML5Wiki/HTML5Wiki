@@ -6,7 +6,7 @@
 .header-overall .main-menu .menu-items .home .tab{background-image:url('../images/icons16/house.png');}
 .header-overall .main-menu .menu-items .updates .tab{background-image:url('../images/icons16/clockHistoryFrame.png');}
 .header-overall .main-menu .menu-items .article .tab{background-image:url('../images/icons16/page.png');}
-.header-overall .main-menu .menu-items .search{float:right;margin:0;}
+.header-overall .main-menu .menu-items .search{float:right;margin:-10px 0 0 0;}.header-overall .main-menu .menu-items .search .searchterm{font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;font-size:85%;padding:5px 3px 3px 22px;background:url('../images/icons16/magnifier.png') no-repeat 3px 2px #ffffff;border:1px solid #ea7253;width:150px;}
 .hide{display:none;}
 .clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden;}
 .clearfix:after{clear:both;}
