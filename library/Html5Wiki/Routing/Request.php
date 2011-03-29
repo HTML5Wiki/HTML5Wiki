@@ -87,24 +87,23 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->uri   = $_SERVER['REQUEST_URI'];
 
 		$this->path     = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
-		$this->basePath = str_replace('/index.php', '', $_SERVER['PHP_SELF']);
+
+		$phpSelf = $_SERVER['PHP_SELF'];
+		$indexPhpPos = strpos($phpSelf, '/index.php');
+		$this->basePath = substr($phpSelf, 0, $indexPhpPos);
 
 		$this->queryString = $_SERVER['QUERY_STRING'];
 		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 
-		// strip base path from request uri to get only the relevant parts
-		$arguments = str_replace($this->basePath, '', $this->uri);
-		
+		// strip base path & index.php from request uri to get only the relevant parts
+		$arguments = str_replace($this->basePath, '', str_replace('/index.php', '', $this->uri));
 		$this->arguments = explode("/", $arguments);
 		$this->arguments = array_filter($this->arguments);
 
 		$this->post = $_POST;
 		$this->get = $_GET;
-
-		// unset $_POST/$_GET to forbid using those arrays directly
-		unset($_POST, $_GET);
 	}
 
 	/**
