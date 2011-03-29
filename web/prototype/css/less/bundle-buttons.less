@@ -17,9 +17,13 @@
 	}
 	
 	.icon-16-button() {
-		background-repeat: no-repeat;
-		background-position: 3px 3px;
-		padding: 5px 6px 3px 22px;	
+		padding: 5px 8px 3px 6px;
+		
+		.caption {
+			padding-left: 19px;
+			padding-top: 2px;
+			background-repeat: no-repeat;
+		}
 	}
 	
 	.header-icon-button() {
@@ -29,13 +33,28 @@
 		color: darken(@primarycolor,5%);		
 		background-color: lighten(@primarycolor,28%);
 		border-color: lighten(@primarycolor,8%);
+		
+		background-image:
+			-moz-linear-gradient(center bottom,
+			lighten(@primarycolor,22%) 20%,
+			lighten(@primarycolor,28%) 45%);
 
 		&:hover {
 			color: @primarycolor;
 			background-color: lighten(@primarycolor,32%);
+			background-image:
+				-moz-linear-gradient(center bottom,
+				lighten(@primarycolor,25%) 20%,
+				lighten(@primarycolor,33%) 45%);
+			.box-shadow(0, 0, 5px, fadeout(#ffffff,50%));
 		}
 		&:active {
-			box-shadow: 0 0 5px fadeout(#ffffff,20%);
+			.box-shadow(0, 0, 5px, fadeout(#ffffff,5%));
+			text-shadow: 0px 1px 1px fadeout(#000000,80%);
+			background-image:
+				-moz-linear-gradient(center top,
+				lighten(@primarycolor,25%) 20%,
+				lighten(@primarycolor,33%) 45%);
 		}
 	}
 }
