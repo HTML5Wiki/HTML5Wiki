@@ -9,53 +9,56 @@
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="css/main.css" /> 
-	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script--> 
+	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
 	
 	<script type="text/javascript">
-		/*
-		<div class="messagebox">
-			<div class="barshadow">&nbsp;</div>
-			<div class="message info">
-				Dies ist eine Info Message
-			</div>
-		</div>
-	
-		<div class="messagebox">
-			<div class="barshadow">&nbsp;</div>
-			<div class="message error">
-				Dies ist eine Error Message
-			</div>
-		</div>
-	
-		<div class="messagebox">
-			<div class="barshadow">&nbsp;</div>
-			<div class="message question">
-				Dies ist eine Frage
-			</div>
-		</div>
-		*/
-	
-		function showInfoMessage() {
-			
+		var messageBoxes = new Array();
+		
+		function showInfoMessage(message) {
+			addMessageBox('info','Dies ist eine Informations-Meldung.');
 		}
 		
 		function showErrorMessage() {
-			
+			addMessageBox('error','Dies ist eine Fehlermeldung!');
 		}
 		
 		function showQuestionMessage() {
-			
+			addMessageBox('question','Dies ist eine Frage');
 		}
+		
+		function addMessageBox(type, message) {
+			var messageBox = createMessageBox(type, message);
+			messageBoxes = new Array(messageBox).concat(messageBoxes);
+			
+			if($('.messagebox').size() == 0) displayMessageBox();
+		}
+		
+		function displayMessageBox() {
+			var latestBox = messageBoxes.pop();
+			
+			if(latestBox != undefined) {
+				$('.header-overall').before(latestBox);
+				$(latestBox).slideDown().delay(2000).slideUp(function() {
+					$(this).remove();
+					displayMessageBox();
+				});				
+			}
+		}
+		
+		function createMessageBox(type, message) {
+			var messagebox = $('<div class="messagebox" />');
+			$(messagebox).append('<div class="barshadow">&nbsp;</div>');
+			$(messagebox).append('<div class="message ' + type + '">' + message + '</div>');
+			$(messagebox).hide();
+			
+			return messagebox;
+		}
+		
 	</script>
 
 </head> 
 <body>
-	<div class="messagebox">
-		<div class="barshadow">&nbsp;</div>
-		<div class="message question">
-			Dies ist eine Info Message
-		</div>
-	</div>
 	<header class="header-overall">
 		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
 		<nav class="main-menu">
