@@ -12,7 +12,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Default controller if none is supplied
 	 */
-	const DEFAULT_CONTROLLER = 'wiki';
+	const DEFAULT_CONTROLLER = 'index';
 
 	/**
 	 * Default action if none is supplied
