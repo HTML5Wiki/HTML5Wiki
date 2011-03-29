@@ -72,8 +72,9 @@
 	float: right;
 	margin-right: 5px;
 	.capsule { #buttons > .colored-icon-button(@capsule_base_color); }
-	
 	.item { float: left; list-style: none; }
+	
+	.active .capsule { #buttons > .pressed-button(@capsule_base_color); }
 	.item .capsule { border: 1px solid  lighten(@capsule_base_color,8%); border-left-width: 0; }
 	.first .capsule { .border-radius(5px 0 0 5px); border-left-width: 1px; }
 	.last .capsule { .border-radius(0 5px 5px 0); }

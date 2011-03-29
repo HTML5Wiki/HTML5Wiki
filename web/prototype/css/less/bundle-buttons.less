@@ -9,14 +9,35 @@
 // zur Verfügung.
 //
 #buttons {
+	
+	// Factory-Mixins ---------------------------------------------------------
 	.simple-button() {
 		font-family: @titlefont;
 		font-size: 85%;
 		text-decoration: none;
 		outline: none;
 	}
-	.bordered-button(color) { border: 1px solid lighten(@color,8%); }
+	.bordered-button(@color) { border: 1px solid lighten(@color,8%); }
 	.rounded-button() { .border-radius(4px); }
+	
+	.pressed-button(@color) {
+		.box-shadow(0, 0, 5px, fadeout(#ffffff,5%));
+		text-shadow: 0px 1px 1px fadeout(#000000,80%);
+		background-image:
+			-moz-linear-gradient(center top,
+			lighten(@color,25%) 20%,
+			lighten(@color,33%) 45%);
+	}
+	
+	.hovered-button(@color) {
+		color: @color;
+		background-color: lighten(@color,28%);
+		background-image:
+			-moz-linear-gradient(center bottom,
+			lighten(@color,25%) 20%,
+			lighten(@color,33%) 45%);
+		.box-shadow(0, 0, 5px, fadeout(#ffffff,50%));
+	}
 	
 	.icon-16-button() {
 		padding: 5px 8px 3px 6px;
@@ -28,11 +49,13 @@
 		}
 	}
 	
+	
+	// Button-Mixins ----------------------------------------------------------
 	.colored-icon-button(@color) {
 		#buttons > .simple-button;
 		#buttons > .icon-16-button;
 		
-		color: darken(@color,5%);
+		color: darken(@color,18%);
 		background-color: lighten(@color,28%);
 		border-color: lighten(@color,8%);
 		
@@ -41,62 +64,8 @@
 			lighten(@color,22%) 20%,
 			lighten(@color,28%) 45%);
 
-		&:hover {
-			color: @color;
-			background-color: lighten(@color,32%);
-			background-image:
-				-moz-linear-gradient(center bottom,
-				lighten(@color,25%) 20%,
-				lighten(@color,33%) 45%);
-			.box-shadow(0, 0, 5px, fadeout(#ffffff,50%));
-		}
-		&:active {
-			.box-shadow(0, 0, 5px, fadeout(#ffffff,5%));
-			text-shadow: 0px 1px 1px fadeout(#000000,80%);
-			background-image:
-				-moz-linear-gradient(center top,
-				lighten(@color,25%) 20%,
-				lighten(@color,33%) 45%);
-		}
-		
+		&:hover { #buttons > .hovered-button(@color); }
+		&:active { #buttons > .pressed-button(@color); }
 	}
 	
-	
-	
-	
-	
-	
-	
-	.header-icon-button() {
-		#buttons > .simple-button;
-		#buttons > .icon-16-button;
-		#buttons > .bordered-button(@primarycolor);
-		#buttons > .rounded-button;
-
-		color: darken(@primarycolor,5%);		
-		background-color: lighten(@primarycolor,28%);
-		
-		background-image:
-			-moz-linear-gradient(center bottom,
-			lighten(@primarycolor,22%) 20%,
-			lighten(@primarycolor,28%) 45%);
-
-		&:hover {
-			color: @primarycolor;
-			background-color: lighten(@primarycolor,32%);
-			background-image:
-				-moz-linear-gradient(center bottom,
-				lighten(@primarycolor,25%) 20%,
-				lighten(@primarycolor,33%) 45%);
-			.box-shadow(0, 0, 5px, fadeout(#ffffff,50%));
-		}
-		&:active {
-			.box-shadow(0, 0, 5px, fadeout(#ffffff,5%));
-			text-shadow: 0px 1px 1px fadeout(#000000,80%);
-			background-image:
-				-moz-linear-gradient(center top,
-				lighten(@primarycolor,25%) 20%,
-				lighten(@primarycolor,33%) 45%);
-		}
-	}
 }
