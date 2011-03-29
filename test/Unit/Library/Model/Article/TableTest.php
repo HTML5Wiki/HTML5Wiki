@@ -7,6 +7,11 @@
  * @package		Test
  * @subpackage	Model
  */
+
+require 'library/Zend/Db/Table/Abstract.php';
+require 'library/Html5Wiki/Model/Article/Table.php';
+
+
 class Test_Unit_Library_Model_Article_TableTest extends PHPUnit_Framework_TestCase {
 	
 	/**
@@ -18,7 +23,7 @@ class Test_Unit_Library_Model_Article_TableTest extends PHPUnit_Framework_TestCa
 	 * 
 	 */
 	public function setUp() {
-		$this->table = new Html5Wiki_Model_Article_Table();
+		//$this->table = new Html5Wiki_Model_Article_Table();
 	}
 	
 	/**
@@ -26,6 +31,20 @@ class Test_Unit_Library_Model_Article_TableTest extends PHPUnit_Framework_TestCa
 	 */
 	public function tearDown() {
 		
+	}
+	
+	/**
+	 * 
+	 */
+	public function testInsert() {
+//		$data = array(
+//			'mediaVersionId'			=> 1,
+//			'mediaVersionTimestamp'		=> time(),
+//			'title'						=> 'testarticle',
+//			'content'					=> 'someContent'
+//		);
+//		
+//		$this->table->insert($data);
 	}
 }
 ?>
