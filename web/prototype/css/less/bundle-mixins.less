@@ -14,6 +14,12 @@
   border-radius: @radius;
 }
 
+.border-radius (@tl,@tr,@br,@bl) {
+  -moz-border-radius: @tl @tr @br @bl;
+  -webkit-border-radius: @tl @tr @br @bl;
+  border-radius: @tl @tr @br @bl;
+}
+
 .box-shadow(@h-offset, @v-offset, @blur, @color) {
 	-webkit-box-shadow: @h-offset @v-offset @blur @color;
 	-moz-box-shadow: @h-offset @v-offset @blur @color;

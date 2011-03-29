@@ -1,11 +1,11 @@
 @import "html5reset-1.6.1.css";
 .header-overall{font-family:Helvetica,"Helvetica Neue",Arial,sans-serif;font-size:85%;background:url('../images/headerBackground.png') repeat-x;position:relative;height:60px;padding:8px 6px;}.header-overall .logo{position:absolute;background:url('../images/headerLogo.png') no-repeat;width:153px;height:60px;}
-.header-overall .main-menu{margin-left:181px;margin-top:23px;}.header-overall .main-menu .menu-items .button{-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;text-decoration:none;border:1px solid;outline:none;padding:5px 8px 3px 6px;color:#d6411b;background-color:#f4b5a5;border-color:#e96b4a;background-image:-moz-linear-gradient(center bottom, #f09f8a 20%, #f4b5a5 45%);}.header-overall .main-menu .menu-items .button .caption{padding-left:19px;padding-top:2px;background-repeat:no-repeat;}
-.header-overall .main-menu .menu-items .button:hover{color:#e44d26;background-color:#f6c4b7;background-image:-moz-linear-gradient(center bottom, #f2aa97 20%, #f7c8bc 45%);-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);box-shadow:0 0 5px rgba(255, 255, 255, 0.5);}
-.header-overall .main-menu .menu-items .button:active{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-image:-moz-linear-gradient(center top, #f2aa97 20%, #f7c8bc 45%);}
-.header-overall .main-menu .menu-items .item{float:left;list-style:none;margin-right:6px;}
-.header-overall .main-menu .menu-items .home .caption{background-image:url('../images/icons16/house.png');}
-.header-overall .main-menu .menu-items .updates .caption{background-image:url('../images/icons16/clockHistoryFrame.png');}
+.header-overall .main-menu{margin-left:181px;margin-top:29px;}.header-overall .main-menu .menu-items .item{float:left;list-style:none;margin-right:3px;}
+.header-overall .main-menu .menu-items .tab{color:black;text-decoration:none;background:5px 5px no-repeat rgba(255, 255, 255, 0.6);padding:7px 8px 4px 24px;-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0;}.header-overall .main-menu .menu-items .tab:hover{background-color:rgba(255, 255, 255, 0.8);}
+.header-overall .main-menu .menu-items .active{background-color:#fff;}.header-overall .main-menu .menu-items .active:hover{background-color:#fff;}
+.header-overall .main-menu .menu-items .home .tab{background-image:url('../images/icons16/house.png');}
+.header-overall .main-menu .menu-items .updates .tab{background-image:url('../images/icons16/clockHistoryFrame.png');}
+.header-overall .main-menu .menu-items .article .tab{background-image:url('../images/icons16/page.png');}
 .header-overall .main-menu .menu-items .search{float:right;margin:0;}
 .hide{display:none;}
 .clearfix:before,.clearfix:after{content:"\0020";display:block;height:0;overflow:hidden;}
