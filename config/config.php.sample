@@ -1,0 +1,22 @@
+<?php
+/**
+ * Sample configuration
+ *
+ * @author Michael Weibel <mweibel@hsr.ch>
+ * @copyright (c) HTML5Wiki Team 2011
+ * @package Config
+ */
+
+$config = array(
+	'database' => array(
+		'host' => 'localhost',
+		'port' => '3306',
+		'db'   => 'html5wiki',
+		'user' => 'html5wiki',
+		'password' => 'mySuperCoolPassword1337'
+	),
+	'routing' => array(
+		'defaultController' => 'index',
+		'defaultAction'     => 'index
+	),
+);
