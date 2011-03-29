@@ -74,17 +74,23 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * Constructs a new request object
 	 */
 	public function __construct() {
-		$this->host = $_SERVER['SERVER_NAME'];
-		$this->port = $_SERVER['SERVER_PORT'];
+		$this->host  = $_SERVER['SERVER_NAME'];
+		$this->port  = $_SERVER['SERVER_PORT'];
 		$this->https = !empty($_SERVER['HTTPS']);
-		$this->uri = $_SERVER['REQUEST_URI'];
-		$this->path = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+		$this->uri   = $_SERVER['REQUEST_URI'];
+
+		$this->path     = isset($_SERVER['PATH_INFO']) ? $_SERVER['PATH_INFO'] : '';
+		$this->basePath = str_replace('/index.php', '', $_SERVER['PHP_SELF']);
+
 		$this->queryString = $_SERVER['QUERY_STRING'];
 		$this->userAgent = $_SERVER['HTTP_USER_AGENT'];
 		$this->ipAddress = $_SERVER['REMOTE_ADDR'];
 		$this->requestMethod = $_SERVER['REQUEST_METHOD'];
 
-		$this->arguments = explode(PATH_SEPARATOR, $this->uri);
+		// strip base path from request uri to get only the relevant parts
+		$arguments = str_replace($this->basePath, '', $this->uri);
+		
+		$this->arguments = explode("/", $arguments);
 		$this->arguments = array_filter($this->arguments);
 
 		$this->post = $_POST;
