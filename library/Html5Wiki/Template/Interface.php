@@ -5,7 +5,7 @@
  * @author Michael Weibel <mweibel@hsr.ch>
  * @copyright (c) HTML5Wiki Team 2011
  * @package Library
- * @package Template
+ * @subpackage Template
  */
 interface Html5Wiki_Template_Interface {
     public function render();

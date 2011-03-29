@@ -48,6 +48,8 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 * Routes request according to informations from the request object
 	 */
 	public function route() {
+		$this->request->parse();
+
 		$arguments = $this->request->getArguments();
 
 		$this->controller = isset($arguments[1]) ? $arguments[1] : self::DEFAULT_CONTROLLER;
