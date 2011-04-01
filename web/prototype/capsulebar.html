@@ -10,6 +10,12 @@
 	<link rel="icon" href="favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="css/main.css" /> 
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
+	
+	<script src="js/jquery.markitup.js" type="text/javascript"></script>
+	<script src="js/markitup/sets/default/set.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="js/markitup/skins/markitup/style.css" />
+	<link rel="stylesheet" type="text/css" href="js/markitup/sets/default/style.css" />
+	
 	<script type="text/javascript">
 		function setCapsuleActive(str) {
 			//set all menu item to 'not' active
@@ -62,11 +68,14 @@
 						};
 						
 						$.ajax({
-							url: "tt.html",
+							url: $(this).attr('id') + ".html",
 							type: 'POST',
 							data: media_data,
 							success: function(msg) {
 								$('#media_content').html(msg);
+							},
+							error: function(request, error) {
+								$('#media_content').html(request.responseText);
 							}
 						});
 				
