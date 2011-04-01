@@ -44,99 +44,143 @@
 	</article>
 	
 	<script type="text/javascript">
-		var objectsToSearchIn = [
-			'Aargau, Kanton und Weinregion / Schweiz'
-			,'Abaca'
-			,'Abadesa' 	 
-			,'Abbaukrankheit' 	 
-			,'Abbeeren' 	 
-			,'Abbondosa'
-			,'Abbuoto'
-			,'ABC Trinker'
-			,'Abfindungsbrennerei'
-			,'Abfüllen' 	 
-			,'Abfüllschock' 	 
-			,'Abfüllung und Reife (Wein)'
-			,'Abgang' 	 
-			,'abgebaut' 	 
-			,'abgerundet' 	 
-			,'abkühlen' 	 
-			,'Ablagerung' 	 
-			,'Ableger'	 
-			,'aboccato'
-			,'Biowein' 	 
-			,'Birk, Heinrich (1898-1973)' 	 
-			,'Birne - Geschmacksvielfalt beim Wein' 	 
-			,'Birstaler Muskat'
-			,'Bischoff, Oskar (1912-1985)' 	 
-			,'Bissig (Wein)' 	 
-			,'Bitartrat-Kristalle' 	 
-			,'Bitter'
-			,'Bittermandel' 	 
-			,'Biturica' 	 
-			,'Bivongi' 	 
-			,'Black Eagle'
-		];
-		
-		
-		$('#header-searchbox').keyup(function(event) {
-			var keycode = event.which;
-			var term = $(this).val();
-			var resultContainer = $('#header-searchbox-results');
-			
-			/* Suchen: */
-			if(keycodeTriggersSearch(keycode)) {
-				// Folgende Zeile wird mit AJAX ersetzt!
-				var results = search(term);
-				///////////////////////////////////////
-				
-				// Container erstellen falls nötig:
-				if(resultContainer.length == 0) {
-					var top = $(this).position().top;
-					var left = $(this).position().left;
-					top += $(this).offset().top;
-					var width = $(this).css('width');
-					
-					resultContainer = createResultContainer(top,left,width);
-					$('.header-overall').append(resultContainer);
-				}
-				
-				
-				var resultList = $('<ol/>');
-				for(var i = 0, l = results.length; i < l; i++) {
-					$(resultList).append(createResultItem(results[i]));
-				}
-				$(resultContainer).empty();
-				resultContainer.append(resultList);
-			}
-		});
-		
-		function createResultContainer(top, left,width) {
-			var resultContainer = $('<div id="header-searchbox-results" class="searchbox-results" style="background: red;position: absolute; top:'+top+'px; left:'+left+'px;"/>');
-			
-			
-			return resultContainer;
-		}
-		function createResultItem(result) {
-			return $('<li class="result" style="list-style: none;">'+result+'</li>')
-		}
-		
-		
 		
 		/**
-		 * Stellt sicher, dass nur "normale" Zeichen (>= 48) sowie
-		 * Delete (46), Backspace (8) und Space (32) eine Suche auslösen.
+		 * Controller für die Header-SearchBox.
 		 *
-		 * @param keycode, Code der gedrückten Taste
-		 * @returns true/false
+		 * @author Manuel Alabor
 		 */
-		function keycodeTriggersSearch(keycode) {
-			return (keycode >= 48
-					|| keycode == 46
-					|| keycode == 8
-					|| keycode == 32);
-		}
-		
+		var SearchBoxController = (function() {
+			var self = {},
+				selectedResultItem = 0;
+			
+			/**
+			 * Initialisiert den Controller auf eine SearchBox.
+			 *
+			 * @param searchBox jQuery-DOM-Objekt
+			 */
+			self.initWithSearchBox = function(searchBox) {
+				$(searchBox).keyup(self.handleKeyUp);
+			};
+			
+			/**
+			 * Nimmt KeyEvents vom keyUp-Event der SearchBox
+			 * entgegen.
+			 *
+			 * @param event
+			 */
+			self.handleKeyUp = function(event) {
+				var keycode = event.which;
+				var term = $(this).val();
+				var resultContainer = $('#header-searchbox-results');
+
+				if(self.keycodeTriggersSearch(keycode)) {
+					///////////////////////////////////////
+					// Folgende Zeile wird mit AJAX ersetzt!
+					var results = search(term);
+					///////////////////////////////////////
+
+					// Container erstellen falls nötig:
+					if(resultContainer.length == 0) {
+						resultContainer = self.createResultContainer();
+						$(this).parent('.item').append(resultContainer);
+					}
+
+
+					var resultList = $('<ol/>');
+					for(var i = 0, l = results.length; i < l; i++) {
+						$(resultList).append(self.createResultItem(results[i]));
+					}
+					$(resultContainer).empty();
+					resultContainer.append(resultList);
+
+				} else {
+					var updateSelectedItem = false;
+
+					switch(keycode) {
+						case 40 :
+							if(selectedResultItem < $('.result-item').length){
+								selectedResultItem++;
+								updateSelectedItem = true;
+							}
+						break;
+						case 38 :
+						 	if(selectedResultItem > 1) {
+								selectedResultItem--;
+								updateSelectedItem = true;
+							}
+						break;
+					}
+
+					if(updateSelectedItem) {
+						$('.result-item.selected').removeClass('selected');
+						$('.result-item:nth-child('+selectedResultItem+')').addClass('selected');
+						event.preventDefault();
+					}
+				}
+			};
+			
+			/**
+			 * Liefert das aktuell in der Resultatliste ausgewählte
+			 * Element resp. dessen Index zurück.
+			 *
+			 * @returns Index
+			 */
+			self.getSelectedResultItem = function() {
+				return self.selectedResultItem;
+			};
+			
+			/**
+			 * Stellt sicher, dass nur "normale" Zeichen (>= 48) sowie
+			 * Delete (46), Backspace (8) und Space (32) eine Suche auslösen.
+			 *
+			 * @param keycode, Code der gedrückten Taste
+			 * @returns true/false
+			 */
+			self.keycodeTriggersSearch = function(keycode) {
+				return (keycode >= 48
+						|| keycode == 46
+						|| keycode == 8
+						|| keycode == 32
+						|| keycode == 0);
+			}
+			
+			/**
+			 * Erstellt einen Resultat-Container
+			 *
+			 * @see SearchBoxController#handleKeyUp
+			 * @returns DOM-Objekt
+			 */
+			self.createResultContainer = function() {
+				return $('<div id="header-searchbox-results" class="searchbox-results" />');
+			}
+			
+			/**
+			 * Erstellt mit einem Resultattext ein
+			 * Resultat-Element.
+			 *
+			 * @see SearchBoxController#handleKeyUp
+			 * @returns DOM-Objekt
+			 */
+			self.createResultItem = function(result) {
+				return $('<li class="result-item">'+result+'</li>')
+			}
+			
+			
+			return self;
+		}());  // end SearchBoxController
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+		SearchBoxController.initWithSearchBox($('#header-searchbox'));
 		
 		/**
 		 * Ersatz für AJAX-Request.
@@ -148,6 +192,39 @@
 		 * @returns Array mit gefundenen Begriffen
 		 */
 		function search(term) {
+			var objectsToSearchIn = [
+				'Aargau, Kanton und Weinregion / Schweiz'
+				,'Abaca'
+				,'Abadesa' 	 
+				,'Abbaukrankheit' 	 
+				,'Abbeeren' 	 
+				,'Abbondosa'
+				,'Abbuoto'
+				,'ABC Trinker'
+				,'Abfindungsbrennerei'
+				,'Abfüllen' 	 
+				,'Abfüllschock' 	 
+				,'Abfüllung und Reife (Wein)'
+				,'Abgang' 	 
+				,'abgebaut' 	 
+				,'abgerundet' 	 
+				,'abkühlen' 	 
+				,'Ablagerung' 	 
+				,'Ableger'	 
+				,'aboccato'
+				,'Biowein' 	 
+				,'Birk, Heinrich (1898-1973)' 	 
+				,'Birne - Geschmacksvielfalt beim Wein' 	 
+				,'Birstaler Muskat'
+				,'Bischoff, Oskar (1912-1985)' 	 
+				,'Bissig (Wein)' 	 
+				,'Bitartrat-Kristalle' 	 
+				,'Bitter'
+				,'Bittermandel' 	 
+				,'Biturica' 	 
+				,'Bivongi' 	 
+				,'Black Eagle'
+			];
 			var results = Array();
 			term = term.trim();
 			
@@ -156,9 +233,15 @@
 				
 				for(var i = 0, l = objectsToSearchIn.length; i < l; i++) {
 					var toMatch = objectsToSearchIn[i].toUpperCase();
+					var result = objectsToSearchIn[i];
+					
 					if(term.length <= toMatch.length) {
 						if(toMatch.substring(0,term.length) == term) {
-							results.push(objectsToSearchIn[i]);
+							result = '<span class="typed">'
+								   + result.substring(0,term.length)
+								   + '</span>'
+								   + result.substring(term.length);
+							results.push(result);
 						}
 					}				
 				}
