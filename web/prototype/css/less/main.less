@@ -15,6 +15,7 @@
 	@logo_height: 60px;
 	@header_padding_lr: 8px;
 	@header_padding_tb: 6px;
+	@searchbox_width: 150px;
 	
 	font-family: @uifont;
 	font-size: 85%;
@@ -59,10 +60,14 @@
 					padding: 5px 3px 3px 22px;
 					background: @icon_magnifier no-repeat 3px 2px #fff;
 					border: 1px solid lighten(@primary_color,10%);
-					width: 150px;
+					width: @searchbox_width;
 				}
 			}
 		}
+	}
+	
+	.searchbox-results {
+		width: @searchbox_width + 22px;
 	}
 }
 

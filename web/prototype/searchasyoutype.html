@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<title>Aritkel | HTML5Wiki</title>
+	<meta name="description" content="">
+ 	<meta name="author" content="HTML5Wiki">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="favicon.ico" type="image/ico" />
+	<link rel="stylesheet" href="css/main.css" /> 
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script--> 
+	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
+
+</head> 
+<body>
+	<header class="header-overall">
+		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
+		<nav class="main-menu">
+			<ol class="menu-items clearfix">
+				<li class="item home"><a href="#" class="tab active">Startseite</a></li>
+				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
+				<li class="item search"><input placeholder="Suchen" id="header-searchbox" class="searchterm" accesskey="s" /></li>
+			</ol>
+		</nav>
+	</header>
+		
+	<article class="content article">
+		<header class="title clearfix">
+			<h1 class="heading">SearchAsYouType Prototype</h1>
+			<ol class="capsulebar">
+				<li class="item first active read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
+				<li class="item edit"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
+				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
+			</ol>
+		</header>
+		
+		
+		<section>
+			<p>
+				Use the search field :) Examplewords begin with 'a' or 'b'
+			</p>
+		</section>
+	</article>
+	
+	<script type="text/javascript">
+		var objectsToSearchIn = [
+			'Aargau, Kanton und Weinregion / Schweiz'
+			,'Abaca'
+			,'Abadesa' 	 
+			,'Abbaukrankheit' 	 
+			,'Abbeeren' 	 
+			,'Abbondosa'
+			,'Abbuoto'
+			,'ABC Trinker'
+			,'Abfindungsbrennerei'
+			,'Abfüllen' 	 
+			,'Abfüllschock' 	 
+			,'Abfüllung und Reife (Wein)'
+			,'Abgang' 	 
+			,'abgebaut' 	 
+			,'abgerundet' 	 
+			,'abkühlen' 	 
+			,'Ablagerung' 	 
+			,'Ableger'	 
+			,'aboccato'
+			,'Biowein' 	 
+			,'Birk, Heinrich (1898-1973)' 	 
+			,'Birne - Geschmacksvielfalt beim Wein' 	 
+			,'Birstaler Muskat'
+			,'Bischoff, Oskar (1912-1985)' 	 
+			,'Bissig (Wein)' 	 
+			,'Bitartrat-Kristalle' 	 
+			,'Bitter'
+			,'Bittermandel' 	 
+			,'Biturica' 	 
+			,'Bivongi' 	 
+			,'Black Eagle'
+		];
+		
+		
+		$('#header-searchbox').keyup(function(event) {
+			var keycode = event.which;
+			var term = $(this).val();
+			var resultContainer = $('#header-searchbox-results');
+			
+			/* Suchen: */
+			if(keycodeTriggersSearch(keycode)) {
+				// Folgende Zeile wird mit AJAX ersetzt!
+				var results = search(term);
+				///////////////////////////////////////
+				
+				// Container erstellen falls nötig:
+				if(resultContainer.length == 0) {
+					var top = $(this).position().top;
+					var left = $(this).position().left;
+					top += $(this).offset().top;
+					var width = $(this).css('width');
+					
+					resultContainer = createResultContainer(top,left,width);
+					$('.header-overall').append(resultContainer);
+				}
+				
+				
+				var resultList = $('<ol/>');
+				for(var i = 0, l = results.length; i < l; i++) {
+					$(resultList).append(createResultItem(results[i]));
+				}
+				$(resultContainer).empty();
+				resultContainer.append(resultList);
+			}
+		});
+		
+		function createResultContainer(top, left,width) {
+			var resultContainer = $('<div id="header-searchbox-results" class="searchbox-results" style="background: red;position: absolute; top:'+top+'px; left:'+left+'px;"/>');
+			
+			
+			return resultContainer;
+		}
+		function createResultItem(result) {
+			return $('<li class="result" style="list-style: none;">'+result+'</li>')
+		}
+		
+		
+		
+		/**
+		 * Stellt sicher, dass nur "normale" Zeichen (>= 48) sowie
+		 * Delete (46), Backspace (8) und Space (32) eine Suche auslösen.
+		 *
+		 * @param keycode, Code der gedrückten Taste
+		 * @returns true/false
+		 */
+		function keycodeTriggersSearch(keycode) {
+			return (keycode >= 48
+					|| keycode == 46
+					|| keycode == 8
+					|| keycode == 32);
+		}
+		
+		
+		/**
+		 * Ersatz für AJAX-Request.
+		 * Simuliert den Server und gibt Suchresultate zum übergebenen
+		 * Suchbegriff zurück.
+		 * Caseinsensitive!
+		 *
+		 * @param term Suchbegriff
+		 * @returns Array mit gefundenen Begriffen
+		 */
+		function search(term) {
+			var results = Array();
+			term = term.trim();
+			
+			if(term != '') {
+				term = term.toUpperCase();
+				
+				for(var i = 0, l = objectsToSearchIn.length; i < l; i++) {
+					var toMatch = objectsToSearchIn[i].toUpperCase();
+					if(term.length <= toMatch.length) {
+						if(toMatch.substring(0,term.length) == term) {
+							results.push(objectsToSearchIn[i]);
+						}
+					}				
+				}
+			}
+			
+			return results;
+		}
+		
+	</script>
+	
+</body>
+</html>
