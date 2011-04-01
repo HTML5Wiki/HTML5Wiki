@@ -20,7 +20,10 @@
 			<ol class="menu-items clearfix">
 				<li class="item home"><a href="#" class="tab active">Startseite</a></li>
 				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
-				<li class="item search"><input placeholder="Suchen" id="header-searchbox" class="searchterm" accesskey="s" /></li>
+				<li class="item search">
+					<input placeholder="Suchen" id="header-searchbox" class="searchterm" accesskey="s" />
+					<div id="header-searchbox-results" class="searchbox-results" />
+				</li>
 			</ol>
 		</nav>
 	</header>
@@ -60,7 +63,7 @@
 			 * @param searchBox jQuery-DOM-Objekt
 			 */
 			self.initWithSearchBox = function(searchBox) {
-				$(searchBox).keyup(self.handleKeyUp);
+				$(searchBox).keyup(handleKeyUp);
 			};
 			
 			/**
@@ -68,43 +71,40 @@
 			 * entgegen.
 			 *
 			 * @param event
+			 * @scope private
 			 */
-			self.handleKeyUp = function(event) {
+			function handleKeyUp(event) {
 				var keycode = event.which;
 				var term = $(this).val();
 				var resultContainer = $('#header-searchbox-results');
 
-				if(self.keycodeTriggersSearch(keycode)) {
+				if(keycodeTriggersSearch(keycode)) {
 					///////////////////////////////////////
 					// Folgende Zeile wird mit AJAX ersetzt!
 					var results = search(term);
 					///////////////////////////////////////
 
-					// Container erstellen falls nötig:
-					if(resultContainer.length == 0) {
-						resultContainer = self.createResultContainer();
-						$(this).parent('.item').append(resultContainer);
-					}
-
-
 					var resultList = $('<ol/>');
 					for(var i = 0, l = results.length; i < l; i++) {
-						$(resultList).append(self.createResultItem(results[i]));
+						resultList.append(createResultItem(results[i]));
 					}
-					$(resultContainer).empty();
+					resultContainer.empty();
 					resultContainer.append(resultList);
-
+					
+					selectedResultItem = 0;
+					
 				} else {
 					var updateSelectedItem = false;
 
 					switch(keycode) {
-						case 40 :
-							if(selectedResultItem < $('.result-item').length){
+						case 40 : // Down
+							var totalItems = $('.result-item').length;
+							if(selectedResultItem < totalItems){
 								selectedResultItem++;
 								updateSelectedItem = true;
 							}
 						break;
-						case 38 :
+						case 38 : // Up
 						 	if(selectedResultItem > 1) {
 								selectedResultItem--;
 								updateSelectedItem = true;
@@ -113,8 +113,9 @@
 					}
 
 					if(updateSelectedItem) {
+						var selectorString = '.result-item:nth-child('+selectedResultItem+')';
 						$('.result-item.selected').removeClass('selected');
-						$('.result-item:nth-child('+selectedResultItem+')').addClass('selected');
+						$(selectorString).addClass('selected');
 						event.preventDefault();
 					}
 				}
@@ -136,8 +137,9 @@
 			 *
 			 * @param keycode, Code der gedrückten Taste
 			 * @returns true/false
+			 * @scope private
 			 */
-			self.keycodeTriggersSearch = function(keycode) {
+			function keycodeTriggersSearch(keycode) {
 				return (keycode >= 48
 						|| keycode == 46
 						|| keycode == 8
@@ -146,23 +148,14 @@
 			}
 			
 			/**
-			 * Erstellt einen Resultat-Container
-			 *
-			 * @see SearchBoxController#handleKeyUp
-			 * @returns DOM-Objekt
-			 */
-			self.createResultContainer = function() {
-				return $('<div id="header-searchbox-results" class="searchbox-results" />');
-			}
-			
-			/**
 			 * Erstellt mit einem Resultattext ein
 			 * Resultat-Element.
 			 *
 			 * @see SearchBoxController#handleKeyUp
 			 * @returns DOM-Objekt
+			 * @scope private
 			 */
-			self.createResultItem = function(result) {
+			createResultItem = function(result) {
 				return $('<li class="result-item">'+result+'</li>')
 			}
 			
