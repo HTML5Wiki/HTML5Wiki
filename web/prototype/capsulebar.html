@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<title>Aritkel | HTML5Wiki</title>
+	<meta name="description" content="">
+ 	<meta name="author" content="HTML5Wiki">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="favicon.ico" type="image/ico" />
+	<link rel="stylesheet" href="css/main.css" /> 
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
+	<script type="text/javascript">
+		function setCapsuleActive(str) {
+			//set all menu item to 'not' active
+			$("ol.capsulebar").children('li').removeClass('active');
+			//set parent li of selected a to active	
+			$("a#" + str).parent('li').addClass('active');
+		}
+	</script> 
+</head> 
+<body>
+	<header class="header-overall">
+		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
+		<nav class="main-menu">
+			<ol class="menu-items clearfix">
+				<li class="item home"><a href="#" class="tab">Startseite</a></li>
+				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
+				<li class="item article"><a href="#" class="tab active">Der erste grosse Artikel im Prototyp</a></li>
+				<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+			</ol>
+		</nav>
+	</header>
+
+	<article class="content article">
+		<header class="title clearfix">
+			<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
+			<ol class="capsulebar">
+				<li class="item first active read"><a href="#" id="read" class="capsule"><span class="caption">Lesen</span></a></li>
+				<li class="item edit"><a href="#" id="edit" class="capsule"><span class="caption">Bearbeiten</span></a></li>
+				<li class="item last history"><a href="#" id="history" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
+			</ol>
+			
+			<script type="text/javascript">
+			
+			var capsulebar_elements = ['read','edit','history'];
+			
+			$.each(capsulebar_elements, function() {
+					$("#" + this).click(function() {
+				
+						//Abort request if already active
+						if ( $(this).parent('li').hasClass('active') ) {
+							return false;
+						}
+					
+						setCapsuleActive($(this).attr('id'));
+										
+						var media_data = {
+							name: 'blabla',
+							nextVar: 'var2',
+							ajax: '1'		
+						};
+						
+						$.ajax({
+							url: "tt.html",
+							type: 'POST',
+							data: media_data,
+							success: function(msg) {
+								$('#media_content').html(msg);
+							}
+						});
+				
+						return false;
+						
+					})
+					
+			});
+			
+			</script>
+			
+		</header>
+
+		<section id="media_content">
+			<h2>Ein kleinerer Untertitel</h2>
+			<p>Lorem ipsum <a href="#">dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et <em>accusam et justo duo dolores</em> et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore <strong>et dolore magna aliquyam</strong> erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+			
+			<h2>Ein kleinerer Untertitel</h2>
+			<h3>Ein noch unterer Untertitel</h3>
+			<p>Lorem ipsum dolor sit amet, <em>consetetur sadipscing elitr</em>, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+			<h3>Ein noch unterer Untertitel</h3>
+			<p>Lorem ipsum dolor sit amet, consetetur <a href="#">sadipscing elitr, sed diam nonumy</a> eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et <strong>justo duo dolores</strong> et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+		</section>
+	</article>
+	
+</body>
+</html>
