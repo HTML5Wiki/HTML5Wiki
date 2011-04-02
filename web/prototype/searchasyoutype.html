@@ -49,7 +49,7 @@
 	<script type="text/javascript">
 		
 		/**
-		 * Controller für die Header-SearchBox.
+		 * Controller for a Searchbox-Field
 		 *
 		 * @author Manuel Alabor
 		 */
@@ -58,17 +58,17 @@
 				selectedResultItem = 0;
 			
 			/**
-			 * Initialisiert den Controller auf eine SearchBox.
+			 * Initializes the Event-Handling for a Searchbox
+			 * (Text-Inputfield)
 			 *
-			 * @param searchBox jQuery-DOM-Objekt
+			 * @param searchBox jQuery-DOM-Object
 			 */
 			self.initWithSearchBox = function(searchBox) {
 				$(searchBox).keyup(handleKeyUp);
 			};
 			
 			/**
-			 * Nimmt KeyEvents vom keyUp-Event der SearchBox
-			 * entgegen.
+			 * Handles KeyEvents for the keyUp-Event.
 			 *
 			 * @param event
 			 * @scope private
@@ -80,7 +80,7 @@
 
 				if(keycodeTriggersSearch(keycode)) {
 					///////////////////////////////////////
-					// Folgende Zeile wird mit AJAX ersetzt!
+					// Following line has to be replaced with an ajax request
 					var results = search(term);
 					///////////////////////////////////////
 
@@ -122,8 +122,8 @@
 			};
 			
 			/**
-			 * Liefert das aktuell in der Resultatliste ausgewählte
-			 * Element resp. dessen Index zurück.
+			 * Returns the currently selected Resultitem inside the
+			 * Resultlist
 			 *
 			 * @returns Index
 			 */
@@ -132,10 +132,9 @@
 			};
 			
 			/**
-			 * Stellt sicher, dass nur "normale" Zeichen (>= 48) sowie
-			 * Delete (46), Backspace (8) und Space (32) eine Suche auslösen.
+			 * Ensures that keys like CTRL or SHIFT don't trigger a search request.
 			 *
-			 * @param keycode, Code der gedrückten Taste
+			 * @param keycode
 			 * @returns true/false
 			 * @scope private
 			 */
@@ -148,15 +147,14 @@
 			}
 			
 			/**
-			 * Erstellt mit einem Resultattext ein
-			 * Resultat-Element.
+			 * Creates a resultitem with a resulttext
 			 *
 			 * @see SearchBoxController#handleKeyUp
 			 * @returns DOM-Objekt
 			 * @scope private
 			 */
-			createResultItem = function(result) {
-				return $('<li class="result-item">'+result+'</li>')
+			createResultItem = function(resultText) {
+				return $('<li class="result-item">'+resultText+'</li>')
 			}
 			
 			
@@ -176,13 +174,11 @@
 		SearchBoxController.initWithSearchBox($('#header-searchbox'));
 		
 		/**
-		 * Ersatz für AJAX-Request.
-		 * Simuliert den Server und gibt Suchresultate zum übergebenen
-		 * Suchbegriff zurück.
-		 * Caseinsensitive!
+		 * Simulates an AJAX-Searchrequest and returns matching resultitems.
+		 * It's caseinsensitive.
 		 *
-		 * @param term Suchbegriff
-		 * @returns Array mit gefundenen Begriffen
+		 * @param term Term
+		 * @returns Array with matching items
 		 */
 		function search(term) {
 			var objectsToSearchIn = [
