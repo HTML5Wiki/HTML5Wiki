@@ -120,9 +120,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`MediaVersionTags`
+-- Table `html5wiki`.`MediaVersionTag`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersionTags` (
+CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersionTag` (
   `tagTag` VARCHAR(50) NOT NULL ,
   `mediaVersionId` int(11) NOT NULL ,
   PRIMARY KEY (`tagTag`, `mediaVersionId`) ,
