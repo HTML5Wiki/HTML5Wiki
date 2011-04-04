@@ -1,0 +1,13 @@
+<?php
+$_CONFiG = array();
+
+$_CONFiG['database'] = array(
+	'adapter'	=>'pdo_mysql',
+	'params'	=> array(
+		'host'		=> 'localhost',
+		'dbname'	=> 'dbname',
+		'username'	=> 'username',
+		'password'	=> 'password',
+	)
+);
+?>
