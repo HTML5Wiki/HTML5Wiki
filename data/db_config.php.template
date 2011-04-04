@@ -1,7 +1,7 @@
 <?php
-$_CONFiG = array();
+$CONFiG = array();
 
-$_CONFiG['database'] = array(
+$CONFiG['database'] = array(
 	'adapter'	=>'pdo_mysql',
 	'params'	=> array(
 		'host'		=> 'localhost',
