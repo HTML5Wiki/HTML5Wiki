@@ -12,11 +12,18 @@
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
 	
 	<script src="js/jquery.markitup.js" type="text/javascript"></script>
-	<script src="js/markitup/sets/markdown/set.js" type="text/javascript"></script>
-	<link rel="stylesheet" type="text/css" href="js/markitup/skins/markitup/style.css" />
-	<link rel="stylesheet" type="text/css" href="js/markitup/sets/markdown/style.css" />
+	<script src="js/markitup/sets/html5wiki/set.js" type="text/javascript"></script>
+	<link rel="stylesheet" type="text/css" href="js/markitup/skins/html5wiki/style.css" />
+	<link rel="stylesheet" type="text/css" href="js/markitup/sets/html5wiki/style.css" />
 	
 	<script type="text/javascript">
+	/**
+	 * setCapsuleActive 
+	 *
+	 * set the class of the selected capsule to active
+	 *
+	 * @author Alexandre Joly
+	 */
 		function setCapsuleActive(str) {
 			//set all menu item to 'not' active
 			$("ol.capsulebar").children('li').removeClass('active');
@@ -49,8 +56,17 @@
 			
 			<script type="text/javascript">
 			
+			//definition of the capsulebar
 			var capsulebar_elements = ['read','edit','history'];
 			
+			/**
+			 * capsule element.click action 
+			 *
+			 * Each capsulebar element send a ajax request 
+			 * and display the result in the main content placeholder 
+			 *
+			 * @author Alexandre Joly
+			 */
 			$.each(capsulebar_elements, function() {
 					$("#" + this).click(function() {
 				
