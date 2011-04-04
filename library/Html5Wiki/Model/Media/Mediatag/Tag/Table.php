@@ -8,24 +8,19 @@
  * @subpackage	Library
  */
 
-/**
- * Defining of the Article table
- * 
- * @author Nicolas Karrer
- */
-class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
-	
+class Html5Wiki_Model_Media_Mediatag_Tag_Table extends Zend_Db_Table_Abstract {
+		
 	/**
 	 * 
 	 * @var string
 	 */
-	protected $_name		= 'ArticleVersion';
+	protected $_name		= 'Tag';
 	
 	/**
 	 * 
 	 * @var array
 	 */
-	protected $_primary		= array('mediaVersionId', 'mediaVersionTimestamp');
+	protected $_primary		= array('tag');
 	
 	/**
 	 * 
@@ -33,8 +28,6 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 	 */
 	protected $_sequence	= false;
 	
-
+		
 }
-
-
 ?>

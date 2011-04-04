@@ -3,3 +3,4 @@ nbproject
 .project
 .settings/
 config/config.php
+data/db_config.php

@@ -8,18 +8,14 @@
  * @subpackage	Library
  */
 
-/**
- * Defining of the Article table
- * 
- * @author Nicolas Karrer
- */
-class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
-	
+
+class Html5Wiki_Model_File_Table extends Zend_Db_Table_Abstract {
+		
 	/**
 	 * 
 	 * @var string
 	 */
-	protected $_name		= 'ArticleVersion';
+	protected $_name		= 'FileVerson';
 	
 	/**
 	 * 
@@ -33,8 +29,6 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 	 */
 	protected $_sequence	= false;
 	
-
+		
 }
-
-
 ?>

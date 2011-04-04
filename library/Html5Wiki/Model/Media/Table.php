@@ -3,7 +3,7 @@
  * This file is part of the HTML5Wiki Project.
  *
  * @author		Nicolas Karrer <nkarrer@hsr.ch>
- * @copyright	Html5Wiki 2011
+ * @copyright	(c) HTML5Wiki Team 2011
  * @package		Html5Wiki
  * @subpackage	Library
  */
