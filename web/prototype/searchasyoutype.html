@@ -22,7 +22,6 @@
 				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
 				<li class="item search">
 					<input placeholder="Suchen" id="header-searchbox" class="searchterm" accesskey="s" />
-					<div id="header-searchbox-results" class="searchbox-results" />
 				</li>
 			</ol>
 		</nav>
@@ -49,13 +48,20 @@
 	<script type="text/javascript">
 		
 		/**
-		 * Controller for a Searchbox-Field
+		 * Controller for a Searchbox-Field.<br/>
+		 * To use, wrap an input-element (suggest to use one with the type "text")
+		 * into a parent DOM element. Afterwards call SearchBoxController#initWithSearchBox
+		 * and pass the JQuery representation of the input element as argument.<br/>
+		 * SearchBoxController will then create all necessary event bindings and creates a
+		 * DOM-object for keeping the result list in the searchbox' parent.
 		 *
 		 * @author Manuel Alabor
+		 * @see SearchBoxController#initWithSearchBox
 		 */
 		var SearchBoxController = (function() {
-			var self = {},
-				selectedResultItem = 0;
+			var self = {}
+				,selectedResultItem = 0
+				,resultContainer = '';
 			
 			/**
 			 * Initializes the Event-Handling for a Searchbox
@@ -64,19 +70,40 @@
 			 * @param searchBox jQuery-DOM-Object
 			 */
 			self.initWithSearchBox = function(searchBox) {
+				/* Keybindings: */
 				$(searchBox).keyup(handleKeyUp);
+				$(searchBox).keydown(handleKeyDown);
+				
+				/* Resultcontainer: */
+				// This container is created in the parent of the searchbox.
+				// It will contain an ordered list with matched searchresults
+				// later on.
+				resultContainer = $('<div id="header-searchbox-results" class="searchbox-results" />');
+				$(searchBox).parent().append(resultContainer);
 			};
 			
 			/**
-			 * Handles KeyEvents for the keyUp-Event.
+			 * Returns the currently selected Resultitem inside the
+			 * Resultlist
+			 *
+			 * @returns Index
+			 */
+			self.getSelectedResultItem = function() {
+				return self.selectedResultItem;
+			};
+			
+			
+			/**
+			 * Handles KeyEvents for the keyUp-Event.<br/>
+			 * Search requests are sent here.
 			 *
 			 * @param event
 			 * @scope private
+			 * @see SearchBoxController#handleKeyDown for UI control
 			 */
 			function handleKeyUp(event) {
 				var keycode = event.which;
 				var term = $(this).val();
-				var resultContainer = $('#header-searchbox-results');
 
 				if(keycodeTriggersSearch(keycode)) {
 					///////////////////////////////////////
@@ -92,19 +119,36 @@
 					resultContainer.append(resultList);
 					
 					selectedResultItem = 0;
-					
-				} else {
+				}
+			};
+			
+			/**
+			 * Handles KeyEvents for the keyDown-Event.<br/>
+			 * If the user wants to select a specific result item, this
+			 * action is handled here.
+			 *
+			 * @param event
+			 * @scope private
+			 * @see SearchBoxController#handleKeyUp for search requests
+			 */
+			function handleKeyDown(event) {
+				var keycode = event.which;
+
+				if(!keycodeTriggersSearch(keycode)) {
 					var updateSelectedItem = false;
+					var preventDefault = false;
 
 					switch(keycode) {
 						case 40 : // Down
 							var totalItems = $('.result-item').length;
+							preventDefault = true;
 							if(selectedResultItem < totalItems){
 								selectedResultItem++;
 								updateSelectedItem = true;
 							}
 						break;
 						case 38 : // Up
+							preventDefault = true;
 						 	if(selectedResultItem > 1) {
 								selectedResultItem--;
 								updateSelectedItem = true;
@@ -113,22 +157,12 @@
 					}
 
 					if(updateSelectedItem) {
-						var selectorString = '.result-item:nth-child('+selectedResultItem+')';
-						$('.result-item.selected').removeClass('selected');
-						$(selectorString).addClass('selected');
-						event.preventDefault();
+						$('.result-item.selected',resultContainer).removeClass('selected');
+						$($('.result-item',resultContainer)[selectedResultItem-1]).addClass('selected');
 					}
+					
+					if(preventDefault) event.preventDefault();
 				}
-			};
-			
-			/**
-			 * Returns the currently selected Resultitem inside the
-			 * Resultlist
-			 *
-			 * @returns Index
-			 */
-			self.getSelectedResultItem = function() {
-				return self.selectedResultItem;
 			};
 			
 			/**
@@ -162,16 +196,9 @@
 		}());  // end SearchBoxController
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 		SearchBoxController.initWithSearchBox($('#header-searchbox'));
+		
+		
 		
 		/**
 		 * Simulates an AJAX-Searchrequest and returns matching resultitems.
