@@ -60,7 +60,8 @@
 		 */
 		var SearchBoxController = (function() {
 			var self = {}
-				,selectedResultItem = 0
+				,selectedResultItem = -1
+				,totalResultItems = 0
 				,resultContainer = '';
 			
 			/**
@@ -92,6 +93,55 @@
 				return self.selectedResultItem;
 			};
 			
+			/**
+			 * Selects a specific item in the current resultlist according
+			 * to its index.
+			 *
+			 * @param Index
+			 */
+			self.setSelectedResultItem = function(index) {
+				if(selectedResultItem != index) {
+					$('.result-item.selected',resultContainer).removeClass('selected');
+					$($('.result-item',resultContainer)[index]).addClass('selected');
+					selectedResultItem = index;
+				}
+			};
+			
+			/**
+			 * Selects, if possible, the next result item in the result list.
+			 *
+			 * @returns true if selection was possible, false if not
+			 */
+			self.selectNextResultItem = function() {
+				var wasAbleToSelect = false;
+				var newIndex = selectedResultItem+1;
+				
+				if(newIndex < totalResultItems) {
+					self.setSelectedResultItem(newIndex);
+					wasAbleToSelect = true;
+				}
+				
+				return wasAbleToSelect;
+			};
+			
+			/**
+			 * Selects, if possible, the previous result item in the result list.
+			 *
+			 * @returns true if selection was possible, false if not
+			 */
+			self.selectPreviousResultItem = function() {
+				var wasAbleToSelect = false;
+				
+			 	if(selectedResultItem > 0) {
+					self.setSelectedResultItem(selectedResultItem - 1);
+					wasAbleToSelect = true;
+				}
+				
+				return wasAbleToSelect;
+			};
+			
+			
+			
 			
 			/**
 			 * Handles KeyEvents for the keyUp-Event.<br/>
@@ -110,15 +160,16 @@
 					// Following line has to be replaced with an ajax request
 					var results = search(term);
 					///////////////////////////////////////
-
+					
 					var resultList = $('<ol/>');
 					for(var i = 0, l = results.length; i < l; i++) {
-						resultList.append(createResultItem(results[i]));
+						resultList.append(createResultItem(results[i],'#'));
 					}
 					resultContainer.empty();
 					resultContainer.append(resultList);
 					
-					selectedResultItem = 0;
+					selectedResultItem = -1;
+					totalResultItems = results.length;
 				}
 			};
 			
@@ -135,30 +186,17 @@
 				var keycode = event.which;
 
 				if(!keycodeTriggersSearch(keycode)) {
-					var updateSelectedItem = false;
 					var preventDefault = false;
 
 					switch(keycode) {
 						case 40 : // Down
-							var totalItems = $('.result-item').length;
 							preventDefault = true;
-							if(selectedResultItem < totalItems){
-								selectedResultItem++;
-								updateSelectedItem = true;
-							}
+							self.selectNextResultItem();
 						break;
 						case 38 : // Up
 							preventDefault = true;
-						 	if(selectedResultItem > 1) {
-								selectedResultItem--;
-								updateSelectedItem = true;
-							}
+							self.selectPreviousResultItem();
 						break;
-					}
-
-					if(updateSelectedItem) {
-						$('.result-item.selected',resultContainer).removeClass('selected');
-						$($('.result-item',resultContainer)[selectedResultItem-1]).addClass('selected');
 					}
 					
 					if(preventDefault) event.preventDefault();
@@ -181,14 +219,22 @@
 			}
 			
 			/**
-			 * Creates a resultitem with a resulttext
+			 * Creates a list item for a searchresult with a specific text and url.<br/>
+			 * There is a hover-eventbinding added by default which will selects the
+			 * hovered result item.
 			 *
-			 * @see SearchBoxController#handleKeyUp
+			 * @param text Items text
+			 * @param url Items url
 			 * @returns DOM-Objekt
+			 * @see SearchBoxController#handleKeyUp
 			 * @scope private
 			 */
-			createResultItem = function(resultText) {
-				return $('<li class="result-item">'+resultText+'</li>')
+			function createResultItem(text, url) {
+				var item = $('<li class="result-item"><a href="'+url+'">'+text+'</a></li>');
+				item.hover(function() {
+					self.setSelectedResultItem($(this).index());
+				});
+				return item;
 			}
 			
 			
