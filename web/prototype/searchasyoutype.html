@@ -62,6 +62,7 @@
 			var self = {}
 				,selectedResultItem = -1
 				,totalResultItems = 0
+				,resultItems = ''
 				,resultContainer = '';
 			
 			/**
@@ -80,6 +81,7 @@
 				// It will contain an ordered list with matched searchresults
 				// later on.
 				resultContainer = $('<div id="header-searchbox-results" class="searchbox-results" />');
+				resultContainer.hide();
 				$(searchBox).parent().append(resultContainer);
 			};
 			
@@ -141,8 +143,6 @@
 			};
 			
 			
-			
-			
 			/**
 			 * Handles KeyEvents for the keyUp-Event.<br/>
 			 * Search requests are sent here.
@@ -156,15 +156,27 @@
 				var term = $(this).val();
 
 				if(keycodeTriggersSearch(keycode)) {
-					///////////////////////////////////////
+					
+					
+					// @todo AJAX request
 					// Following line has to be replaced with an ajax request
 					var results = search(term);
-					///////////////////////////////////////
 					
+					
+					// Save response data:
+					resultItems = results;
+					totalResultItems = results.length;
+					selectedResultItem = -1;
+					
+					// Show or hide Result-Container
+					if(totalResultItems > 0) resultContainer.show();
+					else resultContainer.hide();
+					
+					// Prepare result items:
 					var resultList = $('<ol/>');
-					for(var i = 0, l = results.length; i < l; i++) {
-						var text = results[i];
-						var url = '#';
+					for(var i = 0, l = totalResultItems; i < l; i++) {
+						var text = results[i].text;
+						var url = results[i].url;
 						
 						text = '<span class="typed">'
 							   + text.substring(0,term.length)
@@ -175,9 +187,6 @@
 					}
 					resultContainer.empty();
 					resultContainer.append(resultList);
-					
-					selectedResultItem = -1;
-					totalResultItems = results.length;
 				}
 			};
 			
@@ -204,7 +213,32 @@
 						case 38 : // Up
 							preventDefault = true;
 							self.selectPreviousResultItem();
-						break;
+							break;
+						case 13 : // Enter
+							// If an item is selected, open that item;
+							// Otherwise, trigger search for the entered term.
+							if(selectedResultItem > -1) {
+								
+								
+								// @todo Open selected item
+								console.log('Open selected result item!');
+								window.href = resultItems[selectedResultItem].url;
+								
+								
+							} else {
+								
+								
+								// @todo Trigger search here
+								console.log('Trigger search here!')
+								
+								
+							}
+							break;
+						case 27 : // Escape
+							preventDefault = true;
+							resultContainer.hide();
+							break;
+							
 					}
 					
 					if(preventDefault) event.preventDefault();
@@ -303,7 +337,10 @@
 				
 				for(var i = 0, l = objectsToSearchIn.length; i < l; i++) {
 					var toMatch = objectsToSearchIn[i].toUpperCase();
-					var result = objectsToSearchIn[i];
+					var result = {
+						text : objectsToSearchIn[i]
+						,url : '#'
+					};
 					
 					if(term.length <= toMatch.length) {
 						if(toMatch.substring(0,term.length) == term) {
