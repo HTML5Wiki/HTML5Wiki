@@ -104,7 +104,7 @@
 			self.setSelectedResultItem = function(index) {
 				if(selectedResultItem != index) {
 					$('.result-item.selected',resultContainer).removeClass('selected');
-					$($('.result-item',resultContainer)[index]).addClass('selected');
+					if(index > -1) $($('.result-item',resultContainer)[index]).addClass('selected');
 					selectedResultItem = index;
 				}
 			};
@@ -166,7 +166,7 @@
 					// Save response data:
 					resultItems = results;
 					totalResultItems = results.length;
-					selectedResultItem = -1;
+					self.setSelectedResultItem(-1);
 					
 					// Show or hide Result-Container
 					if(totalResultItems > 0) resultContainer.show();
@@ -237,6 +237,7 @@
 						case 27 : // Escape
 							preventDefault = true;
 							resultContainer.hide();
+							self.setSelectedResultItem(-1);
 							break;
 							
 					}
