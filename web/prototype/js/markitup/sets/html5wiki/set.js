@@ -12,6 +12,8 @@
 // -------------------------------------------------------------------
 mySettings = {
 	previewParserPath:	'',
+	previewInWindow: 'width=800, height=600, resizable=yes, scrollbars=yes',
+	previewAutoRefresh: true,
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},
 	markupSet: [
 		{name:'First Level Heading', key:'1', placeHolder:'Your title here...', closeWith:function(markItUp) { return miu.markdownTitle(markItUp, '=') } },
