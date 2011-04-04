@@ -12,6 +12,7 @@
 .header-overall .main-menu .menu-items .article .tab{background-image:url('../images/icons16/page.png');}
 .header-overall .main-menu .menu-items .search{float:right;margin:-10px 0 0 0;}.header-overall .main-menu .menu-items .search .searchterm{width:150px;font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;padding:5px 3px 3px 22px;background:url('../images/icons16/magnifier.png') no-repeat 3px 2px #ffffff;border:1px solid #ea7253;}
 .header-overall .searchbox-results{margin:-1px 0 0 0;position:absolute;width:175px;background:#fff;border:1px solid #ea7253;border-top:1px solid #fbe2db;}.header-overall .searchbox-results .result-item{list-style:none;padding:4px;font-size:85%;}.header-overall .searchbox-results .result-item .typed{font-weight:bold;background-color:#fbe2db;}
+.header-overall .searchbox-results .result-item a{text-decoration:none;color:#000;}
 .header-overall .searchbox-results .selected{background-color:#f5bdae;}
 .messagebox{position:absolute;top:55px;left:25%;width:50%;display:box;overflow:hidden;}.messagebox .barshadow{position:absolute;height:10px;width:100%;top:-10px;box-shadow:0 0 2px black;}
 .messagebox .message{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;color:#fff;-moz-border-radius:0 0 4px 4px;-webkit-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px;padding:6px 8px 4px 28px;background:no-repeat 6px 4px;border:1px solid;border-top-width:0;}
