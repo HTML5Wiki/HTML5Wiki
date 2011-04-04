@@ -163,7 +163,15 @@
 					
 					var resultList = $('<ol/>');
 					for(var i = 0, l = results.length; i < l; i++) {
-						resultList.append(createResultItem(results[i],'#'));
+						var text = results[i];
+						var url = '#';
+						
+						text = '<span class="typed">'
+							   + text.substring(0,term.length)
+							   + '</span>'
+							   + text.substring(term.length);
+						
+						resultList.append(createResultItem(text,url));
 					}
 					resultContainer.empty();
 					resultContainer.append(resultList);
@@ -299,10 +307,6 @@
 					
 					if(term.length <= toMatch.length) {
 						if(toMatch.substring(0,term.length) == term) {
-							result = '<span class="typed">'
-								   + result.substring(0,term.length)
-								   + '</span>'
-								   + result.substring(term.length);
 							results.push(result);
 						}
 					}				
