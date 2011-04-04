@@ -1,13 +1,8 @@
 <?php
-$CONFiG = array();
-
-$CONFiG['database'] = array(
-	'adapter'	=>'pdo_mysql',
-	'params'	=> array(
-		'host'		=> 'localhost',
-		'dbname'	=> 'dbname',
-		'username'	=> 'username',
-		'password'	=> 'password',
-	)
+Html5Wiki_Db::$CONFIG['database'] = array(
+	'host'		=> 'localhost',
+	'dbname'	=> 'html5wiki',
+	'username'	=> 'username',
+	'password'	=> 'password',
 );
 ?>
