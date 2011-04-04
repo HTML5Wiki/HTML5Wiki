@@ -1,7 +1,7 @@
 <?php
 
-require 'library/Html5Wiki/Routing/Interface/Request.php';
-require 'library/Html5Wiki/Routing/Request.php';
+require_once 'library/Html5Wiki/Routing/Interface/Request.php';
+require_once 'library/Html5Wiki/Routing/Request.php';
 
 /**
  * Request test
@@ -136,12 +136,40 @@ class Test_Unit_Routing_RequestTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('test', $arguments[2]);
 	}
 
+	public function testHost() {
+		$this->setUpRequestVariablesAndParseRequest();
+		$this->assertEquals('localhost', $this->request->getHost());
+	}
+
+	public function testPort() {
+		$this->setUpRequestVariablesAndParseRequest();
+		$this->assertEquals(80, $this->request->getPort());
+	}
+
+	public function testHttps() {
+		$this->setUpRequestVariablesAndParseRequest();
+		$this->assertEquals(false, $this->request->getHttps());
+	}
+
+	public function testQueryString() {
+		$this->setUpRequestVariablesAndParseRequest();
+		$this->assertEquals('', $this->request->getQueryString());
+	}
+
+	public function testUri() {
+		$this->setUpRequestVariablesAndParseRequest(array(
+			'REQUEST_URI' => self::SCRIPT_NAME . '/wiki/test'
+		));
+
+		$this->assertEquals(self::SCRIPT_NAME . '/wiki/test', $this->request->getUri());
+	}
+
 	/**
 	 * Helper method to fully setup the request
 	 * 
 	 * @param array $serverVariables
 	 */
-	private function setUpRequestVariablesAndParseRequest($serverVariables) {
+	private function setUpRequestVariablesAndParseRequest($serverVariables = array()) {
 		$serverVariables = array_merge($this->baseServerVariables, $serverVariables);
 		$this->request->setServerVariables($serverVariables);
 		$this->request->parse();
