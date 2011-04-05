@@ -55,7 +55,6 @@ abstract class Html5Wiki_Controller_Abstract {
 		
 		$this->layoutTemplate = new Html5Wiki_Template_Php();
 		$this->layoutTemplate->setTemplateFile($this->layoutFile);
-		$this->setTitle('');
 
 		$this->template = new Html5Wiki_Template_Php($this->layoutTemplate);
 	}
@@ -65,6 +64,8 @@ abstract class Html5Wiki_Controller_Abstract {
 
 		$this->templateFile = strtolower($this->router->getController()) . '/' . strtolower($this->router->getAction()) . '.php';
 		$this->template->setTemplateFile($this->templateFile);
+
+		$this->layoutTemplate->assign('basePath', $this->router->getRequest()->getBasePath());
 
 		$actionMethod = $this->router->getAction() . 'Action';
 
