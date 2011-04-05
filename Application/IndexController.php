@@ -8,6 +8,7 @@
  */
 class Application_IndexController extends Html5Wiki_Controller_Abstract {
     public function indexAction() {
+		$this->setTitle('Hello World');
 		$this->template->assign('helloWorld', 'Hello from html5wiki');
 	}
 }

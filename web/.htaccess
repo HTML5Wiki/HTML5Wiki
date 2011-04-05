@@ -11,4 +11,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule !^(css/.*|images/.*|prototype/.*) index.php [L]
+RewriteRule !^(css/.*|images/.*|prototype/.*|js/.*) index.php [L]

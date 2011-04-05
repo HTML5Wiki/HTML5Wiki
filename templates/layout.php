@@ -2,16 +2,16 @@
 <html lang="de">
 <head>
 	<meta charset="utf-8" />
-	<title>[TITLE] | HTML5Wiki</title>
+	<title><?php echo $this->title ?> | HTML5Wiki</title>
 	<meta name="description" content="">
  	<meta name="author" content="HTML5Wiki">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="images/favicon.ico" type="image/ico" />
-	<link rel="stylesheet" href="css/html5wiki.css" /> 
+	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="/images/favicon.ico" type="image/ico" />
+	<link rel="stylesheet" href="/css/html5wiki.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script> 
-	<script src="js/searchboxcontroller.js"></script>
-	<script src="js/html5wiki.js"></script>
+	<script src="/js/searchboxcontroller.js"></script>
+	<script src="/js/html5wiki.js"></script>
 </head> 
 <body>
 	<header class="header-overall">

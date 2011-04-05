@@ -55,6 +55,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		
 		$this->layoutTemplate = new Html5Wiki_Template_Php();
 		$this->layoutTemplate->setTemplateFile($this->layoutFile);
+		$this->setTitle('');
 
 		$this->template = new Html5Wiki_Template_Php($this->layoutTemplate);
 	}
@@ -71,6 +72,14 @@ abstract class Html5Wiki_Controller_Abstract {
 			return $this->$actionMethod();
 		}
 		throw new Html5Wiki_Exception_404('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
+	}
+
+	/**
+	 * Set Page title
+	 * @param string $title
+	 */
+	public function setTitle($title) {
+		$this->layoutTemplate->assign('title', $title);
 	}
 
 	public function render() {
