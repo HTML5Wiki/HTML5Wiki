@@ -7,13 +7,12 @@
  * @package Html5Wiki
  * @subpackage Test
  */
-
-require 'library/Html5Wiki/Test/SeleniumTestCase.php';
+require_once 'PHPUnit/Autoload.php';
 
 /**
  * Openflex Test case (just for testing the selenium & ci)
  */
-class Test_Functional_OpenflexTest extends Html5Wiki_Test_SeleniumTestCase {
+class Test_Functional_OpenflexTest extends PHPUnit_Extensions_SeleniumTestCase {
 	protected function setUp() {
 		parent::setUp();
 		$this->setBrowserUrl('http://www.openflex.net');

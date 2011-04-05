@@ -3,7 +3,7 @@
 #
 # @author Michael Weibel <mweibel@hsr.ch>
 # @copyright Html5Wiki 2011
-# @package Html5Wiki
+# @package Html5Wiki
 # @subpackage web
 #
 
@@ -11,4 +11,4 @@ RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteCond %{REQUEST_FILENAME} !-l
-RewriteRule ^(^css|^images|^prototype)*$ index.php [QSA,L]
+RewriteRule !^(css/.*|images/.*|prototype/.*) index.php [L]
