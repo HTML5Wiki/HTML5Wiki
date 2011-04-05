@@ -1,3 +1,6 @@
+<?php
+	$basePath = $this->basePath . '/';
+?>
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -6,12 +9,12 @@
 	<meta name="description" content="">
  	<meta name="author" content="HTML5Wiki">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="/images/favicon.ico" type="image/ico" />
-	<link rel="stylesheet" href="/css/html5wiki.css" />
+	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/ico" />
+	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script> 
-	<script src="/js/searchboxcontroller.js"></script>
-	<script src="/js/html5wiki.js"></script>
+	<script src="<?php echo $basePath ?>js/searchboxcontroller.js"></script>
+	<script src="<?php echo $basePath ?>js/html5wiki.js"></script>
 </head> 
 <body>
 	<header class="header-overall">
