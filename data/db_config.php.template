@@ -1,8 +1,0 @@
-<?php
-Html5Wiki_Db::$CONFIG['database'] = array(
-	'host'		=> 'localhost',
-	'dbname'	=> 'html5wiki',
-	'username'	=> 'username',
-	'password'	=> 'password',
-);
-?>

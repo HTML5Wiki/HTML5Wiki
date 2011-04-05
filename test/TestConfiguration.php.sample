@@ -1,0 +1,17 @@
+<?php
+/**
+ * Test Configuration
+ *
+ * @author		Michael Weibel <mweibel@hsr.ch>
+ * @copyright	(c) HTML5Wiki Team 2011
+ * @package		Test
+ */
+
+/**
+ * Database Configuration
+ */
+define('DATABASE_HOST', '127.0.0.1');
+define('DATABASE_SCHEMA', 'html5wiki');
+define('DATABASE_USERNAME', 'html5wiki');
+define('DATABASE_PASSWORD', 'mySuperCoolPassword1337');
+?>
