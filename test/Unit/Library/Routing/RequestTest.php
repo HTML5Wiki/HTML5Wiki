@@ -41,7 +41,9 @@ class Test_Unit_Routing_RequestTest extends PHPUnit_Framework_TestCase {
 			'QUERY_STRING' => '',
 			'HTTP_USER_AGENT' => 'TestCase',
 			'REMOTE_ADDR' => '127.0.0.1',
-			'REQUEST_METHOD' => 'GET'
+			'REQUEST_METHOD' => 'GET',
+			'PHP_SELF' => self::SCRIPT_NAME,
+			'REQUEST_URI' => '/'
 		);
 	}
 

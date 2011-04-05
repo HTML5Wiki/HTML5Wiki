@@ -17,6 +17,6 @@ $config = array(
 	),
 	'routing' => array(
 		'defaultController' => 'index',
-		'defaultAction'     => 'index
+		'defaultAction'     => 'index'
 	),
 );

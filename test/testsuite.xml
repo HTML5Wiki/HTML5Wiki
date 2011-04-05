@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    Document   : testsuite.xml
+    Created on : 5. April 2011, 08:41
+    Author     : Michael Weibel <mweibel@hsr.ch>
+    Description:
+        Testsuite configuration
+-->
+<phpunit bootstrap="./TestHelper.php">
+	<testsuites>
+		<testsuite name="Functional">
+			<directory>Functional</directory>
+		</testsuite>
+		<testsuite name="Unit_Application">
+			<directory>Unit/Application</directory>
+		</testsuite>
+		<testsuite name="Unit_Library">
+			<directory>Unit/Library</directory>
+		</testsuite>
+		<testsuite name="Unit/Zend">
+			<directory>Unit/Zend</directory>
+		</testsuite>
+	</testsuites>
+	<filter>
+		<blacklist>
+			<directory suffix=".php">.</directory>
+		</blacklist>
+	</filter>
+	<selenium>
+		<browser name="Firefox on Debian" browser="*firefox" host="selenium.openflex.net" port="4444" />
+	</selenium>
+</phpunit>
