@@ -53,7 +53,7 @@ var MessageController = (function() {
 		};
 		messageQueue = new Array(messageData).concat(messageQueue);
 	
-		if($('.messagebox').size() == 0) self.displayMessageBox();
+		if($('.messagebox').size() == 0) self.displayQueuedMessage();
 	}
 
 	/**
@@ -63,7 +63,7 @@ var MessageController = (function() {
 	 *
 	 * @access public
 	 */
-	self.displayMessageBox = function() {
+	self.displayQueuedMessage = function() {
 		var messageData = messageQueue.pop();
 	
 		if(messageData != undefined) {
@@ -75,7 +75,7 @@ var MessageController = (function() {
 				.delay(message_show_time)
 				.slideUp(message_slideup_time,function() {
 					$(this).remove();
-					self.displayMessageBox();
+					self.displayQueuedMessage();
 				});					
 			} else {
 				var overlay = createOverlay();
@@ -142,8 +142,8 @@ var MessageController = (function() {
 					
 					$('.overlay').fadeOut(overlay_fadeout_time, function() {
         				$(this).remove();
-        				event.data.callback();
-        				self.displayMessageBox();
+        				if(event.data.callback != undefined) event.data.callback();
+        				self.displayQueuedMessage();
 					});
     			});
     		});
