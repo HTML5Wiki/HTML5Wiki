@@ -123,8 +123,12 @@
 			 * @access public
 			 */
 			self.addMessage = function(type, message, options) {
-				var messageBox = createMessageBox(type, message, options);
-				messageQueue = new Array(messageBox).concat(messageQueue);
+				var messageData = {
+					type: type
+					,message: message
+					,options: options
+				};
+				messageQueue = new Array(messageData).concat(messageQueue);
 			
 				if($('.messagebox').size() == 0) self.displayMessageBox();
 			}
@@ -137,17 +141,23 @@
 			 * @access public
 			 */
 			self.displayMessageBox = function() {
-				var latestBox = messageQueue.pop();
+				var messageData = messageQueue.pop();
 			
-				if(latestBox != undefined) {
-					$('.header-overall').after(latestBox);
-					if($(latestBox).children('.question').size() == 0) {
-						$(latestBox).slideDown().delay(2000).slideUp(function() {
+				if(messageData != undefined) {
+					var messageBox = createMessageBox(messageData);
+					$('.header-overall').after(messageBox);
+					
+					if(messageData.type != 'question') {
+						$(messageBox).slideDown().delay(2000).slideUp(function() {
 							$(this).remove();
 							self.displayMessageBox();
 						});					
 					} else {
-						$(latestBox).slideDown();
+						var overlay = createOverlay();
+						$('body').append(overlay);
+						overlay.fadeIn(300, function() {
+							$(messageBox).slideDown();
+						});
 					}
 
 				}
@@ -156,13 +166,14 @@
 			/**
 		     * Creates a messagebox DOM element with given parameters.
 		     *
-		     * @param type		[info, error, question]
-		     * @param message	Message text
-		     * @param options	Optional array with options
+		     * @param messageData Dictionary with message data
 			 * @see MessageController#addMessage(type,message,options)
 			 * @access private
 		     */
-			function createMessageBox(type, message, options) {
+			function createMessageBox(messageData) {
+				var type = messageData.type;
+				var message = messageData.message;
+				var options = messageData.options;
 		        var messageOptions;
 				
 		        if(options != undefined && options.length > 0) {
@@ -178,9 +189,13 @@
 						// After that, the callback of the option is called.
 		        		$(option).bind('click', { callback : options[i]['callback'] }, function(event) {
 		        			$(this).parents('.messagebox').slideUp(function() {
-		        				$(this).remove();
-		        				event.data.callback();
-		        				self.displayMessageBox();
+								$(this).remove();
+								
+								$('.overlay').fadeOut(200, function() {
+			        				$(this).remove();
+			        				event.data.callback();
+			        				self.displayMessageBox();
+								});
 		        			});
 		        		});
 		        		
@@ -197,6 +212,17 @@
 		        $(messagebox).hide();
 		        
 		        return messagebox;
+			}
+			
+			/**
+			 * Creates an overlay and returns it as jQuery DOM-Element.
+			 *
+			 * @access private
+			 */
+			function createOverlay() {
+				var overlay = $('<div class="overlay" />');
+				overlay.hide();
+				return overlay;
 			}
 			
 			return self;
