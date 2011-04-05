@@ -11,7 +11,6 @@
 	<link rel="stylesheet" href="css/main.css" /> 
 	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script--> 
 	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
-
 </head> 
 <body>
 	<header class="header-overall">
@@ -70,11 +69,17 @@
 			 * (Text-Inputfield)
 			 *
 			 * @param searchBox jQuery-DOM-Object
+			 * @scope public
 			 */
 			self.initWithSearchBox = function(searchBox) {
-				/* Keybindings: */
-				$(searchBox).keyup(handleKeyUp);
-				$(searchBox).keydown(handleKeyDown);
+				/* Eventbindings: */
+				// Bind search-functionalities:
+				$(searchBox).bind('keyup',handleKeyUp);
+				$(searchBox).bind('keydown',handleKeyDown);
+				
+				// Bind functionalities to hide resultlist on focus-lose:
+				$('body').bind('click',handleBodyClick);
+				
 				
 				/* Resultcontainer: */
 				// This container is created in the parent of the searchbox.
@@ -90,6 +95,7 @@
 			 * Resultlist
 			 *
 			 * @returns Index
+			 * @scope public
 			 */
 			self.getSelectedResultItem = function() {
 				return self.selectedResultItem;
@@ -100,6 +106,7 @@
 			 * to its index.
 			 *
 			 * @param Index
+			 * @scope public
 			 */
 			self.setSelectedResultItem = function(index) {
 				if(selectedResultItem != index) {
@@ -113,6 +120,7 @@
 			 * Selects, if possible, the next result item in the result list.
 			 *
 			 * @returns true if selection was possible, false if not
+			 * @scope public
 			 */
 			self.selectNextResultItem = function() {
 				var wasAbleToSelect = false;
@@ -130,6 +138,7 @@
 			 * Selects, if possible, the previous result item in the result list.
 			 *
 			 * @returns true if selection was possible, false if not
+			 * @scope public
 			 */
 			self.selectPreviousResultItem = function() {
 				var wasAbleToSelect = false;
@@ -196,8 +205,8 @@
 			 * action is handled here.
 			 *
 			 * @param event
-			 * @scope private
 			 * @see SearchBoxController#handleKeyUp for search requests
+			 * @scope private
 			 */
 			function handleKeyDown(event) {
 				var keycode = event.which;
@@ -206,10 +215,14 @@
 					var preventDefault = false;
 
 					switch(keycode) {
+						case 9 : // Tab
+							hideResultList();
+							break;
+							
 						case 40 : // Down
 							preventDefault = true;
 							self.selectNextResultItem();
-						break;
+							break;
 						case 38 : // Up
 							preventDefault = true;
 							self.selectPreviousResultItem();
@@ -247,6 +260,29 @@
 			};
 			
 			/**
+			 * Eventhandler for the <body>'s-Clickevent.<br/>
+			 * Hides the resultlist (of possible).
+			 *
+			 * @see SearchBoxController#hideResultList
+			 * @scope private
+			 */
+			function handleBodyClick(event) {
+				if(resultContainer.is(':visible')) {
+					hideResultList();
+				}
+			}
+			
+			/**
+			 * Resets the selected Resultitem and hides the resultlist itselfs.
+			 *
+			 * @scope private
+			 */
+			function hideResultList() {
+				self.setSelectedResultItem(-1);
+				resultContainer.hide();
+			}
+			
+			/**
 			 * Ensures that keys like CTRL or SHIFT don't trigger a search request.
 			 *
 			 * @param keycode
@@ -277,9 +313,12 @@
 				item.hover(function() {
 					self.setSelectedResultItem($(this).index());
 				});
+				
+				// Ensures that the a-Element reacts as expected when clicked:
+				item.parent().click(function(event) { event.stopPropagation(); })
+				
 				return item;
 			}
-			
 			
 			return self;
 		}());  // end SearchBoxController
@@ -340,7 +379,7 @@
 					var toMatch = objectsToSearchIn[i].toUpperCase();
 					var result = {
 						text : objectsToSearchIn[i]
-						,url : '#'
+						,url : '#'+i
 					};
 					
 					if(term.length <= toMatch.length) {
@@ -355,6 +394,7 @@
 		}
 		
 	</script>
+
 	
 </body>
 </html>
