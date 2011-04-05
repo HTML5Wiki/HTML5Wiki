@@ -2,9 +2,9 @@ CREATE SCHEMA IF NOT EXISTS `html5wiki` DEFAULT CHARACTER SET utf8 COLLATE utf8_
 USE `html5wiki` ;
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`User`
+-- Table `User`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`User` (
+CREATE  TABLE IF NOT EXISTS `User` (
   `id`		int(11) NOT NULL AUTO_INCREMENT ,
   `email`	VARCHAR(255) NOT NULL ,
   `name`	VARCHAR(255) NULL ,
@@ -14,9 +14,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`MediaVersion`
+-- Table `MediaVersion`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersion` (
+CREATE  TABLE IF NOT EXISTS `MediaVersion` (
   `id`			int(11) NOT NULL AUTO_INCREMENT ,
   `timestamp`	int(10) NOT NULL ,
   `previousMediaVersionTimtestamp` int(10) NULL ,
@@ -31,26 +31,26 @@ CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersion` (
   INDEX `fk_MediaVersion_MediaVersion1` (`previousMediaVersionTimtestamp` ASC) ,
   CONSTRAINT `fk_MediaVersion_User`
     FOREIGN KEY (`userId` )
-    REFERENCES `html5wiki`.`User` (`id` ),
+    REFERENCES `User` (`id` ),
   CONSTRAINT `fk_MediaVersion_MediaVersion1`
     FOREIGN KEY (`previousMediaVersionTimtestamp` )
-    REFERENCES `html5wiki`.`MediaVersion` (`timestamp` ))
+    REFERENCES `MediaVersion` (`timestamp` ))
 ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`Tag`
+-- Table `Tag`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`Tag` (
+CREATE  TABLE IF NOT EXISTS `Tag` (
   `tag` VARCHAR(50) NOT NULL ,
   PRIMARY KEY (`tag`) )
 ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`ArticleVersion`
+-- Table `ArticleVersion`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`ArticleVersion` (
+CREATE  TABLE IF NOT EXISTS `ArticleVersion` (
   `mediaVersionId` int(11) NOT NULL,
   `mediaVersionTimestamp` int(10) NOT NULL ,
   `title` varchar(200) NOT NULL ,
@@ -59,14 +59,14 @@ CREATE  TABLE IF NOT EXISTS `html5wiki`.`ArticleVersion` (
   PRIMARY KEY (`mediaVersionId`, `mediaVersionTimestamp`) ,
   CONSTRAINT `fk_ArticleVersion_MediaVersion1`
     FOREIGN KEY (`mediaVersionId` , `mediaVersionTimestamp` )
-    REFERENCES `html5wiki`.`MediaVersion` (`id` , `timestamp` ))
+    REFERENCES `MediaVersion` (`id` , `timestamp` ))
 ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`Mimetype`
+-- Table `Mimetype`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`Mimetype` (
+CREATE  TABLE IF NOT EXISTS `Mimetype` (
   `id` int(11) NOT NULL AUTO_INCREMENT ,
   `type` varchar(60) NULL ,
   PRIMARY KEY (`id`) ,
@@ -75,9 +75,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`License`
+-- Table `License`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`License` (
+CREATE  TABLE IF NOT EXISTS `License` (
   `id` int(11) NOT NULL AUTO_INCREMENT ,
   `name` varchar(140) NOT NULL ,
   `description` TEXT NULL ,
@@ -87,9 +87,9 @@ ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`FileVersion`
+-- Table `FileVersion`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`FileVersion` (
+CREATE  TABLE IF NOT EXISTS `FileVersion` (
   `mediaVersionId` int(11)NOT NULL ,
   `mediaVersionTimestamp` int(10) NOT NULL ,
   `name` varchar(200) NOT NULL ,
@@ -105,20 +105,20 @@ CREATE  TABLE IF NOT EXISTS `html5wiki`.`FileVersion` (
   INDEX `fk_FileVersion_License1` (`licenseId` ASC) ,
   CONSTRAINT `fk_FileVersion_MediaVersion1`
     FOREIGN KEY (`mediaVersionId` , `mediaVersionTimestamp` )
-    REFERENCES `html5wiki`.`MediaVersion` (`id` , `timestamp` ),
+    REFERENCES `MediaVersion` (`id` , `timestamp` ),
   CONSTRAINT `fk_FileVersion_Mimetype1`
     FOREIGN KEY (`mimetypeId` )
-    REFERENCES `html5wiki`.`Mimetype` (`id` ),
+    REFERENCES `Mimetype` (`id` ),
   CONSTRAINT `fk_FileVersion_License1`
     FOREIGN KEY (`licenseId` )
-    REFERENCES `html5wiki`.`License` (`id` ))
+    REFERENCES `License` (`id` ))
 ENGINE=MyISAM DEFAULT CHARSET=utf8 ;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`MediaVersionTag`
+-- Table `MediaVersionTag`
 -- -----------------------------------------------------
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersionTag` (
+CREATE  TABLE IF NOT EXISTS `MediaVersionTag` (
   `tagTag` VARCHAR(50) NOT NULL ,
   `mediaVersionId` int(11) NOT NULL ,
   PRIMARY KEY (`tagTag`, `mediaVersionId`) ,
@@ -126,8 +126,8 @@ CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersionTag` (
   INDEX `fk_Tag_has_MediaVersion_Tag1` (`tagTag` ASC) ,
   CONSTRAINT `fk_Tag_has_MediaVersion_Tag1`
     FOREIGN KEY (`tagTag` )
-    REFERENCES `html5wiki`.`Tag` (`tag` ),
+    REFERENCES `Tag` (`tag` ),
   CONSTRAINT `fk_Tag_has_MediaVersion_MediaVersion1`
     FOREIGN KEY (`mediaVersionId` )
-    REFERENCES `html5wiki`.`MediaVersion` (`id` ))
+    REFERENCES `MediaVersion` (`id` ))
 ENGINE=MyISAM DEFAULT CHARSET=utf8 ;

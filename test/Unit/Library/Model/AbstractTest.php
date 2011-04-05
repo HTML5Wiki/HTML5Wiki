@@ -16,11 +16,9 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 	 * Zend Db Adapter Instance
 	 * @var Zend_Db_Adapter_Pdo_Mysql
 	 */
-	private $db = null;
+	protected $db = null;
 
     public function setUp() {
-		parent::setUp();
-
 		$this->db = new Zend_Db_Adapter_Pdo_Mysql(array(
 			'host'     => DATABASE_HOST,
 			'username' => DATABASE_USERNAME,
@@ -28,6 +26,10 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 			'dbname'   => DATABASE_SCHEMA
 		));
 
+	}
+
+	public function tearDown() {
+		$this->db = null;
 	}
 }
 ?>

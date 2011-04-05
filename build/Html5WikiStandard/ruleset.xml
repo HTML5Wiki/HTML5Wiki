@@ -4,24 +4,37 @@
 	<exclude-pattern>*/build/*\.xml</exclude-pattern>
 	<exclude-pattern>*/build/*\.sh</exclude-pattern>
 
-	<rule ref="Zend"></rule>
-	<rule ref="Zend.NamingConventions.ValidVariableName.PrivateNoUnderscore">
-		<severity>0</severity>
-	</rule>
-	<rule ref="PEAR.Classes.ClassDeclaration.OpenBraceNewLine">
-		<severity>0</severity>
-	</rule>
-	<rule ref="Generic.Functions.OpeningFunctionBraceBsdAllman.BraceOnSameLine">
-		<severity>0</severity>
-	</rule>
-	<rule ref="Generic.WhiteSpace.DisallowTabIndent.TabsUsed">
-		<severity>0</severity>
-	</rule>
+	<rule ref="Generic.Functions.FunctionCallArgumentSpacing"/>
+	<rule ref="Generic.PHP.DisallowShortOpenTag"/>
+
+	<rule ref="PEAR.ControlStructures.ControlSignature"/>
+	<rule ref="PEAR.Functions.FunctionCallSignature"/>
+	<rule ref="PEAR.Functions.ValidDefaultValue"/>
+	<rule ref="PEAR.NamingConventions.ValidClassName"/>
+	<rule ref="PEAR.WhiteSpace.ScopeClosingBrace"/>
+
+	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
+	<rule ref="Squiz.Arrays.ArrayDeclaration"/>
+	<rule ref="Squiz.Functions.GlobalFunction"/>
+	<rule ref="Squiz.Classes.ClassDeclaration"/>
+	<rule ref="Squiz.Classes.ClassFileName"/>
+	<rule ref="Squiz.Classes.LowercaseClassKeywords"/>
+	<rule ref="Squiz.Classes.SelfMemberReference"/>
+	
+	<rule ref="Zend.Files.ClosingTag"/>
+	<rule ref="Zend.NamingConventions.ValidVariableName"/>
 
 	<rule ref="Generic.Files.LineLength">
 		<properties>
 			<property name="lineLimit" value="100"/>
 			<property name="absoluteLineLimit" value="120"/>
+		</properties>
+	</rule>
+
+	<!-- use UNIX line endings -->
+	<rule ref="Generic.Files.LineEndings">
+		<properties>
+			<property name="eolChar" value="\n"/>
 		</properties>
 	</rule>
 </ruleset>

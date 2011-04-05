@@ -9,13 +9,13 @@
  * @subpackage	Model
  */
 
-//require 'library/Zend/Db/Table/Abstract.php';
-//require 'library/Html5Wiki/Model/Media/Table.php';
+require_once 'library/Zend/Db/Table/Abstract.php';
+require_once 'library/Html5Wiki/Model/Media/Table.php';
 
 class Test_Unit_Library_Model_Media_TableTest extends Test_Unit_Library_Model_AbstractTest {
 	
 	/**
-	 * @var Html5Wiki_Model_Meida_Table
+	 * @var Html5Wiki_Model_Media_Table
 	 */
 	private $table;
 	
@@ -33,7 +33,7 @@ class Test_Unit_Library_Model_Media_TableTest extends Test_Unit_Library_Model_Ab
 	 * @return void
 	 */
 	public function tearDown() {
-		
+		parent::tearDown();
 	}
 }
 ?>
