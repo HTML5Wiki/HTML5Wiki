@@ -38,6 +38,7 @@
 		<section>
 			<p>
 				Use links below to see message-prototypes.<br/>
+				The question-message will report the clicked button/link into your firebug console.<br/>
 				<em>Hint: Click fast to enqueue more than one messagebox into the queue.</em>
 			</p>
 			<p>
@@ -71,10 +72,10 @@
 				{
 					text : 'Ja'
 					,button : true
-					,callback : function() { alert('Coole Sau ;)'); }
+					,callback : function() { console.log('Coole Sau ;)'); }
 				},{
 					text : 'Nein, das tu\' ich nicht.'
-					,callback : function() { alert('pf, schade, was?'); }
+					,callback : function() { console.log('pf, schade, was?'); }
 				}
 			];
 			MessageController.addMessage('question','Gehörst du zum HTML5Wiki Team?', options);
@@ -89,7 +90,12 @@
 		 */
 		var MessageController = (function() {
 			var self = {}
-				,messageQueue = new Array();
+				,messageQueue = new Array()
+				,message_slidedown_time = 'fast'
+				,message_slideup_time = 'fast'
+				,overlay_fadein_time = 300
+				,overlay_fadeout_time = 200
+				,message_show_time = 2000;
 			
 			/**
 			 * Adds a Message with given parameters to the queue and ensures
@@ -147,16 +153,18 @@
 					var messageBox = createMessageBox(messageData);
 					$('.header-overall').after(messageBox);
 					
-					if(messageData.type != 'question') {
-						$(messageBox).slideDown().delay(2000).slideUp(function() {
+					if(messageData.options == undefined || messageData.options.length == 0) {
+						$(messageBox).slideDown(message_slidedown_time)
+						.delay(message_show_time)
+						.slideUp(message_slideup_time,function() {
 							$(this).remove();
 							self.displayMessageBox();
 						});					
 					} else {
 						var overlay = createOverlay();
 						$('body').append(overlay);
-						overlay.fadeIn(300, function() {
-							$(messageBox).slideDown();
+						overlay.fadeIn(overlay_fadein_time, function() {
+							$(messageBox).slideDown(message_slidedown_time);
 						});
 					}
 
@@ -171,51 +179,68 @@
 			 * @access private
 		     */
 			function createMessageBox(messageData) {
-				var type = messageData.type;
-				var message = messageData.message;
-				var options = messageData.options;
-		        var messageOptions;
-				
-		        if(options != undefined && options.length > 0) {
-		        	messageOptions = $('<div class="options" />');
-		        	for(var i = 0, l = options.length; i < l; i++) {
-		        		var showAsButton = options[i]['button'];
-		        		var optionClass = ' class="option"';
-		        		if(showAsButton) optionClass = ' class="button"';
-		        		
-		        		var option = $('<a href="#"' + optionClass + '>' + options[i]['text'] + '</a>');
-		        		
-						// A click on an option makes the messagebox disappear in a first step.
-						// After that, the callback of the option is called.
-		        		$(option).bind('click', { callback : options[i]['callback'] }, function(event) {
-		        			$(this).parents('.messagebox').slideUp(function() {
-								$(this).remove();
-								
-								$('.overlay').fadeOut(200, function() {
-			        				$(this).remove();
-			        				event.data.callback();
-			        				self.displayMessageBox();
-								});
-		        			});
-		        		});
-		        		
-		        		$(messageOptions).append(option);
-		        	}
-		        }
-		        
-		        
 		        var messagebox = $('<div class="messagebox" />');
-		        var content = $('<div class="message ' + type + '">' + message + '</div>');
-		        $(messagebox).append('<div class="barshadow">&nbsp;</div>');
-		        if(messageOptions) $(content).append(messageOptions);
-		        $(messagebox).append(content);
-		        $(messagebox).hide();
+		        var content = $('<div class="message ' + messageData.type + '">' + messageData.message + '</div>');
+		        messagebox.append('<div class="barshadow">&nbsp;</div>');
+		
+		        if(messageData.options != undefined
+					&& messageData.options.length > 0) {
+					content.append(createOptions(messageData.options));
+				}
+		
+		        messagebox.append(content);
+		        messagebox.hide();
 		        
 		        return messagebox;
 			}
 			
 			/**
-			 * Creates an overlay and returns it as jQuery DOM-Element.
+			 * Creates clickable buttons and links from a options Information
+			 * Array.
+			 *
+			 * @param options Array with information about the options
+			 * @see MessageController#addMessage
+			 * @see MessageController#createMessageBox
+			 * @access private
+			 */
+			function createOptions(optionsData) {
+				var container = $('<div class="options" />');
+				
+	        	for(var i = 0, l = optionsData.length; i < l; i++) {
+					var text = optionsData[i]['text'];
+	        		var showAsButton = optionsData[i]['button'];
+					var callback = optionsData[i]['callback'];
+					
+					// The option:
+	        		var class = ' class="option"';
+					if(showAsButton) class = ' class="button"';
+	        		var option = $('<a href="#"' + class + '>' + text + '</a>');
+	        		
+					// Eventbinding:
+					// A click on an option makes the messagebox disappear in a first step.
+					// After that, the callback of the option is called.
+	        		$(option).bind('click', { callback : callback }, function(event) {
+	        			$(this).parents('.messagebox').slideUp(message_slideup_time, function() {
+							$(this).remove();
+							
+							$('.overlay').fadeOut(overlay_fadeout_time, function() {
+		        				$(this).remove();
+		        				event.data.callback();
+		        				self.displayMessageBox();
+							});
+	        			});
+	        		});
+	        		
+	        		container.append(option);
+	        	}
+				
+				return container;
+			}
+			
+			/**
+			 * Creates an overlay and returns it as jQuery DOM-Element.<br/>
+			 * The overlay is used to mask the rest of the UI if a message has
+			 * options to select (= modal dialog actually).
 			 *
 			 * @access private
 			 */
