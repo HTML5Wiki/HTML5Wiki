@@ -50,6 +50,14 @@ $path = array(
 );
 set_include_path(implode(PATH_SEPARATOR, $path));
 
+/**
+ * Get configuration; If no config is defined, get the sample config
+ */
+if (is_readable($testDir . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
+    require_once $testDir . DIRECTORY_SEPARATOR . 'TestConfiguration.php';
+} else {
+    require_once $testDir . DIRECTORY_SEPARATOR . 'TestConfiguration.php.sample';
+}
 
 /*
  * Unset global variables that are no longer needed.

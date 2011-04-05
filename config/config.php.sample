@@ -9,10 +9,9 @@
 
 $config = array(
 	'database' => array(
-		'host' => 'localhost',
-		'port' => '3306',
-		'db'   => 'html5wiki',
-		'user' => 'html5wiki',
+		'host'     => 'localhost',
+		'schema'   => 'html5wiki',
+		'user'     => 'html5wiki',
 		'password' => 'mySuperCoolPassword1337'
 	),
 	'routing' => array(
