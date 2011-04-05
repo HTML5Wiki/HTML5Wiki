@@ -16,7 +16,7 @@
 	</target>
 	<target name="php-depend">
 		<exec executable="pdepend" failonerror="on" dir="${basedir}/source">
-			<arg line="--phpunit-xml=${basedir}/build/logs/pdepend.xml --jdepend-chart=${basedir}/build/graph/10-dependencies.svg --overview-pyramid=${basedir}/build/graph/11-software-metrics-pyramid.svg ."/>
+			<arg line="--ignore=test/ --phpunit-xml=${basedir}/build/logs/pdepend.xml --jdepend-chart=${basedir}/build/graph/10-dependencies.svg --overview-pyramid=${basedir}/build/graph/11-software-metrics-pyramid.svg ."/>
 		</exec>
 	</target>
 	<target name="php-codesniffer">
