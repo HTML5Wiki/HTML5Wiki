@@ -8,7 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="favicon.ico" type="image/ico" />
-	<link rel="stylesheet" href="css/main.css" /> 
+	<link rel="stylesheet" href="css/html5wiki.css" /> 
 	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script--> 
 	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
 </head> 
@@ -69,7 +69,7 @@
 			 * (Text-Inputfield)
 			 *
 			 * @param searchBox jQuery-DOM-Object
-			 * @scope public
+			 * @access public
 			 */
 			self.initWithSearchBox = function(searchBox) {
 				/* Eventbindings: */
@@ -95,7 +95,7 @@
 			 * Resultlist
 			 *
 			 * @returns Index
-			 * @scope public
+			 * @access public
 			 */
 			self.getSelectedResultItem = function() {
 				return self.selectedResultItem;
@@ -106,7 +106,7 @@
 			 * to its index.
 			 *
 			 * @param Index
-			 * @scope public
+			 * @access public
 			 */
 			self.setSelectedResultItem = function(index) {
 				if(selectedResultItem != index) {
@@ -120,7 +120,7 @@
 			 * Selects, if possible, the next result item in the result list.
 			 *
 			 * @returns true if selection was possible, false if not
-			 * @scope public
+			 * @access public
 			 */
 			self.selectNextResultItem = function() {
 				var wasAbleToSelect = false;
@@ -138,7 +138,7 @@
 			 * Selects, if possible, the previous result item in the result list.
 			 *
 			 * @returns true if selection was possible, false if not
-			 * @scope public
+			 * @access public
 			 */
 			self.selectPreviousResultItem = function() {
 				var wasAbleToSelect = false;
@@ -157,7 +157,7 @@
 			 * Search requests are sent here.
 			 *
 			 * @param event
-			 * @scope private
+			 * @access private
 			 * @see SearchBoxController#handleKeyDown for UI control
 			 */
 			function handleKeyUp(event) {
@@ -206,7 +206,7 @@
 			 *
 			 * @param event
 			 * @see SearchBoxController#handleKeyUp for search requests
-			 * @scope private
+			 * @access private
 			 */
 			function handleKeyDown(event) {
 				var keycode = event.which;
@@ -264,7 +264,7 @@
 			 * Hides the resultlist (of possible).
 			 *
 			 * @see SearchBoxController#hideResultList
-			 * @scope private
+			 * @access private
 			 */
 			function handleBodyClick(event) {
 				if(resultContainer.is(':visible')) {
@@ -275,7 +275,7 @@
 			/**
 			 * Resets the selected Resultitem and hides the resultlist itselfs.
 			 *
-			 * @scope private
+			 * @access private
 			 */
 			function hideResultList() {
 				self.setSelectedResultItem(-1);
@@ -287,7 +287,7 @@
 			 *
 			 * @param keycode
 			 * @returns true/false
-			 * @scope private
+			 * @access private
 			 */
 			function keycodeTriggersSearch(keycode) {
 				return (keycode >= 48
@@ -306,7 +306,7 @@
 			 * @param url Items url
 			 * @returns DOM-Objekt
 			 * @see SearchBoxController#handleKeyUp
-			 * @scope private
+			 * @access private
 			 */
 			function createResultItem(text, url) {
 				var item = $('<li class="result-item"><a href="'+url+'">'+text+'</a></li>');
