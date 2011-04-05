@@ -1,7 +1,7 @@
 <project basedir="../../" default="build" name="html5wiki">
 	<target name="checkout">
 		<exec dir="${basedir}/source" executable="git">
-			<arg line="pull"></arg>
+			<arg line="pull -q"></arg>
 		</exec>
 	</target>
 	<target name="php-documentor">
