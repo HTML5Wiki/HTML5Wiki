@@ -18,10 +18,10 @@
 </head> 
 <body>
 	<header class="header-overall">
-		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
+		<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
 		<nav class="main-menu">
 			<ol class="menu-items clearfix">
-				<li class="item home active"><a href="#" class="tab">Startseite</a></li>
+				<li class="item home active"><a href="<?php echo $basePath ?>" class="tab">Startseite</a></li>
 				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
 				<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
 			</ol>
