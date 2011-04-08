@@ -34,6 +34,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				throw new Html5Wiki_Exception_404('Wikipage "' . $permalink . '" not found.');
 			}
 
+			$this->setTitle($wikiPage->title);
+
 			$this->template->assign('title', $wikiPage->title);
 			$this->template->assign('content', $wikiPage->content);
 		}
