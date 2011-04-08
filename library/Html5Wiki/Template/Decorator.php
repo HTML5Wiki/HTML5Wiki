@@ -40,6 +40,7 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	}
 
 	public function render() {
+		// can be null
 		if ($this->decoratedTemplate instanceof Html5Wiki_Template_Interface) {
 			$this->decoratedTemplate->render();
 		}

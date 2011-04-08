@@ -37,6 +37,7 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 		include_once(self::TEMPLATE_PATH . $this->templateFile);
 		$decoratedContent = ob_get_clean();
 
+		// can be null
 		if ($this->decoratedTemplate instanceof Html5Wiki_Template_Interface) {
 			$this->decoratedTemplate->setDecoratedContent($decoratedContent);
 			$this->decoratedTemplate->render();
