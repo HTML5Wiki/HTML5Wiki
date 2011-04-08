@@ -20,7 +20,11 @@ class Test_Functional_OpenflexTest extends PHPUnit_Extensions_SeleniumTestCase {
 
 	public function testOpenflex() {
 		$this->open('http://www.openflex.net');
-		$this->assertTrue(strpos($this->getTitle(), "OpenFlex.net") !== false,
-				"Expected 'OpenFlex.net' in title of openflex.net");
+		$this->assertTrue(
+						strpos($this->getTitle(), "OpenFlex.net") !== false,
+						"Expected 'OpenFlex.net' in title of openflex.net"
+		);
 	}
 }
+
+?>

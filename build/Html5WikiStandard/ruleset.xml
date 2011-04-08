@@ -16,12 +16,9 @@
 	<rule ref="Squiz.Arrays.ArrayBracketSpacing"/>
 	<rule ref="Squiz.Arrays.ArrayDeclaration"/>
 	<rule ref="Squiz.Functions.GlobalFunction"/>
-	<rule ref="Squiz.Classes.ClassDeclaration"/>
-	<rule ref="Squiz.Classes.ClassFileName"/>
 	<rule ref="Squiz.Classes.LowercaseClassKeywords"/>
 	<rule ref="Squiz.Classes.SelfMemberReference"/>
 	
-	<rule ref="Zend.Files.ClosingTag"/>
 	<rule ref="Zend.NamingConventions.ValidVariableName"/>
 
 	<rule ref="Generic.Files.LineLength">
