@@ -164,22 +164,22 @@
 					} else {
 						var title;
 						var key;
-						var class = 'item';
+						var itemClass = 'item';
 						var item;
 						var link;
 						
 						if(previousWasNotAButton) {
-							class += ' first';
+							itemClass += ' first';
 							previousWasNotAButton = false;
 						}
-						if(i+1 >= l || markupSet[i+1].separator) class += ' last';
+						if(i+1 >= l || markupSet[i+1].separator) itemClass += ' last';
 
 						if(button.key == undefined) title = (button.name||'');
 						else title = (button.name||'') + ' [Ctrl+'+button.key+']';
 						if(button.key != undefined) key = 'accesskey="'+button.key+'"';
-						if(button.className) class += ' '+button.className;
+						if(button.className) itemClass += ' '+button.className;
 						
-						item = $('<li class="'+class+'" />');
+						item = $('<li class="'+itemClass+'" />');
 						link = $('<a class="capsule" title="'+title+'" '+key+'><span class="caption" />');
 						
 						link.bind('contextmenu', function() { return false; });
