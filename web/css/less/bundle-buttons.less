@@ -9,11 +9,9 @@
 // zur Verfügung.
 //
 #buttons {
-	
 	// Factory-Mixins ---------------------------------------------------------
 	.simple-button() {
-		font-family: @uifont;
-		font-size: 85%;
+		font-family: @font_ui;
 		text-decoration: none;
 		outline: none;
 	}
@@ -52,10 +50,11 @@
 	
 	
 	// Button-Mixins ----------------------------------------------------------
-	.colored-button(@color) {
+	.colored-button(@color, @font-size) {
 		#buttons > .simple-button;
 		#buttons > .bordered-button(@color);
 		
+		font-size: @font-size;
 		padding: 2px 4px;
 		color: darken(@color,18%);
 		background-color: lighten(@color,28%);
@@ -67,8 +66,10 @@
 			lighten(@color,28%) 45%);
 
 		&:hover { #buttons > .hovered-button(@color); }
-		&:active { #buttons > .pressed-button(@color); }		
+		&:active { #buttons > .pressed-button(@color); }
 	}
+	
+	.colored-button(@color) { #buttons > .colored-button(@color, @font_normalsize); }
 	
 	.colored-icon-button(@color) {
 		#buttons > .colored-button(@color);
