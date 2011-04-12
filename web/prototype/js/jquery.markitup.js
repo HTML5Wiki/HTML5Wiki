@@ -142,52 +142,63 @@
 				});
 			}
 
-			// recursively build header with dropMenus from markupset
+			/**
+			 * recursively build header with dropMenus from markupset
+			 *
+			 * MOD BY HTML5WIKI:
+			 * Supports now only one level of buttons. In payback, you get better
+			 * markup which is more stylable.
+			 *
+			 * @param markupSet Markup-Set-Information Array
+			 * @author Manuel Alabor
+			 */
 			function dropMenus(markupSet) {
-				var ul = $('<ul></ul>'), i = 0;
-				$('li:hover > ul', ul).css('display', 'block');
-				$.each(markupSet, function() {
-					var button = this, t = '', title, li, j;
-					title = (button.key) ? (button.name||'')+' [Ctrl+'+button.key+']' : (button.name||'');
-					key   = (button.key) ? 'accesskey="'+button.key+'"' : '';
-					if (button.separator) {
-						li = $('<li class="markItUpSeparator">'+(button.separator||'')+'</li>').appendTo(ul);
+				var toolbar = $('<ol class="editorToolbar" />');
+				var previousWasNotAButton = true;
+				
+				for(i = 0, l = markupSet.length; i < l; i++) {
+					var button = markupSet[i];					
+					
+					if(button.separator != undefined) {
+						previousWasNotAButton = true;
 					} else {
-						i++;
-						for (j = levels.length -1; j >= 0; j--) {
-							t += levels[j]+"-";
+						var title;
+						var key;
+						var class = 'item';
+						var item;
+						var link;
+						
+						if(previousWasNotAButton) {
+							class += ' first';
+							previousWasNotAButton = false;
 						}
-						li = $('<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'">'+(button.name||'')+'</a></li>')
-						.bind("contextmenu", function() { // prevent contextmenu on mac and allow ctrl+click
-							return false;
-						}).click(function() {
-							return false;
-						}).bind("focusin", function(){
-                            $$.focus();
-						}).mousedown(function() {
-							if (button.call) {
-								eval(button.call)();
+						if(i+1 >= l || markupSet[i+1].separator) class += ' last';
+
+						if(button.key == undefined) title = (button.name||'');
+						else title = (button.name||'') + ' [Ctrl+'+button.key+']';
+						if(button.key != undefined) key = 'accesskey="'+button.key+'"';
+						if(button.className) class += ' '+button.className;
+						
+						item = $('<li class="'+class+'" />');
+						link = $('<a class="capsule" title="'+title+'" '+key+'><span class="caption" />');
+						
+						link.bind('contextmenu', function() { return false; });
+						link.bind('click', function() { return false; })
+						link.bind('mouseup', {button:button}, function(event) {
+							if (event.data.button.call) {
+								eval(event.data.button.call)();
 							}
-							setTimeout(function() { markup(button) },1);
+							setTimeout(function() { markup(event.data.button) },1);
 							return false;
-						}).hover(function() {
-								$('> ul', this).show();
-								$(document).one('click', function() { // close dropmenu if click outside
-										$('ul ul', header).hide();
-									}
-								);
-							}, function() {
-								$('> ul', this).hide();
-							}
-						).appendTo(ul);
-						if (button.dropMenu) {
-							levels.push(i);
-							$(li).addClass('markItUpDropMenu').append(dropMenus(button.dropMenu));
-						}
+						});
+						
+						$(toolbar).append(item.append(link));
 					}
-				}); 
-				levels.pop();
-				return ul;
+					
+					
+				}
+				
+				return toolbar;
 			}
 
 			// markItUp! markups
