@@ -36,8 +36,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 			$this->setTitle($wikiPage->title);
 
+			$markDownParser = new Markdown_Parser();
 			$this->template->assign('title', $wikiPage->title);
-			$this->template->assign('content', $wikiPage->content);
+			$this->template->assign('content', $markDownParser->transform($wikiPage->content));
 		}
 	}
 }

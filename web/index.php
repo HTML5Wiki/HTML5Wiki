@@ -25,7 +25,7 @@ ini_set('include_path', $includePath);
 require $libraryPath . 'Zend/Loader/Autoloader.php';
 
 $autoloader = Zend_Loader_Autoloader::getInstance();
-$autoloader->registerNamespace(array('Html5Wiki_', 'Application_'));
+$autoloader->registerNamespace(array('Html5Wiki_', 'Application_', 'Markdown_'));
 
 require $configPath . 'config.php';
 $config = new Zend_Config($config);
