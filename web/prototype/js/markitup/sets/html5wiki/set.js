@@ -10,7 +10,7 @@
 // -------------------------------------------------------------------
 // Feel free to add more tags
 // -------------------------------------------------------------------
-mySettings = {
+html5WikiMarkItUpSettings = {
 	previewParserPath:	'',
 	previewInWindow: 'width=800, height=600, resizable=yes, scrollbars=yes',
 	previewAutoRefresh: true,
