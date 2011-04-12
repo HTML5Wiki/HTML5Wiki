@@ -1,9 +1,9 @@
 <?php
 
 require_once 'RequestStub.php';
-require_once 'library/Html5Wiki/Exception.php';
-require_once 'library/Html5Wiki/Routing/Interface/Router.php';
-require_once 'library/Html5Wiki/Routing/Router.php';
+require_once 'Html5Wiki/Exception.php';
+require_once 'Html5Wiki/Routing/Interface/Router.php';
+require_once 'Html5Wiki/Routing/Router.php';
 
 /**
  * Router test
