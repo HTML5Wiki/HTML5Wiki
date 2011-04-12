@@ -37,14 +37,36 @@
 			</ol>
 		</header>
 		
-		<textarea id="contenteditor"></textarea>
+		<textarea id="contentEditor"></textarea>
 		
 	</article>
 
 	<script type="text/javascript" >
-	   $(document).ready(function() {
-	      $("#contenteditor").markItUp(html5WikiMarkItUpSettings);
-	   });
+		$(document).ready(function() {
+			$('#contentEditor').markItUp(html5WikiMarkItUpSettings);
+			$('h1.heading').bind('mouseup', handleEditArticleTitle);
+		});
+		
+		function handleEditArticleTitle() {
+			var heading = $(this);
+			var title = heading.text();
+			
+			var titleEditor = $('<input value="'+title+'" class="editor" />');
+			
+			var cancelButton = $('<a href="#" class="button">Abbrechen</a>');
+			cancelButton.bind('mouseup',{title:title}, function(event) {
+				var heading = $('<h1 class="heading">'+event.data.title+'</h1>');
+				$(heading).bind('mouseup', handleEditArticleTitle);
+				titleEditor.replaceWith(heading);
+				$(this).remove();
+				return false;
+			});
+			
+			heading.replaceWith(titleEditor);
+			titleEditor.after(cancelButton);
+			
+			return false;			
+		}
 	</script>
 
 	
