@@ -16,6 +16,9 @@
 	<script src="<?php echo $basePath ?>js/messagecontroller.js"></script>
 	<script src="<?php echo $basePath ?>js/searchboxcontroller.js"></script>
 	<script src="<?php echo $basePath ?>js/html5wiki.js"></script>
+	<script src="<?php echo $basePath ?>js/jquery-nonproductive.js"></script>
+	<script src="<?php echo $basePath ?>js/jquery.markitup.js"></script>
+	<script src="<?php echo $basePath ?>js/markitup/html5wiki-set.js"></script>
 </head> 
 <body>
 	<header class="header-overall">

@@ -9,7 +9,31 @@
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	public function foobarAction() {
-		$this->template->assign('foo', 'bar');
+		$foo = array('bar', 'baz');
+		$this->template->assign('foo', $foo);
+	}
+
+	public function editAction() {
+		$ajax = $this->router->getRequest()->getPost('ajax');		
+		if ($ajax === true) {
+			$this->setNoLayout();
+		} 
+		
+		$permalink = $this->getPermalink();
+		
+		/*
+		$article = new Html5Wiki_Model_Article();
+		$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
+		*/
+		
+		$title = 'ze Title';
+		$permalinkFull = 'http://www.html5wiki.org/wiki/' . $permalink;
+		$content = $permalink;
+		
+		$this->template->assign('title', $title);
+		$this->template->assign('permalink', $permalinkFull);
+		$this->template->assign('content', $content);
+		
 	}
 
 	/**
@@ -22,10 +46,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		} catch (Html5Wiki_Exception_404 $e) {
 			$this->setTemplate('article.php');
 
-
-			$uri = $router->getRequest()->getUri();
-			$permalink = explode('/', $uri, 3);
-			$permalink = $permalink[2];
+			$permalink = $this->getPermalink();
 
 			$article = new Html5Wiki_Model_Media_Table();
 			$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
@@ -41,6 +62,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->template->assign('content', $markDownParser->transform($wikiPage->content));
 		}
 	}
+	
+	private function getPermalink() {
+		$uri = $this->router->getRequest()->getUri();
+		$permalinks = explode('/', $uri, 4);
+		return $permalinks[3];
+	}
+	
 }
 
 ?>

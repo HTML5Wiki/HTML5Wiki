@@ -24,7 +24,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * Router
 	 * @var Html5Wiki_Routing_Interface_Router
 	 */
-	private $router = null;
+	protected $router = null;
 
 	/**
 	 * Template object
@@ -80,6 +80,10 @@ abstract class Html5Wiki_Controller_Abstract {
 	 */
 	protected function setTitle($title) {
 		$this->layoutTemplate->assign('title', $title);
+	}
+	
+	protected function setNoLayout() {
+		$this->layoutTemplate = null;
 	}
 
 	/**

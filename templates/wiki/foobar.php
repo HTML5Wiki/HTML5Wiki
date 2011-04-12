@@ -1,3 +1,5 @@
 <?php
-echo $this->foo;
+foreach ($this->foo as $foobar):
+	echo $foobar ."<br/>";
+endforeach;
 ?>
