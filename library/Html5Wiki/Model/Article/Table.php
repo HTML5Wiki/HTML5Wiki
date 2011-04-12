@@ -33,6 +33,18 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 	 */
 	protected $_sequence	= false;
 	
+	/**
+	 * 
+	 */
+	public function getArticleData($idMediaVersion, $timestampMediaVersion) {
+		$selectStatement = $this->select()->setIntegrityCheck(false);
+		
+		$selectStatement->where($this->_primary[0] . ' = ?', $idMediaVersion);
+		$selectStatement->where($this->_primary[0] . ' = ?', $timestampMediaVersion);
+		
+		return $this->fetchRow($selectStatement);
+	}
+	
 
 }
 
