@@ -27,7 +27,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		*/
 		
 		$title = 'ze Title';
-		$permalinkFull = 'http://www.html5wiki.org/wiki/' . $permalink;
+		$permalinkFull = 'http://www.html5wiki.org/wiki/' . strtolower($permalink);
 		$content = $permalink;
 		
 		$this->template->assign('title', $title);
