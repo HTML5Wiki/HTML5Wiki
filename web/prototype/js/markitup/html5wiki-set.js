@@ -1,15 +1,3 @@
-// -------------------------------------------------------------------
-// markItUp!
-// -------------------------------------------------------------------
-// Copyright (C) 2008 Jay Salvat
-// http://markitup.jaysalvat.com/
-// -------------------------------------------------------------------
-// MarkDown tags example
-// http://en.wikipedia.org/wiki/Markdown
-// http://daringfireball.net/projects/markdown/
-// -------------------------------------------------------------------
-// Feel free to add more tags
-// -------------------------------------------------------------------
 html5WikiMarkItUpSettings = {
 	previewParserPath:	'',
 	previewInWindow: 'width=800, height=600, resizable=yes, scrollbars=yes',
