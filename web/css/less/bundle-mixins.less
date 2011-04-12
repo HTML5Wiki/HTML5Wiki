@@ -1,0 +1,52 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// Bundle: Mixins
+// Autor:  Manuel Alabor
+//
+// LessCSS Mixins
+//
+
+.border-radius (@radius) {
+  -moz-border-radius: @radius;
+  -webkit-border-radius: @radius;
+  border-radius: @radius;
+}
+
+.border-radius (@tl,@tr,@br,@bl) {
+  -moz-border-radius: @tl @tr @br @bl;
+  -webkit-border-radius: @tl @tr @br @bl;
+  border-radius: @tl @tr @br @bl;
+}
+
+.left-border-radius (@radius) {
+  -moz-border-radius-topleft: @radius;
+  -moz-border-radius-bottomleft: @radius;
+  -webkit-border-top-left-radius: @radius;
+  -webkit-border-bottom-left-radius: @radius;
+  border-top-left-radius: @radius;
+  border-bottom-left-radius: @radius;
+}
+
+.right-border-radius (@radius) {
+  -moz-border-radius-topright: @radius;
+  -moz-border-radius-bottomright: @radius;
+  -webkit-border-top-right-radius: @radius;
+  -webkit-border-bottom-right-radius: @radius;
+  border-top-right-radius: @radius;
+  border-top-right-radius: @radius;
+}
+
+.border-radius (@tl,@tr,@br,@bl) {
+  -moz-border-radius: @tl @tr @br @bl;
+  -webkit-border-radius: @tl @tr @br @bl;
+  border-radius: @tl @tr @br @bl;
+}
+
+
+.box-shadow(@h-offset, @v-offset, @blur, @color) {
+	-webkit-box-shadow: @h-offset @v-offset @blur @color;
+	-moz-box-shadow: @h-offset @v-offset @blur @color;
+	box-shadow: @h-offset @v-offset @blur @color;
+}

@@ -1,0 +1,89 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// Bundle: Buttons
+// Autor:  Manuel Alabor
+//
+// Dieses Bundle stellt alle Standardbuttons für das HTML5Wiki-GUI
+// zur Verfügung.
+//
+#buttons {
+	
+	// Factory-Mixins ---------------------------------------------------------
+	.simple-button() {
+		font-family: @uifont;
+		font-size: 85%;
+		text-decoration: none;
+		outline: none;
+	}
+	.bordered-button(@color) { border: 1px solid lighten(@color,8%); }
+	.rounded-button() { .border-radius(4px); }
+	
+	.pressed-button(@color) {
+		.box-shadow(0, 0, 5px, fadeout(#ffffff,5%));
+		text-shadow: 0px 1px 1px fadeout(#000000,80%);
+		background-color: lighten(@color,28%);
+		background-image:
+			-moz-linear-gradient(center top,
+			lighten(@color,25%) 20%,
+			lighten(@color,33%) 45%);
+	}
+	
+	.hovered-button(@color) {
+		color: @color;
+		background-color: lighten(@color,28%);
+		background-image:
+			-moz-linear-gradient(center bottom,
+			lighten(@color,25%) 20%,
+			lighten(@color,33%) 45%);
+		.box-shadow(0, 0, 5px, fadeout(#ffffff,50%));
+	}
+	
+	.icon-16-button() {
+		padding: 5px 8px 3px 6px;
+		
+		.caption {
+			padding-left: 19px;
+			padding-top: 1px;
+			background-repeat: no-repeat;
+		}
+	}
+	
+	
+	// Button-Mixins ----------------------------------------------------------
+	.colored-button(@color) {
+		#buttons > .simple-button;
+		#buttons > .bordered-button(@color);
+		
+		padding: 2px 4px;
+		color: darken(@color,18%);
+		background-color: lighten(@color,28%);
+		border-color: lighten(@color,8%);
+		
+		background-image:
+			-moz-linear-gradient(center bottom,
+			lighten(@color,22%) 20%,
+			lighten(@color,28%) 45%);
+
+		&:hover { #buttons > .hovered-button(@color); }
+		&:active { #buttons > .pressed-button(@color); }		
+	}
+	
+	.colored-icon-button(@color) {
+		#buttons > .colored-button(@color);
+		#buttons > .icon-16-button;
+	}
+	
+	// Capsulebar-Mixins ------------------------------------------------------
+	.colored-capsule-bar(@capsule_base_color) {
+		.capsule { #buttons > .colored-icon-button(@capsule_base_color); }
+		.item { float: left; list-style: none; }
+
+		.active .capsule { #buttons > .pressed-button(@capsule_base_color); }
+		.item .capsule { border: 1px solid  lighten(@capsule_base_color,8%); border-left-width: 0; }
+		.first .capsule { .left-border-radius(5px); border-left-width: 1px; }
+		.last .capsule { .right-border-radius(5px); }
+	}
+	
+}

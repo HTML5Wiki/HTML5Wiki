@@ -8,6 +8,7 @@
  */
 ob_start();
 
+ini_set('display_errors', true);
 error_reporting(E_ALL | E_STRICT);
 
 $basePath = realpath(dirname(__FILE__) . '/../');
