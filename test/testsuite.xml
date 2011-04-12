@@ -17,7 +17,10 @@
 		<testsuite name="Unit_Library">
 			<directory>Unit/Library</directory>
 		</testsuite>
-		<testsuite name="Unit/Zend">
+		<testsuite name="Unit_Markdown">
+			<directory>Unit/Markdown</directory>
+		</testsuite>
+		<testsuite name="Unit_Zend">
 			<directory>Unit/Zend</directory>
 		</testsuite>
 	</testsuites>
