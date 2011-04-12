@@ -11,9 +11,9 @@
  * @subpackage	Model
  */
 
-require_once 'library/Zend/Db/Table/Abstract.php';
-require_once 'test/Unit/Library/Model/AbstractTest.php';
-require_once 'library/Html5Wiki/Model/Article/Table.php';
+require_once 'Zend/Db/Table/Abstract.php';
+require_once 'Unit/Library/Model/AbstractTest.php';
+require_once 'Html5Wiki/Model/Article/Table.php';
 
 
 class Test_Unit_Library_Model_Article_TableTest extends Test_Unit_Library_Model_AbstractTest {

@@ -9,8 +9,8 @@
  * @subpackage	Model
  */
 
-require_once 'library/Zend/Db/Table/Abstract.php';
-require_once 'library/Html5Wiki/Model/Media/Table.php';
+require_once 'Zend/Db/Table/Abstract.php';
+require_once 'Html5Wiki/Model/Media/Table.php';
 
 class Test_Unit_Library_Model_Media_TableTest extends Test_Unit_Library_Model_AbstractTest {
 	
