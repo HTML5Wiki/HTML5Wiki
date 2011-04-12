@@ -1,7 +1,7 @@
 <?php
 
-require_once 'library/Html5Wiki/Routing/Interface/Request.php';
-require_once 'library/Html5Wiki/Routing/Request.php';
+require_once 'Html5Wiki/Routing/Interface/Request.php';
+require_once 'Html5Wiki/Routing/Request.php';
 
 /**
  * Request test

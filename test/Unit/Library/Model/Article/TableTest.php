@@ -11,8 +11,9 @@
  * @subpackage	Model
  */
 
-require 'library/Zend/Db/Table/Abstract.php';
-require 'library/Html5Wiki/Model/Article/Table.php';
+require_once 'Zend/Db/Table/Abstract.php';
+require_once 'Unit/Library/Model/AbstractTest.php';
+require_once 'Html5Wiki/Model/Article/Table.php';
 
 
 class Test_Unit_Library_Model_Article_TableTest extends Test_Unit_Library_Model_AbstractTest {
@@ -29,26 +30,31 @@ class Test_Unit_Library_Model_Article_TableTest extends Test_Unit_Library_Model_
 		parent::setUp();
 		$this->table = new Html5Wiki_Model_Article_Table(array('db' => $this->db));
 	}
-	
-	/**
-	 * 
-	 */
-	public function tearDown() {
-		
-	}
-	
 	/**
 	 * 
 	 */
 	public function testInsert() {
+		$time = time();
 		$data = array(
 			'mediaVersionId'			=> 1,
-			'mediaVersionTimestamp'		=> time(),
+			'mediaVersionTimestamp'		=> $time,
 			'title'						=> 'testarticle',
 			'content'					=> 'someContent'
 		);
 		
-		$this->table->insert($data);
+		$pk = $this->table->insert($data);
+
+		$this->assertEquals($pk, array('mediaVersionId' => 1, 'mediaVersionTimestamp' => $time));
+	}
+
+
+	/**
+	 *
+	 */
+	public function tearDown() {
+		parent::tearDown();
+
+		$this->table->delete('');
 	}
 }
 ?>

@@ -11,7 +11,7 @@
  * Database Configuration
  */
 define('DATABASE_HOST', '127.0.0.1');
-define('DATABASE_SCHEMA', 'html5wiki');
+define('DATABASE_SCHEMA', 'html5wiki_test');
 define('DATABASE_USERNAME', 'html5wiki');
 define('DATABASE_PASSWORD', 'mySuperCoolPassword1337');
 ?>

@@ -4,7 +4,7 @@
 		<modificationset quietperiod="60">
 			<git localworkingcopy="projects/${project.name}/source/"></git>
 		</modificationset>
-		<schedule interval="60">
+		<schedule interval="43200">
 			<ant buildfile="projects/${project.name}/source/build/build.xml" anthome="apache-ant-1.7.0"></ant>
 		</schedule>
 		<listeners>

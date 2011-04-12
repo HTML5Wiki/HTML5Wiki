@@ -62,9 +62,8 @@ abstract class Html5Wiki_Controller_Abstract {
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
 		$this->router = $router;
 
-		$this->templateFile = strtolower($this->router->getController()) . '/' . strtolower($this->router->getAction()) . '.php';
-		$this->template->setTemplateFile($this->templateFile);
-
+		$this->setTemplate(strtolower($this->router->getAction()) . ".php");
+		
 		$this->layoutTemplate->assign('basePath', $this->router->getRequest()->getBasePath());
 
 		$actionMethod = $this->router->getAction() . 'Action';
@@ -79,8 +78,17 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * Set Page title
 	 * @param string $title
 	 */
-	public function setTitle($title) {
+	protected function setTitle($title) {
 		$this->layoutTemplate->assign('title', $title);
+	}
+
+	/**
+	 * Sets template file according to the controller directory.
+	 * @param string $templateFile
+	 */
+	protected function setTemplate($templateFile) {
+		$this->templateFile = strtolower($this->router->getController()) . DIRECTORY_SEPARATOR . $templateFile;
+		$this->template->setTemplateFile($this->templateFile);
 	}
 
 	public function render() {

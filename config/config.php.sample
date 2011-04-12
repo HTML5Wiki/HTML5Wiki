@@ -8,10 +8,11 @@
  */
 
 $config = array(
+	'databaseAdapter' => 'PDO_MYSQL',
 	'database' => array(
 		'host'     => 'localhost',
-		'schema'   => 'html5wiki',
-		'user'     => 'html5wiki',
+		'dbname'   => 'html5wiki',
+		'username' => 'html5wiki',
 		'password' => 'mySuperCoolPassword1337'
 	),
 	'routing' => array(

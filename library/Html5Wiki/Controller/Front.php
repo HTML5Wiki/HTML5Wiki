@@ -10,6 +10,12 @@
 class Html5Wiki_Controller_Front {
 
 	/**
+	 * Configuration
+	 * @var Zend_Config
+	 */
+	private $config = null;
+
+	/**
 	 * Router object
 	 * @var Html5Wiki_Routing_Router
 	 */
@@ -42,7 +48,9 @@ class Html5Wiki_Controller_Front {
 	/**
 	 * Creates a new router and sets up basic paths
 	 */
-	public function __construct($basePath, $libraryPath, $applicationPath) {
+	public function __construct($config, $basePath, $libraryPath, $applicationPath) {
+		$this->config = $config;
+		
 		$this->router = new Html5Wiki_Routing_Router();
 		$this->router->route();
 
