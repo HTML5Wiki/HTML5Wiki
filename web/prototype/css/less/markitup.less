@@ -1,38 +1,41 @@
-/* -------------------------------------------------------------------
-// markItUp! Universal MarkUp Engine, JQuery plugin
-// By Jay Salvat - http://markitup.jaysalvat.com/
-// ------------------------------------------------------------------*/
-.markItUp * {
-	margin:0px; padding:0px;
-	outline:none;
+@import "bundle-mixins";
+@import "bundle-ressources";
+@import "bundle-buttons";
+
+.markItUp {
+	& * {
+		margin: 0;
+		padding: 0;
+		outline: none;
+	}
+	
+	width: 80%;
+	
+	a {
+		&:link, &:visited {
+			color:#000;
+			text-decoration:none;
+		}
+	}
 }
-.markItUp a:link,
-.markItUp a:visited {
-	color:#000;
-	text-decoration:none;
-}
-.markItUp  {
-	width:700px;
-	margin:5px 0 5px 0;
-	border:5px solid #F5F5F5;	
-}
+
 .markItUpContainer  {
-	border:1px solid #3C769D;	
-	background:#FFF url(images/bg-container.png) repeat-x top left;
-	padding:5px 5px 2px 5px;
-	font:11px Verdana, Arial, Helvetica, sans-serif;
+	border: 1px solid red;
+	font: 11px Verdana, Arial, Helvetica, sans-serif;
 }
+
 .markItUpEditor {
-	font:12px 'Courier New', Courier, monospace;
-	padding:5px 5px 5px 5px;
-	border:3px solid #3C769D;
-	width:673px;
+	font: 12px 'Courier New', Courier, monospace;
+	padding: 5px 5px 5px 5px;
+	//width:673px;
+	width: 100%;
 	height:320px;
-	//background:#FFF url(images/bg-editor.png) no-repeat;
 	clear:both;
 	line-height:18px;
 	overflow:auto;
+	resize: vertical;
 }
+
 .markItUpPreviewFrame	{
 	overflow:auto;
 	background-color:#FFFFFF;
@@ -127,21 +130,4 @@
 .markItUpHeader ul ul a:hover  {
 	color:#FFF;
 	background-color:#3C769D;
-}
-/***************************************************************************************/
-.html .markItUpEditor {
-	//background-image:url(images/bg-editor-html.png);
-}
-.markdown .markItUpEditor {
-	/*background-image:url(images/bg-editor-markdown.png);*/
-}
-.textile .markItUpEditor {
-	background-image:url(images/bg-editor-textile.png);
-}
-.bbcode .markItUpEditor {
-	background-image:url(images/bg-editor-bbcode.png);
-}
-.wiki .markItUpEditor,
-.dotclear .markItUpEditor {
-	background-image:url(images/bg-editor-wiki.png);
 }

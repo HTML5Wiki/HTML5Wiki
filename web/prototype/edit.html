@@ -1,7 +1,54 @@
-<textarea id="markItUp"></textarea>
+<!DOCTYPE html>
+<html lang="de">
+<head>
+	<meta charset="utf-8" />
+	<title>Aritkel | HTML5Wiki</title>
+	<meta name="description" content="">
+ 	<meta name="author" content="HTML5Wiki">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="favicon.ico" type="image/ico" />
+	<link rel="stylesheet" href="css/html5wiki.css" /> 
+	<link rel="stylesheet" href="css/markitup.css" />
+	
+	<!--script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script--> 
+	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
+	<script type="text/javascript" src="js/jquery.markitup.js"></script>
+	<script type="text/javascript" src="js/markitup/sets/html5wiki/set.js"></script>
+</head> 
+<body>
+	<header class="header-overall">
+		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
+		<nav class="main-menu">
+			<ol class="menu-items clearfix">
+				<li class="item home"><a href="#" class="tab">Startseite</a></li>
+				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
+				<li class="item article active"><a href="#" class="tab">Der erste grosse Artikel im Prototyp</a></li>
+				<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+			</ol>
+		</nav>
+	</header>
 
-<script type="text/javascript" >
-   $(document).ready(function() {
-      $("#markItUp").markItUp(mySettings);
-   });
-</script>
+	<article class="content article">
+		<header class="title clearfix">
+			<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
+			<ol class="capsulebar">
+				<li class="item first active read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
+				<li class="item edit"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
+				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
+			</ol>
+		</header>
+		
+		<textarea id="contenteditor"></textarea>
+		
+	</article>
+
+	<script type="text/javascript" >
+	   $(document).ready(function() {
+	      $("#contenteditor").markItUp(html5WikiMarkItUpSettings);
+	   });
+	</script>
+
+	
+</body>
+</html>
