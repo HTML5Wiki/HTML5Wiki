@@ -44,6 +44,7 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		'TRASH' => 'TRASH'
 	);
 
+	// @todo move this to article_table
 	public function fetchArticleVersionByPermalink($permalink) {
 		$selectStmt = $this->select()->setIntegrityCheck(false);
 		$selectStmt->from($this);
@@ -57,6 +58,23 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		$selectStmt->join('ArticleVersion', $idJoinCondition . ' AND ' . $timestampJoinCondition);
 
 		return $this->fetchRow($selectStmt);
+	}
+	
+	/**
+	 * 
+	 * @param	$idMediaVersion
+	 * @param	$timestampMediaVersion
+	 * @return	Array
+	 */
+	public function fetchMediaVersion($idMediaVersion, $timestampMediaVersion) {
+		$selectStatement = $this->select()->setIntegrityCheck(false);
+		
+		$selectStatement->from($this);
+		
+		$selectStatement->where('id = ?', $idMediaVersion);
+		$selectStatement->where('timestamp = ?', $timestampMediaVersion);
+		
+		return $this->fetchRow($selectStatement);
 	}
 }
 
