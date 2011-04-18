@@ -13,10 +13,23 @@
 
 .content {
 	.title {
-		.editor {
-			font: @font_h1size @font_ui;
-			font-weight: bold;
+		.heading { cursor: pointer; }
+		
+		.editor-wrapper {
+			float: left;
 			width: 50%;
+			
+			.txtTitle {				
+				font: @font_h1size @font_ui;
+				font-weight: bold;
+				width: 100%;
+				margin-bottom: 6px;
+			}	
+			
+			.cancel {
+				font: @font_smallsize @font_ui;
+				color: @color_secondary;
+			}
 		}
 	}
 }
