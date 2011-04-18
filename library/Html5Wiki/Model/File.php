@@ -13,7 +13,7 @@
  * @author	Nicolas Karrer <nkarrer@hsr.ch>
  *
  */
-class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
+class Html5Wiki_Model_File extends Html5Wiki_Model_Media {
 	
 	/**
 	 * 
