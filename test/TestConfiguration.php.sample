@@ -8,6 +8,11 @@
  */
 
 /**
+ * Skip functional tests if not on vs01 (because the selenium server only allows connections from vs01)
+ */
+define('SKIP_FUNCTIONAL_TESTS', false);
+
+/**
  * Database Configuration
  */
 define('DATABASE_HOST', '127.0.0.1');
