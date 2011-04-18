@@ -32,7 +32,7 @@ class Html5Wiki_Model_File_Table extends Zend_Db_Table_Abstract {
 	/**
 	 * 
 	 */
-	public function getArticleData($idMediaVersion, $timestampMediaVersion) {
+	public function getFileData($idMediaVersion, $timestampMediaVersion) {
 		$selectStatement = $this->select()->setIntegrityCheck(false);
 		
 		$selectStatement->where($this->_primary[1] . ' = ?', $idMediaVersion);
@@ -46,7 +46,7 @@ class Html5Wiki_Model_File_Table extends Zend_Db_Table_Abstract {
 	 * @param $data
 	 * @return unknown_type
 	 */
-	public function saveArticle($data) {
+	public function saveFile($data) {
 		$saveData = array(
 			'mediaVersionId' 		=> intval($data['mediaVersionId']),
 			'mediaVersionTimestamp' => intval($data['mediaVersionTimetamp']),

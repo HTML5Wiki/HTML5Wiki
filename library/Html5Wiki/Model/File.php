@@ -59,6 +59,4 @@ class Html5Wiki_Model_File extends Html5Wiki_Model_Media {
 	}
 }
 
-
-?>
 ?>
