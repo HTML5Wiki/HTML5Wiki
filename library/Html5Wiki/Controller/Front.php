@@ -48,8 +48,12 @@ class Html5Wiki_Controller_Front {
 	/**
 	 * Creates a new router and sets up basic paths
 	 */
-	public function __construct($config, $basePath, $libraryPath, $applicationPath) {
+	public function __construct(Zend_Config $config, $basePath, $libraryPath, $applicationPath) {
 		$this->config = $config;
+
+		if (!is_string($basePath) || !is_string($libraryPath) || !is_string($applicationPath)) {
+			throw new Html5Wiki_Exception_InvalidArgument("All paths given to " . __CLASS . " should be strings.");
+		}
 		
 		$this->router = new Html5Wiki_Routing_Router();
 		$this->router->route();

@@ -63,9 +63,6 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 
 		$path = $this->testingBasePath . 'CorrectControllers';
 		include_once $path . DIRECTORY_SEPARATOR . 'IndexController.php';
-		include_once 'Html5Wiki/Template/Interface.php';
-		include_once 'Html5Wiki/Template/Decorator.php';
-		include_once 'Html5Wiki/Template/Php.php';
 
 		$controller = Html5Wiki_Controller_Factory::factory($path, $this->router);
 		$this->assertTrue($controller instanceof Html5Wiki_Controller_Abstract);
