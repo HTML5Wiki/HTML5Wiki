@@ -8,15 +8,16 @@
  * @subpackage Test
  */
 require_once 'PHPUnit/Autoload.php';
+require_once 'SeleniumTestCase.php';
 
 /**
  * Index Test case
  */
-class Test_Functional_IndexTest extends PHPUnit_Extensions_SeleniumTestCase {
+class Test_Functional_IndexTest extends Test_Functional_SeleniumTestCase {
 	
 	const MAIN_URL = 'http://vs01.openflex.net';
 
-	protected function setUp() {
+	public function setUp() {
 		parent::setUp();
 		$this->setBrowserUrl(self::MAIN_URL);
 	}
