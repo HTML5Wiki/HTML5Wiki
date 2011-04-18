@@ -32,6 +32,7 @@
 			}
 		}
 	}
+	
 }
 
 
@@ -86,8 +87,6 @@
 	background-image:url(images/handle.png);
 	cursor:n-resize;
 }
-/***************************************************************************************/
-/* first row of buttons */
 
 .editorToolbar {
 	#buttons > .colored-capsule-bar(@color_secondary);
@@ -111,4 +110,48 @@
 	.quote .caption { background-image: @icon_userComment; }
 	.sourcecode .caption { background-image: @icon_sourceCode; }
 	.preview .caption { background-image: @icon_pageMagnifier; }
+}
+
+
+
+
+.ui-ptags {
+	display: block;
+}
+.ui-ptags-tag-box-container, .ui-ptags-tag-container {
+	float: left;
+}
+.ui-ptags-tag-box-container {
+	margin-bottom: .2em;
+}
+.ui-ptags-tag {
+	float: left;
+	margin: 0 .2em .2em;
+	padding: .2em .3em;
+	
+	.border-radius(5px);
+	color: darken(@color_secondary,18%);
+	background-color: lighten(@color_secondary,28%);
+	border: 1px solid lighten(@color_secondary,8%);
+}
+
+.ui-ptags-tag-text {
+	float: left;
+	cursor: pointer;
+	margin: 0;
+	padding: 0;
+	font: @font_smallsize @font_ui;
+}
+.ui-ptags-tag .ui-ptags-tag-remover {
+	float: left;
+	margin: 1px 0 0 .2em;
+	
+	cursor: pointer;
+	width: 7px;
+	height: 8px;
+	background: @icon_bulletDelete no-repeat -5px -4px;
+}
+
+.ui-ptags-clear {
+	height: 0px;
 }
