@@ -42,8 +42,12 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Construct router -> creates a new request object and calls parse on it
 	 */
-	public function __construct() {
-		$this->request = new Html5Wiki_Routing_Request();
+	public function __construct($request = null) {
+		if (!$request) {
+			$this->request = new Html5Wiki_Routing_Request();
+		} else {
+			$this->request = $request;
+		}
 	}
 
 	/**
