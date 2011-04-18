@@ -123,6 +123,30 @@ EOF;
 		$this->transformAndTest($text, $expected);
 	}
 
+	public function testHashHtmlBlocks() {
+		$expected = <<<EOF
+<p>test</p>
+
+<div>
+    <div>foo</div>
+</div>
+
+<p>test2</p>
+
+EOF;
+
+		$text = <<<EOF
+test
+
+<div>
+	<div>foo</div>
+</div>
+
+test2
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
 	public function testUnorderedLists() {
 		$expected = <<<EOF
 <ul>
@@ -237,6 +261,19 @@ EOF;
 		$this->transformAndTest($text, $expected);
 	}
 
+	public function testAnchorReferenceLink() {
+		$text = <<<EOF
+This is an [Example][].
+
+[Example]: http://example.com
+EOF;
+		$expected = <<<EOF
+<p>This is an <a href="http://example.com">Example</a>.</p>
+
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
 	public function testNumberedReferenceStyleLinks() {
 		$text = <<<EOF
 I get 10 times more traffic from [Google][1] than from
@@ -282,13 +319,27 @@ EOF;
 
 	public function testReferenceStyleImages() {
 		$expected = <<<EOF
-<p><img src="/path/to/img.jpg" alt="alt text" title="Title" /></p>
+<p><img src="/path/to/img.jpg" alt="alt text" title="Title" />
+<img src="/path/to/example.jpg" alt="example" title="Test" /></p>
 
 EOF;
 		$text = <<<EOF
 ![alt text][id]
+![example][]
 
 [id]: /path/to/img.jpg "Title"
+[example]: /path/to/example.jpg "Test"
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
+	public function testEncodeAmpsAndAngles() {
+		$expected = <<<EOF
+<p>foo&amp;bar &#8212;</p>
+
+EOF;
+		$text = <<<EOF
+foo&bar &#8212;
 EOF;
 		$this->transformAndTest($text, $expected);
 	}
