@@ -46,12 +46,27 @@ class Html5Wiki_Controller_Front {
 	private $applicationPath = '';
 
 	/**
-	 * Creates a new router and sets up basic paths
+	 * Setup front controller
+	 *
+	 * @param Zend_Config $config Application configuration
+	 * @param string $basePath        Base path of the wiki
+	 * @param string $libraryPath     Library path
+	 * @param string $applicationPath Application path
+	 * @param Html5Wiki_Routing_Router_Interface $router Router, optional. If null given, a new
+	 *                                                   Html5Wiki_Routing_Router will be instantiated
 	 */
-	public function __construct($config, $basePath, $libraryPath, $applicationPath) {
+	public function __construct(Zend_Config $config, $basePath, $libraryPath, $applicationPath, $router = null) {
 		$this->config = $config;
-		
-		$this->router = new Html5Wiki_Routing_Router();
+
+		if (!is_string($basePath) || !is_string($libraryPath) || !is_string($applicationPath)) {
+			throw new Html5Wiki_Exception_InvalidArgument("All paths given to " . __CLASS__ . " should be strings.");
+		}
+
+		if (!$router) {
+			$this->router = new Html5Wiki_Routing_Router();
+		} else {
+			$this->router = $router;
+		}
 		$this->router->route();
 
 		$this->basePath = $basePath;

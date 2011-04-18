@@ -57,6 +57,19 @@ EOF;
 		$this->transformAndTest($text, $expected);
 	}
 
+	public function testHardBreaks() {
+		$text = <<<EOF
+Test Hardbreak with two whitespaces before newline.  
+This should be hardbreaked.
+EOF;
+		$expected = <<<EOF
+<p>Test Hardbreak with two whitespaces before newline.<br />
+This should be hardbreaked.</p>
+
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
 	public function testBlockquote() {
 		$text = <<<EOF
 > This is a blockquote.
@@ -93,6 +106,43 @@ Some of these words <em>are emphasized also</em>.</p>
 <p>Use two asterisks for <strong>strong emphasis</strong>.
 Or, if you prefer, <strong>use two underscores instead</strong>.</p>
 
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
+	public function testItalicsAndBold() {
+		$text = <<<EOF
+Some of these words ***are strong and italics***.
+Some of these words ___are strong and italics also___.
+EOF;
+		$expected = <<<EOF
+<p>Some of these words <strong><em>are strong and italics</em></strong>.
+Some of these words <strong><em>are strong and italics also</em></strong>.</p>
+
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
+	public function testHashHtmlBlocks() {
+		$expected = <<<EOF
+<p>test</p>
+
+<div>
+    <div>foo</div>
+</div>
+
+<p>test2</p>
+
+EOF;
+
+		$text = <<<EOF
+test
+
+<div>
+	<div>foo</div>
+</div>
+
+test2
 EOF;
 		$this->transformAndTest($text, $expected);
 	}
@@ -189,6 +239,41 @@ EOF;
 		$this->transformAndTest($text, $expected);
 	}
 
+	public function testAutoLink() {
+		$text = <<<EOF
+This is an <http://example.com/>.
+EOF;
+		$expected = <<<EOF
+<p>This is an <a href="http://example.com/">http://example.com/</a>.</p>
+
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
+	public function testEmailAutoLink() {
+		$text = <<<EOF
+This is a email link <mailto:foo@example.com>.
+EOF;
+		$expected = <<<EOF
+<p>This is a email link <a href="&#x6d;&#97;&#105;&#x6c;&#116;&#111;&#x3a;&#x66;&#111;&#x6f;&#x40;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#46;&#x63;&#x6f;&#109;">&#x66;&#111;&#x6f;&#x40;&#101;&#120;&#x61;&#109;&#112;&#x6c;&#x65;&#46;&#x63;&#x6f;&#109;</a>.</p>
+
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
+	public function testAnchorReferenceLink() {
+		$text = <<<EOF
+This is an [Example][].
+
+[Example]: http://example.com
+EOF;
+		$expected = <<<EOF
+<p>This is an <a href="http://example.com">Example</a>.</p>
+
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
 	public function testNumberedReferenceStyleLinks() {
 		$text = <<<EOF
 I get 10 times more traffic from [Google][1] than from
@@ -234,13 +319,27 @@ EOF;
 
 	public function testReferenceStyleImages() {
 		$expected = <<<EOF
-<p><img src="/path/to/img.jpg" alt="alt text" title="Title" /></p>
+<p><img src="/path/to/img.jpg" alt="alt text" title="Title" />
+<img src="/path/to/example.jpg" alt="example" title="Test" /></p>
 
 EOF;
 		$text = <<<EOF
 ![alt text][id]
+![example][]
 
 [id]: /path/to/img.jpg "Title"
+[example]: /path/to/example.jpg "Test"
+EOF;
+		$this->transformAndTest($text, $expected);
+	}
+
+	public function testEncodeAmpsAndAngles() {
+		$expected = <<<EOF
+<p>foo&amp;bar &#8212;</p>
+
+EOF;
+		$text = <<<EOF
+foo&bar &#8212;
 EOF;
 		$this->transformAndTest($text, $expected);
 	}

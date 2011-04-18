@@ -20,8 +20,7 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 
     public function setUp() {
 		$this->request = new Test_Unit_Routing_RequestStub();
-		$this->router  = new Html5Wiki_Routing_Router();
-		$this->router->setRequest($this->request);
+		$this->router  = new Html5Wiki_Routing_Router($this->request);
 	}
 
 	public function testDefaultControllerAndAction() {

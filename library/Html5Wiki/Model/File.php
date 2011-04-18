@@ -13,36 +13,36 @@
  * @author	Nicolas Karrer <nkarrer@hsr.ch>
  *
  */
-class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
+class Html5Wiki_Model_File extends Html5Wiki_Model_Media {
 	
 	/**
 	 * 
 	 * @var String
 	 */
-	private $mediaVersionType = 'ARTICLE';
+	private $mediaVersionType = 'FIlE';
 	
 	/**
 	 * 
-	 * @param	Integer	$idArticleVersion
-	 * @param	Integer	$timestampArticleVersion
+	 * @param	Integer	$idFileVersion
+	 * @param	Integer	$timestampFileVersion
 	 */
-	public function __construct($idArticleVersion, $timestampArticleVersion) {
-		parent::__construct($idArticleVersion, $timestampArticleVersion);
+	public function __construct($idFileVersion, $timestampFileVersion) {
+		parent::__construct($idFileVersion, $timestampFileVersion);
 		
-		$this->dbAdapter = new Html5Wiki_Model_Article_Table();
+		$this->dbAdapter = new Html5Wiki_Model_File_Table();
 		
 		$this->data['mediaVersionType'] = $this->mediaVersionType;
 		
-		$this->load($idArticleVersion, $timestampArticleVersion);
+		$this->load($idFileVersion, $timestampFileVersion);
 	}
 	
 	/**
 	 * 
 	 * @param	Integer	$idArticleVersion
-	 * @param	Integer	$timestampArticleVersion
+	 * @param	Integer	$timestampFileVersion
 	 */
-	private function load($idArticleVersion, $timestampArticleVersion) {
-		array_merge($this->data, $this->dbAdapter->getArticleData($idArticleVersion, $timestampArticleVersion));
+	private function load($idFileVersion, $timestampFileVersion) {
+		array_merge($this->data, $this->dbAdapter->getFileData($idFileVersion, $timestampFileVersion));
 	}
 
 	/**
@@ -55,9 +55,8 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 		$saveData['idMediaVersion'] = $idMediaVersion;
 		$saveData['timestampMediaVersion'] = $timestampMediaVersion;
 		
-		$this->dbAdapter->saveArticle($saveData);
+		$this->dbAdapter->saveFile($saveData);
 	}
 }
-
 
 ?>
