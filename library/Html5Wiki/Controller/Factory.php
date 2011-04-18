@@ -13,8 +13,7 @@ class Html5Wiki_Controller_Factory {
 
 	/**
 	 *
-	 * @todo move basepath in config or somewhere else
-	 * @param string $basePath
+	 * @param string $applicationPath
 	 * @param Html5Wiki_Routing_Interface_Router $router
 	 * @return AbstractController
 	 */
