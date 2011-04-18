@@ -2,7 +2,7 @@
 /**
  * This file is part of the HTML5Wiki Project.
  *
- * @author Alexandre Joly <ajoly@hsr.ch>
+ * @author Michael Weibel <mweibel@hsr.ch>
  * @copyright Html5Wiki 2011
  * @package Html5Wiki
  * @subpackage Test
