@@ -17,11 +17,21 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	
 	/**
 	 * 
+	 * @var String
+	 */
+	private $mediaVersionType = 'ARTICLE';
+	
+	/**
+	 * 
 	 * @param	Integer	$idArticleVersion
 	 * @param	Integer	$timestampArticleVersion
 	 */
 	public function __construct($idArticleVersion, $timestampArticleVersion) {
 		parent::__construct($idArticleVersion, $timestampArticleVersion);
+		
+		$this->dbAdapter = new Html5Wiki_Model_Article_Table();
+		
+		$this->data['mediaVersionType'] = $this->mediaVersionType;
 		
 		$this->load($idArticleVersion, $timestampArticleVersion);
 	}
@@ -32,9 +42,20 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	 * @param	Integer	$timestampArticleVersion
 	 */
 	private function load($idArticleVersion, $timestampArticleVersion) {
-		$table = new Html5Wiki_Model_Article_Table();
+		array_merge($this->data, $this->dbAdapter->getArticleData($idArticleVersion, $timestampArticleVersion));
+	}
+
+	/**
+	 * (non-PHPdoc)
+	 * @see html5wiki/library/Html5Wiki/Model/Html5Wiki_Model_Media#save()
+	 */
+	public function save() {
+		list($idMediaVersion, $timestampMediaVersion) = parent::save($this->data);
 		
-		array_merge($this->data, $table->getArticleData($idArticleVersion, $timestampArticleVersion));
+		$saveData['idMediaVersion'] = $idMediaVersion;
+		$saveData['timestampMediaVersion'] = $timestampMediaVersion;
+		
+		$this->dbAdapter->saveArticle($saveData);
 	}
 }
 

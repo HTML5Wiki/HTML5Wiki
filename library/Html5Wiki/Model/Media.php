@@ -23,11 +23,19 @@ class Html5Wiki_Model_Media {
 	
 	/**
 	 * 
+	 * @var Zend_Db_Table_Abstract
+	 */
+	protected $dbAdapter;
+	
+	/**
+	 * 
 	 * @param	Integer	$idMediaVersion
 	 * @param	Integer	$timestampMediaVersion
 	 */
 	public function __construct($idMediaVersion, $timestampMediaVersion) {
 		$idMediaVersion = intval($idMediaVersion);
+		
+		$this->dbAdapter = new Html5Wiki_Model_Media_Table();
 		
 		$this->load($idMediaVersion, $timestampMediaVersion);
 	}
@@ -37,10 +45,31 @@ class Html5Wiki_Model_Media {
 	 * @param	Integer	$idMediaVersion
 	 * @param	Integer	$timestampMediaVersion
 	 */
-	private function load($idMediaVersion, $timestampMediaVersion) {
-		$table = new Html5Wiki_Model_Media_Table();
+	private function load($idMediaVersion, $timestampMediaVersion) {	
+		$this->data	= $this->dbAdapter->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
+		$this->data['tags'] = $this->dbAdapter->fetchMediaVersionTags($idMediaVersion);
+	}
+	
+	/**
+	 * 
+	 * @param $data
+	 * @return unknown_type
+	 */
+	public function setData(array $data) {
+		$this->data = $data;
+	}
+	
+	/**
+	 * 
+	 * @param	Array	$saveData
+	 */
+	public function save() {
+		list($id, $timestamp) = $this->dbAdapter->saveMediaVersion($this->data);
 		
-		$this->data	= $table->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
+		$this->data['id']			= $id;
+		$this->data['timestamp']	= $timestamp;
+		
+		return array($id, $timestamp);
 	}
 }
 ?>

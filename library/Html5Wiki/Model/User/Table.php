@@ -21,7 +21,5 @@ class Html5Wiki_Model_User_Table extends Zend_Db_Adapter_Abstract {
 	 * @var array
 	 */
 	protected $_primary		= array('id');
-	
-		
 }
 ?>

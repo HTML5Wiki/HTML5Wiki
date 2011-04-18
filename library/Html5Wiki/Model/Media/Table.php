@@ -71,11 +71,32 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		
 		$selectStatement->from($this);
 		
-		$selectStatement->where('id = ?', $idMediaVersion);
-		$selectStatement->where('timestamp = ?', $timestampMediaVersion);
+		$selectStatement->where($this->_primary[1] . ' = ?', $idMediaVersion);
+		$selectStatement->where($this->_primary[2] . ' = ?', $timestampMediaVersion);
 		
 		return $this->fetchRow($selectStatement);
 	}
+	
+	/**
+	 * 
+	 * @return Array
+	 */
+	public function saveMediaVersion($saveData) {
+		$localSaveData = array(
+			'previousMediaVersionTimtestamp '	=> $saveData['previousMediaVersionTimtestamp'],
+			'userId'							=> $saveData['userId'],
+			'permalink'							=> $saveData['permalink'],
+			'state'								=> self::$STATE[$saveData['state']],
+			'versionComment'					=> $saveData['versionComment'],
+			'mediaVersionType'					=> $saveData['mediaVersionType'],
+		);
+		
+		return $this->insert($localSaveData);
+	} 
+	
+	
+	
+	
 }
 
 
