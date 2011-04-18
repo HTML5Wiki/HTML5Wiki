@@ -50,20 +50,25 @@
 		function handleEditArticleTitle() {
 			var heading = $(this);
 			var title = heading.text();
+			var titleEditor = $('<input value="'+title+'" class="txtTitle" id="txtTitle" name="txtTitle" />');
 			
-			var titleEditor = $('<input value="'+title+'" class="editor" />');
-			
-			var cancelButton = $('<a href="#" class="button">Verwerfen</a>');
+			var cancelButton = $('<a href="#" class="button">Wiederherstellen</a>');
 			cancelButton.bind('mouseup',{title:title}, function(event) {
 				var heading = $('<h1 class="heading">'+event.data.title+'</h1>');
 				$(heading).bind('mouseup', handleEditArticleTitle);
-				titleEditor.replaceWith(heading);
-				$(this).remove();
+				$('.editor-wrapper').replaceWith(heading);
 				return false;
 			});
 			
-			heading.replaceWith(titleEditor);
-			titleEditor.after(cancelButton);
+			
+			var container = $('<div class="editor-wrapper" />');
+			container.append(titleEditor);
+			container.append('<br/><span class="cancel">M&ouml;chten Sie den Titel wiederherstellen?</span> ');
+			container.append(cancelButton);
+			heading.replaceWith(container);
+			
+			//heading.replaceWith(titleEditor);
+			//titleEditor.after(cancelButton);
 			
 			return false;			
 		}
