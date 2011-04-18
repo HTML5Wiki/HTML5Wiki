@@ -21,5 +21,52 @@ class Html5Wiki_Model_User_Table extends Zend_Db_Adapter_Abstract {
 	 * @var array
 	 */
 	protected $_primary		= array('id');
+	
+	/**
+	 * 
+	 * @param	$idUser
+	 * @return	Array
+	 */
+	public function fetchUser($idUser) {
+		$selectStatement = $this->select()->setIntegrityCheck(false);
+		
+		$selectStatement->from($this);
+		
+		$selectStatement->where($this->_primary[1] . ' = ?', $idUser);
+		
+		return $this->fetchRow($selectStatement);
+	}
+	
+	/**
+	 * saves new user to database. returns new Id
+	 * 
+	 * @param	Array	$saveData
+	 * @return	Integer	Id
+	 */
+	public function saveNewUser($data) {
+		$saveData = array(
+			'email'	=> $data['email'],
+			'name'	=> $data ['name']
+		);
+		
+		return $this->insert($saveData);
+	}
+	
+	/**
+	 * Updates user data
+	 * 
+	 * @param	Integer		$idUser
+	 * @param	Array		$data
+	 */
+	public function updateUser($idUser, $data) {
+		$where	= $this->getAdapter()->quoteInto($this->_primary . ' = ', $idUser);
+		
+		$updateData = array(
+			'email'	=> $data['email'],
+			'name'	=> $data['name']
+		);
+		
+		$this->update($data, $where);
+	}
 }
 ?>
