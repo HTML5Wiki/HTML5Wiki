@@ -1,15 +1,15 @@
 <article class="content editor">
-	<header class="grid_12 title clearfix">
-		<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
-		<ol class="capsulebar">
-			<li class="item first read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
-			<li class="item edit active"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
-			<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
-		</ol>
-	</header>
-	<div class="clear"></div>
+	<form action="#" method="post">
+		<header class="grid_12 title clearfix">
+			<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
+			<ol class="capsulebar">
+				<li class="item first read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
+				<li class="item edit active"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
+				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
+			</ol>
+		</header>
+		<div class="clear"></div>
 
-	<form action="#" method="post" class>
 		<div class="grid_12">
 			<fieldset name="content" class="group">
 				<legend class="groupname">Artikelinhalt</legend>					
@@ -55,5 +55,12 @@
 			</fieldset>	
 		</div>
 		<div class="clear"></div>
+		
+		<div class="grid_12 buttons">
+			<a href="#" class="save-button"><span class="caption">Speichern</span></a>
+			<a href="#" class="cancel-button">&Auml;nderungen verwerfen</a>
+		</div>
+		<div class="clear"></div>
+
 	</form>
 </article>

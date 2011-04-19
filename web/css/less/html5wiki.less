@@ -130,9 +130,14 @@ body { 	background: @img_headerbackground repeat-x; }
 	.options {
 		padding: 7px 0 4px 0;
 		.option {
+			color: darken(@color_secondary,25%);
 			font-size: @font_normalsize;
 			outline: none;
-			color: darken(#a9a9a9,25%);
+			
+			&:hover {
+				color: darken(@color_secondary, 20%);
+				background-color: fadeout(lighten(@color_secondary, 30%),30%);
+			}
 		}
 		
 		.button {
