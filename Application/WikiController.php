@@ -65,8 +65,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	
 	private function getPermalink() {
 		$uri = $this->router->getRequest()->getUri();
-		$permalinks = explode('/', $uri, 4);
-		return $permalinks[3];
+		
+		$needle = '/' . $this->router->getController() . '/';
+		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
+		
+		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
+		
+		return $permalink;
 	}
 	
 }
