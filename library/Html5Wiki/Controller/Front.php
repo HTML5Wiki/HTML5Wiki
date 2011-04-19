@@ -75,12 +75,34 @@ class Html5Wiki_Controller_Front {
 	}
 
 	/**
-	 * Dispatches the request
+	 * Runs the request
+	 */
+	public function run() {
+		$this->controller = $this->getController();
+		$this->dispatch();
+		$this->render();
+	}
+
+	/**
+	 * Dispatch request to controller
 	 */
 	public function dispatch() {
-		$this->controller = Html5Wiki_Controller_Factory::factory($this->applicationPath, $this->router);
 		$this->controller->dispatch($this->router);
+	}
+
+	/**
+	 * Call rendering method of controller
+	 */
+	public function render() {
 		$this->controller->render();
+	}
+
+	/**
+	 * Get the controller from the factory
+	 * @return Html5Wiki_Controller_Abstract
+	 */
+	protected function getController() {
+		return Html5Wiki_Controller_Factory::factory($this->applicationPath, $this->router);
 	}
 
 	/**

@@ -35,6 +35,6 @@ $adapter = Zend_Db::factory($config->databaseAdapter, $config->database);
 Zend_Db_Table::setDefaultAdapter($adapter);
 
 $frontController = new Html5Wiki_Controller_Front($config, $basePath, $libraryPath, $applicationPath);
-$frontController->dispatch();
+$frontController->run();
 
 ob_end_flush();
