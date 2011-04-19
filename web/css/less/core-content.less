@@ -1,0 +1,38 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// This core bundle contains some main stylings for the BODY.
+// Further the .content-Class creates the basic styling of a page content
+// (normally something like "<article class="content" />")
+//
+// @author Manuel Alabor
+//
+
+body { 	background: @img_headerbackground repeat-x; }
+
+.content {
+	margin: 10px 0 30px 0;
+	
+	
+	h1 { font: bold @font_h1size @font_title; }
+	
+	.button {
+		#buttons > .colored-button(@color_secondary,@font_smallsize);
+		#buttons > .rounded-button();
+	}
+	
+	.title {
+		margin-bottom: 20px;
+		.heading { float: left; }
+		.capsulebar {
+			#buttons > .colored-capsule-bar(@color_secondary);
+			float: right;
+			margin-top: 12px;
+			
+			.read .caption { background-image: @icon_16_3dglasses; }
+			.edit .caption { background-image: @icon_16_pencil; }
+			.history .caption { background-image: @icon_16_timeGo; }
+		}
+	}
+}

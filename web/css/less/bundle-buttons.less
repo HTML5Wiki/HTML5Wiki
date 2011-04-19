@@ -2,11 +2,11 @@
 // HTML5Wiki
 // LessCSS-Sourcefile
 // 
-// Bundle: Buttons
-// Autor:  Manuel Alabor
+// This core bundle delivers factories for the creation of button-styles.
+// Example: Use #buttons > colored-button(#fff) to create styledefinition for a
+// white button.
 //
-// Dieses Bundle stellt alle Standardbuttons für das HTML5Wiki-GUI
-// zur Verfügung.
+// @author Manuel Alabor
 //
 #buttons {
 	// Factory-Mixins ---------------------------------------------------------
@@ -19,7 +19,7 @@
 	.rounded-button() { .border-radius(4px); }
 	
 	.pressed-button(@color) {
-		.box-shadow(0, 0, 5px, fadeout(#ffffff,5%));
+		.box-shadow(0, 0, 5px, fadeout(#fff,5%));
 		text-shadow: 0px 1px 1px fadeout(#000000,80%);
 		background-color: lighten(@color,32%);
 		background-image:
@@ -35,7 +35,7 @@
 			-moz-linear-gradient(center bottom,
 			lighten(@color,25%) 20%,
 			lighten(@color,33%) 45%);
-		.box-shadow(0, 0, 5px, fadeout(#ffffff,50%));
+		.box-shadow(0, 0, 5px, fadeout(#fff,50%));
 	}
 	
 	.icon-16-button() {

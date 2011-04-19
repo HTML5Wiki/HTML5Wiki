@@ -1,0 +1,27 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// Styling for the content-element of the article view.
+//
+// @author Manuel Alabor
+//
+
+.article {
+	a {
+		color: @color_primary;
+		text-decoration: none;
+		
+		&:hover { background-color: lighten(@color_primary, 45%); }
+	}
+		
+	h2, h3, h4, h5 { font-family: @font_title; }
+	h2 { font-size: @font_h2size; margin: 30px 0 5px 0; }
+	h3 { font-size: @font_h3size; margin: 10px 0 0 0; }
+	h2:first-child { margin-top: 0; }
+	p {
+		font-family: @font_paragraph;
+		line-height: 140%;
+	}
+	em { font-style: italic; }
+}
