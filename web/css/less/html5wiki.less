@@ -10,6 +10,8 @@
 @import "bundle-ressources";
 @import "bundle-buttons";
 
+body { 	background: @img_headerbackground repeat-x; }
+
 .header-overall {
 	@logo_width: 153px;
 	@logo_height: 60px;
@@ -19,10 +21,13 @@
 	
 	font-family: @font_ui;
 	font-size: @font_normalsize;
-	background: @img_headerbackground repeat-x;
+
 	position: relative;
 	height: @logo_height;
-	padding: @header_padding_lr @header_padding_tb;
+	//padding: @header_padding_lr @header_padding_tb;
+	padding-top: 8px;
+	
+
 	
 	.logo {
 		position: absolute;
@@ -155,7 +160,7 @@
 
 
 .content {
-	margin: 10px 10px 0 10px;
+	margin-top: 10px;
 	
 	.button {
 		#buttons > .colored-button(@color_secondary,@font_smallsize);
