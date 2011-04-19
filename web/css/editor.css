@@ -16,7 +16,7 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .markItUp*{margin:0;padding:0;outline:none;}
 .markItUp a:link,.markItUp a:visited{color:#000;text-decoration:none;}
 .markItUpContainer{font:11px Verdana,Arial,Helvetica,sans-serif;}
-.markItUpEditor{font:115% "Courier New",Courier,monospace;width:100%;height:320px;clear:both;line-height:18px;overflow:auto;resize:vertical;margin-top:5px;}
+.markItUpEditor{font:115% "Courier New",Courier,monospace;width:99%;height:320px;clear:both;line-height:18px;overflow:auto;resize:vertical;margin-top:5px;}
 .markItUpPreviewFrame{overflow:auto;background-color:#FFFFFF;border:1px solid #3C769D;width:99.9%;height:300px;margin:5px 0;}
 .markItUpFooter{width:100%;cursor:n-resize;}
 .markItUpResizeHandle{overflow:hidden;width:22px;height:5px;margin-left:auto;margin-right:auto;background-image:url(images/handle.png);cursor:n-resize;}
