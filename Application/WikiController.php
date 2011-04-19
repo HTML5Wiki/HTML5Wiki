@@ -19,6 +19,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		} 
 		
+		$permalink = $this->getPermalink();
 		
 		//Get current Article
 		
@@ -32,10 +33,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		//TODO
 		
-		$title = 'ze Title';
-		$content = 'ze mega content. blablablabla';
-		$tag = 'content,mega,bla';
+		$title = $permalink;
+		$content = 'ze mega content from ' . $permalink;
+		$tag = 'content,mega,bla,' . $permalink;
 		
+		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
 		$this->template->assign('tag', $tag);
