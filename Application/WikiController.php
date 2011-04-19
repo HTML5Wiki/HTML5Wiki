@@ -22,7 +22,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$permalink = $this->getPermalink();
 		
 		//Get current Article
-
 		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 
 		if( $wikiPage == null ) {
@@ -30,6 +29,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		} else {
 			$this->loadEditPage($wikiPage);
 		}
+
+	}
+	
+	public function saveAction() {
+		echo "saving...";
 	}
 
 	/**
@@ -116,13 +120,15 @@ var_dump($article);
 	 * @return unknown_type
 	 */
 	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
-				//TODO
+		//TODO
 		
 		//Prepare article data for the view
+		/*
 		var_dump($wikiPage);
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
 		$tag = $this->getTags($wikiPage);
+		*/
 		//TODO
 		
 		// DUMMY DATA ***********************************		
