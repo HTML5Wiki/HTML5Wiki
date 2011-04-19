@@ -1,5 +1,11 @@
 <?php
 	$basePath = $this->basePath . '/';
+
+	$jsHelper = $this->javascriptHelper();
+	$jsHelper->appendFile($basePath . 'js/messagecontroller.js');
+	$jsHelper->appendFile($basePath . 'js/searchboxcontroller.js');
+	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
+	$jsHelper->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2');
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -12,13 +18,7 @@
 	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
-	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
-	<script src="<?php echo $basePath ?>js/jquery.markitup.js"></script>
-	<script src="<?php echo $basePath ?>js/jquery.ptags.min.js"></script>
-	<script src="<?php echo $basePath ?>js/markitup/html5wiki-set.js"></script>
-	<script src="<?php echo $basePath ?>js/messagecontroller.js"></script>
-	<script src="<?php echo $basePath ?>js/searchboxcontroller.js"></script>
-	<script src="<?php echo $basePath ?>js/html5wiki.js"></script>
+	<link rel="stylesheet" href="<?php echo $basePath ?>css/editor.css" />
 </head> 
 <body>
 	<div class="container_12">
@@ -33,8 +33,9 @@
 			</nav>
 		</header>
 		<div class="clear"></div>
-
+		
 		<?php echo $this->decoratedContent ?>
 	</div>
+	<?php echo $this->javascriptHelper()->toString() ?>
 </body>
 </html>
