@@ -1,0 +1,86 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// A core bundle with the definitions for the main header of a HTML5Wiki page.
+//
+// @author Manuel Alabor
+//
+.header-overall {
+	@logo_width: 153px;
+	@logo_height: 60px;
+	@searchbox_width: 150px;
+	
+	font-family: @font_ui;
+	font-size: @font_normalsize;
+
+	position: relative;
+	height: @logo_height;
+	padding-top: 8px;
+	
+	.logo {
+		position: absolute;
+		background: @img_headerlogo no-repeat;
+		width: @logo_width;
+		height: @logo_height;
+	}
+	
+	.main-menu {
+		margin-left: @logo_width + 28px;
+		margin-top: 28px;
+		.menu-items {
+			.item { float: left; list-style: none; margin-right: 3px; }
+			.tab {
+				color: black;
+				text-decoration: none;
+				background: 5px 5px no-repeat fadeout(#fff,40%);
+				padding: 6px 8px 4px 24px;
+				.border-radius(5px,5px,0,0);
+				
+				&:hover { background-color: fadeout(#fff,20%);}
+			}
+			.active .tab { background-color: #fff; &:hover { background-color: #fff; } }
+			.home .tab { background-image: @icon_16_house; }
+			.updates .tab { background-image: @icon_16_clock_history_frame; }
+			.article .tab { background-image: @icon_16_page; }
+			
+			.search {
+				float: right;
+				margin: -10px 0 0 0;
+				
+				.searchterm {
+					width: @searchbox_width;
+					font-family: @font_title;
+					font-size: @font_normalsize;
+					padding: 5px 3px 3px 22px;
+					background: @icon_16_magnifier no-repeat 3px 2px #fff;
+					border: 1px solid lighten(@color_primary,10%);
+				}
+			}
+		}
+	}
+	
+	.searchbox-results {
+		margin: -1px 0 0 0;
+		position: absolute;
+		width: @searchbox_width + 22px + 3px;
+		background: #fff;
+		border: 1px solid lighten(@color_primary,10%);
+		border-top: 1px solid lighten(@color_primary,40%);
+		
+		.result-item {
+			list-style: none;
+			padding: 4px;
+			font-size: @font_normalsize;
+			
+			.typed {
+				font-weight: bold;
+				background-color: lighten(@color_primary,40%);
+			}
+			
+			a { text-decoration: none; color: #000; }
+		}
+		
+		.selected { background-color: lighten(@color_primary,30%); }
+	}
+}
