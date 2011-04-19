@@ -24,7 +24,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//Get current Article
 
 		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-		
+
 		if( $wikiPage == null ) {
 			$this->loadNoArticlePage($permalink);
 		} else {
@@ -116,7 +116,7 @@ var_dump($article);
 	 * @return unknown_type
 	 */
 	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
-		//TODO
+				//TODO
 		
 		//Prepare article data for the view
 		var_dump($wikiPage);
@@ -125,13 +125,21 @@ var_dump($article);
 		$tag = $this->getTags($wikiPage);
 		//TODO
 		
+		// DUMMY DATA ***********************************		
 		$title = $permalink;
 		$content = 'ze mega content from ' . $permalink;
 		$tag = 'content,mega,bla,' . $permalink;
+		// **********************************************
+		
+		//Get author data from cookies
+		$username = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
+		$userEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
 		
 		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
+		$this->template->assign('author', $username);
+		$this->template->assign('authorEmail', $userEmail);
 		$this->template->assign('tag', $tag);
 	}
  }
