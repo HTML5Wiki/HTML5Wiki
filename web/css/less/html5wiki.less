@@ -10,6 +10,8 @@
 @import "bundle-mixins";
 @import "bundle-ressources";
 @import "bundle-buttons";
+@import "editor";
+@import "history";
 
 body { 	background: @img_headerbackground repeat-x; }
 
@@ -47,9 +49,9 @@ body { 	background: @img_headerbackground repeat-x; }
 				&:hover { background-color: fadeout(#fff,20%);}
 			}
 			.active .tab { background-color: #fff; &:hover { background-color: #fff; } }
-			.home .tab { background-image: @icon_house; }
-			.updates .tab { background-image: @icon_clock_history_frame; }
-			.article .tab { background-image: @icon_page; }
+			.home .tab { background-image: @icon_16_house; }
+			.updates .tab { background-image: @icon_16_clock_history_frame; }
+			.article .tab { background-image: @icon_16_page; }
 			
 			.search {
 				float: right;
@@ -60,7 +62,7 @@ body { 	background: @img_headerbackground repeat-x; }
 					font-family: @font_title;
 					font-size: @font_normalsize;
 					padding: 5px 3px 3px 22px;
-					background: @icon_magnifier no-repeat 3px 2px #fff;
+					background: @icon_16_magnifier no-repeat 3px 2px #fff;
 					border: 1px solid lighten(@color_primary,10%);
 				}
 			}
@@ -123,9 +125,9 @@ body { 	background: @img_headerbackground repeat-x; }
 		border-top-width: 0;
 	}
 	
-	.info { background-image: @icon_information; background-color: @color_infomessage; border-color: darken(@color_infomessage,20%); }
-	.error { background-image: @icon_exclamation; background-color: @color_errormessage; border-color: darken(@color_errormessage,20%); }
-	.question { color: black; background-image: @icon_question; background-color: @color_questionmessage; border-color: darken(@color_questionmessage,20%); }
+	.info { background-image: @icon_16_information; background-color: @color_infomessage; border-color: darken(@color_infomessage,20%); }
+	.error { background-image: @icon_16_exclamation; background-color: @color_errormessage; border-color: darken(@color_errormessage,20%); }
+	.question { color: black; background-image: @icon_16_question; background-color: @color_questionmessage; border-color: darken(@color_questionmessage,20%); }
 	
 	.options {
 		padding: 7px 0 4px 0;
@@ -179,9 +181,9 @@ body { 	background: @img_headerbackground repeat-x; }
 			float: right;
 			margin-top: 12px;
 			
-			.read .caption { background-image: @icon_3dglasses; }
-			.edit .caption { background-image: @icon_pencil; }
-			.history .caption { background-image: @icon_timeGo; }
+			.read .caption { background-image: @icon_16_3dglasses; }
+			.edit .caption { background-image: @icon_16_pencil; }
+			.history .caption { background-image: @icon_16_timeGo; }
 		}
 	}
 }

@@ -12,7 +12,6 @@
 	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
-	<link rel="stylesheet" href="<?php echo $basePath ?>css/editor.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
 	<script src="<?php echo $basePath ?>js/jquery.markitup.js"></script>
 	<script src="<?php echo $basePath ?>js/jquery.ptags.min.js"></script>
