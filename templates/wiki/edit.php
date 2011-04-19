@@ -12,9 +12,9 @@
 	<textarea id="contenteditor"><?=$this->content?></textarea>
 	
 	<script type="text/javascript" >
-	   $(document).ready(function() {
-	      $("#contenteditor").markItUp(html5WikiMarkItUpSettings);
-	   });
+		$(document).ready(function() {
+			$("#contenteditor").markItUp(html5WikiMarkItUpSettings);
+		});
 	</script>
 	
 </article>
