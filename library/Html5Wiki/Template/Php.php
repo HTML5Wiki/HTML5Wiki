@@ -32,7 +32,7 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 		return isset($this->data[$name]) ? $this->data[$name] : null;
 	}
 
-	private function __call($name, $args) {
+	public function __call($name, $args) {
 		if (!in_array($name, $this->helpers)) {
 			$helper = $this->getHelper($name);
 			$this->helpers[$name] = $helper;
