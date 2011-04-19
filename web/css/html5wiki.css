@@ -29,7 +29,7 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .content .title .capsulebar{float:right;margin-top:12px;}.content .title .capsulebar .capsule{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;text-decoration:none;outline:none;border:1px solid #bdbdbd;font-size:85%;padding:2px 4px;color:#7b7b7b;background-color:#f0f0f0;border-color:#bdbdbd;background-image:-moz-linear-gradient(center bottom, #e1e1e1 20%, #f0f0f0 45%);padding:5px 8px 3px 6px;}.content .title .capsulebar .capsule:hover{color:#a9a9a9;background-color:#fbfbfb;background-image:-moz-linear-gradient(center bottom, #e9e9e9 20%, #fdfdfd 45%);-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);box-shadow:0 0 5px rgba(255, 255, 255, 0.5);}
 .content .title .capsulebar .capsule:active{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-color:#fbfbfb;background-image:-moz-linear-gradient(center top, #e9e9e9 20%, #fdfdfd 45%);}
 .content .title .capsulebar .capsule .caption{padding-left:19px;padding-top:1px;background-repeat:no-repeat;}
-.content .title .capsulebar .item{float:left;list-style:none;}
+.content .title .capsulebar .item{float:left;}
 .content .title .capsulebar .active .capsule{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-color:#fbfbfb;background-image:-moz-linear-gradient(center top, #e9e9e9 20%, #fdfdfd 45%);}
 .content .title .capsulebar .item .capsule{border:1px solid #bdbdbd;border-left-width:0;}
 .content .title .capsulebar .first .capsule{-moz-border-radius-topleft:5px;-moz-border-radius-bottomleft:5px;-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;border-top-left-radius:5px;border-bottom-left-radius:5px;border-left-width:1px;}
@@ -68,7 +68,7 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .editorToolbar .capsule{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;text-decoration:none;outline:none;border:1px solid #bdbdbd;font-size:85%;padding:2px 4px;color:#7b7b7b;background-color:#f0f0f0;border-color:#bdbdbd;background-image:-moz-linear-gradient(center bottom, #e1e1e1 20%, #f0f0f0 45%);padding:5px 8px 3px 6px;}.editorToolbar .capsule:hover{color:#a9a9a9;background-color:#fbfbfb;background-image:-moz-linear-gradient(center bottom, #e9e9e9 20%, #fdfdfd 45%);-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);box-shadow:0 0 5px rgba(255, 255, 255, 0.5);}
 .editorToolbar .capsule:active{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-color:#fbfbfb;background-image:-moz-linear-gradient(center top, #e9e9e9 20%, #fdfdfd 45%);}
 .editorToolbar .capsule .caption{padding-left:19px;padding-top:1px;background-repeat:no-repeat;}
-.editorToolbar .item{float:left;list-style:none;}
+.editorToolbar .item{float:left;}
 .editorToolbar .active .capsule{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-color:#fbfbfb;background-image:-moz-linear-gradient(center top, #e9e9e9 20%, #fdfdfd 45%);}
 .editorToolbar .item .capsule{border:1px solid #bdbdbd;border-left-width:0;}
 .editorToolbar .first .capsule{-moz-border-radius-topleft:5px;-moz-border-radius-bottomleft:5px;-webkit-border-top-left-radius:5px;-webkit-border-bottom-left-radius:5px;border-top-left-radius:5px;border-bottom-left-radius:5px;border-left-width:1px;}
@@ -97,3 +97,5 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .ui-ptags-tag-text{float:left;cursor:pointer;margin:0;padding:0;font-size:75%;}
 .ui-ptags-tag .ui-ptags-tag-remover{float:left;margin:1px 0 0 .2em;cursor:pointer;width:7px;height:8px;background:url('../images/icons16/bullet_delete.png') no-repeat -5px -4px;}
 .ui-ptags-clear{height:0px;}
+.history .versionhistory .timespan{font:bold 150% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;background:url('../images/icons16/calendar.png') no-repeat 0 6px;padding-left:23px;}
+.history .versionhistory .group{margin-bottom:5px;}

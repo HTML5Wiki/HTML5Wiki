@@ -83,7 +83,7 @@
 	// Capsulebar-Mixins ------------------------------------------------------
 	.colored-capsule-bar(@capsule_base_color) {
 		.capsule { #buttons > .colored-icon-button(@capsule_base_color); }
-		.item { float: left; list-style: none; }
+		.item { float: left; }
 
 		.active .capsule { #buttons > .pressed-button(@capsule_base_color); }
 		.item .capsule { border: 1px solid  lighten(@capsule_base_color,8%); border-left-width: 0; }

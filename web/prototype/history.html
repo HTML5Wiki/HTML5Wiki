@@ -41,17 +41,33 @@
 			</header>
 			<div class="clear"></div>
 			
-			<div class="grid_12">
+			<div class="grid_12">	
 				<ol class="versionhistory">
-					<li class="version">
-						
-					</li>
-					<li class="version">
-						
-					</li>
-					<li class="version">
-						
-					</li>
+					<li class="timespan">Heute</li>
+					<ol class="group">
+
+					</ol>
+					<li class="timespan">Gestern</li>
+					<ol class="group">
+					</ol>					
+					<li class="timespan">Vorgestern</li>
+					<ol class="group">
+					</ol>
+					<li class="timespan">Diese Woche</li>
+					<ol class="group">
+					</ol>
+					<li class="timespan">Letzte Woche</li>
+					<ol class="group">
+					</ol>
+					<li class="timespan">Diesen Monat</li>
+					<ol class="group">
+					</ol>
+					<li class="timespan">März 2011</li>
+					<ol class="group">
+					</ol>
+					<li class="timespan">Februar 2011</li>
+					<ol class="group">
+					</ol>
 				</ol>
 			</div>
 			<div class="clear"></div>
@@ -61,7 +77,12 @@
 	</div>
 
 	<script type="text/javascript" >
-	
+		$('.group').each(function() {
+			for(i=0,l=5; i < l; i++) {
+				var version = '<li class="version">Version</li>';
+				$(this).append(version);
+			}
+		});
 	</script>
 
 	

@@ -36,9 +36,7 @@ footer,header,hgroup,menu,nav,section {
 	display:block;
 }
 
-nav ul {
-    list-style:none;
-}
+ul, ol { list-style: none; }
 
 blockquote, q {
     quotes:none;
