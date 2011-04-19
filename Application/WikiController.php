@@ -74,9 +74,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	private function getPermalink() {
 		$uri = $this->router->getRequest()->getUri();
 		$basePath = $this->router->getRequest()->getBasePath();
-		if (empty($basePath)) {
-			$basePath = '/';
-		}
+		$basePath .= '/';
 		
 		$needle = $basePath . $this->router->getController() . '/';
 		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
