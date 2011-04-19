@@ -23,14 +23,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		//Get current Article
 		
-		//TODO
-		/*
-		$article = new Html5Wiki_Model_Article();
+		$article = new Html5Wiki_Model_Media_Table();
 		$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
-		*/
+		
+		//TODO
 		
 		//Prepare article data for the view
-		
+		var_dump($wikiPage);
+		$title = $wikiPage->title;
+		$content = $wikiPage->content;
+		$tag = $this->getTags($wikiPage);
 		//TODO
 		
 		$title = $permalink;
@@ -80,6 +82,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
 		
 		return $permalink;
+	}
+	
+	private function getTags(Zend_Db_Row $article) {
+var_dump($article);
 	}
 	
 }
