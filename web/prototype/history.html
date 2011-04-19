@@ -41,7 +41,7 @@
 			</header>
 			<div class="clear"></div>
 			
-			<div class="grid_12">	
+			<div class="grid_12">
 				<ol class="versionhistory">
 					<li class="timespan">Heute</li>
 					<ol class="group">
@@ -72,14 +72,19 @@
 			</div>
 			<div class="clear"></div>
 			
+			<div class="grid_12 bottom-button-bar">
+				<a href="#" class="large-button diff-button"><span class="caption">Vergleichen</span></a>
+			</div>
+			<div class="clear"></div>
+			
 		</article>
 
 	</div>
 
 	<script type="text/javascript" >
 		$('.group').each(function() {
-			for(i=0,l=5; i < l; i++) {
-				var version = '<li class="version"><input type="radio" name="left" /> <input type="radio" name="right"/> Version</li>';
+			for(i=0,l=2; i < l; i++) {
+				var version = '<li class="version"><input type="radio" name="left" value="[timestamp]" class="diffselector" /> <input type="radio" name="right" value="[timestamp]" class="diffselector" /> <span class="timestamp"><span class="time">19:00</span>, <span class="date">25.02.2011</span></span> <img src="#" class="avatar" /> <span class="author">Manuel Alabor</span>: <span class="comment">This was only a short change</span></li>';
 				$(this).append(version);
 			}
 		});

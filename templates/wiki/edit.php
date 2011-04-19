@@ -62,9 +62,9 @@
 		</div>
 		<div class="clear"></div>
 		
-		<div class="grid_12 buttons">
-			<a href="#" class="save-button"><span class="caption">Speichern</span></a>
-			<a href="#" class="cancel-button">&Auml;nderungen verwerfen</a>
+		<div class="grid_12 bottom-button-bar">
+			<a href="#" class="large-button save-button"><span class="caption">Speichern</span></a>
+			<a href="#" class="link-button cancel-button">&Auml;nderungen verwerfen</a>
 		</div>
 		<div class="clear"></div>
 
