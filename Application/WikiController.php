@@ -21,18 +21,26 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$permalink = $this->getPermalink();
 		
+		//Get current Article
+		
+		//TODO
 		/*
 		$article = new Html5Wiki_Model_Article();
 		$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
 		*/
 		
-		$title = 'ze Title';
-		$permalinkFull = 'http://www.html5wiki.org/wiki/' . strtolower($permalink);
-		$content = $permalink;
+		//Prepare article data for the view
 		
+		//TODO
+		
+		$title = $permalink;
+		$content = 'ze mega content from ' . $permalink;
+		$tag = 'content,mega,bla,' . $permalink;
+		
+		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
-		$this->template->assign('permalink', $permalinkFull);
 		$this->template->assign('content', $content);
+		$this->template->assign('tag', $tag);
 		
 	}
 
