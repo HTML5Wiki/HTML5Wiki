@@ -22,16 +22,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$permalink = $this->getPermalink();
 		
 		//Get current Article
-
+		/*
 		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-		
+		*/
 		//TODO
 		
 		//Prepare article data for the view
+		/*
 		var_dump($wikiPage);
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
 		$tag = $this->getTags($wikiPage);
+		*/
 		//TODO
 		
 		// DUMMY DATA ***********************************		
@@ -51,6 +53,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('authorEmail', $userEmail);
 		$this->template->assign('tag', $tag);
 		
+	}
+	
+	public function saveAction() {
+		echo "saving...";
 	}
 
 	/**
