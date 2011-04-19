@@ -65,6 +65,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->setTemplate(strtolower($this->router->getAction()) . ".php");
 		
 		$this->layoutTemplate->assign('basePath', $this->router->getRequest()->getBasePath());
+		$this->template->assign('basePath', $this->router->getRequest()->getBasePath());
 
 		$actionMethod = $this->router->getAction() . 'Action';
 

@@ -1,3 +1,9 @@
+<?php
+	$jsHelper = $this->javascriptHelper();
+	$jsHelper->appendFile($this->basePath . '/js/jquery.markitup.js');
+	$jsHelper->appendFile($this->basePath . '/js/jquery.ptags.min.js');
+	$jsHelper->appendFile($this->basePath . '/js/markitup/html5wiki-set.js');
+?>
 <article class="content editor">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
