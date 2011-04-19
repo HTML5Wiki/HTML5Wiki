@@ -15,14 +15,14 @@ require_once 'Html5Wiki/Controller/Factory.php';
 class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCase {
 
 	private $testingBasePath = '';
-	private $request;
 	private $router;
 
 	public function setUp() {
 		$this->testingBasePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FactoryTest' . DIRECTORY_SEPARATOR;
 
-		$this->request = new Test_Unit_Routing_RequestStub();
-		$this->router  = new Html5Wiki_Routing_Router($this->request);
+		$request = new Test_Unit_Routing_RequestStub();
+		$this->router  = new Html5Wiki_Routing_Router($request);
+		$this->router->route();
 	}
 
 	/**
@@ -69,7 +69,6 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 
 	public function tearDown() {
 		$this->applicationPath = null;
-		$this->request = null;
 		$this->router = null;
 	}
 }

@@ -2,14 +2,16 @@
 // HTML5Wiki
 // LessCSS-Sourcefile
 // 
-// Bundle: Ressources
-// Autor:  Manuel Alabor
+// This file defines all ressources for the HTML5Wiki CSS framework.
+// It contains colors, fonts, icon-urls and a class ".hide" for generic
+// invisibility of an element.
+// All main stylings can be controlled from here. (all .less-files reference to
+// these variable-declarations)
 //
-// Dieses Bundle stellt Farben, Bilder und Fonts als Variabeln zur
-// Verfügung.
+// @author Manuel Alabor
 //
 
-// Farben:
+// Colors:
 @color_primary: #e44d26;
 @color_secondary: #a9a9a9;
 @color_infomessage: #7ab7e6;
@@ -29,40 +31,42 @@
 @font_paragraph: Palatino, "Palatino Linotype", Georgia, Times, "Times New Roman", serif;
 @font_editor: "Courier New", Courier, monospace;
 
-// Bilder:
+// Images:
 @img_headerlogo: url('../images/headerLogo.png');
 @img_headerbackground: url('../images/headerBackground.png');
 
-// Icons:
-@icon_house: url('../images/icons16/house.png');
-@icon_clock_history_frame: url('../images/icons16/clockHistoryFrame.png');
-@icon_page: url('../images/icons16/page.png');
-@icon_magnifier: url('../images/icons16/magnifier.png');
-@icon_pencil: url('../images/icons16/pencil.png');
-@icon_3dglasses: url('../images/icons16/3dGlasses.png');
-@icon_timeGo: url('../images/icons16/timeGo.png');
-@icon_information: url('../images/icons16/information.png');
-@icon_exclamation: url('../images/icons16/exclamation.png');
-@icon_question: url('../images/icons16/question.png');
+// Icons (16x16):
+@icon_16_house: url('../images/icons16/house.png');
+@icon_16_clock_history_frame: url('../images/icons16/clockHistoryFrame.png');
+@icon_16_page: url('../images/icons16/page.png');
+@icon_16_magnifier: url('../images/icons16/magnifier.png');
+@icon_16_pencil: url('../images/icons16/pencil.png');
+@icon_16_3dglasses: url('../images/icons16/3dGlasses.png');
+@icon_16_timeGo: url('../images/icons16/timeGo.png');
+@icon_16_information: url('../images/icons16/information.png');
+@icon_16_exclamation: url('../images/icons16/exclamation.png');
+@icon_16_question: url('../images/icons16/question.png');
+@icon_16_accept: url('../images/icons16/accept.png');
+@icon_16_textHeading1: url('../images/icons16/text_heading_1.png');
+@icon_16_textHeading2: url('../images/icons16/text_heading_2.png');
+@icon_16_textHeading3: url('../images/icons16/text_heading_3.png');
+@icon_16_textHeading4: url('../images/icons16/text_heading_4.png');
+@icon_16_textHeading5: url('../images/icons16/text_heading_5.png');
+@icon_16_textHeading6: url('../images/icons16/text_heading_6.png');
+@icon_16_textBold: url('../images/icons16/text_bold.png');
+@icon_16_textItalic: url('../images/icons16/text_italic.png');
+@icon_16_textListBullets: url('../images/icons16/text_list_bullets.png');
+@icon_16_textListNumbers: url('../images/icons16/text_list_numbers.png');
+@icon_16_imageAdd: url('../images/icons16/image_add.png');
+@icon_16_linkAdd: url('../images/icons16/link_add.png');
+@icon_16_userComment: url('../images/icons16/user_comment.png');
+@icon_16_sourceCode: url('../images/icons16/source_code.png');
+@icon_16_pageMagnifier: url('../images/icons16/page_magnifier.png');
+@icon_16_bulletDelete: url('../images/icons16/bullet_delete.png');
 
-@icon_textHeading1: url('../images/icons16/text_heading_1.png');
-@icon_textHeading2: url('../images/icons16/text_heading_2.png');
-@icon_textHeading3: url('../images/icons16/text_heading_3.png');
-@icon_textHeading4: url('../images/icons16/text_heading_4.png');
-@icon_textHeading5: url('../images/icons16/text_heading_5.png');
-@icon_textHeading6: url('../images/icons16/text_heading_6.png');
-@icon_textBold: url('../images/icons16/text_bold.png');
-@icon_textItalic: url('../images/icons16/text_italic.png');
-@icon_textListBullets: url('../images/icons16/text_list_bullets.png');
-@icon_textListNumbers: url('../images/icons16/text_list_numbers.png');
-@icon_imageAdd: url('../images/icons16/image_add.png');
-@icon_linkAdd: url('../images/icons16/link_add.png');
-@icon_userComment: url('../images/icons16/user_comment.png');
-@icon_sourceCode: url('../images/icons16/source_code.png');
-@icon_pageMagnifier: url('../images/icons16/page_magnifier.png');
+// Icons (32x32)
+@icon_32_time: url('../images/icons32/time.png');
 
-// Klassen:
+
+// Generic classes:
 .hide { display: none; }
-.clearfix:before, .clearfix:after { content: "\0020"; display: block; height: 0; overflow: hidden; }
-.clearfix:after { clear: both; }
-.clearfix { zoom: 1; }

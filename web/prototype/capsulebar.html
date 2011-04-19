@@ -33,89 +33,93 @@
 	</script> 
 </head> 
 <body>
-	<header class="header-overall">
-		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
-		<nav class="main-menu">
-			<ol class="menu-items clearfix">
-				<li class="item home"><a href="#" class="tab">Startseite</a></li>
-				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
-				<li class="item article active"><a href="#" class="tab">Der erste grosse Artikel im Prototyp</a></li>
-				<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
-			</ol>
-		</nav>
-	</header>
-
-	<article class="content article">
-		<header class="title clearfix">
-			<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
-			<ol class="capsulebar">
-				<li class="item first active read"><a href="#" id="read" class="capsule"><span class="caption">Lesen</span></a></li>
-				<li class="item edit"><a href="#" id="edit" class="capsule"><span class="caption">Bearbeiten</span></a></li>
-				<li class="item last history"><a href="#" id="history" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
-			</ol>
-			
-			<script type="text/javascript">
-			
-			//definition of the capsulebar
-			var capsulebar_elements = ['read','edit','history'];
-			
-			/**
-			 * capsule element.click action 
-			 *
-			 * Each capsulebar element send a ajax request 
-			 * and display the result in the main content placeholder 
-			 *
-			 * @author Alexandre Joly
-			 */
-			$.each(capsulebar_elements, function() {
-					$("#" + this).click(function() {
-				
-						//Abort request if already active
-						if ( $(this).parent('li').hasClass('active') ) {
-							return false;
-						}
-					
-						setCapsuleActive($(this).attr('id'));
-										
-						var media_data = {
-							name: 'blabla',
-							nextVar: 'var2',
-							ajax: true		
-						};
-						
-						$.ajax({
-							url: $(this).attr('id') + ".html",
-							type: 'POST',
-							data: media_data,
-							success: function(msg) {
-								$('#media_content').html(msg);
-							},
-							error: function(request, error) {
-								$('#media_content').html(request.responseText);
-							}
-						});
-				
-						return false;
-						
-					})
-					
-			});
-			
-			</script>
-			
+	<div class="container_12">
+		<header class="grid_12 header-overall">
+			<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
+			<nav class="main-menu">
+				<ol class="menu-items clearfix">
+					<li class="item home"><a href="#" class="tab">Startseite</a></li>
+					<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
+					<li class="item article active"><a href="#" class="tab">Der erste grosse Artikel im Prototyp</a></li>
+					<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+				</ol>
+			</nav>
 		</header>
+		<div class="clear"></div>
 
-		<section id="media_content">
-			<h2>Ein kleinerer Untertitel</h2>
-			<p>Lorem ipsum <a href="#">dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et <em>accusam et justo duo dolores</em> et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore <strong>et dolore magna aliquyam</strong> erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+		<article class="grid_12 content article">
+			<header class="title clearfix">
+				<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
+				<ol class="capsulebar">
+					<li class="item first active read"><a href="#" id="read" class="capsule"><span class="caption">Lesen</span></a></li>
+					<li class="item edit"><a href="#" id="edit" class="capsule"><span class="caption">Bearbeiten</span></a></li>
+					<li class="item last history"><a href="#" id="history" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
+				</ol>
 			
-			<h2>Ein kleinerer Untertitel</h2>
-			<h3>Ein noch unterer Untertitel</h3>
-			<p>Lorem ipsum dolor sit amet, <em>consetetur sadipscing elitr</em>, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
-			<h3>Ein noch unterer Untertitel</h3>
-			<p>Lorem ipsum dolor sit amet, consetetur <a href="#">sadipscing elitr, sed diam nonumy</a> eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et <strong>justo duo dolores</strong> et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
-		</section>
-	</article>
+				<script type="text/javascript">
+			
+				//definition of the capsulebar
+				var capsulebar_elements = ['read','edit','history'];
+			
+				/**
+				 * capsule element.click action 
+				 *
+				 * Each capsulebar element send a ajax request 
+				 * and display the result in the main content placeholder 
+				 *
+				 * @author Alexandre Joly
+				 */
+				$.each(capsulebar_elements, function() {
+						$("#" + this).click(function() {
+				
+							//Abort request if already active
+							if ( $(this).parent('li').hasClass('active') ) {
+								return false;
+							}
+					
+							setCapsuleActive($(this).attr('id'));
+										
+							var media_data = {
+								name: 'blabla',
+								nextVar: 'var2',
+								ajax: true		
+							};
+						
+							$.ajax({
+								url: $(this).attr('id') + ".html",
+								type: 'POST',
+								data: media_data,
+								success: function(msg) {
+									$('#media_content').html(msg);
+								},
+								error: function(request, error) {
+									$('#media_content').html(request.responseText);
+								}
+							});
+				
+							return false;
+						
+						})
+					
+				});
+			
+				</script>
+			
+			</header>
+
+			<section id="media_content">
+				<h2>Ein kleinerer Untertitel</h2>
+				<p>Lorem ipsum <a href="#">dolor sit amet</a>, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et <em>accusam et justo duo dolores</em> et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore <strong>et dolore magna aliquyam</strong> erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+			
+				<h2>Ein kleinerer Untertitel</h2>
+				<h3>Ein noch unterer Untertitel</h3>
+				<p>Lorem ipsum dolor sit amet, <em>consetetur sadipscing elitr</em>, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum.</p>
+				<h3>Ein noch unterer Untertitel</h3>
+				<p>Lorem ipsum dolor sit amet, consetetur <a href="#">sadipscing elitr, sed diam nonumy</a> eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et <strong>justo duo dolores</strong> et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+			</section>
+		</article>
+		<div class="clear"></div>
+	</div>
 	
 </body>
 </html>

@@ -21,18 +21,28 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$permalink = $this->getPermalink();
 		
-		/*
-		$article = new Html5Wiki_Model_Article();
+		//Get current Article
+		
+		$article = new Html5Wiki_Model_Media_Table();
 		$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
-		*/
 		
-		$title = 'ze Title';
-		$permalinkFull = 'http://www.html5wiki.org/wiki/' . strtolower($permalink);
-		$content = $permalink;
+		//TODO
 		
+		//Prepare article data for the view
+		var_dump($wikiPage);
+		$title = $wikiPage->title;
+		$content = $wikiPage->content;
+		$tag = $this->getTags($wikiPage);
+		//TODO
+		
+		$title = $permalink;
+		$content = 'ze mega content from ' . $permalink;
+		$tag = 'content,mega,bla,' . $permalink;
+		
+		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
-		$this->template->assign('permalink', $permalinkFull);
 		$this->template->assign('content', $content);
+		$this->template->assign('tag', $tag);
 		
 	}
 
@@ -55,11 +65,34 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 	}
-	
+
+	/**
+	 * Get permalink from url
+	 *
+	 * Works like this:
+	 * User requests /wiki/foobar
+	 * -> Method returns foobar, because the Action foobar doesn't exist.
+	 * User requests /wiki/edit/foobar
+	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
+	 *    needle of the substring replacement.
+	 *
+	 * @return string
+	 */
 	private function getPermalink() {
 		$uri = $this->router->getRequest()->getUri();
-		$permalinks = explode('/', $uri, 4);
-		return $permalinks[3];
+		$basePath = $this->router->getRequest()->getBasePath();
+		$basePath .= '/';
+		
+		$needle = $basePath . $this->router->getController() . '/';
+		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
+		
+		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
+		
+		return $permalink;
+	}
+	
+	private function getTags(Zend_Db_Row $article) {
+var_dump($article);
 	}
 	
 	private function loadPage(Html5Wiki_Model_Article $wikiPage) {

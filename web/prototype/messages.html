@@ -13,41 +13,45 @@
 	<script type="text/javascript" src="js/jquery-nonproductive.js"></script>
 </head> 
 <body>
-	<header class="header-overall">
-		<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
-		<nav class="main-menu">
-			<ol class="menu-items clearfix">
-				<li class="item home"><a href="#" class="tab">Startseite</a></li>
-				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
-				<li class="item article active"><a href="#" class="tab">Der erste grosse Artikel im Prototyp</a></li>
-				<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
-			</ol>
-		</nav>
-	</header>
-
-	<article class="content article">
-		<header class="title clearfix">
-			<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
-			<ol class="capsulebar">
-				<li class="item first active read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
-				<li class="item edit"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
-				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
-			</ol>
+	<div class="container_12">
+		<header class="grid_12 header-overall">
+			<a href="#" class="logo"><span class="hide">HTML5Wiki</span></a>
+			<nav class="main-menu">
+				<ol class="menu-items clearfix">
+					<li class="item home"><a href="#" class="tab">Startseite</a></li>
+					<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
+					<li class="item article active"><a href="#" class="tab">Der erste grosse Artikel im Prototyp</a></li>
+					<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+				</ol>
+			</nav>
 		</header>
+		<div class="clear"></div>
+
+		<article class="grid_12 content article">
+			<header class="title clearfix">
+				<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
+				<ol class="capsulebar">
+					<li class="item first active read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
+					<li class="item edit"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
+					<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
+				</ol>
+			</header>
 		
-		<section>
-			<p>
-				Use links below to see message-prototypes.<br/>
-				The question-message will report the clicked button/link into your firebug console.<br/>
-				<em>Hint: Click fast to enqueue more than one messagebox into the queue.</em>
-			</p>
-			<p>
-				<a href="#" onclick="showInfoMessage();">Info Message</a></br>
-				<a href="#" onclick="showErrorMessage();">Error Message</a></br>
-				<a href="#" onclick="showQuestionMessage();">Question</a>
-			</p>
-		</section>
-	</article>
+			<section>
+				<p>
+					Use links below to see message-prototypes.<br/>
+					The question-message will report the clicked button/link into your firebug console.<br/>
+					<em>Hint: Click fast to enqueue more than one messagebox into the queue.</em>
+				</p>
+				<p>
+					<a href="#" onclick="showInfoMessage();">Info Message</a></br>
+					<a href="#" onclick="showErrorMessage();">Error Message</a></br>
+					<a href="#" onclick="showQuestionMessage();">Question</a>
+				</p>
+			</section>
+		</article>
+		<div class="clear"></div>	
+	</div>
 	
 	<script type="text/javascript">
 		/**

@@ -1,6 +1,6 @@
-<article class="content article">
+<article class="grid_12 content article">
 	<header class="title clearfix">
-		<h1><?php echo $this->title ?></h1>
+		<h1 class="heading"><?php echo $this->title ?></h1>
 		<ol class="capsulebar">
 			<li class="item first active read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
 			<li class="item edit"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
@@ -11,3 +11,4 @@
 		<?php echo $this->content ?>
 	</section>
 </article>
+<div class="clear"></div>

@@ -9,8 +9,12 @@
  */
 class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 
+	const HELPER_CLASS_PREFIX = 'Html5Wiki_View_';
+
 	private $templateFile = '';
 	private $decoratedContent = '';
+
+	private $helpers = array();
 
 	/**
 	 * Template File to render
@@ -26,6 +30,20 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 
 	public function __get($name) {
 		return isset($this->data[$name]) ? $this->data[$name] : null;
+	}
+
+	public function __call($name, $args) {
+		if (!in_array($name, $this->helpers)) {
+			$helper = $this->getHelper($name);
+			$this->helpers[$name] = $helper;
+		}
+		return call_user_func(array($helper, $name), $args);
+	}
+
+	private function getHelper($name) {
+		$name = ucfirst($name);
+		$className = self::HELPER_CLASS_PREFIX . $name;
+		return new $className($this);
 	}
 
 	public function render() {
