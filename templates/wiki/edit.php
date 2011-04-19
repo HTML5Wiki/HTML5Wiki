@@ -7,7 +7,6 @@
 			<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
 		</ol>
 	</header>
-<<<<<<< HEAD
 	<div class="clear"></div>
 
 	<form action="#" method="post" class>
@@ -57,15 +56,4 @@
 		</div>
 		<div class="clear"></div>
 	</form>
-=======
-	
-	<textarea id="contenteditor"><?=$this->content?></textarea>
-	
-	<script type="text/javascript" >
-		$(document).ready(function() {
-			$("#contenteditor").markItUp(html5WikiMarkItUpSettings);
-		});
-	</script>
->>>>>>> c82a540c80bebc6247cd000d5d6f15d38bffb0b9
-	
 </article>
