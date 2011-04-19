@@ -1,7 +1,7 @@
 <article class="content editor">
 	<form action="#" method="post">
 		<header class="grid_12 title clearfix">
-			<h1 class="heading">Der erste grosse Artikel im Prototyp</h1>
+			<h1 class="heading"><?php echo $this->title; ?></h1>
 			<ol class="capsulebar">
 				<li class="item first read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
 				<li class="item edit active"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
@@ -13,7 +13,7 @@
 		<div class="grid_12">
 			<fieldset name="content" class="group">
 				<legend class="groupname">Artikelinhalt</legend>					
-				<textarea id="contentEditor"></textarea>
+				<textarea id="contentEditor"><?php echo $this->content; ?></textarea>
 			</fieldset>
 		</div>
 		<div class="clear"></div>
@@ -42,7 +42,7 @@
 				<legend class="groupname">Tagging</legend>
 				<p class="clearfix">
 					<label for="txtTags" class="label">Tag</label>
-					<input type="text" name="txtTags" id="txtTags" value="ein,paar,tags,zum,testen" class="textfield" />
+					<input type="text" name="txtTags" id="txtTags" value="<?php echo $this->tag; ?>" class="textfield" />
 				</p>
 				<p class="hint">
 					Ein Artikel kann mit verschiedenen Tags versehen werden,
