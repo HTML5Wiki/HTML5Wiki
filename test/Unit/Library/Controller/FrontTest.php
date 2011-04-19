@@ -50,7 +50,8 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 		$frontController = $this->getMock('Html5Wiki_Controller_Front', array('getController', 'dispatch', 'render'), array(new Zend_Config($this->config),
 				$this->basePath, $this->libraryPath, $this->applicationPath, $router));
 		$frontController->expects($this->once())
-						->method('getController');
+						->method('getController')
+						->will($this->returnValue(new Application_IndexController()));
 		$frontController->expects($this->once())
 						->method('dispatch');
 		$frontController->expects($this->once())

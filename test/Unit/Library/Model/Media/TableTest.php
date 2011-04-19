@@ -24,6 +24,7 @@ class Test_Unit_Library_Model_Media_TableTest extends Test_Unit_Library_Model_Ab
 	 * @return void
 	 */
 	public function setUp() {
+		$this->markTestIncomplete(); // TODO: remove that on adding tests
 		parent::setUp();
 		$this->table = new Html5Wiki_Model_Media_Table(array('db' => $this->db));
 	}
