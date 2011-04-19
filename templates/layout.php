@@ -6,9 +6,9 @@
 <head>
 	<meta charset="utf-8" />
 	<title><?php echo $this->title ?> | HTML5Wiki</title>
-	<meta name="description" content="">
- 	<meta name="author" content="HTML5Wiki">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content=""/>
+ 	<meta name="author" content="HTML5Wiki"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
