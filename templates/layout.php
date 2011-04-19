@@ -14,25 +14,28 @@
 	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
 	<link rel="stylesheet" href="<?php echo $basePath ?>css/editor.css" />
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2"></script>
-	<script src="<?php echo $basePath ?>js/jquery.markitup.js"></script> 
+	<script src="<?php echo $basePath ?>js/jquery.markitup.js"></script>
+	<script src="<?php echo $basePath ?>js/jquery.ptags.min.js"></script>
 	<script src="<?php echo $basePath ?>js/markitup/html5wiki-set.js"></script>
 	<script src="<?php echo $basePath ?>js/messagecontroller.js"></script>
 	<script src="<?php echo $basePath ?>js/searchboxcontroller.js"></script>
 	<script src="<?php echo $basePath ?>js/html5wiki.js"></script>
 </head> 
 <body>
-	<header class="header-overall">
-		<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
-		<nav class="main-menu">
-			<ol class="menu-items clearfix">
-				<li class="item home active"><a href="<?php echo $basePath ?>" class="tab">Startseite</a></li>
-				<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
-				<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
-			</ol>
-		</nav>
-	</header>
+	<div class="container_12">
+		<header class="grid_12 header-overall">
+			<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
+			<nav class="main-menu">
+				<ol class="menu-items clearfix">
+					<li class="item home active"><a href="<?php echo $basePath ?>" class="tab">Startseite</a></li>
+					<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
+					<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+				</ol>
+			</nav>
+		</header>
+		<div class="clear"></div>
 
-	<?php echo $this->decoratedContent ?>
-	
+		<?php echo $this->decoratedContent ?>
+	</div>
 </body>
 </html>

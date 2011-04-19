@@ -1,4 +1,4 @@
-<article class="content article">
+<article class="grid_12 content article">
 	<header class="title clearfix">
 		<h1><?php echo $this->title ?></h1>
 		<ol class="capsulebar">
@@ -11,3 +11,4 @@
 		<?php echo $this->content ?>
 	</section>
 </article>
+<div class="clear"></div>
