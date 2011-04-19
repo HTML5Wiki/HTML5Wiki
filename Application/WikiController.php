@@ -8,11 +8,20 @@
  */
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
+	/**
+	 * 
+	 * @return unknown_type
+	 */
 	public function foobarAction() {
 		$foo = array('bar', 'baz');
 		$this->template->assign('foo', $foo);
 	}
 
+	/**
+	 * Edit Article
+	 * 
+	 * @author	Alexandre Joly <ajoly@hsr.ch>
+	 */
 	public function editAction() {
 		$ajax = $this->router->getRequest()->getPost('ajax');		
 		if ($ajax === true) {
@@ -32,6 +41,28 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	}
 	
+	/**
+	 * Creates new article. Afterwards it loads the edit page.
+	 * 
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 */
+	public function createAction() {
+		$wikiPage = new Html5Wiki_Model_Article(0, 0);
+		
+		$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink()));
+		$wikiPage->save();
+		
+		$this->setTemplate('edit.php');
+		
+		$this->loadEditPage($wikiPage);
+	}
+	
+	/**
+	 * Save the edited Article and forward to the Article 
+	 * or if the validation failed, to the edit page
+	 * 
+	 * @author	Alexandre Joly <ajoly@hsr.ch>
+	 */
 	public function saveAction() {
 		echo "saving...";
 	}
@@ -84,14 +115,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $permalink;
 	}
 	
-	private function getTags(Html5Wiki_Model_Article $article) {
-//var_dump($article);
-	}
-	
 	/**
+	 * Loads the standard view page for a given article
 	 * 
-	 * @param $wikiPage
-	 * @return unknown_type
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 * @param	Html5Wiki_Model_Article $wikiPage
 	 */
 	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
 		$this->setTemplate('article.php');
@@ -106,11 +134,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	/**
 	 * Loads the noarticle page. With a button to add an article with the requested permalink
 	 * 
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
 	 * @param	$permalink
 	 */
 	private function loadNoArticlePage($permalink) {
 		$this->setTemplate('noarticle.php');
-				
+		
+		$this->template->assign('request', $this->router->getRequest());		
 		$this->template->assign('permalink', $permalink);
 	}
 	
@@ -120,22 +150,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return unknown_type
 	 */
 	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
-		//TODO
 		
 		//Prepare article data for the view
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
-		$tag = $this->getTags($wikiPage);
+		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
-		$username = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
-		$userEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
+		$author = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
+		$authorEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
 		
 		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
-		$this->template->assign('author', $username);
-		$this->template->assign('authorEmail', $userEmail);
+		$this->template->assign('author', $author);
+		$this->template->assign('authorEmail', $authorEmail);
 		$this->template->assign('tag', $tag);
 	}
  }
