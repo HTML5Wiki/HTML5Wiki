@@ -17,6 +17,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('foo', $foo);
 	}
 
+	/**
+	 * Edit Article
+	 * 
+	 * @author	Alexandre Joly <ajoly@hsr.ch>
+	 */
 	public function editAction() {
 		$ajax = $this->router->getRequest()->getPost('ajax');		
 		if ($ajax === true) {
@@ -53,8 +58,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
+	 * Save the edited Article and forward to the Article 
+	 * or if the validation failed, to the edit page
 	 * 
-	 * @return unknown_type
+	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function saveAction() {
 		echo "saving...";
