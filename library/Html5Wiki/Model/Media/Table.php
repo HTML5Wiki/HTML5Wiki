@@ -26,12 +26,6 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 	 * @var	array
 	 */
 	protected $_primary		= array('id', 'timestamp');
-	
-	/**
-	 * 
-	 * @var boolean
-	 */
-	protected $_sequence	= false;
 
 	private static $MEDIA_VERSION_TYPE = array(
 		'ARTICLE' => 'ARTICLE',
@@ -83,14 +77,15 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 	 * @return Array
 	 */
 	public function saveMediaVersion($saveData) {
-		$localSaveData = array(
-			'previousMediaVersionTimtestamp '	=> $saveData['previousMediaVersionTimtestamp'],
-			'userId'							=> $saveData['userId'],
-			'permalink'							=> $saveData['permalink'],
-			'state'								=> self::$STATE[$saveData['state']],
-			'versionComment'					=> $saveData['versionComment'],
-			'mediaVersionType'					=> $saveData['mediaVersionType'],
-		);
+		$localSaveData = array();
+
+		if(isset($saveData['userId'])) 				$localSaveData['userId']			= $saveData['userId'];
+		if(isset($saveData['permalink']))			$localSaveData['permalink']			= $saveData['permalink'];
+		if(isset($saveData['state']))				$localSaveData['state']				= self::$STATE[$saveData['state']];
+		if(isset($saveData['versionComment'])) 		$localSaveData['versioncomment']	= $saveData['versioncomment'];
+		if(isset($saveData['mediaVersionType']))	$localSaveData['mediaVersionType']	= $saveData['mediaVersionType'];
+		
+		$localSaveData['timestamp'] = time();
 		
 		return $this->insert($localSaveData);
 	} 

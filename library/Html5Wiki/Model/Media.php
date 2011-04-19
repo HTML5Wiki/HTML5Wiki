@@ -25,7 +25,7 @@ class Html5Wiki_Model_Media {
 	 * 
 	 * @var Zend_Db_Table_Abstract
 	 */
-	protected $dbAdapter;
+	private $dbAdapter;
 	
 	/**
 	 * 
@@ -67,7 +67,10 @@ class Html5Wiki_Model_Media {
 	 */
 	private function load($idMediaVersion, $timestampMediaVersion) {	
 		$mediaData	= $this->dbAdapter->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
-		$this->data = $mediaData->toArray();
+		
+		if($mediaData != null) {
+			$this->data = $mediaData->toArray();
+		}
 		//$this->data['tags'] = $this->dbAdapter->fetchMediaVersionTags($idMediaVersion);
 	}
 	
@@ -82,15 +85,23 @@ class Html5Wiki_Model_Media {
 	
 	/**
 	 * 
+	 * @return unknown_type
+	 */
+	public function getData() {
+		$this->data;
+	}
+	
+	/**
+	 * 
 	 * @param	Array	$saveData
 	 */
 	public function save() {
-		list($id, $timestamp) = $this->dbAdapter->saveMediaVersion($this->data);
+		$primaryKeys = $this->dbAdapter->saveMediaVersion($this->data);
 		
-		$this->data['id']			= $id;
-		$this->data['timestamp']	= $timestamp;
+		$this->data['id']			= $primaryKeys['id'];
+		$this->data['timestamp']	= $primaryKeys['timestamp'];
 		
-		return array($id, $timestamp);
+		return $primaryKeys;
 	}
 }
 ?>

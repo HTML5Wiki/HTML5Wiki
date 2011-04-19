@@ -8,6 +8,10 @@
  */
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
+	/**
+	 * 
+	 * @return unknown_type
+	 */
 	public function foobarAction() {
 		$foo = array('bar', 'baz');
 		$this->template->assign('foo', $foo);
@@ -32,6 +36,26 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	}
 	
+	/**
+	 * Creates new article. Afterwards it loads the edit page.
+	 * 
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 */
+	public function createAction() {
+		$wikiPage = new Html5Wiki_Model_Article(0, 0);
+		
+		$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink()));
+		$wikiPage->save();
+		
+		$this->setTemplate('edit.php');
+		
+		$this->loadEditPage($wikiPage);
+	}
+	
+	/**
+	 * 
+	 * @return unknown_type
+	 */
 	public function saveAction() {
 		echo "saving...";
 	}
@@ -84,14 +108,20 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $permalink;
 	}
 	
+	/**
+	 * 
+	 * @param $article
+	 * @return unknown_type
+	 */
 	private function getTags(Html5Wiki_Model_Article $article) {
 //var_dump($article);
 	}
 	
 	/**
+	 * Loads the standard view page for a given article
 	 * 
-	 * @param $wikiPage
-	 * @return unknown_type
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 * @param	Html5Wiki_Model_Article $wikiPage
 	 */
 	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
 		$this->setTemplate('article.php');
@@ -106,11 +136,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	/**
 	 * Loads the noarticle page. With a button to add an article with the requested permalink
 	 * 
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
 	 * @param	$permalink
 	 */
 	private function loadNoArticlePage($permalink) {
 		$this->setTemplate('noarticle.php');
-				
+		
+		$this->template->assign('request', $this->router->getRequest());		
 		$this->template->assign('permalink', $permalink);
 	}
 	

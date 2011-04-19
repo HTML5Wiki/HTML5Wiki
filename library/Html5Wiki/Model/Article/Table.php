@@ -31,7 +31,7 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 	 * 
 	 * @var boolean
 	 */
-	protected $_sequence	= false;
+	protected $_sequence	= true;
 	
 	/**
 	 * 
@@ -50,15 +50,16 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 	 * @param $data
 	 * @return unknown_type
 	 */
-	public function saveArticle($data) {
-		$saveData = array(
-			'mediaVersionId' => intval($data['mediaVersionId']),
-			'mediaVersionTimestamp' => intval($data['mediaVersionTimetamp']),
-			'title'	=> $data['title'],
-			'content' => $data['content']
+	public function saveArticle($saveData) {
+		$localSaveData = array(
+			'mediaVersionId' 		=> intval($saveData['mediaVersionId']),
+			'mediaVersionTimestamp' => intval($saveData['mediaVersionTimestamp']),
+			'title'					=> $saveData['title'],
 		);
 		
-		return $this->insert($saveData);
+		if(isset($saveData['content'])) $localSaveData['content'] = $saveData['content'];
+		
+		return $this->insert($localSaveData);
 	}
 	
 

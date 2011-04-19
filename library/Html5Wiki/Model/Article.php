@@ -57,10 +57,11 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	 * @see html5wiki/library/Html5Wiki/Model/Html5Wiki_Model_Media#save()
 	 */
 	public function save() {
-		list($idMediaVersion, $timestampMediaVersion) = parent::save($this->data);
+		$primaryKeys = parent::save($this->data);
 		
-		$saveData['idMediaVersion'] = $idMediaVersion;
-		$saveData['timestampMediaVersion'] = $timestampMediaVersion;
+		$saveData							= $this->data;
+		$saveData['mediaVersionId'] 		= $primaryKeys['id'];
+		$saveData['mediaVersionTimestamp']	= $primaryKeys['timestamp'];
 		
 		$this->dbAdapter->saveArticle($saveData);
 	}
