@@ -42,7 +42,14 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	 * @param	Integer	$timestampArticleVersion
 	 */
 	private function load($idArticleVersion, $timestampArticleVersion) {
-		array_merge($this->data, $this->dbAdapter->getArticleData($idArticleVersion, $timestampArticleVersion));
+		$articleData = $this->dbAdapter->getArticleData($idArticleVersion, $timestampArticleVersion);
+		
+		if( $articleData != null) {
+			$this->data = array_merge($this->data, $articleData->toArray());
+		} else {
+			$this->data['title'] = '';
+			$this->data['content'] = '';
+		}	
 	}
 
 	/**

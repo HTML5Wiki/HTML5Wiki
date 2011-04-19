@@ -41,13 +41,34 @@ class Html5Wiki_Model_Media {
 	}
 	
 	/**
+	 * Fallback for direct member access.
+	 * First it checks for a getter function, if not available try to find the data in $this->data
+	 *
+	 * @param	String		$memberName
+	 * @return 	String
+	 */
+	public function __get($memberName) {
+		$dataKey	= strtolower($memberName);
+		$methodName	= 'get' . $memberName;
+
+		if( method_exists($this, $methodName) ) {
+			return call_user_func(array($this, $methodName));
+		} elseif( array_key_exists($dataKey, $this->data) ) {
+			return $this->data[$dataKey];
+		}
+		
+		return '';
+	}
+	
+	/**
 	 * 
 	 * @param	Integer	$idMediaVersion
 	 * @param	Integer	$timestampMediaVersion
 	 */
 	private function load($idMediaVersion, $timestampMediaVersion) {	
-		$this->data	= $this->dbAdapter->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
-		$this->data['tags'] = $this->dbAdapter->fetchMediaVersionTags($idMediaVersion);
+		$mediaData	= $this->dbAdapter->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
+		$this->data = $mediaData->toArray();
+		//$this->data['tags'] = $this->dbAdapter->fetchMediaVersionTags($idMediaVersion);
 	}
 	
 	/**

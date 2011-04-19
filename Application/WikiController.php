@@ -20,28 +20,20 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		} 
 		
 		$permalink = $this->getPermalink();
-		
+
 		//Get current Article
-		
-		//TODO
-		/*
-		$article = new Html5Wiki_Model_Article();
-		$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
-		*/
-		
-		//Prepare article data for the view
-		
-		//TODO
-		
-		$title = $permalink;
-		$content = 'ze mega content from ' . $permalink;
-		$tag = 'content,mega,bla,' . $permalink;
-		
-		$this->layoutTemplate->assign('title', $title);
-		$this->template->assign('title', $title);
-		$this->template->assign('content', $content);
-		$this->template->assign('tag', $tag);
-		
+		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+
+		if( $wikiPage == null ) {
+			$this->loadNoArticlePage($permalink);
+		} else {
+			$this->loadEditPage($wikiPage);
+		}
+
+	}
+	
+	public function saveAction() {
+		echo "saving...";
 	}
 
 	/**
@@ -52,25 +44,33 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		try {
 			parent::dispatch($router);
 		} catch (Html5Wiki_Exception_404 $e) {
-			$this->setTemplate('article.php');
-
 			$permalink = $this->getPermalink();
-
-			$article = new Html5Wiki_Model_Media_Table();
-			$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
-
-			if ($wikiPage === null) {
-				throw new Html5Wiki_Exception_404('Wikipage "' . $permalink . '" not found.');
+			
+			//@todo replace this with an aporpriate index page
+			if( !( strlen($permalink) > 0 ) ) throw new Html5Wiki_Exception_404();
+			
+			$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			
+			if( $wikiPage == null ) {
+				$this->loadNoArticlePage($permalink);
+			} else {
+				$this->loadPage($wikiPage);
 			}
-
-			$this->setTitle($wikiPage->title);
-
-			$markDownParser = new Markdown_Parser();
-			$this->template->assign('title', $wikiPage->title);
-			$this->template->assign('content', $markDownParser->transform($wikiPage->content));
 		}
 	}
-	
+
+	/**
+	 * Get permalink from url
+	 *
+	 * Works like this:
+	 * User requests /wiki/foobar
+	 * -> Method returns foobar, because the Action foobar doesn't exist.
+	 * User requests /wiki/edit/foobar
+	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
+	 *    needle of the substring replacement.
+	 *
+	 * @return string
+	 */
 	private function getPermalink() {
 		$uri = $this->router->getRequest()->getUri();
 		$basePath = $this->router->getRequest()->getBasePath();
@@ -84,6 +84,60 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $permalink;
 	}
 	
-}
+	private function getTags(Html5Wiki_Model_Article $article) {
+//var_dump($article);
+	}
+	
+	/**
+	 * 
+	 * @param $wikiPage
+	 * @return unknown_type
+	 */
+	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
+		$this->setTemplate('article.php');
+				
+		$this->setTitle($wikiPage->title);
+
+		$markDownParser = new Markdown_Parser();
+		$this->template->assign('title', $wikiPage->title);
+		$this->template->assign('content', $markDownParser->transform($wikiPage->content));
+	} 
+	
+	/**
+	 * Loads the noarticle page. With a button to add an article with the requested permalink
+	 * 
+	 * @param	$permalink
+	 */
+	private function loadNoArticlePage($permalink) {
+		$this->setTemplate('noarticle.php');
+				
+		$this->template->assign('permalink', $permalink);
+	}
+	
+	/**
+	 * 
+	 * @param $wikiPage
+	 * @return unknown_type
+	 */
+	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
+		//TODO
+		
+		//Prepare article data for the view
+		$title = $wikiPage->title;
+		$content = $wikiPage->content;
+		$tag = $this->getTags($wikiPage);
+
+		//Get author data from cookies
+		$username = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
+		$userEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
+		
+		$this->layoutTemplate->assign('title', $title);
+		$this->template->assign('title', $title);
+		$this->template->assign('content', $content);
+		$this->template->assign('author', $username);
+		$this->template->assign('authorEmail', $userEmail);
+		$this->template->assign('tag', $tag);
+	}
+ }
 
 ?>
