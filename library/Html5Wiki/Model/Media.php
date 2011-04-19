@@ -66,7 +66,8 @@ class Html5Wiki_Model_Media {
 	 * @param	Integer	$timestampMediaVersion
 	 */
 	private function load($idMediaVersion, $timestampMediaVersion) {	
-		$this->data	= $this->dbAdapter->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
+		$mediaData	= $this->dbAdapter->fetchMediaVersion($idMediaVersion, $timestampMediaVersion);
+		$this->data = $mediaData->toArray();
 		//$this->data['tags'] = $this->dbAdapter->fetchMediaVersionTags($idMediaVersion);
 	}
 	

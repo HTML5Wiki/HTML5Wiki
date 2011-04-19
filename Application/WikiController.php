@@ -20,7 +20,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		} 
 		
 		$permalink = $this->getPermalink();
-		
+
 		//Get current Article
 		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 
@@ -85,7 +85,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	private function getTags(Html5Wiki_Model_Article $article) {
-var_dump($article);
+//var_dump($article);
 	}
 	
 	/**
@@ -123,20 +123,10 @@ var_dump($article);
 		//TODO
 		
 		//Prepare article data for the view
-		/*
-		var_dump($wikiPage);
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
 		$tag = $this->getTags($wikiPage);
-		*/
-		//TODO
-		
-		// DUMMY DATA ***********************************		
-		$title = $permalink;
-		$content = 'ze mega content from ' . $permalink;
-		$tag = 'content,mega,bla,' . $permalink;
-		// **********************************************
-		
+
 		//Get author data from cookies
 		$username = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
 		$userEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
