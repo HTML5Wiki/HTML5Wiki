@@ -22,9 +22,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$permalink = $this->getPermalink();
 		
 		//Get current Article
-		/*
-		$article = new Html5Wiki_Model_Media_Table();
-		$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
+
+		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 		
 		//TODO
 		
@@ -32,7 +31,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		var_dump($wikiPage);
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
-		$tag = $this->getTags($wikiPage);*/
+		$tag = $this->getTags($wikiPage);
 		//TODO
 		
 		// DUMMY DATA ***********************************		
@@ -62,22 +61,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		try {
 			parent::dispatch($router);
 		} catch (Html5Wiki_Exception_404 $e) {
-			$this->setTemplate('article.php');
-
 			$permalink = $this->getPermalink();
 
-			$article = new Html5Wiki_Model_Media_Table();
-			$wikiPage = $article->fetchArticleVersionByPermalink($permalink);
-
-			if ($wikiPage === null) {
-				throw new Html5Wiki_Exception_404('Wikipage "' . $permalink . '" not found.');
+			$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			
+			if( $wikiPage == null ) {
+				$this->loadNoArticlePage($permalink);
+			} else {
+				$this->loadPage($wikiPage);
 			}
-
-			$this->setTitle($wikiPage->title);
-
-			$markDownParser = new Markdown_Parser();
-			$this->template->assign('title', $wikiPage->title);
-			$this->template->assign('content', $markDownParser->transform($wikiPage->content));
 		}
 	}
 
@@ -106,10 +98,35 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $permalink;
 	}
 	
-	private function getTags(Zend_Db_Row $article) {
+	private function getTags(Html5Wiki_Model_Article $article) {
 var_dump($article);
 	}
 	
+	/**
+	 * 
+	 * @param $wikiPage
+	 * @return unknown_type
+	 */
+	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
+		$this->setTemplate('article.php');
+				
+		$this->setTitle($wikiPage->title);
+
+		$markDownParser = new Markdown_Parser();
+		$this->template->assign('title', $wikiPage->title);
+		$this->template->assign('content', $markDownParser->transform($wikiPage->content));
+	} 
+	
+	/**
+	 * Loads the noarticle page. With a button to add an article with the requested permalink
+	 * 
+	 * @param	$permalink
+	 */
+	private function loadNoArticlePage($permalink) {
+		$this->setTemplate('noarticle.php');
+				
+		$this->template->assign('permalink', $permalink);
+	}
 }
 
 ?>
