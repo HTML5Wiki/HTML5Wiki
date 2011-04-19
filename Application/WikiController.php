@@ -109,15 +109,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
-	 * 
-	 * @param $article
-	 * @return unknown_type
-	 */
-	private function getTags(Html5Wiki_Model_Article $article) {
-//var_dump($article);
-	}
-	
-	/**
 	 * Loads the standard view page for a given article
 	 * 
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
@@ -152,22 +143,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return unknown_type
 	 */
 	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
-		//TODO
 		
 		//Prepare article data for the view
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
-		$tag = $this->getTags($wikiPage);
+		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
-		$username = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
-		$userEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
+		$author = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
+		$authorEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
 		
 		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
-		$this->template->assign('author', $username);
-		$this->template->assign('authorEmail', $userEmail);
+		$this->template->assign('author', $author);
+		$this->template->assign('authorEmail', $authorEmail);
 		$this->template->assign('tag', $tag);
 	}
  }
