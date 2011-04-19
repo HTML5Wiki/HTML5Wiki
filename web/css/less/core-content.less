@@ -36,4 +36,28 @@ body { 	background: @img_headerbackground repeat-x; }
 			.history .caption { background-image: @icon_16_timeGo; }
 		}
 	}
+	
+	.bottom-button-bar {
+		margin-top: 20px;
+		
+		.large-button {
+			#buttons > .colored-icon-button(darken(@color_secondary,3%), 120%);
+			#buttons > .rounded-button();
+			
+			.caption {
+				background-position: 0 center;
+				padding-left: 22px;
+			}
+		}
+		
+		.link-button {
+			color: @color_secondary;
+			font-size: @font_normalsize;
+			&:hover {
+				color: darken(@color_secondary, 5%);
+				background-color: lighten(@color_secondary, 28%);
+			}
+		}
+	}
+	
 }

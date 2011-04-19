@@ -32,24 +32,8 @@
 		}
 	}
 	
-	.buttons {
-		margin-top: 20px;
-	}
-	
 	.save-button {
-		#buttons > .colored-icon-button(darken(@color_secondary,3%), 120%);
-		#buttons > .rounded-button();
-		
-		.caption { background-image: @icon_16_accept; background-position: 0 center; padding-left: 22px; }
-	}
-
-	.cancel-button {
-		color: @color_secondary;
-		font-size: @font_normalsize;
-		&:hover {
-			color: darken(@color_secondary, 5%);
-			background-color: lighten(@color_secondary, 28%);
-		}
+		.caption { background-image: @icon_16_accept; }
 	}
 	
 }

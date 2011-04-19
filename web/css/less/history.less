@@ -17,12 +17,27 @@
 		}
 
 		.group {
-			margin-bottom: 5px;
+			font: @font_normalsize @font_ui;
+			margin: 0 0 5px 23px;
 			
 			.version {
+				.diffselector {
+					margin: 0;
+					padding: 0;
+				}
 				
+				.avatar {
+					background: red;
+					display: inline-block;
+					width: 16px;
+					height: 16px;
+				}
 			}
 		}
+	}
+	
+	.diff-button {
+		.caption { background-image: @icon_16_compare; }
 	}
 	
 }
