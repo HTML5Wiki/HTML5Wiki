@@ -6,6 +6,7 @@
 // Autor:  Manuel Alabor
 //
 @import "html5reset-1.6.1.css";
+@import "grid.css";
 @import "bundle-mixins";
 @import "bundle-ressources";
 @import "bundle-buttons";
@@ -15,8 +16,6 @@ body { 	background: @img_headerbackground repeat-x; }
 .header-overall {
 	@logo_width: 153px;
 	@logo_height: 60px;
-	@header_padding_lr: 8px;
-	@header_padding_tb: 6px;
 	@searchbox_width: 150px;
 	
 	font-family: @font_ui;
@@ -24,10 +23,7 @@ body { 	background: @img_headerbackground repeat-x; }
 
 	position: relative;
 	height: @logo_height;
-	//padding: @header_padding_lr @header_padding_tb;
 	padding-top: 8px;
-	
-
 	
 	.logo {
 		position: absolute;
@@ -37,7 +33,7 @@ body { 	background: @img_headerbackground repeat-x; }
 	}
 	
 	.main-menu {
-		margin-left: @logo_width + @header_padding_lr + 20px;
+		margin-left: @logo_width + 28px;
 		margin-top: 28px;
 		.menu-items {
 			.item { float: left; list-style: none; margin-right: 3px; }
@@ -147,6 +143,7 @@ body { 	background: @img_headerbackground repeat-x; }
 	}
 }
 
+// Content-Overlay for Modal-Messages:
 .overlay {
 	position: fixed;
 	top: 0;
@@ -157,10 +154,11 @@ body { 	background: @img_headerbackground repeat-x; }
 	z-index: 1000;
 }
 
-
-
+// Styles for common content-conainer
 .content {
 	margin-top: 10px;
+	
+	h1 { font: bold @font_h1size @font_title; }
 	
 	.button {
 		#buttons > .colored-button(@color_secondary,@font_smallsize);
@@ -180,17 +178,18 @@ body { 	background: @img_headerbackground repeat-x; }
 			.history .caption { background-image: @icon_timeGo; }
 		}
 	}
-	
+}
+
+// Styles for article-view
+.article {
 	a {
 		color: @color_primary;
 		text-decoration: none;
 		
 		&:hover { background-color: lighten(@color_primary, 45%); }
 	}
-	
-	
-	h1, h2, h3, h4, h5 { font-family: @font_title; }
-	h1 { font-size: @font_h1size; }
+		
+	h2, h3, h4, h5 { font-family: @font_title; }
 	h2 { font-size: @font_h2size; margin: 30px 0 5px 0; }
 	h3 { font-size: @font_h3size; margin: 10px 0 0 0; }
 	h2:first-child { margin-top: 0; }

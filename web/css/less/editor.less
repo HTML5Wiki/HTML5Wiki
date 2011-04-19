@@ -3,7 +3,9 @@
 // LessCSS-Sourcefile
 // 
 // Enthält alle nötigen Styles für den Artikel-Editor.
-// Dies beinhaltet auch alle MarkItUp-Stylings!
+// Zusätzlich enthaltene Styles:
+//  - MarkItUp (jQuery Plugin)
+//  - Pines Tags (jQuery Plugin)
 //
 // Autor:  Manuel Alabor
 //
@@ -11,7 +13,7 @@
 @import "bundle-ressources";
 @import "bundle-buttons";
 
-.content {
+.editor {
 	.title {
 		.heading { cursor: pointer; }
 		
@@ -35,7 +37,43 @@
 	
 }
 
+form {
+	font-family: @font_ui;
+	
+	.group {
+		.border-radius(5px);
+		border: 1px solid @color_secondary;
+		padding: 5px 10px;
+		margin-bottom: 10px;
+		background-color: lighten(@color_secondary,31%);
+	}
+	.groupname {
+		font-size: @font_smallsize;
+		color: darken(@color_secondary,8%);
+		padding: 0 4px;
+	}
+			
+		
+	.textfield {
+		margin-bottom: 6px;
+		width: 98%;
+	}
+	.label {
+		font-size: @font_smallsize;
+		display: block;
+		margin-bottom: 3px;
+	}
+	
+	.hint {
+		font-size: @font_smallsize;
+		color: darken(@color_secondary,8%);
+		margin-bottom: 5px;
+		line-height: 120%;
+	}
+}
 
+
+// MarkItUp-Styles
 .markItUp {
 	& * {
 		margin: 0;
@@ -113,33 +151,16 @@
 }
 
 
-
-.fieldset {
-	.border-radius(5px);
-	border: 1px solid @color_secondary;
-	
-	.set-label {
-		font: @font_smallsize @font_ui;
-		color: darken(@color_secondary,8%);
-		margin-left: 8px;
-		padding: 0 4px;
-	}
-}
-
-
-
+// Pines Tags-Styles
 .ui-ptags {
 	display: block;
 }
-.ui-ptags-tag-box-container, .ui-ptags-tag-container {
-	float: left;
-}
-.ui-ptags-tag-box-container {
-	margin-bottom: .2em;
+.ui-ptags-tag-container {
+	margin-bottom: .8em;
 }
 .ui-ptags-tag {
 	float: left;
-	margin: 0 .2em .2em;
+	margin: 0 .2em .2em 0;
 	padding: .2em .3em;
 	
 	.border-radius(5px);
@@ -158,7 +179,7 @@
 	cursor: pointer;
 	margin: 0;
 	padding: 0;
-	font: @font_smallsize @font_ui;
+	font-size: @font_smallsize;
 }
 .ui-ptags-tag .ui-ptags-tag-remover {
 	float: left;
@@ -170,6 +191,4 @@
 	background: @icon_bulletDelete no-repeat -5px -4px;
 }
 
-.ui-ptags-clear {
-	height: 0px;
-}
+.ui-ptags-clear { height: 0px; }
