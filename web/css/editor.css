@@ -38,10 +38,12 @@
 .editorToolbar .quote .caption{background-image:url('../images/icons16/user_comment.png');}
 .editorToolbar .sourcecode .caption{background-image:url('../images/icons16/source_code.png');}
 .editorToolbar .preview .caption{background-image:url('../images/icons16/page_magnifier.png');}
+.fieldset{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px solid #a9a9a9;}.fieldset .set-label{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#959595;margin-left:8px;padding:0 4px;}
+.author,.tagging{width:50%;float:left;}
 .ui-ptags{display:block;}
 .ui-ptags-tag-box-container,.ui-ptags-tag-container{float:left;}
 .ui-ptags-tag-box-container{margin-bottom:.2em;}
-.ui-ptags-tag{float:left;margin:0 .2em .2em;padding:.2em .3em;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#7b7b7b;background-color:#f0f0f0;border:1px solid #bdbdbd;}
+.ui-ptags-tag{float:left;margin:0 .2em .2em;padding:.2em .3em;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;color:#7b7b7b;background-color:#f0f0f0;border:1px solid #bdbdbd;}.ui-ptags-tag:hover{background-color:#fbfbfb;color:#9f9f9f;}
 .ui-ptags-tag-text{float:left;cursor:pointer;margin:0;padding:0;font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;}
 .ui-ptags-tag .ui-ptags-tag-remover{float:left;margin:1px 0 0 .2em;cursor:pointer;width:7px;height:8px;background:url('../images/icons16/bullet_delete.png') no-repeat -5px -4px;}
 .ui-ptags-clear{height:0px;}

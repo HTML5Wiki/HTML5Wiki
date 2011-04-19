@@ -41,19 +41,22 @@
 		<form action="#" method="post" style="position: relative;">
 			<textarea id="contentEditor"></textarea>
 
-			<fieldset name="tags">
-				<legend>Tagging</legend>
-				<label for="txtTags">Neue Tags hinzuf&uuml;gen</label>
-				<input type="text" name="txtTags" id="txtTags" value="ein,paar,tags,zum,testen"/>
-			</fieldset>
-			
-			<fieldset name="author">
-				<legend>Autor</legend>
-				<label for="txtAuthor">Ihr Name</label>
-				<input type="text" name="txtAuthor" id="txtAuthor" />
-				<label for="txtAuthorEmail">Ihre E-Mailadresse</label>
-				<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" />
-			</fieldset>
+			<div class="clearfix">
+				<fieldset name="tags" class="fieldset tagging">
+					<legend class="set-label">Tagging</legend>
+					<label for="txtTags">Tags</label>
+					<input type="text" name="txtTags" id="txtTags" value="ein,paar,tags,zum,testen"/>
+					<p>Geben Sie mehrere Tags durch Komma getrennt ein</p>
+				</fieldset>
+				
+				<fieldset name="author" class="fieldset author">
+					<legend class="set-label">Autoreninformation</legend>
+					<label for="txtAuthor">Ihr Name</label>
+					<input type="text" name="txtAuthor" id="txtAuthor" />
+					<label for="txtAuthorEmail">Ihre E-Mailadresse</label>
+					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" />
+				</fieldset>
+			</div>
 		</form>
 	</article>
 
