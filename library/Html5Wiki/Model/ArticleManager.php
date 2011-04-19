@@ -29,7 +29,7 @@ class Html5Wiki_Model_ArticleManager {
 		$articleId	= self::table()->fetchMediaVersionByPermaLink($permalink);
 		
 		if($articleId == null) {
-			return new Html5Wiki_Model_Article(0, 0);
+			return $articleId;
 		}
 		
 		return new Html5Wiki_Model_Article($articleId['mediaVersionId'], $articleId['mediaVersionTimestamp']);

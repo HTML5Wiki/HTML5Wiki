@@ -25,24 +25,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 		
-		//TODO
-		
-		//Prepare article data for the view
-		var_dump($wikiPage);
-		$title = $wikiPage->title;
-		$content = $wikiPage->content;
-		$tag = $this->getTags($wikiPage);
-		//TODO
-		
-		$title = $permalink;
-		$content = 'ze mega content from ' . $permalink;
-		$tag = 'content,mega,bla,' . $permalink;
-		
-		$this->layoutTemplate->assign('title', $title);
-		$this->template->assign('title', $title);
-		$this->template->assign('content', $content);
-		$this->template->assign('tag', $tag);
-		
+		if( $wikiPage == null ) {
+			$this->loadNoArticlePage($permalink);
+		} else {
+			$this->loadEditPage($wikiPage);
+		}
 	}
 
 	/**
@@ -54,7 +41,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			parent::dispatch($router);
 		} catch (Html5Wiki_Exception_404 $e) {
 			$permalink = $this->getPermalink();
-
+			
+			//@todo replace this with an aporpriate index page
+			if( !( strlen($permalink) > 0 ) ) throw new Html5Wiki_Exception_404();
+			
 			$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 			
 			if( $wikiPage == null ) {
@@ -119,6 +109,31 @@ var_dump($article);
 				
 		$this->template->assign('permalink', $permalink);
 	}
-}
+	
+	/**
+	 * 
+	 * @param $wikiPage
+	 * @return unknown_type
+	 */
+	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
+		//TODO
+		
+		//Prepare article data for the view
+		var_dump($wikiPage);
+		$title = $wikiPage->title;
+		$content = $wikiPage->content;
+		$tag = $this->getTags($wikiPage);
+		//TODO
+		
+		$title = $permalink;
+		$content = 'ze mega content from ' . $permalink;
+		$tag = 'content,mega,bla,' . $permalink;
+		
+		$this->layoutTemplate->assign('title', $title);
+		$this->template->assign('title', $title);
+		$this->template->assign('content', $content);
+		$this->template->assign('tag', $tag);
+	}
+ }
 
 ?>
