@@ -24,6 +24,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function editAction() {
 		$ajax = $this->router->getRequest()->getPost('ajax');		
+
 		if ($ajax === true) {
 			$this->setNoLayout();
 		} 
@@ -32,7 +33,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		//Get current Article
 		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-
+	
 		if( $wikiPage == null ) {
 			$this->loadNoArticlePage($permalink);
 		} else {
@@ -157,15 +158,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
-		$author = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
-		$authorEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
+		//$author	= new Html5Wiki_Model_User(0);
 		
 		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
-		$this->template->assign('author', $author);
-		$this->template->assign('authorEmail', $authorEmail);
-		$this->template->assign('tag', $tag);
+		//$this->template->assign('author', $author);
+		//$this->template->assign('tag', $tag);
 	}
  }
 

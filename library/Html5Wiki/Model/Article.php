@@ -65,6 +65,11 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 		
 		$this->dbAdapter->saveArticle($saveData);
 	}
+	
+	
+	public function getUser() {
+		return new Html5Wiki_Model_User($this->data['userId']);
+	}
 }
 
 

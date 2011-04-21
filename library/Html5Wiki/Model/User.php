@@ -14,19 +14,7 @@
  * @author Nicolas Karrer <nkarrer@hsr.ch>
  *
  */
-class Html5Wiki_Model_User {
-	
-	/**
-	 * 
-	 * @var unknown_type
-	 */
-	protected $id = 0;
-	
-	/**
-	 * 
-	 * @var	array
-	 */
-	protected $data	= array();
+class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 	
 	/**
 	 * 
@@ -38,21 +26,30 @@ class Html5Wiki_Model_User {
 	 * 
 	 * @param	Integer	$idUser
 	 */
-	public function __construct($idUser) {
-		$this->id	= intval($idUser);
+	public function __construct($idUser = 0) {
+		$idUser = intval($idUser);
 		
 		$this->dbAdabter = new Html5Wiki_Model_User_Table();
 		
-		if( $this->id > 0 ) {
-			$this->load();
+		if( $idUser > 0 ) {
+			$this->load($idUser);
+		} else {
+			$this->loadFromCookie();
 		}
 	}
 	
 	/**
 	 * Loads User by its id
 	 */
-	private function load() {	
-		$this->data = $this->dbAdapter->fetchUser($this->id);
+	private function load($idUser) {	
+		$this->data = $this->dbAdapter->fetchUser($idUser)->toArray();
+	}
+	
+	
+	private function loadFromCookie() {
+		 if( isset($_COOKIE['currentUserId']) ) {
+			$this->load($_SESSION['currentUserId']);
+		 }
 	}
 	
 	/**
