@@ -39,6 +39,10 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 		}
 		return call_user_func(array($helper, $name), $args);
 	}
+	
+	public function setNoLayout() {
+		$this->decoratedTemplate = null;
+	}
 
 	private function getHelper($name) {
 		$name = ucfirst($name);

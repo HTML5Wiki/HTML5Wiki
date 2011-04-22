@@ -85,6 +85,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	
 	protected function setNoLayout() {
 		$this->layoutTemplate = null;
+		$this->template->setNoLayout();
 	}
 
 	/**
