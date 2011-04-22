@@ -5,6 +5,7 @@
 	$jsHelper->appendFile($basePath . 'js/messagecontroller.js');
 	$jsHelper->appendFile($basePath . 'js/searchboxcontroller.js');
 	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
+	$jsHelper->appendFile($basePath . 'js/Article.js');
 	$jsHelper->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2');
 ?>
 <!DOCTYPE html>

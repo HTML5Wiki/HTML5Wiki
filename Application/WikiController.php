@@ -22,7 +22,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * 
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
-	public function editAction() {
+	public function editAction() {		
 		$ajax = $this->router->getRequest()->getPost('ajax');		
 
 		if ($ajax === true) {
@@ -76,6 +76,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		try {
 			parent::dispatch($router);
 		} catch (Html5Wiki_Exception_404 $e) {
+			$ajax = $this->router->getRequest()->getPost('ajax');
+			
+			if ($ajax == true) {
+				$this->setNoLayout();
+			}
+			
 			$permalink = $this->getPermalink();
 			
 			//@todo replace this with an aporpriate index page
@@ -139,6 +145,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param	$permalink
 	 */
 	private function loadNoArticlePage($permalink) {
+		$ajax = $this->router->getRequest()->getPost('ajax');		
+		
+		if ($ajax === true) {
+			$this->setNoLayout();
+		} 
+		
 		$this->setTemplate('noarticle.php');
 		
 		$this->template->assign('request', $this->router->getRequest());		
