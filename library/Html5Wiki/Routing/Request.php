@@ -238,6 +238,16 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	public function getPost($key, $default = null) {
 		return isset($this->post[$key]) ? $this->post[$key] : $default;
 	}
+	
+	/**
+	 * Get the whole POST paramters form the request
+	 * 
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 * @return	Array
+	 */
+	public function getPostParameters() {
+		return $this->post;
+	}
 
 	/**
 	 * Get a GET key. If it doesn't exist, return default.
@@ -250,7 +260,17 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	public function getGet($key, $default = null) {
 		return isset($this->get[$key]) ? $this->get[$key] : $default;
 	}
-
+	
+	/**
+	 * Get the whole GET paramters form the request
+	 * 
+	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 * @return	Array
+	 */
+	public function getGetParameters() {
+		return $this->get;
+	}
+	
 	/**
 	 *
 	 * @param array $serverVariables
