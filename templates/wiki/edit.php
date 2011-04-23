@@ -29,11 +29,11 @@
 				<legend class="groupname">Autoreninformation</legend>
 				<p>
 					<label for="txtAuthor" class="label">Ihr Name</label>
-					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php // echo $this->author; ?>" />
+					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php  echo $this->author->name; ?>" />
 				</p>
 				<p>
 					<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse</label>
-					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php //echo $this->authorEmail; ?>" />
+					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php echo $this->author->email; ?>" />
 				</p>
 				<p class="hint">
 					Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden

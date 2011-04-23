@@ -48,14 +48,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
 	 */
 	public function createAction() {
-		$wikiPage = new Html5Wiki_Model_Article(0, 0);
+		$parameters	= $this->router->getRequest()->getPostParameters();
 		
-		$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink()));
-		$wikiPage->save();
+		if($this->handleCreateRequest($parameters) != false) {
+			$user       = new Html5Wiki_Model_User();
+			$wikiPage   = new Html5Wiki_Model_Article(0, 0);
 		
-		$this->setTemplate('edit.php');
+			$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink(), 'userId' => $user->id));
+			$wikiPage->save();
 		
-		$this->loadEditPage($wikiPage);
+			$this->setTemplate('edit.php');
+			
+			$this->loadEditPage($wikiPage);
+		} else {
+			$this->loadNoArticlePage($this->getPermalink());
+		}
 	}
 	
 	/**
@@ -147,7 +154,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	private function loadNoArticlePage($permalink) {
 		$ajax = $this->router->getRequest()->getPost('ajax');		
 		
-		if ($ajax === true) {
+		if ($ajax == true) {
 			$this->setNoLayout();
 		} 
 		
@@ -155,6 +162,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$this->template->assign('request', $this->router->getRequest());		
 		$this->template->assign('permalink', $permalink);
+		$this->template->assign('author', new Html5Wiki_Model_User());
 	}
 	
 	/**
@@ -170,13 +178,36 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
-		//$author	= new Html5Wiki_Model_User(0);
+		$author	= new Html5Wiki_Model_User(0);
 		
 		$this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
-		//$this->template->assign('author', $author);
+		$this->template->assign('author', $author);
 		//$this->template->assign('tag', $tag);
+	}
+	
+	
+	private function handleCreateRequest(array $parameters) {
+		$userData	= array(
+			'id'        => $parameters['hiddenAuthorId'],
+			'name'      => $parameters['txtAuthor'],
+			'email' 	=> $parameters['txtAuthorEmail']
+		);
+		
+		$user	= new Html5Wiki_Model_User();
+		if($user->id > 0) {
+			return $user;
+		} else {
+			if( $userData['email'] && $userData['name'] ) {
+				$user->setData($userData);
+				$user->save();
+				
+				return $user;
+			}
+		}
+		
+		return false;
 	}
  }
 

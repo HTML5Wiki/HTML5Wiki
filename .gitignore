@@ -4,3 +4,4 @@ nbproject
 .settings/
 config/config.php
 test/TestConfiguration.php
+.idea/

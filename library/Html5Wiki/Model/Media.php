@@ -14,13 +14,12 @@
  *
  */
 class Html5Wiki_Model_Media extends Html5Wiki_Model_Abstract {
-	
+
 	/**
-	 * 
-	 * @var Zend_Db_Table_Abstract
+	 * @var Html5Wiki_Model_Media_Table
 	 */
-	private $dbAdapter;
-	
+	private $dbAdapter = null;
+
 	/**
 	 * 
 	 * @param	Integer	$idMediaVersion

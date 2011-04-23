@@ -4,34 +4,32 @@
 	</h1>
 	
 	<p>Wollen Sie diesen Artikel erstellen?</p>
-	
-	<?php if( $this->user == null ) { ?>
-		<div class="grid_4">
-			<form id="create-article" name="createArticleForm" method="post" action="<?php echo $this->request->getBasePath()?>/wiki/create/<?php echo $this->permalink ?>">
+
+	<div class="grid_4">
+		<form id="create-article" name="createArticleForm" method="post" action="<?php echo $this->request->getBasePath()?>/wiki/create/<?php echo $this->permalink ?>">
 				
-					<fieldset name="author" class="group">
-						<legend class="groupname">Autoreninformation</legend>
-						<p>
-							<label for="txtAuthor" class="label">Ihr Name*</label>
-							<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" required value="<?php echo $this->author; ?>" />
-						</p>
-						<p>
-							<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse*</label>
-							<input type="email" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" required value="<?php echo $this->authorEmail; ?>" />
-						</p>
-						<p class="hint">
-							Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
-							nur zur internen Identifikation resp. Versionskontrolle
-							abgelegt.<br/>
-							Ihre Daten werden weder weitergegeben noch anderweitig ausgewertet.
-						</p>
-					</fieldset>
-			</form>
-		</div>
-	<?php } ?>
+			<fieldset name="author" class="group">
+				<legend class="groupname">Autoreninformation</legend>
+					<input type="hidden" value="<?php echo $this->author->id; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
+					<p>
+						<label for="txtAuthor" class="label">Ihr Name*</label>
+						<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" required value="<?php echo $this->author->name; ?>" />
+					</p>
+					<p>
+						<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse*</label>
+						<input type="email" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" required value="<?php echo $this->author->email; ?>" />
+					</p>
+					<p class="hint">
+						Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
+						nur zur internen Identifikation resp. Versionskontrolle
+						abgelegt.<br/>
+						Ihre Daten werden weder weitergegeben noch anderweitig ausgewertet.
+					</p>
+				</fieldset>
+		</form>
+	</div>
 	
 	<div class="grid_12 bottom-button-bar">
-			<!-- <a class="large-button save-button" onclick="Article.create(); return false;" href="<?php echo $this->request->getBasePath()?>/wiki/create/<?php echo $this->permalink ?>">  -->
 			<a class="large-button save-button" onclick="Article.create(); return false;" href="#">
 				<span class="caption">Artikel erstellen</span>
 			</a>
