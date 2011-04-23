@@ -1,10 +1,4 @@
-<?php
-	$jsHelper = $this->javascriptHelper();
-	$jsHelper->appendFile($this->basePath . '/js/jquery.markitup.js');
-	$jsHelper->appendFile($this->basePath . '/js/jquery.ptags.min.js');
-	$jsHelper->appendFile($this->basePath . '/js/markitup/html5wiki-set.js');
-?>
-<article class="content editor">
+<article id="content" class="content editor">
 	<form action="#" method="post">
 		<header class="grid_12 title clearfix">
 			<h1 class="heading"><?php echo $this->title; ?></h1>
