@@ -1,5 +1,14 @@
 Article = {
-	
+
+	loadArticle: function(idArticle, timestampArticle) {
+		$.ajax({
+			type: 'POST',
+			url: '',
+			complete: this.replaceContent.bind(this),
+			data: 'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle
+		})
+	},
+
 	create: function() {
 		var form	= $('#create-article');
 		if( form ) {

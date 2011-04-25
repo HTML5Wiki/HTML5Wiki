@@ -82,18 +82,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		try {
 			parent::dispatch($router);
 		} catch (Html5Wiki_Exception_404 $e) {
-			$ajax = $this->router->getRequest()->getPost('ajax');
+			$parameters = $this->router->getRequest()->getPostParameters();
 			
-			if ($ajax == true) {
+			if( isset($parameters['ajax']) ) {
 				$this->setNoLayout();
+				$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+			} else {
+				$permalink = $this->getPermalink();
+				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+				$this->setTitle($wikiPage->title);
 			}
-			
-			$permalink = $this->getPermalink();
-			
-			//@todo replace this with an aporpriate index page
-			if( !( strlen($permalink) > 0 ) ) throw new Html5Wiki_Exception_404();
-			
-			$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 			
 			if( $wikiPage == null ) {
 				$this->loadNoArticlePage($permalink);
@@ -136,8 +134,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
 		$this->setTemplate('article.php');
-				
-		$this->setTitle($wikiPage->title);
 
 		$this->template->assign('wikiPage', $wikiPage);
 		$this->template->assign('markDownParser', new Markdown_Parser());
@@ -182,6 +178,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
 		$this->template->assign('author', $author);
+		$this->template->assign('wikiPage', $wikiPage);
 		//$this->template->assign('tag', $tag);
 	}
 	
