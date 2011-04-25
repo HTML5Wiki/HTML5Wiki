@@ -1,5 +1,5 @@
 <article id="content" class="content editor">
-	<form action="#" method="post">
+	<form action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
 		<header class="grid_12 title clearfix">
 			<h1 class="heading"><?php echo $this->title; ?></h1>
 			<ol class="capsulebar">
@@ -57,7 +57,7 @@
 		<div class="clear"></div>
 		
 		<div class="grid_12 bottom-button-bar">
-			<a href="#" class="large-button save-button"><span class="caption">Speichern</span></a>
+			<a href="#" class="large-button save-button" onclick="Article.save()"><span class="caption">Speichern</span></a>
 			<a href="#" class="link-button cancel-button">&Auml;nderungen verwerfen</a>
 		</div>
 		<div class="clear"></div>

@@ -31,6 +31,30 @@ Article = {
 			});
 		}
 	},
+	
+	save: function() {
+		var form	= $('#edit-article');
+		if( form ) {
+			var name    = $('#txtAuthor').val();
+			var email   = $('#txtAuthorEmail').val();
+            var id      = $('#hiddenAuthorId').val();
+
+			var mediaData = {
+				txtAuthor: name,
+				txtAuthorEmail: email,
+				hiddenAuthorId: id,
+				ajax: true		
+			};
+
+			$.ajax({
+				type: 'POST',
+				url: form.attr('action'), 
+				data: mediaData,
+				complete: Article.onEditFormLoaded.bind(this)
+			});
+		}
+	},
+	}
 
 	replaceContent: function(response) {
 		$('#content').replaceWith(response.responseText);

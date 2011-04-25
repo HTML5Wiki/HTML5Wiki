@@ -75,7 +75,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function saveAction() {
-		echo "saving...";
+		$parameters	= $this->router->getRequest()->getPostParameters();
+		
+		if (isset($parameters['ajax'])) {
+			$this->setNoLayout();
+		}
+		
 	}
 
 	/**
