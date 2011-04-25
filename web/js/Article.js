@@ -16,11 +16,20 @@ Article = {
 			var email   = $('#txtAuthorEmail').val();
             var id      = $('#hiddenAuthorId').val();
 
+			var media_data = {
+				txtAuthor: name,
+				txtAuthorEmail: email,
+				hiddenAuthorId: id,
+				ajax: true		
+			};
+
 			$.ajax({
 				type: 'POST',
 				url: form.attr('action'), 
-				complete: this.replaceContent.bind(this),
-				data: 'ajax=true&txtAuthor='+name+'&txtAuthorEmail='+email+'&hiddenAuthorId='+id
+				data: media_data,
+				success: function(msg) {
+					$('#content').html(msg);
+				}
 			});
 		}
 	},
