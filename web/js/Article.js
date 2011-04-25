@@ -27,7 +27,7 @@ Article = {
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				complete: Article.replaceContent.bind(this)
+				complete: Article.onEditFormLoaded.bind(this)
 			});
 		}
 	},

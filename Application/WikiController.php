@@ -49,6 +49,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function createAction() {
 		$parameters	= $this->router->getRequest()->getPostParameters();
 		
+		if (isset($parameters['ajax'])) {
+			$this->setNoLayout();
+		}
+		
 		if($this->handleCreateRequest($parameters) != false) {
 			$user       = new Html5Wiki_Model_User();
 			$wikiPage   = new Html5Wiki_Model_Article(0, 0);
