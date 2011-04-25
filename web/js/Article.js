@@ -36,11 +36,19 @@ Article = {
 	save: function() {
 		var form	= $('#edit-article');
 		if( form ) {
-			var name    = $('#txtAuthor').val();
-			var email   = $('#txtAuthorEmail').val();
-            var id      = $('#hiddenAuthorId').val();
+            var idArticle = $('#hiddenIdArticle').val();
+            var idArticle = $('#hiddenTimestampArticle').val();
+            var title     = $('#txtTitle').val();
+            var content   = $('#contentEditor').val();
+			var name      = $('#txtAuthor').val();
+			var email     = $('#txtAuthorEmail').val();
+            var id        = $('#hiddenAuthorId').val();
 
 			var mediaData = {
+                idArticle: idArticle,
+                timestampArticle: idArticle,
+                txtTitle: title,
+                contentEditor: content,
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,

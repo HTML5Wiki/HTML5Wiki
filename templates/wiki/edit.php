@@ -1,6 +1,8 @@
 <article id="content" class="content editor">
-	<form action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
-		<header class="grid_12 title clearfix">
+	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
+		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
+        <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
+        <header class="grid_12 title clearfix">
 			<h1 class="heading"><?php echo $this->title; ?></h1>
 			<ol class="capsulebar">
 				<li class="item first read"><a href="#" onclick="Article.loadArticle(<?php echo $this->wikiPage->id; ?> , <?php echo $this->wikiPage->timestamp; ?> );" class="capsule"><span class="caption">Lesen</span></a></li>
@@ -21,6 +23,7 @@
 		<div class="grid_4">
 			<fieldset name="author" class="group">
 				<legend class="groupname">Autoreninformation</legend>
+                <input type="hidden" value="<?php echo $this->author->id; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
 					<label for="txtAuthor" class="label">Ihr Name</label>
 					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php  echo $this->author->name; ?>" />

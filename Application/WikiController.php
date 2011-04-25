@@ -53,7 +53,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		}
 		
-		if($this->handleCreateRequest($parameters) != false) {
+		if($this->handleUserRequest($parameters) != false) {
 			$user       = new Html5Wiki_Model_User();
 			$wikiPage   = new Html5Wiki_Model_Article(0, 0);
 		
@@ -75,11 +75,50 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function saveAction() {
+        echo "save";
 		$parameters	= $this->router->getRequest()->getPostParameters();
 		
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
 		}
+
+        $oldWikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+
+        //TODO: some validation
+
+        $validate = true;
+
+        if ($validate) {
+            if($this->handleUserRequest($parameters) != false) {
+
+                 //TODO: handle Tag request
+
+                $user     = new Html5Wiki_Model_User();
+                $wikiPage = new Html5Wiki_Model_Article(0, 0);
+                //TODO: ...
+                //$title = ($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->getData()->title;
+                $title = "ze new title";
+
+                //TODO: fix permalink, previousVersion
+                $data = array(
+                    'permalink' => $this->getPermalink(),
+                    'title'     => $title,
+                    'content'   => $parameters['contentEditor'],
+                    'previousMediaVersionTimtestamp' => $parameters['timestampArticle'],
+                    'user'      => $user->id,
+                );
+
+
+                $wikiPage->setData($data);
+                $wikiPage->save();
+
+                $this->loadPage($wikiPage);
+            }
+        } else {
+            
+        }
+
+        echo "finito";
 		
 	}
 
@@ -166,7 +205,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
-		$author	= new Html5Wiki_Model_User(0);
+		$author	= new Html5Wiki_Model_User();
 		
 		if($this->layoutTemplate != null) $this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
@@ -178,7 +217,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	
-	private function handleCreateRequest(array $parameters) {
+	private function handleUserRequest(array $parameters) {
 		$userData	= array(
 			'id'        => $parameters['hiddenAuthorId'],
 			'name'      => $parameters['txtAuthor'],
