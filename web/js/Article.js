@@ -16,7 +16,7 @@ Article = {
 			var email   = $('#txtAuthorEmail').val();
             var id      = $('#hiddenAuthorId').val();
 
-			var media_data = {
+			var mediaData = {
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,
@@ -26,10 +26,8 @@ Article = {
 			$.ajax({
 				type: 'POST',
 				url: form.attr('action'), 
-				data: media_data,
-				success: function(msg) {
-					$('#content').html(msg);
-				}
+				data: mediaData,
+				complete: Article.replaceContent.bind(this)
 			});
 		}
 	},
@@ -48,7 +46,7 @@ Article = {
             type:   'POST',
             url:    'edit',
             data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
-			complete: this.onEditFormLoaded.bind(this)
+			complete: Article.onEditFormLoaded.bind(this)
         });
     },
 
@@ -61,7 +59,7 @@ Article = {
 		
 		// templates/wiki/edit.php-Stuff
 		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
-		$('.editor h1.heading').bind('mouseup', this.handleEditArticleTitle);
+		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 		$('.editor #txtTags').ptags();
 	},
 

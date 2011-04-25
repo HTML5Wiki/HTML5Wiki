@@ -90,7 +90,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			} else {
 				$permalink = $this->getPermalink();
 				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-				$this->setTitle($wikiPage->title);
+				if($wikiPage != null) $this->setTitle($wikiPage->title);
 			}
 			
 			if( $wikiPage == null ) {
