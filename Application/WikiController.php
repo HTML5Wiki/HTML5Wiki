@@ -86,23 +86,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		try {
 			parent::dispatch($router);
 		} catch (Html5Wiki_Exception_404 $e) {
-			$parameters = $this->router->getRequest()->getPostParameters();
-			
-			if( isset($parameters['ajax']) ) {
-				$this->setNoLayout();
-				$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
-			} else {
-				$permalink = $this->getPermalink();
-				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-				if($wikiPage != null) $this->setTitle($wikiPage->title);
-			}
-			
-			if( $wikiPage == null ) {
-				$this->loadNoArticlePage($permalink);
-			} else {
-				$this->loadPage($wikiPage);
-			}
-		}
+			$this->readAction();
+		} 
 	}
 
 	/**
@@ -207,6 +192,25 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		
 		return false;
+	}
+
+	public function readAction() {
+		$parameters = $this->router->getRequest()->getPostParameters();
+
+		if( isset($parameters['ajax']) ) {
+			$this->setNoLayout();
+				$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		} else {
+			$permalink = $this->getPermalink();
+				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			if($wikiPage != null) $this->setTitle($wikiPage->title);
+		}
+
+		if( $wikiPage == null ) {
+			$this->loadNoArticlePage($permalink);
+		} else {
+			$this->loadPage($wikiPage);
+		}
 	}
  }
 

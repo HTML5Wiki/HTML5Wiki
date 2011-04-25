@@ -41,5 +41,6 @@
 		<?php echo $this->decoratedContent ?>
 	</div>
 	<?php echo $this->javascriptHelper()->toString() ?>
+	<script type="text/javascript">Html5Wiki.init( '<?php echo $basePath; ?>' );</script>
 </body>
 </html>

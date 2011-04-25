@@ -1,9 +1,10 @@
 Article = {
 
 	loadArticle: function(idArticle, timestampArticle) {
+		console.log();
 		$.ajax({
 			type: 'POST',
-			url: '',
+			url:  Html5Wiki.getUrl('wiki/read'),
 			complete: this.replaceContent.bind(this),
 			data: 'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle
 		})
@@ -32,7 +33,7 @@ Article = {
 		}
 	},
 
-	replaceContent: function(response) {
+	replaceContent: function(response, textStatus) {
 		$('#content').replaceWith(response.responseText);
 	},
 
@@ -44,7 +45,7 @@ Article = {
     loadEditForm: function(idArticle, timestampArticle) {
 		$.ajax({
             type:   'POST',
-            url:    'edit',
+            url:    Html5Wiki.getUrl('wiki/edit'),
             data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
 			complete: Article.onEditFormLoaded.bind(this)
         });
@@ -54,7 +55,7 @@ Article = {
 	 * 
 	 * @param response
 	 */
-	onEditFormLoaded: function(response) {
+	onEditFormLoaded: function(response, textStatus) {
 		this.replaceContent(response);
 		
 		// templates/wiki/edit.php-Stuff
