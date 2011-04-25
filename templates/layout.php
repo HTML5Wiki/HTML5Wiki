@@ -1,15 +1,16 @@
 <?php
 	$basePath = $this->basePath . '/';
-
 	$jsHelper = $this->javascriptHelper();
+	$jsHelper->appendFile($basePath . 'js/init.js');
 	$jsHelper->appendFile($basePath . 'js/messagecontroller.js');
 	$jsHelper->appendFile($basePath . 'js/searchboxcontroller.js');
-	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
 	$jsHelper->appendFile($basePath . 'js/Article.js');
+	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
 	$jsHelper->appendFile($basePath . 'js/jquery.markitup.js');
 	$jsHelper->appendFile($basePath . 'js/jquery.ptags.min.js');
 	$jsHelper->appendFile($basePath . 'js/markitup/html5wiki-set.js');
 	$jsHelper->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2');
+
 ?>
 <!DOCTYPE html>
 <html lang="de">

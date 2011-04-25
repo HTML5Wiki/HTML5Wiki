@@ -55,7 +55,6 @@ Article = {
 			});
 		}
 	},
-	}
 
 	replaceContent: function(response, textStatus) {
 		$('#content').replaceWith(response.responseText);

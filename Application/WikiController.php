@@ -173,6 +173,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('content', $content);
 		$this->template->assign('author', $author);
 		$this->template->assign('wikiPage', $wikiPage);
+		$this->template->assign('request', $this->router->getRequest());
 		//$this->template->assign('tag', $tag);
 	}
 	
