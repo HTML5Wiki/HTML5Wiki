@@ -3,7 +3,7 @@
 		<header class="grid_12 title clearfix">
 			<h1 class="heading"><?php echo $this->title; ?></h1>
 			<ol class="capsulebar">
-				<li class="item first read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
+				<li class="item first read"><a href="#" onclick="Article.loadArticle(<?php echo $this->wikiPage->id; ?> , <?php echo $this->wikiPage->timestamp; ?> );" class="capsule"><span class="caption">Lesen</span></a></li>
 				<li class="item edit active"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
 				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
 			</ol>
