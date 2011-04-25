@@ -58,7 +58,7 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 		);
 		
 		if(isset($saveData['content'])) $localSaveData['content'] = $saveData['content'];
-		
+
 		return $this->insert($localSaveData);
 	}
 	

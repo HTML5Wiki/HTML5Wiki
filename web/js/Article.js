@@ -36,8 +36,8 @@ Article = {
 	save: function() {
 		var form	= $('#edit-article');
 		if( form ) {
-            var idArticle = $('#hiddenIdArticle').val();
-            var idArticle = $('#hiddenTimestampArticle').val();
+            var idArticle        = $('#hiddenIdArticle').val();
+            var timestampArticle = $('#hiddenTimestampArticle').val();
             var title     = $('#txtTitle').val();
             var content   = $('#contentEditor').val();
 			var name      = $('#txtAuthor').val();
@@ -46,7 +46,7 @@ Article = {
 
 			var mediaData = {
                 idArticle: idArticle,
-                timestampArticle: idArticle,
+                timestampArticle: timestampArticle,
                 txtTitle: title,
                 contentEditor: content,
 				txtAuthor: name,

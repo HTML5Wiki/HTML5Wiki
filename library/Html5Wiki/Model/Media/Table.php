@@ -52,6 +52,9 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		$timestampJoinCondition =  $this->_name . '.' . $this->_primary[2] . ' = ArticleVersion.mediaVersionTimestamp';
 		$selectStmt->join('ArticleVersion', $idJoinCondition . ' AND ' . $timestampJoinCondition);
 
+		$selectStmt->limit(1);
+		$selectStmt->order('timestamp DESC');
+
 		return $this->fetchRow($selectStmt);
 	}
 	
@@ -79,6 +82,7 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 	public function saveMediaVersion($saveData) {
 		$localSaveData = array();
 
+		if(isset($saveData['id']))                  $localSaveData['id']                = $saveData['id'];
 		if(isset($saveData['userId'])) 				$localSaveData['userId']			= $saveData['userId'];
 		if(isset($saveData['permalink']))			$localSaveData['permalink']			= $saveData['permalink'];
 		if(isset($saveData['state']))				$localSaveData['state']				= self::$STATE[$saveData['state']];

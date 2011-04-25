@@ -83,7 +83,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 
         $oldWikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
-
         //TODO: some validation
 
         $validate = true;
@@ -96,16 +95,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
                 $user     = new Html5Wiki_Model_User();
                 $wikiPage = new Html5Wiki_Model_Article(0, 0);
                 //TODO: ...
-                //$title = ($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->getData()->title;
-                $title = "ze new title";
+                $title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
 
                 //TODO: fix permalink, previousVersion
                 $data = array(
-                    'permalink' => $this->getPermalink(),
+					'id'        => $oldWikiPage->id,
+	                'permalink' => $oldWikiPage->permalink,
                     'title'     => $title,
                     'content'   => $parameters['contentEditor'],
-                    'previousMediaVersionTimtestamp' => $parameters['timestampArticle'],
-                    'user'      => $user->id,
+                    'userId'      => $user->id,
                 );
 
 
