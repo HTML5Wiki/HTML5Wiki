@@ -38,26 +38,7 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		'TRASH' => 'TRASH'
 	);
 
-	// @todo move this to article_table
-	// @todo remove join (media don't know article)
-	public function fetchMediaVersionByPermaLink($permalink, $mediaVersionType = 'ARTICLE', $state = 'PUBLISHED') {
-		$selectStmt = $this->select()->setIntegrityCheck(false);
-		$selectStmt->from($this);
-		$selectStmt->where('mediaVersionType = ?', $mediaVersionType);
-		$selectStmt->where('state = ?', $state);
-		$selectStmt->where('permalink = ?', $permalink);
 
-
-		$idJoinCondition = $this->_name . '.' . $this->_primary[1] . ' = ArticleVersion.mediaVersionId';
-		$timestampJoinCondition =  $this->_name . '.' . $this->_primary[2] . ' = ArticleVersion.mediaVersionTimestamp';
-		$selectStmt->join('ArticleVersion', $idJoinCondition . ' AND ' . $timestampJoinCondition);
-
-		$selectStmt->limit(1);
-		$selectStmt->order('timestamp DESC');
-
-		return $this->fetchRow($selectStmt);
-	}
-	
 	/**
 	 * 
 	 * @param	$idMediaVersion

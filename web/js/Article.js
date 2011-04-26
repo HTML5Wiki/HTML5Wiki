@@ -96,6 +96,19 @@ Article = {
 	},
 
 	/**
+	 * 
+	 * @param idArticle
+	 */
+	loadArticleHistory: function(idArticle) {
+		$.ajax({
+            type:   'POST',
+            url:    Html5Wiki.getUrl('history/articlehistory'),
+            data:   'ajax=true&idArticle=' + idArticle,
+			complete: Article.replaceContent.bind(this)
+        });
+	},
+
+	/**
      * Changes the h1 of the Article-Editor into a textfield for editing the title
      * of an article.
      * A button with the possibility to cancel the title-editor is appended.
@@ -126,4 +139,5 @@ Article = {
 
 		return false;
 	}
+	
 };

@@ -32,7 +32,7 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 	 * @var boolean
 	 */
 	protected $_sequence	= true;
-	
+
 	/**
 	 * 
 	 */
@@ -62,7 +62,65 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 		return $this->insert($localSaveData);
 	}
 	
+	/**
+	 * @param  $permalink
+	 * @return null|Zend_Db_Table_Row_Abstract
+	 */
+	public function fetchArticleByPermaLink($permalink) {
+		$selectStatement = $this->initSelectStatement('PUBLISHED');
 
+		$selectStatement->where('permalink = ?', $permalink);
+
+		$selectStatement = $this->addMediaVersionJoinStatement($selectStatement);
+
+		$selectStatement->limit(1);
+		$selectStatement->order('timestamp DESC');
+
+		return $this->fetchRow($selectStatement);
+	}
+
+	/**
+	 * @param  $idArticle
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
+	public function fetchArticlesById($idArticle) {
+		$idArticle  = intval($idArticle);
+
+		$selectStatement = $this->initSelectStatement('PUBLISHED');
+
+		$selectStatement->where('mediaVersionId = ?', $idArticle);
+
+		$selectStatement = $this->addMediaVersionJoinStatement($selectStatement);
+
+		return $this->fetchAll($selectStatement);
+	}
+
+	/**
+	 * @param  $state
+	 * @return Zend_Db_Select
+	 */
+	private function initSelectStatement($state) {
+		$selectStatement = $this->select()->setIntegrityCheck(false);
+		$selectStatement->from($this);
+		$selectStatement->where('mediaVersionType = ?', 'ARTICLE');
+		$selectStatement->where('state = ?', $state);
+
+		return $selectStatement;
+	}
+
+	/**
+	 * Add Join to the select statement
+	 *
+	 * @param   Zend_Db_Select    $selectStatement
+	 * @return  Zend_Db_Select
+	 */
+	private function addMediaVersionJoinStatement($selectStatement) {
+		$idJoinCondition = $this->_name . '.' . $this->_primary[1] . ' = MediaVersion.id';
+		$timestampJoinCondition =  $this->_name . '.' . $this->_primary[2] . ' = MediaVersion.timestamp';
+		$selectStatement->join('MediaVersion', $idJoinCondition . ' AND ' . $timestampJoinCondition);
+
+		return $selectStatement;
+	}
 }
 
 

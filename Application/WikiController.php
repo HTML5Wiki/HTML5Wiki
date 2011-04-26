@@ -9,12 +9,15 @@
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
-	 * 
-	 * @return unknown_type
+	 * @override
+	 * @param Html5Wiki_Routing_Interface_Router $router
 	 */
-	public function foobarAction() {
-		$foo = array('bar', 'baz');
-		$this->template->assign('foo', $foo);
+	public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
+		try {
+			parent::dispatch($router);
+		} catch (Html5Wiki_Exception_404 $e) {
+			$this->readAction();
+		}
 	}
 
 	/**
@@ -82,33 +85,33 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		}
 
-        $oldWikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
-        //TODO: some validation
+		$oldWikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		//TODO: some validation
 
-        $validate = true;
+		$validate = true;
 
-        if ($validate) {
-            if($this->handleUserRequest($parameters) != false) {
+		if ($validate) {
+			if($this->handleUserRequest($parameters) != false) {
 
                  //TODO: handle Tag request
 
-                $user     = new Html5Wiki_Model_User();
-                $wikiPage = new Html5Wiki_Model_Article(0, 0);
-                //TODO: ...
-                $title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
+				$user     = new Html5Wiki_Model_User();
+				$wikiPage = new Html5Wiki_Model_Article(0, 0);
+
+				$title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
 
                 //TODO: fix permalink, previousVersion
-                $data = array(
+				$data = array(
 					'id'        => $oldWikiPage->id,
-	                'permalink' => $oldWikiPage->permalink,
-                    'title'     => $title,
-                    'content'   => $parameters['contentEditor'],
-                    'userId'      => $user->id,
-                );
+					'permalink' => $oldWikiPage->permalink,
+					'title'     => $title,
+					'content'   => $parameters['contentEditor'],
+					'userId'      => $user->id,
+				);
 
 
-                $wikiPage->setData($data);
-                $wikiPage->save();
+				$wikiPage->setData($data);
+				$wikiPage->save();
 
                 $this->loadPage($wikiPage);
             }
@@ -120,43 +123,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 	}
 
-	/**
-	 * @override
-	 * @param Html5Wiki_Routing_Interface_Router $router
-	 */
-	public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
-		try {
-			parent::dispatch($router);
-		} catch (Html5Wiki_Exception_404 $e) {
-			$this->readAction();
-		} 
-	}
-
-	/**
-	 * Get permalink from url
-	 *
-	 * Works like this:
-	 * User requests /wiki/foobar
-	 * -> Method returns foobar, because the Action foobar doesn't exist.
-	 * User requests /wiki/edit/foobar
-	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
-	 *    needle of the substring replacement.
-	 *
-	 * @return string
-	 */
-	private function getPermalink() {
-		$uri = $this->router->getRequest()->getUri();
-		$basePath = $this->router->getRequest()->getBasePath();
-		$basePath .= '/';
-		
-		$needle = $basePath . $this->router->getController() . '/';
-		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
-		
-		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
-		
-		return $permalink;
-	}
-	
 	/**
 	 * Loads the standard view page for a given article
 	 * 
@@ -214,7 +180,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//$this->template->assign('tag', $tag);
 	}
 	
-	
+	/**
+	 * @param array $parameters
+	 * @return bool|Html5Wiki_Model_User
+	 */
 	private function handleUserRequest(array $parameters) {
 		$userData	= array(
 			'id'        => $parameters['hiddenAuthorId'],
@@ -237,6 +206,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return false;
 	}
 
+	/**
+	 * @return void
+	 */
 	public function readAction() {
 		$parameters = $this->router->getRequest()->getPostParameters();
 

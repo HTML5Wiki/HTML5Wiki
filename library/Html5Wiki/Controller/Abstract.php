@@ -97,8 +97,37 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->template->setTemplateFile($this->templateFile);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function render() {
 		$this->template->render();
 	}
+
+	/**
+	 * Get permalink from url
+	 *
+	 * Works like this:
+	 * User requests /wiki/foobar
+	 * -> Method returns foobar, because the Action foobar doesn't exist.
+	 * User requests /wiki/edit/foobar
+	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
+	 *    needle of the substring replacement.
+	 *
+	 * @return string
+	 */
+	protected function getPermalink() {
+		$uri = $this->router->getRequest()->getUri();
+		$basePath = $this->router->getRequest()->getBasePath();
+		$basePath .= '/';
+
+		$needle = $basePath . $this->router->getController() . '/';
+		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
+
+		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
+
+		return $permalink;
+	}
+		
 }
 ?>
