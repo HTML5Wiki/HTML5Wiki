@@ -9,15 +9,6 @@
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
-	 * 
-	 * @return unknown_type
-	 */
-	public function foobarAction() {
-		$foo = array('bar', 'baz');
-		$this->template->assign('foo', $foo);
-	}
-
-	/**
 	 * Edit Article
 	 * 
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
