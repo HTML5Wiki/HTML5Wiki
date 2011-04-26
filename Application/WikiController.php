@@ -227,6 +227,24 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->loadPage($wikiPage);
 		}
 	}
+
+	public function historyAction() {
+		$parameters = $this->router->getRequest()->getPostParameters();
+
+		if( isset($parameters['ajax']) ) {
+			$this->setNoLayout();
+			// @todo change to all version of this idArticle (no timestamp)
+			$wikiPages   = Html5Wiki_Model_ArticleManager::getArticlesById($parameters['idArticle']);
+		} else {
+			$permalink  = $this->getPermalink();
+			$wikiPages   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			$wikiPages   = Html5Wiki_Model_ArticleManager::getArticlesById($wikiPages->id);
+		}
+
+		if( $wikiPages == null ) throw new Html5Wiki_Exception_404();
+
+		$this->template->assign('wikiPages', $wikiPages);
+	}
  }
 
 ?>

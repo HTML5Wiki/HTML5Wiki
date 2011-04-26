@@ -92,6 +92,8 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 
 		$selectStatement = $this->addMediaVersionJoinStatement($selectStatement);
 
+		$selectStatement->order('timestamp DESC');
+
 		return $this->fetchAll($selectStatement);
 	}
 
