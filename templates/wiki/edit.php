@@ -1,5 +1,6 @@
 <?php
-	$this->javascriptHelper()->appendFile('js/Capsulebar.js');
+	$basePath = $this->basePath . '/';
+	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
 	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
 ?>
 <article id="content" class="content editor">
