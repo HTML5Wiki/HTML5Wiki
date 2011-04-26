@@ -99,7 +99,7 @@ Article = {
 	 * 
 	 * @param idArticle
 	 */
-	loadArticleHistory: function(idArticle) {
+	loadHistory: function(idArticle) {
 		$.ajax({
             type:   'POST',
             url:    Html5Wiki.getUrl('history/articlehistory'),
@@ -117,7 +117,6 @@ Article = {
      * @access public
      */
 	handleEditArticleTitle: function() {
-		console.log($(this));
 		var heading = $(this);
 		var title = heading.text();
 		var titleEditor = $('<input value="'+title+'" class="txtTitle" id="txtTitle" name="txtTitle" />');

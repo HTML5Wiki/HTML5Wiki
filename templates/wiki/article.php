@@ -6,7 +6,7 @@
 	});
 
 	$("#capsulebar-history").click(function(e) {
-		Article.loadArticleHistory("' . $this->wikiPage->id . '");
+		Article.loadHistory("' . $this->wikiPage->id . '");
 		e.preventDefault();
 	});';
 

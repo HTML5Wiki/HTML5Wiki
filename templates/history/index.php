@@ -14,12 +14,15 @@
 		<ol class="versionhistory">
 			<li class="timespan">Heute</li>
 			<ol class="group">
-				<?php foreach($this->wikiPages as $wikiPage) { ?>
+				<?php foreach($this->wikiPages as $wikiPage) {
+					var_dump($wikiPage->timestamp);
+				?>
+
 					<li class="version">
 						<input type="radio" name="left" value="[timestamp]" class="diffselector" />
 						<input type="radio" name="right" value="[timestamp]" class="diffselector" />
 						<span class="timestamp">
-							<span class="time"><?php date('H:i', $wikiPage->timestamp); ?></span>, <span class="date"><?php date('d.m.Y', $wikiPage->timestamp); ?></span>
+							<span class="time"><?php date('H:i', intval($wikiPage->timestamp)); ?></span>, <span class="date"><?php date('d.m.Y', $wikiPage->timestamp); ?></span>
 						</span>
 						<img src="http://www.gravatar.com/avatar/c36915ec92a666d930c1e91e2c3ba6a4?s=16&d=mm" class="avatar" />
 						<span class="author">Manuel Alabor</span>
