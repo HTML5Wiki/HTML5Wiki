@@ -1,14 +1,14 @@
+<?php
+	$this->javascriptHelper()->appendFile('js/Capsulebar.js');
+	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
+?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
 		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
         <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
         <header class="grid_12 title clearfix">
 			<h1 class="heading"><?php echo $this->title; ?></h1>
-			<ol class="capsulebar">
-				<li class="item first read"><a href="#" onclick="Article.loadArticle(<?php echo $this->wikiPage->id; ?> , <?php echo $this->wikiPage->timestamp; ?> );" class="capsule"><span class="caption">Lesen</span></a></li>
-				<li class="item edit active"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
-				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
-			</ol>
+			<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 		</header>
 		<div class="clear"></div>
 

@@ -1,16 +1,6 @@
 <?php
-	$capsulebarJs = '
-	$("#capsulebar-edit").click(function(e) {
-		Article.loadEditForm("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");
-		e.preventDefault();
-	});
-
-	$("#capsulebar-history").click(function(e) {
-		Article.loadHistory("' . $this->wikiPage->id . '");
-		e.preventDefault();
-	});';
-
-	$this->javascriptHelper()->appendScript($capsulebarJs);
+	$this->javascriptHelper()->appendFile('js/Capsulebar.js');
+	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
 ?>
 <article id="content" class="grid_12 content article">
 	<header class="title clearfix">
