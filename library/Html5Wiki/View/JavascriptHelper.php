@@ -12,14 +12,9 @@
  * Javascript Helper
  */
 class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
-	private $template;
 	private static $javascriptFiles = array();
 	private static $javascriptScripts = array();
 	
-    public function __construct(Html5Wiki_Template_Interface $template) {
-		$this->template = $template;
-	}
-
 	public function appendFile($file) {
 		if (!in_array($file, self::$javascriptFiles)) {
 			self::$javascriptFiles[] = $file;

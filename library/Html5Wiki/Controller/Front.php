@@ -44,6 +44,13 @@ class Html5Wiki_Controller_Front {
 	 * @var string
 	 */
 	private $applicationPath = '';
+	
+	/**
+	 * Front controller instance.
+	 * 
+	 * @var Html5Wiki_Controller_Front
+	 */
+	private static $instance = null;
 
 	/**
 	 * Setup front controller
@@ -72,6 +79,19 @@ class Html5Wiki_Controller_Front {
 		$this->basePath = $basePath;
 		$this->libraryPath = $libraryPath;
 		$this->applicationPath = $applicationPath;
+
+		self::setInstance($this);
+	}
+	
+	public static function setInstance(Html5Wiki_Controller_Front $instance) {
+		self::$instance = $instance;
+	}
+	
+	public static function getInstance() {
+		if (!self::$instance) {
+			throw new Html5Wiki_Exception("Front controller must be instantiated before usage of getInstance");
+		}
+		return self::$instance;
 	}
 
 	/**
