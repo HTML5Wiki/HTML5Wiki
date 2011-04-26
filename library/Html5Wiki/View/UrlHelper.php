@@ -14,7 +14,7 @@
 class Html5Wiki_View_UrlHelper extends Html5Wiki_View_Helper {
 	public function urlHelper($path) {
 		$request = Html5Wiki_Controller_Front::getInstance()->getRouter()->getRequest();
-		return '/' . $request->getBasePath() . $path;
+		return $request->getBasePath() . '/' . $path;
 	}
 }
 
