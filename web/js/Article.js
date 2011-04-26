@@ -102,7 +102,7 @@ Article = {
 	loadHistory: function(idArticle) {
 		$.ajax({
             type:   'POST',
-            url:    Html5Wiki.getUrl('history/articlehistory'),
+            url:    Html5Wiki.getUrl('wiki/history'),
             data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.replaceContent.bind(this)
         });

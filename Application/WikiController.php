@@ -234,16 +234,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
 			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPages   = Html5Wiki_Model_ArticleManager::getArticlesById($parameters['idArticle']);
+			$wikiPage   = Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
 		} else {
 			$permalink  = $this->getPermalink();
-			$wikiPages   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-			$wikiPages   = Html5Wiki_Model_ArticleManager::getArticlesById($wikiPages->id);
+			$wikiPage   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 		}
 
-		if( $wikiPages == null ) throw new Html5Wiki_Exception_404();
+		if( $wikiPage == null ) throw new Html5Wiki_Exception_404();
 
-		$this->template->assign('wikiPages', $wikiPages);
+		$this->template->assign('wikiPage', $wikiPage);
 	}
  }
 
