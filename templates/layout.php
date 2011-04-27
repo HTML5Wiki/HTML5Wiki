@@ -32,9 +32,11 @@
 			<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
-					<li class="item home active"><a href="<?php echo $basePath ?>" class="tab">Startseite</a></li>
-					<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
-					<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+					<li class="item home active">
+						<a href="<?php echo $basePath ?>" class="tab"><?php echo $this->translate->_("homepage") ?></a>
+					</li>
+					<li class="item updates"><a href="#" class="tab"><?php echo $this->translate->_("recentChanges") ?></a></li>
+					<li class="item search"><input placeholder="<?php echo $this->translate->_("search") ?>" class="searchterm" accesskey="s" /></li>
 				</ol>
 			</nav>
 		</header>

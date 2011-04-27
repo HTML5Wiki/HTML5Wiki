@@ -3,6 +3,10 @@
 return array(
 	'read' => 'Read',
 	'edit' => 'Edit',
-	'history' => 'History'
+	'history' => 'History',
+	'homepage' => 'Homepage',
+	'recentChanges' => 'Recent Changes',
+	'search' => 'Search',
+	'articleContentLegend' => 'Article content'
 );
 ?>
