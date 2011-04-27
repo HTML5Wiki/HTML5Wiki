@@ -69,6 +69,12 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @var string
 	 */
 	private $requestMethod = '';
+	
+	/**
+	 * Language of the requestor
+	 * @var string
+	 */
+	private $language = '';
 
 	/**
 	 * Arguments in the URL
@@ -81,6 +87,12 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @var array
 	 */
 	private $serverVariables = array();
+	
+	/**
+	 * Application configuration
+	 * @var Zend_Config
+	 */
+	private $config = null;
 
 	/**
 	 * POST Arguments
@@ -109,6 +121,8 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->port = $this->serverVariables['SERVER_PORT'];
 		$this->https = !empty($this->serverVariables['HTTPS']);
 		$this->uri = $this->serverVariables['REQUEST_URI'];
+		
+		$this->language = $this->serverVariables['HTTP_ACCEPT_LANGUAGE'];
 
 		$this->path = isset($this->serverVariables['PATH_INFO']) ? $this->serverVariables['PATH_INFO'] : '';
 
@@ -128,6 +142,37 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 
 		$this->post = $_POST;
 		$this->get = $_GET;
+	}
+	
+	/**
+	 * Parses the HTTP_ACCEPT_LANGUAGE string and matches the portions against the system languages given. 
+	 * On first match, it returns the language.
+	 * If no match, it returns null
+	 * 
+	 * @param string $languageString
+	 * @param array  $systemLanguages
+	 * @param string|null
+	 */
+	public static function parseHttpAcceptLanguage($languageString, $systemLanguages) {
+		$languagesPortions = explode(";", $languageString);
+		
+		$validLanguages = array();
+		
+		foreach ($languagesPortions as $languagePortion) {
+			$languages = explode(',', $languagePortion);
+			foreach ($languages as $language) {
+				if (!strpos($language, "=") !== false) {
+					$validLanguages[] = $language;
+				}
+			}
+		}
+		foreach ($validLanguages as $language) {
+			if (in_array($language, $systemLanguages)) {
+				return $language;
+			}
+		}
+		
+		return null;
 	}
 
 
@@ -382,7 +427,14 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	public function setGet($get) {
 		$this->get = $get;
 	}
-
+	
+	public function setLanguage($language) {
+		$this->language = $language;
+	}
+	
+	public function getLanguage() {
+		return $this->language;
+	}
 }
 
 ?>

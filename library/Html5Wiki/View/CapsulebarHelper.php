@@ -23,13 +23,19 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 		$html = '
    <ol class="capsulebar">
 		<li class="item first'. (($activePage !== 'edit' && $activePage !== 'history') ? ' active' : '') .' read">
-			<a href="'. $urlHelper->urlHelper('wiki/' . $permalink) .'" class="capsule" id="capsulebar-read"><span class="caption">Lesen</span></a>
+			<a href="'. $urlHelper->urlHelper('wiki/' . $permalink) .'" class="capsule" id="capsulebar-read">
+				<span class="caption">' . $this->template->getTranslate()->_('read'). '</span>
+			</a>
 		</li>
 		<li class="item edit'. ($activePage === 'edit' ? ' active' : '') .'">
-			<a href="'. $urlHelper->urlHelper('wiki/edit/' . $permalink) .'" class="capsule" id="capsulebar-edit"><span class="caption">Bearbeiten</span></a>
+			<a href="'. $urlHelper->urlHelper('wiki/edit/' . $permalink) .'" class="capsule" id="capsulebar-edit">
+				<span class="caption">' . $this->template->getTranslate()->_('edit') . '</span>
+			</a>
 		</li>
 		<li class="item last'. ($activePage === 'history' ? ' active' : '') .' history">
-			<a href="'. $urlHelper->urlHelper('wiki/history/' . $permalink) .'" class="capsule" id="capsulebar-history"><span class="caption">Änderungsgeschichte</span></a>
+			<a href="'. $urlHelper->urlHelper('wiki/history/' . $permalink) .'" class="capsule" id="capsulebar-history">
+				<span class="caption">' . $this->template->getTranslate()->_('history') . '</span>
+			</a>
 		</li>
 	</ol>';
 

@@ -99,6 +99,10 @@ class Html5Wiki_Controller_Front {
 	 */
 	public function run() {
 		$this->controller = $this->getController();
+		
+		$this->controller->setConfig($this->config);
+		$this->controller->setBasePath($this->basePath);
+		
 		$this->dispatch();
 		$this->render();
 	}
