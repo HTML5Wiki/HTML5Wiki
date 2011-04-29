@@ -81,5 +81,13 @@ class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 
 		setcookie('currentUserId', $this->data['id'], time() + 3600, '/', null, false, true);
 	}
+
+
+	/**
+	 * @return 
+	 */
+	public function toString() {
+		return $this->name;
+	}
 }
 ?>

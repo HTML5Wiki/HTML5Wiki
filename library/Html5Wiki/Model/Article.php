@@ -66,9 +66,26 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 		$this->dbAdapter->saveArticle($saveData);
 	}
 	
-	
+	/**
+	 * @return Html5Wiki_Model_User
+	 */
 	public function getUser() {
 		return new Html5Wiki_Model_User($this->data['userId']);
+	}
+
+	/**
+	 * 
+	 * @return void
+	 */
+	public function loadHistory() {
+		$this->data['history'] = array();
+
+		$articles = $this->dbAdapter->fetchArticlesById($this->data['id']);
+
+		foreach($articles as $article) {
+			$historyArticle = new Html5Wiki_Model_Article($article['id'], $article['timestamp']);
+			$this->data['history'][Html5Wiki_Model_ArticleManager::getTimespanGroup($historyArticle->timestamp)][] = $historyArticle;
+		}
 	}
 }
 
