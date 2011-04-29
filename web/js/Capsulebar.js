@@ -22,13 +22,13 @@ var Capsulebar = (function() {
 		},
 		
 		onClick: function(page, e) {
-			var url = this.setContent(page, this.articleId, this.articleTimestamp);
+			var url = this.setContent(page, e);
 			this.updateHistory(page, url, this.articleId, this.articleTimestamp);
 			
 			e.preventDefault();
 		},
 		
-		initializeHistory: function(articleId, articleTimestamp) {
+		initializeHistory: function() {
 			var url = window.location.pathname;
 			
 			this.updateHistory(this.getPage(url), url);
@@ -50,17 +50,17 @@ var Capsulebar = (function() {
 			e.preventDefault();
 		},
 		
-		setContent: function(page) {
+		setContent: function(page, e) {
 			var url;
 			switch (page) {
 				case 'history':
-					url = Article.loadHistory(this.articleId, this.articleTimestamp);
+					url = Article.loadHistory(e, this.articleId, this.articleTimestamp);
 					break;
 				case 'edit':
-					url = Article.loadEditForm(this.articleId, this.articleTimestamp);
+					url = Article.loadEditForm(e, this.articleId, this.articleTimestamp);
 					break;
 				default:
-					url = Article.loadArticle(this.articleId, this.articleTimestamp);
+					url = Article.loadArticle(e, this.articleId, this.articleTimestamp);
 			}
 			return url;
 		},
