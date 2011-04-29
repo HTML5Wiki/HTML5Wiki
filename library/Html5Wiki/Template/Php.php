@@ -10,7 +10,6 @@
 class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 
 	private $templateFile = '';
-	private $decoratedContent = '';
 
 	/**
 	 * Template File to render
@@ -18,14 +17,6 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 	 */
 	public function setTemplateFile($templateFile) {
 		$this->templateFile = $templateFile;
-	}
-
-	public function setDecoratedContent($decoratedContent) {
-		$this->decoratedContent = $decoratedContent;
-	}
-
-	public function __get($name) {
-		return isset($this->data[$name]) ? $this->data[$name] : null;
 	}
 	
 	public function setNoLayout() {

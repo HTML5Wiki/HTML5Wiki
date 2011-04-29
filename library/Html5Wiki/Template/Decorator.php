@@ -13,6 +13,8 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	const TEMPLATE_PATH = 'templates/';
 	
 	private $helpers = array();
+	private $translate = null;
+	protected $decoratedContent = '';
 
 	/**
 	 * Assigned variables.
@@ -24,6 +26,14 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 
 	public function __construct(Html5Wiki_Template_Interface $decoratedTemplate = null) {
 		$this->decoratedTemplate = $decoratedTemplate;
+	}
+	
+	public function setTranslate(Zend_Translate $translate) {
+		$this->translate = $translate;
+	}
+	
+	public function getTranslate() {
+		return $this->translate;
 	}
 	
 	public function __call($name, $args) {
@@ -41,6 +51,10 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		$className = self::HELPER_CLASS_PREFIX . $name;
 		return new $className($this);
 	}
+	
+	public function setDecoratedContent($decoratedContent) {
+		$this->decoratedContent = $decoratedContent;
+	}
 
 
 	/**
@@ -57,6 +71,13 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		$this->data[$key] = $value;
 
 		return $this;
+	}
+	
+	public function __get($name) {
+		if ($name === 'translate') {
+			return $this->translate;
+		}
+		return isset($this->data[$name]) ? $this->data[$name] : null;
 	}
 
 	public function render() {

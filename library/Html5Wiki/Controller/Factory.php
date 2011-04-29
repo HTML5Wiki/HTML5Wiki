@@ -31,7 +31,7 @@ class Html5Wiki_Controller_Factory {
 
 				if (stripos($fileName, $router->getController()) === 0) {
 					$controller = self::APPLICATION_NAMESPACE . substr($fileName, 0, -4);
-					return new $controller;
+					return new $controller();
 				}
 			}
 		}

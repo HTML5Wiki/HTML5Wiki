@@ -20,21 +20,15 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 		
 		$permalink = $args[0];
 		
-		$html = '
-   <ol class="capsulebar">
-		<li class="item first'. (($activePage !== 'edit' && $activePage !== 'history') ? ' active' : '') .' read">
-			<a href="'. $urlHelper->urlHelper('wiki/' . $permalink) .'" class="capsule" id="capsulebar-read"><span class="caption">Lesen</span></a>
-		</li>
-		<li class="item edit'. ($activePage === 'edit' ? ' active' : '') .'">
-			<a href="'. $urlHelper->urlHelper('wiki/edit/' . $permalink) .'" class="capsule" id="capsulebar-edit"><span class="caption">Bearbeiten</span></a>
-		</li>
-		<li class="item last'. ($activePage === 'history' ? ' active' : '') .' history">
-			<a href="'. $urlHelper->urlHelper('wiki/history/' . $permalink) .'" class="capsule" id="capsulebar-history"><span class="caption">Änderungsgeschichte</span></a>
-		</li>
-	</ol>';
-
+		$template = new Html5Wiki_Template_Php();
+		$template->setTemplateFile('helpers/capsulebar.php');
+		$template->assign('activePage', $activePage);
+		$template->assign('permalink', $permalink);
+		$template->setTranslate($this->template->getTranslate());
 		
-		return $html;
+		ob_start();
+		$template->render();
+		return ob_get_clean();
 	}
 	
 }
