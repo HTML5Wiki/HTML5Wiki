@@ -1,13 +1,14 @@
 Article = {
 
 	loadArticle: function(idArticle, timestampArticle) {
-		console.log();
+		var url = Html5Wiki.getUrl('wiki/read');
 		$.ajax({
 			type: 'POST',
-			url:  Html5Wiki.getUrl('wiki/read'),
+			'url':  url,
 			complete: this.replaceContent.bind(this),
 			data: 'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle
-		})
+		});
+		return url;
 	},
 
 	create: function() {
@@ -33,7 +34,8 @@ Article = {
 		}
 	},
 	
-	save: function() {
+	save: function(e) {
+		e.preventDefault();
 		var form	= $('#edit-article');
 		if( form ) {
             var idArticle        = $('#hiddenIdArticle').val();
@@ -59,7 +61,7 @@ Article = {
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				complete: Article.onEditFormLoaded.bind(this)
+				complete: Article.onEditFormLoaded.bind(Article)
 			});
 		}
 	},
@@ -74,12 +76,14 @@ Article = {
 	 * @param timestampArticle
 	 */
     loadEditForm: function(idArticle, timestampArticle) {
+		var url = Html5Wiki.getUrl('wiki/edit');
 		$.ajax({
             type:   'POST',
-            url:    Html5Wiki.getUrl('wiki/edit'),
+            url:    url,
             data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
 			complete: Article.onEditFormLoaded.bind(this)
         });
+		return url;
     },
 
 	/**
@@ -100,12 +104,15 @@ Article = {
 	 * @param idArticle
 	 */
 	loadHistory: function(idArticle, timestampArticle) {
+		var url = Html5Wiki.getUrl('wiki/history');
 		$.ajax({
-            type:   'POST',
-            url:    Html5Wiki.getUrl('wiki/history'),
+			type:   'POST',
+            url:    url,
             data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
 			complete: Article.replaceContent.bind(this)
         });
+		
+		return url;
 	},
 
 	/**

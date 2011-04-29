@@ -42,5 +42,9 @@
 	</div>
 
 	<div class="clear"></div>
-
+	<?php if ($this->ajax === true): ?>
+	<script type="text/javascript">
+		Capsulebar.initializeClickEvents();
+	</script>
+	<?php endif; ?>
 </article>

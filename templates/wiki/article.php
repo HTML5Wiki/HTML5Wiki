@@ -11,5 +11,10 @@
 	<section>
 		<?php echo $this->markDownParser->transform($this->wikiPage->content) ?>
 	</section>
+	<div class="clear"></div>
+	<?php if ($this->ajax === true): ?>
+	<script type="text/javascript">
+		Capsulebar.initializeClickEvents();
+	</script>
+	<?php endif; ?>
 </article>
-<div class="clear"></div>

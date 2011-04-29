@@ -1,7 +1,7 @@
 <?php
 	$basePath = $this->basePath . '/';
 	$jsHelper = $this->javascriptHelper();
-	$jsHelper->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2');
+	$jsHelper->appendFile($basePath . 'js/jquery.min.js');
 	$jsHelper->appendFile($basePath . 'js/init.js');
 	$jsHelper->appendFile($basePath . 'js/messagecontroller.js');
 	$jsHelper->appendFile($basePath . 'js/searchboxcontroller.js');
