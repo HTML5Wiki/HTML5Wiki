@@ -50,5 +50,61 @@ class Html5Wiki_Model_ArticleManager {
 
 		return $articleArray;
 	}
+
+	/**
+	 * @static
+	 * @param  $timestamp
+	 * @return void
+	 */
+	public static function getTimespanGroup($timestamp) {
+		$timestamp = intval($timestamp);
+
+		$today      = array(
+			'start' => mktime(0, 0, 0, date('n'), date('d'), date('Y')),
+			'end' => mktime(23, 59, 59, date('n'), date('d'), date('Y')),
+		);
+		$yesterday  = array(
+			'start' => $today['start'] - 24 * 3600,
+			'end'   => $today['end'] - 24 * 3600,
+		);
+		$dayBeforeYesterday   = array(
+			'start' => $yesterday['start'] - 24 * 3600,
+			'end'   => $yesterday['end'] - 24 * 3600,
+		);
+		$thisWeek = array(
+			'start' => self::getWeekStart(time()),
+			'end'   => self::getWeekEnd(time()),
+		);
+		$lastWeek   = array(
+			'start' => self::getWeekStart(time() - 7 * 24 * 3600),
+			'end'   => self::getWeekEnd(time()  - 7 * 24 * 3600),
+		);
+
+		if( $timestamp < $today['end'] && $timestamp > $today['start']) {
+			return 'Heute';
+		} else if( $timestamp < $yesterday['end'] && $timestamp > $yesterday['start']) {
+			return 'Gestern';
+		} else if( $timestamp < $dayBeforeYesterday['end'] && $timestamp > $dayBeforeYesterday['start']) {
+			return 'Vorgestern';
+		} else if( $timestamp < $thisWeek['end'] && $timestamp > $thisWeek['start']) {
+			return 'Diese Woche';
+		} else if( $timestamp < $lastWeek['end'] && $timestamp > $lastWeek['start']) {
+			return 'Letzte Woche';
+		} else {
+			return date('F Y', $timestamp);
+		}
+	}
+
+	public static function getWeekStart($timestamp) {
+		$diff	= (date('w', $timestamp)+6)%7;
+
+		return mktime(0, 0, 0, date('n', $timestamp), date('j', $timestamp)-$diff, date('Y', $timestamp));
+	}
+
+	public static function getWeekEnd($timestamp) {
+		$diff	= (7-date('w', $timestamp))%7;
+
+		return mktime(23, 59, 59, date('n', $timestamp), date('j', $timestamp)+$diff, date('Y', $timestamp));
+	}
 }
 ?>

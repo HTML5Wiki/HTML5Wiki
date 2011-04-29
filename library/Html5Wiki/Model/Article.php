@@ -26,7 +26,7 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	 * @param	Integer	$idArticleVersion
 	 * @param	Integer	$timestampArticleVersion
 	 */
-	public function __construct($idArticleVersion, $timestampArticleVersion) {
+	public function __construct($idArticleVersion = 0, $timestampArticleVersion = 0) {
 		parent::__construct($idArticleVersion, $timestampArticleVersion);
 		
 		$this->dbAdapter = new Html5Wiki_Model_Article_Table();
@@ -66,9 +66,26 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 		$this->dbAdapter->saveArticle($saveData);
 	}
 	
-	
+	/**
+	 * @return Html5Wiki_Model_User
+	 */
 	public function getUser() {
 		return new Html5Wiki_Model_User($this->data['userId']);
+	}
+
+	/**
+	 * 
+	 * @return void
+	 */
+	public function loadHistory() {
+		$this->data['history'] = array();
+
+		$articles = $this->dbAdapter->fetchArticlesById($this->data['id']);
+
+		foreach($articles as $article) {
+			$historyArticle = new Html5Wiki_Model_Article($article['id'], $article['timestamp']);
+			$this->data['history'][Html5Wiki_Model_ArticleManager::getTimespanGroup($historyArticle->timestamp)][] = $historyArticle;
+		}
 	}
 }
 

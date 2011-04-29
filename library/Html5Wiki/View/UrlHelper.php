@@ -12,9 +12,9 @@
  * Url Helper
  */
 class Html5Wiki_View_UrlHelper extends Html5Wiki_View_Helper {
-	public function urlHelper($path) {
+	public function urlHelper($args) {
 		$request = Html5Wiki_Controller_Front::getInstance()->getRouter()->getRequest();
-		return $request->getBasePath() . '/' . $path;
+		return $request->getBasePath() . '/' . implode("/", $args);
 	}
 }
 

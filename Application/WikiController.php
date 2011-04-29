@@ -27,7 +27,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function editAction() {		
 		$parameters = $this->router->getRequest()->getPostParameters();
-		
+
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
@@ -58,7 +58,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		if($this->handleUserRequest($parameters) != false) {
 			$user       = new Html5Wiki_Model_User();
-			$wikiPage   = new Html5Wiki_Model_Article(0, 0);
+			$wikiPage   = new Html5Wiki_Model_Article();
 		
 			$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink(), 'userId' => $user->id));
 			$wikiPage->save();
@@ -95,7 +95,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
                  //TODO: handle Tag request
 
 				$user     = new Html5Wiki_Model_User();
-				$wikiPage = new Html5Wiki_Model_Article(0, 0);
+				$wikiPage = new Html5Wiki_Model_Article();
 
 				$title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
 
@@ -210,11 +210,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
-				$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
 		} else {
 			$permalink = $this->getPermalink();
 				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-			if($wikiPage != null) $this->setTitle($wikiPage->title);
+			if($wikiPage != null) {
+				$this->setTitle($wikiPage->title);
+			}
 		}
 
 		if( $wikiPage == null ) {
@@ -224,19 +226,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 	}
 
+	/**
+	 * @throws Html5Wiki_Exception_404
+	 * @return void
+	 */
 	public function historyAction() {
 		$parameters = $this->router->getRequest()->getPostParameters();
 
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
 			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPage   = Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
 		} else {
 			$permalink  = $this->getPermalink();
 			$wikiPage   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
 		}
 
-		if( $wikiPage == null ) throw new Html5Wiki_Exception_404();
+		if($wikiPage == null) {
+			throw new Html5Wiki_Exception_404();
+		}
+
+		$wikiPage->loadHistory();
 
 		$this->template->assign('wikiPage', $wikiPage);
 	}

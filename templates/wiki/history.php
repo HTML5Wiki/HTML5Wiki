@@ -6,7 +6,7 @@
 
 <article id="content" class="content history">
 	<header class="grid_12 title clearfix">
-		<h1 class="heading">&Auml;nderungsgeschichte <?php echo $this->wikiPage->title ?></h1>
+		<h1 class="heading">&Auml;nderungsgeschichte: <?php echo $this->wikiPage->title ?></h1>
 		<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 	</header>
 
@@ -14,19 +14,23 @@
 
 	<div class="grid_12">
 		<ol class="versionhistory">
-			<li class="timespan">Heute</li>
+			<?php foreach($this->wikiPage->history as $group => $groupedHistoryArticles ) { ?>
+			<li class="timespan"><?php echo $group ?></li>
 			<ol class="group">
+					<?php foreach($groupedHistoryArticles as $historyArticle ) { ?>
 					<li class="version">
-						<input type="radio" name="left" value="[timestamp]" class="diffselector" />
-						<input type="radio" name="right" value="[timestamp]" class="diffselector" />
+						<input type="radio" name="left" value="<?php $historyArticle->timestamp; ?>" class="diffselector" />
+						<input type="radio" name="right" value="<?php $historyArticle->timestamp; ?>" class="diffselector" />
 						<span class="timestamp">
-							<span class="time"><?php echo date('H:i', intval($this->wikiPage->timestamp)); ?></span>, <span class="date"><?php echo date('d.m.Y', intval($this->wikiPage->timestamp)); ?></span>
+							<span class="time"><?php echo date('H:i', intval($historyArticle->timestamp)); ?></span>, <span class="date"><?php echo date('d.m.Y', intval($historyArticle->timestamp)); ?></span>
 						</span>
-						<img src="http://www.gravatar.com/avatar/c36915ec92a666d930c1e91e2c3ba6a4?s=16&d=mm" class="avatar" />
-						<span class="author">Manuel Alabor</span>
-						<span class="comment">&quot;This was only a short change&quot;</span>
+						<img src="http://www.gravatar.com/avatar/<?php echo md5( trim( strtolower( $historyArticle->getUser()->email ) ) ); ?>?s=16&d=mm" class="avatar" />
+						<span class="author"><?php echo $historyArticle->getUser()->toString(); ?></span>
+						<span class="comment">&quot;<?php echo $historyArticle->versionComment;?>&quot;</span>
 					</li>
+					<?php } ?>
 			</ol>
+		<?php } ?>
 	</div>
 
 	<div class="clear"></div>

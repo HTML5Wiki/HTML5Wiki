@@ -99,11 +99,11 @@ Article = {
 	 * 
 	 * @param idArticle
 	 */
-	loadHistory: function(idArticle) {
+	loadHistory: function(idArticle, timestampArticle) {
 		$.ajax({
             type:   'POST',
             url:    Html5Wiki.getUrl('wiki/history'),
-            data:   'ajax=true&idArticle=' + idArticle,
+            data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
 			complete: Article.replaceContent.bind(this)
         });
 	},

@@ -15,7 +15,7 @@ var Capsulebar = (function() {
 				e.preventDefault();
 			});
 			$("#capsulebar-history").click(function(e) {
-				Article.loadHistory(articleId);
+				Article.loadHistory(articleId, articleTimestamp);
 				e.preventDefault();
 			});
 		}
