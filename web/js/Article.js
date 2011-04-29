@@ -1,7 +1,11 @@
 Article = {
+	
+	getArticlePermalink: function() {
+		return window.location.pathname.replace(/\/wiki(\/(read|edit|history)?\/?)/, '');
+	},
 
 	loadArticle: function(idArticle, timestampArticle) {
-		var url = Html5Wiki.getUrl('wiki/read');
+		var url = Html5Wiki.getUrl('wiki/read/' + this.getArticlePermalink());
 		$.ajax({
 			type: 'POST',
 			'url':  url,
@@ -76,7 +80,7 @@ Article = {
 	 * @param timestampArticle
 	 */
     loadEditForm: function(idArticle, timestampArticle) {
-		var url = Html5Wiki.getUrl('wiki/edit');
+		var url = Html5Wiki.getUrl('wiki/edit/' + this.getArticlePermalink());
 		$.ajax({
             type:   'POST',
             url:    url,
@@ -104,7 +108,7 @@ Article = {
 	 * @param idArticle
 	 */
 	loadHistory: function(idArticle, timestampArticle) {
-		var url = Html5Wiki.getUrl('wiki/history');
+		var url = Html5Wiki.getUrl('wiki/history/' + this.getArticlePermalink());
 		$.ajax({
 			type:   'POST',
             url:    url,
