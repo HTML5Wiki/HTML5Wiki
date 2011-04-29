@@ -26,7 +26,7 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	 * @param	Integer	$idArticleVersion
 	 * @param	Integer	$timestampArticleVersion
 	 */
-	public function __construct($idArticleVersion, $timestampArticleVersion) {
+	public function __construct($idArticleVersion = 0, $timestampArticleVersion = 0) {
 		parent::__construct($idArticleVersion, $timestampArticleVersion);
 		
 		$this->dbAdapter = new Html5Wiki_Model_Article_Table();
