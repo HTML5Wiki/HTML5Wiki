@@ -78,7 +78,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function saveAction() {
-        echo "save";
 		$parameters	= $this->router->getRequest()->getPostParameters();
 		
 		if (isset($parameters['ajax'])) {
@@ -106,7 +105,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 					'permalink' => $oldWikiPage->permalink,
 					'title'     => $title,
 					'content'   => $parameters['contentEditor'],
-					'userId'      => $user->id,
+					'userId'    => $user->id,
 				);
 
 
@@ -118,9 +117,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         } else {
             
         }
-
-        echo "finito";
-		
 	}
 
 	/**
