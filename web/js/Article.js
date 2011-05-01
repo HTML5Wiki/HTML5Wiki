@@ -37,8 +37,8 @@ Article = {
 		e.preventDefault();
 		var form	= $('#edit-article');
 		if( form ) {
-            var hiddenIdArticle        = $('#hiddenIdArticle').val();
-            var hiddenTimestampArticle = $('#hiddenTimestampArticle').val();
+            var idArticle        = $('#hiddenIdArticle').val();
+            var timestampArticle = $('#hiddenTimestampArticle').val();
             var title     = $('#txtTitle').val();
             var content   = $('#contentEditor').val();
 			var name      = $('#txtAuthor').val();
@@ -46,8 +46,8 @@ Article = {
             var id        = $('#hiddenAuthorId').val();
 
 			var mediaData = {
-                idArticle: idArticle,
-                timestampArticle: timestampArticle,
+                hiddenIdArticle: idArticle,
+                hiddenTimestampArticle: timestampArticle,
                 txtTitle: title,
                 contentEditor: content,
 				txtAuthor: name,
