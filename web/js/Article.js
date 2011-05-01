@@ -37,8 +37,8 @@ Article = {
 		e.preventDefault();
 		var form	= $('#edit-article');
 		if( form ) {
-            var idArticle        = $('#hiddenIdArticle').val();
-            var timestampArticle = $('#hiddenTimestampArticle').val();
+            var hiddenIdArticle        = $('#hiddenIdArticle').val();
+            var hiddenTimestampArticle = $('#hiddenTimestampArticle').val();
             var title     = $('#txtTitle').val();
             var content   = $('#contentEditor').val();
 			var name      = $('#txtAuthor').val();
