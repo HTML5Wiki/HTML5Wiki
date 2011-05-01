@@ -1,11 +1,17 @@
 <?php
 	$basePath = $this->basePath . '/';
-
 	$jsHelper = $this->javascriptHelper();
+	$jsHelper->appendFile($basePath . 'js/jquery.min.js');
+	$jsHelper->appendFile($basePath . 'js/init.js');
 	$jsHelper->appendFile($basePath . 'js/messagecontroller.js');
 	$jsHelper->appendFile($basePath . 'js/searchboxcontroller.js');
+	$jsHelper->appendFile($basePath . 'js/Article.js');
 	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
-	$jsHelper->appendFile('http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js?ver=1.4.2');
+	$jsHelper->appendFile($basePath . 'js/jquery.markitup.js');
+	$jsHelper->appendFile($basePath . 'js/jquery.ptags.min.js');
+	$jsHelper->appendFile($basePath . 'js/markitup/html5wiki-set.js');
+
+	$jsHelper->appendScript('Html5Wiki.init("'. $basePath .'");');
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -26,9 +32,11 @@
 			<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
-					<li class="item home active"><a href="<?php echo $basePath ?>" class="tab">Startseite</a></li>
-					<li class="item updates"><a href="#" class="tab">Neuste Änderungen</a></li>
-					<li class="item search"><input placeholder="Suchen" class="searchterm" accesskey="s" /></li>
+					<li class="item home active">
+						<a href="<?php echo $basePath ?>" class="tab"><?php echo $this->translate->_("homepage") ?></a>
+					</li>
+					<li class="item updates"><a href="#" class="tab"><?php echo $this->translate->_("recentChanges") ?></a></li>
+					<li class="item search"><input placeholder="<?php echo $this->translate->_("search") ?>" class="searchterm" accesskey="s" /></li>
 				</ol>
 			</nav>
 		</header>
@@ -36,6 +44,6 @@
 		
 		<?php echo $this->decoratedContent ?>
 	</div>
-	<?php echo $this->javascriptHelper()->toString() ?>
+	<?php echo $this->javascriptHelper() ?>
 </body>
 </html>

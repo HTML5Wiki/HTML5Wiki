@@ -12,7 +12,11 @@
  * Helper interface for view helpers
  */
 abstract class Html5Wiki_View_Helper {
-    abstract public function __construct(Html5Wiki_Template_Interface $template);
+	protected $template;
+	
+    public function __construct(Html5Wiki_Template_Interface $template) {
+		$this->template = $template;
+	}
 
 	public function __call($name, $arguments) {
 		if (!method_exists($this, $name)) {
@@ -21,6 +25,12 @@ abstract class Html5Wiki_View_Helper {
 		return $this->$name($arguments);
 	}
 
-	abstract public function toString();
+	public function toString() {
+		return '';
+	}
+	
+	public function __toString() {
+		return $this->toString();
+	}
 }
 ?>

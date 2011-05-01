@@ -1,24 +1,22 @@
 <?php
-	$jsHelper = $this->javascriptHelper();
-	$jsHelper->appendFile($this->basePath . '/js/jquery.markitup.js');
-	$jsHelper->appendFile($this->basePath . '/js/jquery.ptags.min.js');
-	$jsHelper->appendFile($this->basePath . '/js/markitup/html5wiki-set.js');
+	$basePath = $this->basePath . '/';
+	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
+	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
+	$this->javascriptHelper()->appendScript('$("#edit-article").submit(Article.save.bind());');
 ?>
-<article class="content editor">
-	<form action="#" method="post">
-		<header class="grid_12 title clearfix">
+<article id="content" class="content editor">
+	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
+		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
+        <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
+        <header class="grid_12 title clearfix">
 			<h1 class="heading"><?php echo $this->title; ?></h1>
-			<ol class="capsulebar">
-				<li class="item first read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
-				<li class="item edit active"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
-				<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
-			</ol>
+			<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 		</header>
 		<div class="clear"></div>
 
 		<div class="grid_12">
 			<fieldset name="content" class="group">
-				<legend class="groupname">Artikelinhalt</legend>					
+				<legend class="groupname"><?php echo $this->translate->_("articleContentLegend") ?></legend>					
 				<textarea id="contentEditor"><?php echo $this->content; ?></textarea>
 			</fieldset>
 		</div>
@@ -27,13 +25,14 @@
 		<div class="grid_4">
 			<fieldset name="author" class="group">
 				<legend class="groupname">Autoreninformation</legend>
+                <input type="hidden" value="<?php echo $this->author->id; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
 					<label for="txtAuthor" class="label">Ihr Name</label>
-					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php echo $this->author; ?>" />
+					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php  echo $this->author->name; ?>" />
 				</p>
 				<p>
 					<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse</label>
-					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php echo $this->authorEmail; ?>" />
+					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php echo $this->author->email; ?>" />
 				</p>
 				<p class="hint">
 					Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
@@ -63,10 +62,15 @@
 		<div class="clear"></div>
 		
 		<div class="grid_12 bottom-button-bar">
-			<a href="#" class="large-button save-button"><span class="caption">Speichern</span></a>
+			<input id="article-save" type="submit" value="Speichern" class="caption large-button save-button"/>
 			<a href="#" class="link-button cancel-button">&Auml;nderungen verwerfen</a>
 		</div>
 		<div class="clear"></div>
-
 	</form>
+	<?php if ($this->ajax === true): ?>
+	<script type="text/javascript">
+		Capsulebar.initializeClickEvents();
+		$('#edit-article').submit(Article.save.bind());
+	</script>
+	<?php endif; ?>
 </article>

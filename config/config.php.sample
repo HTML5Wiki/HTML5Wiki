@@ -19,4 +19,6 @@ $config = array(
 		'defaultController' => 'index',
 		'defaultAction'     => 'index'
 	),
+	'languages' => array('en', 'de'),
+	'defaultLanguage' => 'en'
 );

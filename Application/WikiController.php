@@ -9,12 +9,15 @@
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
-	 * 
-	 * @return unknown_type
+	 * @override
+	 * @param Html5Wiki_Routing_Interface_Router $router
 	 */
-	public function foobarAction() {
-		$foo = array('bar', 'baz');
-		$this->template->assign('foo', $foo);
+	public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
+		try {
+			parent::dispatch($router);
+		} catch (Html5Wiki_Exception_404 $e) {
+			$this->readAction();
+		}
 	}
 
 	/**
@@ -22,17 +25,17 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * 
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
-	public function editAction() {
-		$ajax = $this->router->getRequest()->getPost('ajax');		
-		if ($ajax === true) {
+	public function editAction() {		
+		$parameters = $this->router->getRequest()->getPostParameters();
+
+		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
-		} 
-		
-		$permalink = $this->getPermalink();
-
-		//Get current Article
-		$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-
+			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		} else {
+			$permalink = $this->getPermalink();
+			$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+		}
+	
 		if( $wikiPage == null ) {
 			$this->loadNoArticlePage($permalink);
 		} else {
@@ -47,14 +50,25 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
 	 */
 	public function createAction() {
-		$wikiPage = new Html5Wiki_Model_Article(0, 0);
+		$parameters	= $this->router->getRequest()->getPostParameters();
 		
-		$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink()));
-		$wikiPage->save();
+		if (isset($parameters['ajax'])) {
+			$this->setNoLayout();
+		}
 		
-		$this->setTemplate('edit.php');
+		if($this->handleUserRequest($parameters) != false) {
+			$user       = new Html5Wiki_Model_User();
+			$wikiPage   = new Html5Wiki_Model_Article();
 		
-		$this->loadEditPage($wikiPage);
+			$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink(), 'userId' => $user->id));
+			$wikiPage->save();
+		
+			$this->setTemplate('edit.php');
+			
+			$this->loadEditPage($wikiPage);
+		} else {
+			$this->loadNoArticlePage($this->getPermalink());
+		}
 	}
 	
 	/**
@@ -64,57 +78,47 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function saveAction() {
-		echo "saving...";
-	}
-
-	/**
-	 * @override
-	 * @param Html5Wiki_Routing_Interface_Router $router
-	 */
-	public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
-		try {
-			parent::dispatch($router);
-		} catch (Html5Wiki_Exception_404 $e) {
-			$permalink = $this->getPermalink();
-			
-			//@todo replace this with an aporpriate index page
-			if( !( strlen($permalink) > 0 ) ) throw new Html5Wiki_Exception_404();
-			
-			$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-			
-			if( $wikiPage == null ) {
-				$this->loadNoArticlePage($permalink);
-			} else {
-				$this->loadPage($wikiPage);
-			}
+		$parameters	= $this->router->getRequest()->getPostParameters();
+		
+		if (isset($parameters['ajax'])) {
+			$this->setNoLayout();
 		}
+
+		$oldWikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		//TODO: some validation
+
+		$validate = true;
+
+		if ($validate) {
+			if($this->handleUserRequest($parameters) != false) {
+
+                 //TODO: handle Tag request
+
+				$user     = new Html5Wiki_Model_User();
+				$wikiPage = new Html5Wiki_Model_Article();
+
+				$title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
+
+                //TODO: fix permalink, previousVersion
+				$data = array(
+					'id'        => $oldWikiPage->id,
+					'permalink' => $oldWikiPage->permalink,
+					'title'     => $title,
+					'content'   => $parameters['contentEditor'],
+					'userId'    => $user->id,
+				);
+
+
+				$wikiPage->setData($data);
+				$wikiPage->save();
+
+                $this->loadPage($wikiPage);
+            }
+        } else {
+            
+        }
 	}
 
-	/**
-	 * Get permalink from url
-	 *
-	 * Works like this:
-	 * User requests /wiki/foobar
-	 * -> Method returns foobar, because the Action foobar doesn't exist.
-	 * User requests /wiki/edit/foobar
-	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
-	 *    needle of the substring replacement.
-	 *
-	 * @return string
-	 */
-	private function getPermalink() {
-		$uri = $this->router->getRequest()->getUri();
-		$basePath = $this->router->getRequest()->getBasePath();
-		$basePath .= '/';
-		
-		$needle = $basePath . $this->router->getController() . '/';
-		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
-		
-		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
-		
-		return $permalink;
-	}
-	
 	/**
 	 * Loads the standard view page for a given article
 	 * 
@@ -123,12 +127,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
 		$this->setTemplate('article.php');
-				
-		$this->setTitle($wikiPage->title);
 
-		$markDownParser = new Markdown_Parser();
-		$this->template->assign('title', $wikiPage->title);
-		$this->template->assign('content', $markDownParser->transform($wikiPage->content));
+		$this->template->assign('wikiPage', $wikiPage);
+		$this->template->assign('markDownParser', new Markdown_Parser());
 	} 
 	
 	/**
@@ -138,10 +139,17 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param	$permalink
 	 */
 	private function loadNoArticlePage($permalink) {
+		$ajax = $this->router->getRequest()->getPost('ajax');		
+		
+		if ($ajax == true) {
+			$this->setNoLayout();
+		} 
+		
 		$this->setTemplate('noarticle.php');
 		
 		$this->template->assign('request', $this->router->getRequest());		
 		$this->template->assign('permalink', $permalink);
+		$this->template->assign('author', new Html5Wiki_Model_User());
 	}
 	
 	/**
@@ -150,22 +158,97 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return unknown_type
 	 */
 	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
-		
+
 		//Prepare article data for the view
 		$title = $wikiPage->title;
 		$content = $wikiPage->content;
 		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
-		$author = isset($_COOKIE['author']) ? $_COOKIE['author'] : '' ;
-		$authorEmail = isset($_COOKIE['authorEmail']) ? $_COOKIE['authorEmail'] : '' ;
+		$author	= new Html5Wiki_Model_User();
 		
-		$this->layoutTemplate->assign('title', $title);
+		if($this->layoutTemplate != null) $this->layoutTemplate->assign('title', $title);
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
 		$this->template->assign('author', $author);
-		$this->template->assign('authorEmail', $authorEmail);
-		$this->template->assign('tag', $tag);
+		$this->template->assign('wikiPage', $wikiPage);
+		$this->template->assign('request', $this->router->getRequest());
+		//$this->template->assign('tag', $tag);
+	}
+	
+	/**
+	 * @param array $parameters
+	 * @return bool|Html5Wiki_Model_User
+	 */
+	private function handleUserRequest(array $parameters) {
+		$userData	= array(
+			'id'        => $parameters['hiddenAuthorId'],
+			'name'      => $parameters['txtAuthor'],
+			'email' 	=> $parameters['txtAuthorEmail']
+		);
+		
+		$user	= new Html5Wiki_Model_User();
+		if($user->id > 0) {
+			return $user;
+		} else {
+			if( $userData['email'] && $userData['name'] ) {
+				$user->setData($userData);
+				$user->save();
+				
+				return $user;
+			}
+		}
+		
+		return false;
+	}
+
+	/**
+	 * @return void
+	 */
+	public function readAction() {
+		$parameters = $this->router->getRequest()->getPostParameters();
+
+		if( isset($parameters['ajax']) ) {
+			$this->setNoLayout();
+			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		} else {
+			$permalink = $this->getPermalink();
+				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			if($wikiPage != null) {
+				$this->setTitle($wikiPage->title);
+			}
+		}
+
+		if( $wikiPage == null ) {
+			$this->loadNoArticlePage($permalink);
+		} else {
+			$this->loadPage($wikiPage);
+		}
+	}
+
+	/**
+	 * @throws Html5Wiki_Exception_404
+	 * @return void
+	 */
+	public function historyAction() {
+		$parameters = $this->router->getRequest()->getPostParameters();
+
+		if( isset($parameters['ajax']) ) {
+			$this->setNoLayout();
+			// @todo change to all version of this idArticle (no timestamp)
+			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		} else {
+			$permalink  = $this->getPermalink();
+			$wikiPage   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+		}
+
+		if($wikiPage == null) {
+			throw new Html5Wiki_Exception_404();
+		}
+
+		$wikiPage->loadHistory();
+
+		$this->template->assign('wikiPage', $wikiPage);
 	}
  }
 

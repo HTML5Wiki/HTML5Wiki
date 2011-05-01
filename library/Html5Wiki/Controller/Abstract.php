@@ -49,7 +49,23 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @var string
 	 */
 	private $layoutFile = '';
+	
+	/**
+	 * Installation's base path
+	 * @var string
+	 */
+	protected $basePath = '';
+	
+	/**
+	 * Configuration
+	 * @var Zend_Config
+	 */
+	protected $config = null;
 
+	/**
+	 *
+	 * @param string $basePath 
+	 */
 	public function __construct() {
 		$this->layoutFile = self::DEFAULT_LAYOUT_FILE;
 		
@@ -58,9 +74,19 @@ abstract class Html5Wiki_Controller_Abstract {
 
 		$this->template = new Html5Wiki_Template_Php($this->layoutTemplate);
 	}
+	
+	public function setBasePath($basePath) {
+		$this->basePath = $basePath;
+	}
+	
+	public function setConfig(Zend_Config $config) {
+		$this->config = $config;
+	}
 
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
 		$this->router = $router;
+				
+		$this->setTranslation();
 
 		$this->setTemplate(strtolower($this->router->getAction()) . ".php");
 		
@@ -74,6 +100,25 @@ abstract class Html5Wiki_Controller_Abstract {
 		}
 		throw new Html5Wiki_Exception_404('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
 	}
+	
+	public function setTranslation() {
+		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($this->router->getRequest()->getLanguage(), 
+						$this->config->languages->toArray());
+		$language = ($language !== null) ? $language : $this->config->defaultLanguage;
+		
+		$translate = new Zend_Translate(
+				array(
+					'adapter' => 'array',
+					'content' => $this->basePath . '/languages/' . $language . '.php',
+					'locale'  => $language
+				)
+		);
+		
+		$this->layoutTemplate->setTranslate($translate);
+		$this->template->setTranslate($translate);
+	}
+	
+	
 
 	/**
 	 * Set Page title
@@ -83,8 +128,13 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->layoutTemplate->assign('title', $title);
 	}
 	
+	/**
+	 * Disable layout
+	 */
 	protected function setNoLayout() {
 		$this->layoutTemplate = null;
+		$this->template->setNoLayout();
+		$this->template->assign('ajax', true);
 	}
 
 	/**
@@ -96,8 +146,37 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->template->setTemplateFile($this->templateFile);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function render() {
 		$this->template->render();
 	}
+
+	/**
+	 * Get permalink from url
+	 *
+	 * Works like this:
+	 * User requests /wiki/foobar
+	 * -> Method returns foobar, because the Action foobar doesn't exist.
+	 * User requests /wiki/edit/foobar
+	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
+	 *    needle of the substring replacement.
+	 *
+	 * @return string
+	 */
+	protected function getPermalink() {
+		$uri = $this->router->getRequest()->getUri();
+		$basePath = $this->router->getRequest()->getBasePath();
+		$basePath .= '/';
+
+		$needle = $basePath . $this->router->getController() . '/';
+		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
+
+		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
+
+		return $permalink;
+	}
+		
 }
 ?>

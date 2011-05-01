@@ -13,45 +13,25 @@
  * to license@zend.com so we can send you a copy immediately.
  *
  * @category   Zend
- * @package    Zend_Loader
- * @subpackage UnitTests
+ * @package    Zend_Translate
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
+ * @version    $Id: Exception.php 23775 2011-03-01 17:25:24Z ralph $
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
- * @version    $Id $
  */
-
-/**
- * @see Zend_Loader
- */
-require_once 'Zend/Loader.php';
-
-
 
 
 /**
- * Static methods for loading classes and files.
- *
+ * Zend_Exception
+ */
+require_once 'Zend/Exception.php';
+
+
+/**
  * @category   Zend
- * @package    Zend_Loader
- * @subpackage UnitTests
+ * @package    Zend_Translate
  * @copyright  Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)
  * @license    http://framework.zend.com/license/new-bsd     New BSD License
  */
-
-class Zend_Loader_MyOverloader extends Zend_Loader
+class Zend_Translate_Exception extends Zend_Exception
 {
-    public static function loadClass($class, $dirs = null)
-    {
-        parent::loadClass($class, $dirs);
-    }
-
-    public static function autoload($class)
-    {
-        try {
-            self::loadClass($class);
-            return $class;
-        } catch (Exception $e) {
-            return false;
-        }
-    }
 }

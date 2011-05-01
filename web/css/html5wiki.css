@@ -52,7 +52,7 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .editor .title .heading{cursor:pointer;}
 .editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .txtTitle{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
 .editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;}
-.editor .save-button .caption{background-image:url('../images/icons16/accept.png');}
+.editor .save-button.caption{background-image:url('../images/icons16/accept.png');background-repeat:no-repeat;background-position: 5px 9px;padding-left: 25px}
 form{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}form .group{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px solid #a9a9a9;padding:5px 10px;margin-bottom:10px;background-color:#f8f8f8;}
 form .groupname{font-size:75%;color:#959595;padding:0 4px;}
 form .textfield{margin-bottom:6px;width:98%;}

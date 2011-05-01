@@ -1,14 +1,20 @@
-<article class="grid_12 content article">
+<?php
+	$basePath = $this->basePath . '/';
+	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
+	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
+?>
+<article id="content" class="grid_12 content article">
 	<header class="title clearfix">
-		<h1 class="heading"><?php echo $this->title ?></h1>
-		<ol class="capsulebar">
-			<li class="item first active read"><a href="#" class="capsule"><span class="caption">Lesen</span></a></li>
-			<li class="item edit"><a href="#" class="capsule"><span class="caption">Bearbeiten</span></a></li>
-			<li class="item last history"><a href="#" class="capsule"><span class="caption">&Auml;nderungsgeschichte</span></a></li>
-		</ol>
+		<h1 class="heading"><?php echo $this->wikiPage->title ?></h1>
+		<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 	</header>
 	<section>
-		<?php echo $this->content ?>
+		<?php echo $this->markDownParser->transform($this->wikiPage->content) ?>
 	</section>
+	<div class="clear"></div>
+	<?php if ($this->ajax === true): ?>
+	<script type="text/javascript">
+		Capsulebar.initializeClickEvents();
+	</script>
+	<?php endif; ?>
 </article>
-<div class="clear"></div>
