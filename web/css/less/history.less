@@ -19,6 +19,12 @@
 		.group {
 			font: @font_normalsize @font_ui;
 			margin: 0 0 5px 0;
+			border-top: 1px solid @color_secondary;
+			padding-top: 1px;
+			
+			&:first-child {
+				border-top-width: 0px;
+			}
 			
 			.version {
 				.diffselector {
@@ -31,6 +37,7 @@
 					display: inline-block;
 					width: 16px;
 					height: 16px;
+					vertical-align: middle;
 				}
 				
 				.comment {

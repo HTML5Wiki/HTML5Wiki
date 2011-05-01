@@ -43,30 +43,32 @@
 			
 			<div class="grid_12">
 				<ol class="versionhistory">
-					<li class="timespan">Heute</li>
-					<ol class="group">
-
+					<ol class="group today">
+						<li class="version">
+							<input type="radio" name="left" value="[timestamp]" class="diffselector" />
+							<input type="radio" name="right" value="[timestamp]" class="diffselector" />
+							<span class="timestamp">
+								<span class="time">19:00</span>,
+								<span class="date">25.02.2011</span>
+							</span>
+							<img src="http://www.gravatar.com/avatar/c36915ec92a666d930c1e91e2c3ba6a4?s=16&d=mm" class="avatar" />
+							<span class="author">Manuel Alabor</span> 
+							<span class="comment">&quot;This was only a short change&quot;</span>
+						</li>
 					</ol>
-					<li class="timespan">Gestern</li>
-					<ol class="group">
-					</ol>					
-					<li class="timespan">Vorgestern</li>
-					<ol class="group">
+					<ol class="group yesterday">
 					</ol>
-					<li class="timespan">Diese Woche</li>
-					<ol class="group">
+					<ol class="group thisweek">
 					</ol>
-					<li class="timespan">Letzte Woche</li>
-					<ol class="group">
+					<ol class="group lastweek">
 					</ol>
-					<li class="timespan">Diesen Monat</li>
-					<ol class="group">
+					<ol class="group thismonth">
 					</ol>
-					<li class="timespan">März 2011</li>
-					<ol class="group">
+					<ol class="group month">
 					</ol>
-					<li class="timespan">Februar 2011</li>
-					<ol class="group">
+					<ol class="group month">
+					</ol>
+					<ol class="group month">
 					</ol>
 				</ol>
 			</div>
@@ -86,7 +88,7 @@
 	<script type="text/javascript" >
 		$('.group').each(function() {
 			for(i=0,l=2; i < l; i++) {
-				var version = '<li class="version"><input type="radio" name="left" value="[timestamp]" class="diffselector" /> <input type="radio" name="right" value="[timestamp]" class="diffselector" /> <span class="timestamp"><span class="time">19:00</span>, <span class="date">25.02.2011</span></span> <img src="http://www.gravatar.com/avatar/c36915ec92a666d930c1e91e2c3ba6a4?s=16&d=mm" class="avatar" /> <span class="author">Manuel Alabor</span> <span class="comment">&quot;This was only a short change&quot;</span></li>';
+				var version = '';
 				$(this).append(version);
 			}
 		});
