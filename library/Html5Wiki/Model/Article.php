@@ -65,7 +65,7 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 		
 		$this->dbAdapter->saveArticle($saveData);
 	}
-	
+
 	/**
 	 * @return Html5Wiki_Model_User
 	 */
@@ -74,14 +74,14 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	}
 
 	/**
-	 * @return  String
+	 * @return string
 	 */
 	public function getTitle() {
-		return $this->data['title'] ? $this->data['title'] : 'no Title';
+		return $this->data['title'] ? $this->data['title'] : 'No Title Set';
 	}
 
 	/**
-	 * 
+	 *
 	 * @return void
 	 */
 	public function loadHistory() {

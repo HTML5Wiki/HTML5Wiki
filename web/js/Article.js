@@ -44,6 +44,7 @@ Article = {
 			var name      = $('#txtAuthor').val();
 			var email     = $('#txtAuthorEmail').val();
             var id        = $('#hiddenAuthorId').val();
+			var tags      = Article.collectMediaTags();
 
 			var mediaData = {
                 hiddenIdArticle: idArticle,
@@ -53,7 +54,8 @@ Article = {
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,
-				ajax: true		
+				tags: tags.join(','),
+				ajax: true
 			};
 
 			$.ajax({
@@ -96,6 +98,7 @@ Article = {
 		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
 		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 		$('.editor #txtTags').ptags();
+		$('.editor #txtTags').bind('change', Article.collectMediaTags);
 	},
 
 	/**
@@ -143,6 +146,21 @@ Article = {
 		heading.replaceWith(container);
 
 		return false;
+	},
+
+	/**
+	 * collects the media tags in the form.
+	 *
+	 * @return  Array
+	 */
+	collectMediaTags: function() {
+		var tags = [];
+
+		$('.ui-ptags-tag-text').each(function(element, test, test2) {
+			tags.push($.trim(test.innerHTML));
+		});
+
+		return tags;
 	}
 	
 };
