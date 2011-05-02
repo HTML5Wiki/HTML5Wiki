@@ -74,6 +74,13 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	}
 
 	/**
+	 * @return  String
+	 */
+	public function getTitle() {
+		return $this->data['title'] ? $this->data['title'] : 'no Title';
+	}
+
+	/**
 	 * 
 	 * @return void
 	 */

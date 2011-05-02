@@ -1,11 +1,11 @@
 Article = {
-	loadArticle: function(e, idArticle, timestampArticle) {
+	loadArticle: function(e, idArticle) {
 		var url = e.currentTarget.href;
 		$.ajax({
 			type: 'POST',
 			'url':  url,
 			complete: this.replaceContent.bind(this),
-			data: 'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle
+			data: 'ajax=true&idArticle=' + idArticle
 		});
 		return url;
 	},
@@ -74,12 +74,12 @@ Article = {
 	 * @param idArticle
 	 * @param timestampArticle
 	 */
-    loadEditForm: function(e, idArticle, timestampArticle) {
+    loadEditForm: function(e, idArticle) {
 		var url = e.currentTarget.href;
 		$.ajax({
             type:   'POST',
             url:    url,
-            data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
+            data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.onEditFormLoaded.bind(this)
         });
 		return url;
@@ -102,12 +102,12 @@ Article = {
 	 * 
 	 * @param idArticle
 	 */
-	loadHistory: function(e, idArticle, timestampArticle) {
+	loadHistory: function(e, idArticle) {
 		var url = e.currentTarget.href;
 		$.ajax({
 			type:   'POST',
             url:    url,
-            data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
+            data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.replaceContent.bind(this)
         });
 		

@@ -1,7 +1,7 @@
 <?php
 	$basePath = $this->basePath . '/';
 	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
-	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
+	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '");');
 	$this->javascriptHelper()->appendScript('$("#edit-article").submit(Article.save.bind());');
 ?>
 <article id="content" class="content editor">

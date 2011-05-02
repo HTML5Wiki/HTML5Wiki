@@ -40,8 +40,14 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 		$selectStatement = $this->select()->setIntegrityCheck(false);
 		
 		$selectStatement->where($this->_primary[1] . ' = ?', $idMediaVersion);
-		$selectStatement->where($this->_primary[2] . ' = ?', $timestampMediaVersion);
-		
+
+		if( $timestampMediaVersion > 0) {
+			$selectStatement->where($this->_primary[2] . ' = ?', $timestampMediaVersion);
+		} else {
+			$selectStatement->limit(1);
+			$selectStatement->order($this->_primary[2] . ' DESC');
+		}
+
 		return $this->fetchRow($selectStatement);
 	}
 	

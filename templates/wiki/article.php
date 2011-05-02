@@ -1,7 +1,7 @@
 <?php
 	$basePath = $this->basePath . '/';
 	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
-	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '", "' . $this->wikiPage->timestamp . '");');
+	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '");');
 ?>
 <article id="content" class="grid_12 content article">
 	<header class="title clearfix">

@@ -51,7 +51,14 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		$selectStatement->from($this);
 		
 		$selectStatement->where($this->_primary[1] . ' = ?', $idMediaVersion);
-		$selectStatement->where($this->_primary[2] . ' = ?', $timestampMediaVersion);
+
+		if( $timestampMediaVersion > 0) {
+			$selectStatement->where($this->_primary[2] . ' = ?', $timestampMediaVersion);
+		} else {
+			$selectStatement->limit(1);
+			$selectStatement->order($this->_primary[2] . ' DESC');
+		}
+
 		
 		return $this->fetchRow($selectStatement);
 	}
