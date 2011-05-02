@@ -46,8 +46,8 @@ Article = {
             var id        = $('#hiddenAuthorId').val();
 
 			var mediaData = {
-                idArticle: idArticle,
-                timestampArticle: timestampArticle,
+                hiddenIdArticle: idArticle,
+                hiddenTimestampArticle: timestampArticle,
                 txtTitle: title,
                 contentEditor: content,
 				txtAuthor: name,

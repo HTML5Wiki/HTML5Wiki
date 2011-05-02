@@ -84,7 +84,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		}
 
-		$oldWikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+		$oldWikiPage = new Html5Wiki_Model_Article($parameters['hiddenIdArticle'], $parameters['hiddenTimestampArticle']);
 		//TODO: some validation
 
 		$validate = true;

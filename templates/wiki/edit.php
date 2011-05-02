@@ -17,7 +17,7 @@
 		<div class="grid_12">
 			<fieldset name="content" class="group">
 				<legend class="groupname"><?php echo $this->translate->_("articleContentLegend") ?></legend>					
-				<textarea id="contentEditor"><?php echo $this->content; ?></textarea>
+				<textarea id="contentEditor" name="contentEditor"><?php echo $this->content; ?></textarea>
 			</fieldset>
 		</div>
 		<div class="clear"></div>
