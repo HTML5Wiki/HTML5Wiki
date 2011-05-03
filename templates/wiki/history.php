@@ -6,7 +6,7 @@
 
 <article id="content" class="content history">
 	<header class="grid_12 title clearfix">
-		<h1 class="heading">&Auml;nderungsgeschichte: <?php echo $this->wikiPage->title ?></h1>
+		<h1 class="heading"><?php echo $this->wikiPage->title ?></h1>
 		<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 	</header>
 
