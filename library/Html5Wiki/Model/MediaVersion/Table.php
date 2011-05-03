@@ -15,24 +15,11 @@
  */
 class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 	
-	/**
-	 * 
-	 * @var string
-	 */
 	protected $_name		= 'MediaVersion';
-	
-	/**
-	 * 
-	 * @var	array
-	 */
 	protected $_primary		= array('id', 'timestamp');
+	protected $_rowClass	= 'Html5Wiki_Model_MediaVersion';
 	
-	/**
-	 *
-	 * @var string
-	 */
-	protected $_rowClass = 'Html5Wiki_Model_MediaVersion';
-
+	
 	private static $MEDIA_VERSION_TYPE = array(
 		'ARTICLE' => 'ARTICLE',
 		'FILE' => 'FILE'

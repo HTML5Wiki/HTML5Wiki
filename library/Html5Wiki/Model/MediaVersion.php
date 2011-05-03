@@ -31,7 +31,7 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 			$permalink = isset($this->permalink) ? $this->permalink : '';
 
 			if($permalink != '') {
-				$this->loadByPermalink($permalink);
+				$this->loadLatestByPermalink($permalink);
 			} elseif($id > 0 && $timestamp > 0) {
 				$this->loadByIdAndTimestamp($id, $timestamp);
 			} elseif($id > 0 && $timestamp == 0) {
@@ -46,7 +46,7 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	 *
 	 * @param $permalink
 	 */
-	private function loadByPermalink($permalink) {
+	private function loadLatestByPermalink($permalink) {
 		$select = $this->select();
 		$select->order('timestamp DESC');
 		$where = $select->where('permalink = ?', $permalink);
