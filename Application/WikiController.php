@@ -274,24 +274,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if(isset($parameters['ajax'])) {
 			$this->setNoLayout();
 			$id = $parameters['idArticle'];
-			
 			$versions = $mediaManager->getMediaVersionsById($id);
-			$latestVersion = $versions->current();
-			$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		} else {
 			$permalink = $this->getPermalink();
-			
 			$versions = $mediaManager->getMediaVersionsByPermalink($permalink);
-			$latestVersion = $versions->current();
-			$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		}
 
 		if(count($versions) == 0) {
 			throw new Html5Wiki_Exception_404();
 		}
-
-		// todo get current wikipage title!
-
+		
+		$latestVersion = $versions->current();
+		$latestVersion = new Html5Wiki_Model_ArticleVersion(array('data'=>array('mediaVersionId'=>$latestVersion->id)));
+		$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
+		
+		$this->setTitle($latestVersion->title);
 		$this->template->assign('wikiPage', $latestVersion);
 		$this->template->assign('versions', $groupedVersions);
 	}
