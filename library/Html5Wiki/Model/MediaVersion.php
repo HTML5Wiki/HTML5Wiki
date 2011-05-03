@@ -49,11 +49,11 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	private function loadLatestByPermalink($permalink) {
 		$select = $this->select();
 		$select->order('timestamp DESC');
-		$where = $select->where('permalink = ?', $permalink);
+		$select->where('permalink = ?', $permalink);
 		
-		$row = $this->_getTable()->fetchRow($where);
+		$mediaVersion = $this->_getTable()->fetchRow($select);
 		
-		$this->_data = $row->toArray();
+		$this->_data = $mediaVersion->toArray();
 		$this->_cleanData = $this->_data;
 		$this->_modifiedFields = array();
 	}
@@ -93,14 +93,14 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 		$this->_modifiedFields = array();
 	}
 	
-	public function save() {
-		parent::save();
+	public function getUser() {
+		$data = array('id' => $this->userId);
+		$user = new Html5Wiki_Model_User(array('data'=>$data));
+		return $user;
 	}
 	
-	public function getUser() {
-		// todo
-		$data = array('id' => $this->userId);
-		return new Html5Wiki_Model_User(array('data'=>$data));
+	public function save() {
+		parent::save();
 	}
 	
 	public function __toString() {
