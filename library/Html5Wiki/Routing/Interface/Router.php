@@ -8,7 +8,7 @@
  * @package Routing
  */
 interface Html5Wiki_Routing_Interface_Router {
-    public function __construct();
+    public function __construct(Zend_Config $config, Html5Wiki_Routing_Interface_Request $request = null);
 	public function route();
 }
 ?>
