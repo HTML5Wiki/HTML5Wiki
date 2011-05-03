@@ -13,7 +13,7 @@
  * 
  * @author Nicolas Karrer
  */
-class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
+class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 	
 	/**
 	 * 
@@ -26,6 +26,12 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 	 * @var	array
 	 */
 	protected $_primary		= array('id', 'timestamp');
+	
+	/**
+	 *
+	 * @var string
+	 */
+	protected $_rowClass = 'Html5Wiki_Model_MediaVersion';
 
 	private static $MEDIA_VERSION_TYPE = array(
 		'ARTICLE' => 'ARTICLE',
@@ -60,6 +66,24 @@ class Html5Wiki_Model_Media_Table extends Zend_Db_Table_Abstract {
 		}
 
 		
+		return $this->fetchRow($selectStatement);
+	}
+	
+	/**
+	 * Returns the latest version of a media regarding its permalink.
+	 *
+	 * @param  $permalink
+	 * @return null or Zend_Db_Table_Row_Abstract
+	 */
+	public function fetchMediaByPermaLink($permalink) {
+		$selectStatement = $this->select()->setIntegrityCheck(false);
+		$selectStatement->from($this);
+		$selectStatement->where('permalink = ?', $permalink);
+		$selectStatement->where('state = ?', self::$STATE['PUBLISHED']);
+
+		$selectStatement->limit(1);
+		$selectStatement->order('timestamp DESC');
+
 		return $this->fetchRow($selectStatement);
 	}
 	

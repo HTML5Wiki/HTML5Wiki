@@ -19,44 +19,78 @@ class Html5Wiki_Model_MediaManager {
 	
 	private $table = null;
 	
-	private __construct() {
-		$this->table = new Html5Wiki_Model_Media_Table();
+	public function __construct() {
+		//$this->table = new Html5Wiki_Model_Media_Table();
 	}
+	
+	/**
+	 * Uses Html5Wiki_Model_MediaManager#getMediaVersionsByPermalink for fetching
+	 * all versions of a Media.<br/>
+	 * Afterwards all versions are grouped into proper temporal groups by using
+	 * Html5Wiki_Model_MediaManager#getTimespanGroup.<br/>
+	 *
+	 * @param $permalink
+	 * @return Associative Array with Html5Wiki_Model_MediaVersion
+	 */
+	public function getGroupedMediaVersionsByPermalink($permalink) {
+		$versions = $this->getMediaVersionsByPermalink($permalink);
+		$groupedVersions = array();
+		
+		
+		
+		return $groupedVersions;
+	}
+	
+	/**
+	 * This method delivers all versions of a specific Media regarding its
+	 * permalink.<br/>
+	 * To achieve this, the ID of the Media has to be fetched. After getting the
+	 * ID, all versions of the Media can be retrived.
+	 *
+	 * @see MediaManager#getMediaByPermalink
+	 * @param $permalink
+	 * @return Zend_Db_Table_Rowset
+	 */
+	public function getMediaVersionsByPermalink($permalink) {
+		$versions = null;
+		$permalinksModel = $this->getLatestMediaVersionByPermaLink($permalink);
+		
+		if($permalinksModel->id > 0) {
+			$versions = $this->getMediaVersionsById($permalinksModel->id);
+		}
+		
+		return $versions;
+	}	
 	
 	/**
 	 * Returns the latest version of a Media by looking for its permalink.
 	 *
 	 * @param $permalink
-	 * @return MediaVersion (ZendDB-representation)
+	 * @return Html5Wiki_Model_MediaVersion
 	 */
-	public function getMediaByPermaLink($permalink) {
-		$articleId	= $this->table->fetchArticleByPermaLink($permalink);
+	public function getLatestMediaVersionByPermaLink($permalink) {
+		$data = array('permalink' => $permalink);
+		$model = new Html5Wiki_Model_MediaVersion(array('data' => $data));
 		
-		if($articleId == null) {
-			return $articleId;
-		}
-		
-		return new Html5Wiki_Model_Article($articleId['mediaVersionId'], $articleId['mediaVersionTimestamp']);
+		return $model;
 	}
 
 	/**
-	 * Returns ALL versions of a media by looking for its ID.
+	 * Returns a rowset of ALL versions of a MediaVersion by looking for its ID.
 	 *
 	 * @param  $idMediaVersion
-	 * @return Array with MediaVersions (ZendDB-representation)
+	 * @return Zend_Db_Table_Rowset
 	 */
-	public function getMediaVersionsById($idMediaVersion) {
-		$articleArray = array();
-		$articles   = $this->table->fetchArticlesById($idMediaVersion);
-
-		foreach($articles as $article) {
-			$articleArray[] = new Html5Wiki_Model_Article($article['mediaVersionId'], $article['mediaVersionTimestamp']);
-		}
-
-		return $articleArray;
+	public function getMediaVersionsById($id) {
+		$model = new Html5Wiki_Model_MediaVersion();
+		$select = $model->select();
+		
+		$select->where('id = ?', $id);
+		$select->order('timestamp DESC');
+		$rowset = $model->getTable()->fetchAll($select);
+		
+		return $rowset;
 	}
-
-
 
 
 	/**
@@ -66,7 +100,7 @@ class Html5Wiki_Model_MediaManager {
 	 * @param  $timestamp
 	 * @return timespan-Code (today,yesterday,daybeforeyesterday,thisweek,lastweek)
 	 */
-	private function getTimespanGroup($timestamp) {
+	public function getTimespanGroup($timestamp) {
 		$timestamp = intval($timestamp);
 
 		$today = array(

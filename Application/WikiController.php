@@ -218,7 +218,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
 		} else {
 			$permalink = $this->getPermalink();
-				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+				//$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+				$wikiPage = '';
 			if($wikiPage != null) {
 				$this->setTitle($wikiPage->title);
 			}
@@ -245,16 +246,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		} else {
 			$permalink = $this->getPermalink();
 			$mediaManager = new Html5Wiki_Model_MediaManager();
-			$mediaVersions = $mediaManager->getMediaVersionsByPermaLink($permalink);
+			$versions = $mediaManager->getGroupedMediaVersionsByPermalink($permalink);
 		}
 
-		if($wikiPage == null) {
+		if(count($versions) == 0) {
 			throw new Html5Wiki_Exception_404();
 		}
 
-		$wikiPage->loadHistory();
-
-		$this->template->assign('wikiPage', $wikiPage);
+		$this->template->assign('wikiPage', $versions->current());
+		$this->template->assign('versions', $versions);
 	}
  }
 

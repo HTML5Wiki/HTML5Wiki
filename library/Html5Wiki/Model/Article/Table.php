@@ -67,23 +67,6 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 
 		return $this->insert($localSaveData);
 	}
-	
-	/**
-	 * @param  $permalink
-	 * @return null|Zend_Db_Table_Row_Abstract
-	 */
-	public function fetchArticleByPermaLink($permalink) {
-		$selectStatement = $this->initSelectStatement('PUBLISHED');
-
-		$selectStatement->where('permalink = ?', $permalink);
-
-		$selectStatement = $this->addMediaVersionJoinStatement($selectStatement);
-
-		$selectStatement->limit(1);
-		$selectStatement->order('timestamp DESC');
-
-		return $this->fetchRow($selectStatement);
-	}
 
 	/**
 	 * @param  $idArticle
