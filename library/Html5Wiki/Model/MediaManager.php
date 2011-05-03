@@ -1,32 +1,36 @@
 <?php
+/**
+ * This file is part of the HTML5Wiki Project.
+ *
+ * @author		Manuel Alabor
+ * @copyright	(c) HTML5Wiki Team 2011
+ * @package		Html5Wiki
+ * @subpackage	Library
+ */
 
-class Html5Wiki_Model_ArticleManager {
+/**
+ * Provides methods and processes to access MediaVersion information on the
+ * database.<br/>
+ * Especially fetching of a version history is handled here.
+ *
+ * @author	Manuel Alabor
+ */
+class Html5Wiki_Model_MediaManager {
 	
-	/**
-	 * 
-	 * @var Html5Wiki_Model_Article_Table
-	 */
-	protected static $table = null;
+	private $table = null;
 	
-	/**
-	 * 
-	 * @return  Html5Wiki_Model_Article_Table
-	 */
-	public static function table() {
-		if( self::$table == null ) {
-			 self::$table =  new Html5Wiki_Model_Article_Table();
-		}
-		
-		return self::$table;
+	private __construct() {
+		$this->table = new Html5Wiki_Model_Media_Table();
 	}
 	
 	/**
-	 * 
-	 * @param	String	$permalink
-	 * @return unknown_type
+	 * Returns the latest version of a Media by looking for its permalink.
+	 *
+	 * @param $permalink
+	 * @return MediaVersion (ZendDB-representation)
 	 */
-	public static function getArticleByPermaLink($permalink) {
-		$articleId	= self::table()->fetchArticleByPermaLink($permalink);
+	public function getMediaByPermaLink($permalink) {
+		$articleId	= $this->table->fetchArticleByPermaLink($permalink);
 		
 		if($articleId == null) {
 			return $articleId;
@@ -36,13 +40,14 @@ class Html5Wiki_Model_ArticleManager {
 	}
 
 	/**
-	 * @static
-	 * @param  $idArticle
-	 * @return array
+	 * Returns ALL versions of a media by looking for its ID.
+	 *
+	 * @param  $idMediaVersion
+	 * @return Array with MediaVersions (ZendDB-representation)
 	 */
-	public static function getArticlesById($idArticle) {
+	public function getMediaVersionsById($idMediaVersion) {
 		$articleArray = array();
-		$articles   = self::table()->fetchArticlesById($idArticle);
+		$articles   = $this->table->fetchArticlesById($idMediaVersion);
 
 		foreach($articles as $article) {
 			$articleArray[] = new Html5Wiki_Model_Article($article['mediaVersionId'], $article['mediaVersionTimestamp']);
@@ -51,12 +56,17 @@ class Html5Wiki_Model_ArticleManager {
 		return $articleArray;
 	}
 
+
+
+
 	/**
-	 * @static
+	 * Analyzes a Timestamp and recognizes its position relativly in the past.<br/>
+	 * Example: If the timestamp is located yesterday, the method returns "yesterday".
+	 *
 	 * @param  $timestamp
-	 * @return void
+	 * @return timespan-Code (today,yesterday,daybeforeyesterday,thisweek,lastweek)
 	 */
-	public static function getTimespanGroup($timestamp) {
+	private function getTimespanGroup($timestamp) {
 		$timestamp = intval($timestamp);
 
 		$today = array(
@@ -95,15 +105,27 @@ class Html5Wiki_Model_ArticleManager {
 		}
 	}
 
-	public static function getWeekStart($timestamp) {
-		$diff	= (date('w', $timestamp)+6)%7;
-
+	/**
+	 * Takes a timestamp and delivers the regarding week (or more precise: the
+	 * timestamp of the weeks start)
+	 *
+	 * @param $timestamp
+	 * @return weekstart as timestamp
+	 */
+	private function getWeekStart($timestamp) {
+		$diff = (date('w', $timestamp)+6)%7;
 		return mktime(0, 0, 0, date('n', $timestamp), date('j', $timestamp)-$diff, date('Y', $timestamp));
 	}
 
-	public static function getWeekEnd($timestamp) {
-		$diff	= (7-date('w', $timestamp))%7;
-
+	/**
+	 * Takes a timestamp and delivers the regarding week (or more precise: the
+	 * timestamp of the weeks end)
+	 *
+	 * @param $timestamp
+	 * @return weekend as timestamp
+	 */
+	private function getWeekEnd($timestamp) {
+		$diff = (7-date('w', $timestamp))%7;
 		return mktime(23, 59, 59, date('n', $timestamp), date('j', $timestamp)+$diff, date('Y', $timestamp));
 	}
 }
