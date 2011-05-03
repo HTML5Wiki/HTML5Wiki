@@ -243,18 +243,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
 	 * @throws Html5Wiki_Exception_404
-	 * @return void
+	 * @author Manuel Alabor <malabor@hsr.ch>
 	 */
 	public function historyAction() {
 		$parameters = $this->router->getRequest()->getPostParameters();
-
-		if( isset($parameters['ajax']) ) {
+		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
+		
+		if(isset($parameters['ajax'])) {
 			$this->setNoLayout();
-			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPage   = new Html5Wiki_Model_ArticleVersion($parameters['idArticle']);
+			$id = $parameters['idArticle'];
+			
+			$versions = $mediaManager->getMediaVersionsById($id);
+			$latestVersion = $versions->current();
+			$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		} else {
 			$permalink = $this->getPermalink();
-			$mediaManager = new Html5Wiki_Model_MediaVersionManager();
 			
 			$versions = $mediaManager->getMediaVersionsByPermalink($permalink);
 			$latestVersion = $versions->current();
