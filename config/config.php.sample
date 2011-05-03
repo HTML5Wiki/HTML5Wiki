@@ -16,7 +16,7 @@ $config = array(
 		'password' => 'mySuperCoolPassword1337'
 	),
 	'routing' => array(
-		'defaultController' => 'index',
+		'defaultController' => 'wiki',
 		'defaultAction'     => 'index'
 	),
 	'languages' => array('en', 'de'),
