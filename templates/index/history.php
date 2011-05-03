@@ -7,7 +7,7 @@
 			<?php foreach($this->latestArticles as $article): ?>
 			<li>
 				<a href="<?php echo $this->urlHelper('wiki', $article->permalink) ?>"><?php echo $article->title ?></a>
-				<time><?php echo $article->mediaVersionTimestamp ?></time>
+				<time><?php echo date('d.m.Y H:i', $article->mediaVersionTimestamp) ?></time>
 			</li>
 			<?php endforeach; ?>
 		</ol>
