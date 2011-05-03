@@ -102,6 +102,31 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 
 		return $this->fetchAll($selectStatement);
 	}
+	
+	/**
+	 * @return type 
+	 */
+	public function fetchLatestArticles() {
+		
+		$select = $this->select()->setIntegrityCheck(false);
+		
+		$subselect = $this->select()->setIntegrityCheck(false)
+				->from('MediaVersion')
+				->where('mediaVersionType = ?', 'ARTICLE')
+				->where('state = ?', 'PUBLISHED')
+				->order('timestamp DESC');
+		
+		$select->from($subselect);
+		
+		$idJoinCondition = 't.id = ' . $this->_name . '.' . $this->_primary[1];
+		$timestampJoinCondition =  't.timestamp = ' . $this->_name . '.' . $this->_primary[2];
+		
+		$select->join('ArticleVersion', $idJoinCondition . ' AND ' . $timestampJoinCondition);
+		$select->group('t.id');
+		$select->order('t.timestamp DESC');
+		
+		return $this->fetchAll($select);
+	}
 
 	/**
 	 * @param  $state
