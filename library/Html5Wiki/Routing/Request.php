@@ -137,6 +137,8 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 
 		// strip base path & index.php from request uri to get only the relevant parts
 		$arguments = str_replace($this->basePath, '', str_replace('/index.php', '', $this->uri));
+		$arguments = str_replace('?' . $this->queryString, '', $arguments);
+		
 		$this->arguments = explode("/", $arguments);
 		$this->arguments = array_filter($this->arguments);
 

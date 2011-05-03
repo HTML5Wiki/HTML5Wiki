@@ -26,7 +26,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function editAction() {		
-		$parameters = $this->router->getRequest()->getPostParameters();
+		$parameters = $this->router->getRequest()->getGetParameters();
 
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
@@ -213,7 +213,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return void
 	 */
 	public function readAction() {
-		$parameters = $this->router->getRequest()->getPostParameters();
+		$parameters = $this->router->getRequest()->getGetParameters();
 
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
@@ -246,7 +246,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author Manuel Alabor <malabor@hsr.ch>
 	 */
 	public function historyAction() {
-		$parameters = $this->router->getRequest()->getPostParameters();
+		$parameters = $this->router->getRequest()->getGetParameters();
 		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
 		
 		if(isset($parameters['ajax'])) {

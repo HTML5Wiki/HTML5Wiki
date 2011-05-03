@@ -1,7 +1,7 @@
 Article = {
 	loadArticle: function(url, idArticle) {
 		$.ajax({
-			type: 'POST',
+			type: 'get',
 			'url':  url,
 			complete: this.replaceContent.bind(this),
 			data: 'ajax=true&idArticle=' + idArticle
@@ -80,7 +80,7 @@ Article = {
 	 */
     loadEditForm: function(url, idArticle) {
 		$.ajax({
-            type:   'POST',
+            type:   'get',
             url:    url,
             data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.onEditFormLoaded.bind(this)
@@ -108,7 +108,7 @@ Article = {
 	 */
 	loadHistory: function(url, idArticle) {
 		$.ajax({
-			type:   'POST',
+			type:   'get',
             url:    url,
             data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.replaceContent.bind(this)
