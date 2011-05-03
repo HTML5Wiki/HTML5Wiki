@@ -58,7 +58,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 
 		$this->controller = isset($arguments[1]) ? $arguments[1] : $this->config->routing->defaultController;
 		$this->action = isset($arguments[2]) ? $arguments[2] : $this->config->routing->defaultAction;
-
+		
 		$this->sanitizeControllerAndAction();
 	}
 

@@ -221,15 +221,20 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		} else {
 			$permalink = $this->getPermalink();
+			if ($permalink === '' && $this->config->routing->defaultController !== 'wiki') {
+				throw new Html5Wiki_Exception_404("Empty permalink is not allowed");
+			} else if ($this->config->routing->defaultController == 'wiki') {
+				$permalink = $this->config->routing->defaultController . '/' . $this->config->routing->defaultAction;
+			}
+				
 			$data = array('permalink' => $permalink);
 			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
-			
-			if($wikiPage != null) {
+			if($wikiPage != null && isset($wikiPage->title)) {
 				$this->setTitle($wikiPage->title);
 			}
 		}
 
-		if( $wikiPage == null ) {
+		if(!isset($wikiPage->id)) {
 			$this->loadNoArticlePage($permalink);
 		} else {
 			$this->loadPage($wikiPage);

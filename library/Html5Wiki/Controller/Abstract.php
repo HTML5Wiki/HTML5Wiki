@@ -147,10 +147,10 @@ abstract class Html5Wiki_Controller_Abstract {
 	}
 
 	/**
-	 * @return void
+	 * @return string
 	 */
 	public function render() {
-		$this->template->render();
+		return $this->template->render();
 	}
 
 	/**
@@ -172,9 +172,9 @@ abstract class Html5Wiki_Controller_Abstract {
 
 		$needle = $basePath . $this->router->getController() . '/';
 		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
-
+		
 		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
-
+		
 		return $permalink;
 	}
 		

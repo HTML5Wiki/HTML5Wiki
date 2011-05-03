@@ -58,20 +58,22 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$select->order('timestamp DESC');
 		$mediaVersion = $mediaVersionTable->fetchRow($select);
 		
-		// Get ArticleVersion (article data lies there):
-		$select = $this->select();
-		$select->where('mediaVersionId = ?', $mediaVersion->id);
-		$select->where('mediaVersionTimestamp = ?', $mediaVersion->timestamp);
-		$articleVersion = $this->_getTable()->fetchRow($select);
-		
-		
-		$articleVersionData = $articleVersion->toArray();
-		$mediaVersionData = $mediaVersion->toArray();
-		$data = array_merge($articleVersionData,$mediaVersionData);
-		
-		$this->_data = $data;
-		$this->_cleanData = $this->_data;
-		$this->_modifiedFields = array();
+		if (isset($mediaVersion->id)) {
+			// Get ArticleVersion (article data lies there):
+			$select = $this->select();
+			$select->where('mediaVersionId = ?', $mediaVersion->id);
+			$select->where('mediaVersionTimestamp = ?', $mediaVersion->timestamp);
+			$articleVersion = $this->_getTable()->fetchRow($select);
+
+
+			$articleVersionData = $articleVersion->toArray();
+			$mediaVersionData = $mediaVersion->toArray();
+			$data = array_merge($articleVersionData,$mediaVersionData);
+
+			$this->_data = $data;
+			$this->_cleanData = $this->_data;
+			$this->_modifiedFields = array();
+		}
 	}
 	
 	/**
