@@ -13,25 +13,21 @@
  * 
  * @author Nicolas Karrer
  */
-class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
+class Html5Wiki_Model_ArticleVersion_Table extends Zend_Db_Table_Abstract {
 	
-	/**
-	 * 
-	 * @var string
-	 */
 	protected $_name		= 'ArticleVersion';
-	
-	/**
-	 * 
-	 * @var array
-	 */
 	protected $_primary		= array('mediaVersionId', 'mediaVersionTimestamp');
-	
-	/**
-	 * 
-	 * @var boolean
-	 */
 	protected $_sequence	= true;
+	protected $_rowClass	= 'Html5Wiki_Model_ArticleVersion';
+
+	protected $_dependentTables = array('Html5Wiki_Model_MediaVersion_Table');
+	protected $_referenceMap = array(
+		'MediaVersion' => array(
+			'columns' => array('mediaVersionId','mediaVersionTimestamp')
+			,'refTableClass' => 'Html5Wiki_Model_MediaVersion_Table'
+			,'refColumns' => array('id','timestamp')
+		)
+	);
 
 	/**
 	 * 
