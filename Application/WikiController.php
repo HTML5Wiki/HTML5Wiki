@@ -236,10 +236,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
 			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
+			//$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
 		} else {
-			$permalink  = $this->getPermalink();
-			$wikiPage   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			$permalink = $this->getPermalink();
+			$mediaManager = new Html5Wiki_Model_MediaManager();
+			$mediaVersions = $mediaManager->getMediaVersionsByPermaLink($permalink);
 		}
 
 		if($wikiPage == null) {
