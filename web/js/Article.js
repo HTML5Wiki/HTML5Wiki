@@ -40,6 +40,7 @@ Article = {
             var timestampArticle = $('#hiddenTimestampArticle').val();
             var title     = $('#txtTitle').val();
             var content   = $('#contentEditor').val();
+			var versionComment = $('#versionComment').val();
 			var name      = $('#txtAuthor').val();
 			var email     = $('#txtAuthorEmail').val();
             var id        = $('#hiddenAuthorId').val();
@@ -50,6 +51,7 @@ Article = {
                 hiddenTimestampArticle: timestampArticle,
                 txtTitle: title,
                 contentEditor: content,
+				versionComment: versionComment,
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,

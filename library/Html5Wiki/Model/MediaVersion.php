@@ -93,10 +93,6 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 		$this->_modifiedFields = array();
 	}
 	
-	public function save() {
-		parent::save();
-	}
-	
 	public function getUser() {
 		// todo
 		$data = array('id' => $this->userId);

@@ -26,8 +26,8 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 	}
 
 	public function toString() {
-		self::$javascriptFiles = array_reverse(self::$javascriptFiles);
-		self::$javascriptScripts = array_reverse(self::$javascriptScripts);
+		self::$javascriptFiles = self::$javascriptFiles;
+		self::$javascriptScripts = self::$javascriptScripts;
 		$string = '';
 		foreach (self::$javascriptFiles as $file) {
 			$string .= $this->fileString($file);

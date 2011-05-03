@@ -9,7 +9,7 @@
 		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
         <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
         <header class="grid_12 title clearfix">
-			<h1 class="heading"><?php echo $this->title; ?></h1>
+			<h1 class="heading"><?php echo !empty($this->title) ? $this->title : $this->translate->_('noTitle'); ?></h1>
 			<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 		</header>
 		<div class="clear"></div>
@@ -58,6 +58,13 @@
 					<em>Eingabetaste</em>.
 				</p>
 			</fieldset>	
+			<fieldset name="versionComment" class="group">
+				<legend class="groupname">Versionskommentar</legend>
+				<p class="clearfix">
+					<label for="versionComment" class="label">Kommentar zur Version <em>(optional)</em>:</label>
+					<input type="text" name="versionComment" id="versionComment" class="textfield"/>
+				</p>
+			</fieldset>
 		</div>
 		<div class="clear"></div>
 		
