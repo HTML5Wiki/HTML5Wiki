@@ -5,7 +5,7 @@
 	$this->javascriptHelper()->appendScript('$("#edit-article").submit(Article.save.bind());');
 ?>
 <article id="content" class="content editor">
-	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
+	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->wikiPage->permalink ?>" method="post">
 		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
         <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
         <header class="grid_12 title clearfix">
@@ -25,14 +25,14 @@
 		<div class="grid_4">
 			<fieldset name="author" class="group">
 				<legend class="groupname">Autoreninformation</legend>
-                <input type="hidden" value="<?php echo $this->author->id; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
+                <input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : 0; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
 					<label for="txtAuthor" class="label">Ihr Name</label>
-					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php  echo $this->author->name; ?>" />
+					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
 				</p>
 				<p>
 					<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse</label>
-					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php echo $this->author->email; ?>" />
+					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
 				</p>
 				<p class="hint">
 					Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden

@@ -14,21 +14,17 @@
  * @author Nicolas Karrer <nkarrer@hsr.ch>
  *
  */
-class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
+class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 	
-	/**
-	 * 
-	 * @param	Integer	$idUser
-	 */
-	public function __construct($idUser = 0) {
-		$idUser = intval($idUser);
-
-		$this->dbAdapter = new Html5Wiki_Model_User_Table();
-
-		$this->data['id'] = $idUser;
-		
-		if( $idUser > 0 ) {
-			$this->load($idUser);
+	protected $_tableClass = 'Html5Wiki_Model_User_Table';
+	
+	public function init() {
+		$userId = isset($this->id) ? intval($this->id) : 0;
+		if($userId > 0 && (!isset($this->name) && !isset($this->email))) {
+			$this->loadById($userId);
+			$this->saveCookie($userId);
+		} elseif (isset($this->id) && isset($this->name) && isset($this->email)) {
+			$this->saveCookie($userId);
 		} else {
 			$this->loadFromCookie();
 		}
@@ -37,26 +33,30 @@ class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 	/**
 	 * Loads User by its id
 	 */
-	private function load($idUser) {	
-		$this->data = $this->dbAdapter->fetchUser($idUser)->toArray();
+	private function loadById($userId) {
+		$where = $this->select()->where('id = ?', $userId);
+		$row = $this->_getTable()->fetchRow($where);
+		
+		$this->_data = $row->toArray();
+        $this->_cleanData = $this->_data;
+        $this->_modifiedFields = array();
 	}
 	
 	/**
 	 * Loads User by existing cookie
 	 */
 	private function loadFromCookie() {
-		if( isset($_COOKIE['currentUserId']) ) {
-			$this->load($_COOKIE['currentUserId']);
+		if(isset($_COOKIE['currentUserId'])) {
+			$this->loadById($_COOKIE['currentUserId']);
 		 }
 	}
 	
 	/**
-	 * Set user data
-	 *
-	 * @param $data
+	 * Save user cookie (currentUserId)
+	 * @return bool return of setcookie.
 	 */
-	public function setData(array $data) {
-		$this->data = $data;
+	private function saveCookie() {
+		return setcookie('currentUserId', $this->id, time() + 3600, '/', null, false, true);
 	}
 	
 	/**
@@ -69,24 +69,16 @@ class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 	 * @param	Array	$saveData
 	 */
 	public function save() {
-		if( $this->data['id'] == 0) {
-			if($userData = $this->dbAdapter->userExists($this->data['name'], $this->data['email'])) {
-				$this->data = $userData->toArray();
-			} else {
-				$this->data['id'] = $this->dbAdapter->saveNewUser($this->data);
-			}
-		} else {
-			$this->dbAdapter->updateUser($this->data['id'], $this->data);
-		}
-
-		setcookie('currentUserId', $this->data['id'], time() + 3600, '/', null, false, true);
+		parent::save();
+		
+		$this->saveCookie($this->id);
 	}
 
 
 	/**
 	 * @return 
 	 */
-	public function toString() {
+	public function __toString() {
 		return $this->name;
 	}
 }

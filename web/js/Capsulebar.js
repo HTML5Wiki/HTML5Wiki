@@ -21,7 +21,8 @@ var Capsulebar = (function() {
 		},
 		
 		onClick: function(page, e) {
-			var url = this.setContent(page, e);
+			var url = e.currentTarget.href;
+			this.setContent(page, this.articleId, url);
 			this.updateHistory(page, url, this.articleId);
 			
 			e.preventDefault();
@@ -43,22 +44,22 @@ var Capsulebar = (function() {
 		},
 		
 		onPopState: function(e) {
-			this.setContent(this.getPage(history.state.url), history.state.articleId);
+			this.setContent(this.getPage(history.state.url), history.state.articleId, e.currentTarget.location.href);
 			
 			e.preventDefault();
 		},
 		
-		setContent: function(page, e) {
+		setContent: function(page, articleId, url) {
 			var url;
 			switch (page) {
 				case 'history':
-					url = Article.loadHistory(e, this.articleId);
+					url = Article.loadHistory(url, articleId);
 					break;
 				case 'edit':
-					url = Article.loadEditForm(e, this.articleId);
+					url = Article.loadEditForm(url, articleId);
 					break;
 				default:
-					url = Article.loadArticle(e, this.articleId);
+					url = Article.loadArticle(url, articleId);
 			}
 			return url;
 		},
