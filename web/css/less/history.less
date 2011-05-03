@@ -18,12 +18,11 @@
 
 		.group {
 			font: @font_normalsize @font_ui;
-			margin: 0 0 5px 0;
 			border-top: 1px solid @color_secondary;
-			padding-top: 1px;
-			
+			padding: 5px 0;
 			&:first-child {
-				border-top-width: 0px;
+				border-top-width: 0;
+				padding-top: 0;
 			}
 			
 			.version {
@@ -32,12 +31,16 @@
 					padding: 0;
 				}
 				
+				.timestamp {
+					margin: 0 5px;
+				}
+				
 				.avatar {
-					background: red;
 					display: inline-block;
 					width: 16px;
 					height: 16px;
 					vertical-align: middle;
+					margin-right: 3px;
 				}
 				
 				.comment {

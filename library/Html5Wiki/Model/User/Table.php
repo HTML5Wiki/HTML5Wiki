@@ -10,17 +10,9 @@
 
 class Html5Wiki_Model_User_Table extends Zend_Db_Table_Abstract {
 			
-	/**
-	 * 
-	 * @var string
-	 */
-	protected $_name		= 'User';
-	
-	/**
-	 * 
-	 * @var array
-	 */
-	protected $_primary		= array('id');
+	protected $_name = 'User';
+	protected $_primary = array('id');
+	protected $_rowClass = 'Html5Wiki_Model_User';
 	
 	/**
 	 * 
@@ -76,8 +68,8 @@ class Html5Wiki_Model_User_Table extends Zend_Db_Table_Abstract {
 
         $selectStatement->where('name = ?', $name);
         $selectStatement->where('email = ?', $email);
-
+		
         return $this->fetchRow($selectStatement);
-    }
+	}
 }
 ?>

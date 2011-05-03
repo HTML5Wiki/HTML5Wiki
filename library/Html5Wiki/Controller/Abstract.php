@@ -101,7 +101,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		throw new Html5Wiki_Exception_404('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
 	}
 	
-	public function setTranslation() {
+	public function setTranslation() {;
 		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($this->router->getRequest()->getLanguage(), 
 						$this->config->languages->toArray());
 		$language = ($language !== null) ? $language : $this->config->defaultLanguage;
@@ -125,7 +125,9 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @param string $title
 	 */
 	protected function setTitle($title) {
-		$this->layoutTemplate->assign('title', $title);
+		if(isset($this->layoutTemplate)) {
+			$this->layoutTemplate->assign('title', $title);
+		}
 	}
 	
 	/**
@@ -147,10 +149,10 @@ abstract class Html5Wiki_Controller_Abstract {
 	}
 
 	/**
-	 * @return void
+	 * @return string
 	 */
 	public function render() {
-		$this->template->render();
+		return $this->template->render();
 	}
 
 	/**
@@ -172,9 +174,9 @@ abstract class Html5Wiki_Controller_Abstract {
 
 		$needle = $basePath . $this->router->getController() . '/';
 		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
-
+		
 		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
-
+		
 		return $permalink;
 	}
 		

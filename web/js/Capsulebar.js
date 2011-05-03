@@ -4,11 +4,10 @@
  * @author Michael Weibel <mweibel@hsr.ch>
  */
 var Capsulebar = (function() {
-	var articleId, articleTimestamp;
+	var articleId;
 	return {
-		init: function(articleId, articleTimestamp) {
+		init: function(articleId) {
 			this.articleId = articleId;
-			this.articleTimestamp = articleTimestamp;
 			this.initializeHistory();
 			this.initializeClickEvents();
 			
@@ -22,8 +21,9 @@ var Capsulebar = (function() {
 		},
 		
 		onClick: function(page, e) {
-			var url = this.setContent(page, e);
-			this.updateHistory(page, url, this.articleId, this.articleTimestamp);
+			var url = e.currentTarget.href;
+			this.setContent(page, this.articleId, url);
+			this.updateHistory(page, url, this.articleId);
 			
 			e.preventDefault();
 		},
@@ -38,29 +38,28 @@ var Capsulebar = (function() {
 			history.pushState(
 				{
 					'articleId' : this.articleId, 
-					'articleTimestamp': this.articleTimestamp, 
 					'url': toPageUrl
 				}, 
 				toPageTitle, toPageUrl);
 		},
 		
 		onPopState: function(e) {
-			this.setContent(this.getPage(history.state.url), history.state.articleId, history.state.articleTimestamp);
+			this.setContent(this.getPage(history.state.url), history.state.articleId, e.currentTarget.location.href);
 			
 			e.preventDefault();
 		},
 		
-		setContent: function(page, e) {
+		setContent: function(page, articleId, url) {
 			var url;
 			switch (page) {
 				case 'history':
-					url = Article.loadHistory(e, this.articleId, this.articleTimestamp);
+					url = Article.loadHistory(url, articleId);
 					break;
 				case 'edit':
-					url = Article.loadEditForm(e, this.articleId, this.articleTimestamp);
+					url = Article.loadEditForm(url, articleId);
 					break;
 				default:
-					url = Article.loadArticle(e, this.articleId, this.articleTimestamp);
+					url = Article.loadArticle(url, articleId);
 			}
 			return url;
 		},

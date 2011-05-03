@@ -10,14 +10,10 @@
  */
 class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
-	 * Default controller if none is supplied
+	 * Configuration
+	 * @var Zend_Config
 	 */
-	const DEFAULT_CONTROLLER = 'index';
-
-	/**
-	 * Default action if none is supplied
-	 */
-	const DEFAULT_ACTION = 'index';
+	private $config = null;
 
 	/**
 	 * Request object
@@ -42,7 +38,9 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Construct router -> creates a new request object and calls parse on it
 	 */
-	public function __construct($request = null) {
+	public function __construct(Zend_Config $config, Html5Wiki_Routing_Interface_Request $request = null) {
+		$this->config = $config;
+		
 		if (!$request) {
 			$this->request = new Html5Wiki_Routing_Request();
 		} else {
@@ -58,9 +56,9 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 
 		$arguments = $this->request->getArguments();
 
-		$this->controller = isset($arguments[1]) ? $arguments[1] : self::DEFAULT_CONTROLLER;
-		$this->action = isset($arguments[2]) ? $arguments[2] : self::DEFAULT_ACTION;
-
+		$this->controller = isset($arguments[1]) ? $arguments[1] : $this->config->routing->defaultController;
+		$this->action = isset($arguments[2]) ? $arguments[2] : $this->config->routing->defaultAction;
+		
 		$this->sanitizeControllerAndAction();
 	}
 

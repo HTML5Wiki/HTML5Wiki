@@ -1,11 +1,10 @@
 Article = {
-	loadArticle: function(e, idArticle, timestampArticle) {
-		var url = e.currentTarget.href;
+	loadArticle: function(url, idArticle) {
 		$.ajax({
-			type: 'POST',
+			type: 'get',
 			'url':  url,
 			complete: this.replaceContent.bind(this),
-			data: 'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle
+			data: 'ajax=true&idArticle=' + idArticle
 		});
 		return url;
 	},
@@ -35,32 +34,39 @@ Article = {
 	
 	save: function(e) {
 		e.preventDefault();
-		var form	= $('#edit-article');
+		var form	= $(e.currentTarget);
 		if( form ) {
             var idArticle        = $('#hiddenIdArticle').val();
             var timestampArticle = $('#hiddenTimestampArticle').val();
             var title     = $('#txtTitle').val();
             var content   = $('#contentEditor').val();
+			var versionComment = $('#versionComment').val();
 			var name      = $('#txtAuthor').val();
 			var email     = $('#txtAuthorEmail').val();
             var id        = $('#hiddenAuthorId').val();
+			var tags      = Article.collectMediaTags();
 
 			var mediaData = {
                 hiddenIdArticle: idArticle,
                 hiddenTimestampArticle: timestampArticle,
                 txtTitle: title,
                 contentEditor: content,
+				versionComment: versionComment,
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,
-				ajax: true		
+				tags: tags.join(','),
+				ajax: true
 			};
-
 			$.ajax({
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				complete: Article.onEditFormLoaded.bind(Article)
+				complete: function(response) {
+					Article.replaceContent(response);
+					var url = window.location.href.replace('edit', 'read');
+					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
+				}
 			});
 		}
 	},
@@ -74,12 +80,11 @@ Article = {
 	 * @param idArticle
 	 * @param timestampArticle
 	 */
-    loadEditForm: function(e, idArticle, timestampArticle) {
-		var url = e.currentTarget.href;
+    loadEditForm: function(url, idArticle) {
 		$.ajax({
-            type:   'POST',
+            type:   'get',
             url:    url,
-            data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
+            data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.onEditFormLoaded.bind(this)
         });
 		return url;
@@ -96,18 +101,18 @@ Article = {
 		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
 		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 		$('.editor #txtTags').ptags();
+		$('.editor #txtTags').bind('change', Article.collectMediaTags);
 	},
 
 	/**
 	 * 
 	 * @param idArticle
 	 */
-	loadHistory: function(e, idArticle, timestampArticle) {
-		var url = e.currentTarget.href;
+	loadHistory: function(url, idArticle) {
 		$.ajax({
-			type:   'POST',
+			type:   'get',
             url:    url,
-            data:   'ajax=true&idArticle=' + idArticle + '&timestampArticle=' + timestampArticle,
+            data:   'ajax=true&idArticle=' + idArticle,
 			complete: Article.replaceContent.bind(this)
         });
 		
@@ -143,6 +148,21 @@ Article = {
 		heading.replaceWith(container);
 
 		return false;
+	},
+
+	/**
+	 * collects the media tags in the form.
+	 *
+	 * @return  Array
+	 */
+	collectMediaTags: function() {
+		var tags = [];
+
+		$('.ui-ptags-tag-text').each(function(element, test, test2) {
+			tags.push($.trim(test.innerHTML));
+		});
+
+		return tags;
 	}
 	
 };

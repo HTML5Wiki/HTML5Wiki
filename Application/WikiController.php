@@ -26,14 +26,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author	Alexandre Joly <ajoly@hsr.ch>
 	 */
 	public function editAction() {		
-		$parameters = $this->router->getRequest()->getPostParameters();
+		$parameters = $this->router->getRequest()->getGetParameters();
 
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+			$data = array('mediaVersionId' => $parameters['idArticle']);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		} else {
 			$permalink = $this->getPermalink();
-			$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			$data = array('permalink'=>$permalink);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		}
 	
 		if( $wikiPage == null ) {
@@ -58,12 +60,23 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		if($this->handleUserRequest($parameters) != false) {
 			$user       = new Html5Wiki_Model_User();
-			$wikiPage   = new Html5Wiki_Model_Article();
-		
-			$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink(), 'userId' => $user->id));
-			$wikiPage->save();
+			$mediaVersion   = new Html5Wiki_Model_MediaVersion_Table();
+			$row = $mediaVersion->createRow();
+			$row->setFromArray(array('permalink' => $this->getPermalink(), 'userId' => $user->id, 'timestamp' => time()));
+			$row->save();
+			
+			$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
+			$articleRow = $articleVersion->createRow();
+			$articleRow->setFromArray(array('mediaVersionId' => $row->id, 'mediaVersionTimestamp' => $row->timestamp));
+			$articleRow->save();
 		
 			$this->setTemplate('edit.php');
+			
+			// reload the wikipage because it needs also the MediaVersion informations.
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+				'mediaVersionId' => $articleRow->mediaVersionId,
+				'mediaVersionTimestamp' => $articleRow->mediaVersionTimestamp
+			)));
 			
 			$this->loadEditPage($wikiPage);
 		} else {
@@ -83,34 +96,45 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
 		}
-
-		$oldWikiPage = new Html5Wiki_Model_Article($parameters['hiddenIdArticle'], $parameters['hiddenTimestampArticle']);
+		
+		$oldWikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+			'mediaVersionId' => $parameters['hiddenIdArticle'], 
+			'mediaVersionTimestamp' => $parameters['hiddenTimestampArticle']
+		)));
 		//TODO: some validation
 
 		$validate = true;
 
 		if ($validate) {
-			if($this->handleUserRequest($parameters) != false) {
-
+			$user = $this->handleUserRequest($parameters);
+			if($user !== false) {
                  //TODO: handle Tag request
-
-				$user     = new Html5Wiki_Model_User();
-				$wikiPage = new Html5Wiki_Model_Article();
-
-				$title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
-
-                //TODO: fix permalink, previousVersion
-				$data = array(
-					'id'        => $oldWikiPage->id,
+				$wikiPage = new Html5Wiki_Model_MediaVersion_Table();
+				$mediaVersionRow = $wikiPage->createRow(array(
+					'id' => $oldWikiPage->id,
+					'timestamp' => time(),
 					'permalink' => $oldWikiPage->permalink,
-					'title'     => $title,
-					'content'   => $parameters['contentEditor'],
-					'userId'    => $user->id,
-				);
+					'userId' => $user->id,
+					'versionComment' => $parameters['versionComment']
+				));
+				$mediaVersionRow->save();
 
-
-				$wikiPage->setData($data);
-				$wikiPage->save();
+				$title = isset($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->title;
+				
+				$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
+				$articleVersionRow = $articleVersion->createRow(array(
+					'mediaVersionId' => $oldWikiPage->id,
+					'mediaVersionTimestamp' => $mediaVersionRow->timestamp,
+					'title' => $title,
+					'content' => $parameters['contentEditor']
+				));
+				$articleVersionRow->save();
+				
+				// reload the wikipage because it needs also the MediaVersion informations.
+				$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+					'mediaVersionId' => $articleVersionRow->mediaVersionId,
+					'mediaVersionTimestamp' => $articleVersionRow->mediaVersionTimestamp
+				)));
 
                 $this->loadPage($wikiPage);
             }
@@ -123,9 +147,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * Loads the standard view page for a given article
 	 * 
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
-	 * @param	Html5Wiki_Model_Article $wikiPage
+	 * @param	Html5Wiki_Model_ArticleVersion $wikiPage
 	 */
-	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
+	private function loadPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
 		$this->setTemplate('article.php');
 
 		$this->template->assign('wikiPage', $wikiPage);
@@ -157,17 +181,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
-
+	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
 		//Prepare article data for the view
-		$title = $wikiPage->title;
-		$content = $wikiPage->content;
+		$title = isset($wikiPage->title) ? $wikiPage->title : '';
+		$content = isset($wikiPage->content) ? $wikiPage->content : '';
 		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
 		$author	= new Html5Wiki_Model_User();
 		
-		if($this->layoutTemplate != null) $this->layoutTemplate->assign('title', $title);
+		if($this->layoutTemplate != null) {
+			$this->layoutTemplate->assign('title', $title);
+		}
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
 		$this->template->assign('author', $author);
@@ -182,17 +207,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function handleUserRequest(array $parameters) {
 		$userData	= array(
-			'id'        => $parameters['hiddenAuthorId'],
+			'id'        => intval($parameters['hiddenAuthorId']),
 			'name'      => $parameters['txtAuthor'],
 			'email' 	=> $parameters['txtAuthorEmail']
 		);
 		
-		$user	= new Html5Wiki_Model_User();
-		if($user->id > 0) {
+		$user = new Html5Wiki_Model_User(array('data' => $userData));
+		if($userData['id'] > 0) {
 			return $user;
 		} else {
-			if( $userData['email'] && $userData['name'] ) {
-				$user->setData($userData);
+			$userTable = new Html5Wiki_Model_User_Table();
+			$existingUser = $userTable->userExists($userData['name'], $userData['email']);
+			if (isset($existingUser->id)) {
+				return $existingUser;
+			}
+			if($userData['email'] && $userData['name']) {
 				$user->save();
 				
 				return $user;
@@ -206,20 +235,28 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return void
 	 */
 	public function readAction() {
-		$parameters = $this->router->getRequest()->getPostParameters();
+		$parameters = $this->router->getRequest()->getGetParameters();
 
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+			$data = array('mediaVersionId' => $parameters['idArticle']);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		} else {
 			$permalink = $this->getPermalink();
-				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-			if($wikiPage != null) {
+			if ($permalink === '' && $this->config->routing->defaultController !== 'wiki') {
+				throw new Html5Wiki_Exception_404("Empty permalink is not allowed");
+			} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
+				$permalink = $this->config->routing->defaultAction;
+			}
+				
+			$data = array('permalink' => $permalink);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
+			if($wikiPage != null && isset($wikiPage->title)) {
 				$this->setTitle($wikiPage->title);
 			}
 		}
 
-		if( $wikiPage == null ) {
+		if(!isset($wikiPage->id)) {
 			$this->loadNoArticlePage($permalink);
 		} else {
 			$this->loadPage($wikiPage);
@@ -228,27 +265,32 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
 	 * @throws Html5Wiki_Exception_404
-	 * @return void
+	 * @author Manuel Alabor <malabor@hsr.ch>
 	 */
 	public function historyAction() {
-		$parameters = $this->router->getRequest()->getPostParameters();
-
-		if( isset($parameters['ajax']) ) {
+		$parameters = $this->router->getRequest()->getGetParameters();
+		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
+		
+		if(isset($parameters['ajax'])) {
 			$this->setNoLayout();
-			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], $parameters['timestampArticle']);
+			$id = $parameters['idArticle'];
+			$versions = $mediaManager->getMediaVersionsById($id);
 		} else {
-			$permalink  = $this->getPermalink();
-			$wikiPage   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			$permalink = $this->getPermalink();
+			$versions = $mediaManager->getMediaVersionsByPermalink($permalink);
 		}
 
-		if($wikiPage == null) {
+		if(count($versions) == 0) {
 			throw new Html5Wiki_Exception_404();
 		}
-
-		$wikiPage->loadHistory();
-
-		$this->template->assign('wikiPage', $wikiPage);
+		
+		$latestVersion = $versions->current();
+		$latestVersion = new Html5Wiki_Model_ArticleVersion(array('data'=>array('mediaVersionId'=>$latestVersion->id)));
+		$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
+		
+		$this->setTitle($latestVersion->title);
+		$this->template->assign('wikiPage', $latestVersion);
+		$this->template->assign('versions', $groupedVersions);
 	}
  }
 

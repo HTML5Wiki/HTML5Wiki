@@ -52,7 +52,7 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .editor .title .heading{cursor:pointer;}
 .editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .txtTitle{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
 .editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;}
-.editor .save-button.caption{background-image:url('../images/icons16/accept.png');background-repeat:no-repeat;background-position: 5px 9px;padding-left: 25px}
+.editor .save-button.caption{background-image:url('../images/icons16/accept.png');background-repeat:no-repeat;background-position:5px 9px;padding-left:25px;}
 form{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}form .group{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px solid #a9a9a9;padding:5px 10px;margin-bottom:10px;background-color:#f8f8f8;}
 form .groupname{font-size:75%;color:#959595;padding:0 4px;}
 form .textfield{margin-bottom:6px;width:98%;}
@@ -98,8 +98,9 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .ui-ptags-tag .ui-ptags-tag-remover{float:left;margin:1px 0 0 .2em;cursor:pointer;width:7px;height:8px;background:url('../images/icons16/bullet_delete.png') no-repeat -5px -4px;}
 .ui-ptags-clear{height:0px;}
 .history .versionhistory .timespan{font:bold 150% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;background:url('../images/icons16/calendar.png') no-repeat 0 6px;padding-left:23px;}
-.history .versionhistory .group{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;margin:0 0 5px 0;border-top:1px solid #a9a9a9;padding-top:1px;}.history .versionhistory .group:first-child{border-top-width:0px;}
+.history .versionhistory .group{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;border-top:1px solid #a9a9a9;padding:5px 0;}.history .versionhistory .group:first-child{border-top-width:0;padding-top:0;}
 .history .versionhistory .group .version .diffselector{margin:0;padding:0;}
-.history .versionhistory .group .version .avatar{background:red;display:inline-block;width:16px;height:16px;vertical-align:middle;}
+.history .versionhistory .group .version .timestamp{margin:0 5px;}
+.history .versionhistory .group .version .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .history .versionhistory .group .version .comment{font-size:75%;font-style:italic;}
 .history .diff-button .caption{background-image:url('../images/icons16/compare.png');}
