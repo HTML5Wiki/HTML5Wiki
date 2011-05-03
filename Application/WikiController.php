@@ -246,15 +246,20 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		} else {
 			$permalink = $this->getPermalink();
 			$mediaManager = new Html5Wiki_Model_MediaVersionManager();
-			$versions = $mediaManager->getGroupedMediaVersionsByPermalink($permalink);
+			
+			$versions = $mediaManager->getMediaVersionsByPermalink($permalink);
+			$latestVersion = $versions->current();
+			$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		}
 
 		if(count($versions) == 0) {
 			throw new Html5Wiki_Exception_404();
 		}
 
-		$this->template->assign('wikiPage', $versions->current());
-		$this->template->assign('versions', $versions);
+		// todo get current wikipage title!
+
+		$this->template->assign('wikiPage', $latestVersion);
+		$this->template->assign('versions', $groupedVersions);
 	}
  }
 

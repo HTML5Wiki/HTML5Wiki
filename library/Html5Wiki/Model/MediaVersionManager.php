@@ -17,30 +17,6 @@
  */
 class Html5Wiki_Model_MediaVersionManager {
 	
-	private $table = null;
-	
-	public function __construct() {
-		//$this->table = new Html5Wiki_Model_Media_Table();
-	}
-	
-	/**
-	 * Uses Html5Wiki_Model_MediaManager#getMediaVersionsByPermalink for fetching
-	 * all versions of a Media.<br/>
-	 * Afterwards all versions are grouped into proper temporal groups by using
-	 * Html5Wiki_Model_MediaManager#getTimespanGroup.<br/>
-	 *
-	 * @param $permalink
-	 * @return Associative Array with Html5Wiki_Model_MediaVersion
-	 */
-	public function getGroupedMediaVersionsByPermalink($permalink) {
-		$versions = $this->getMediaVersionsByPermalink($permalink);
-		$groupedVersions = array();
-		
-		
-		
-		return $groupedVersions;
-	}
-	
 	/**
 	 * This method delivers all versions of a specific Media regarding its
 	 * permalink.<br/>
@@ -91,6 +67,24 @@ class Html5Wiki_Model_MediaVersionManager {
 		
 		return $rowset;
 	}
+	
+	/**
+	 * Groups MediaVersions into proper temporal groups by using
+	 * Html5Wiki_Model_MediaManager#getTimespanGroup.<br/>
+	 *
+	 * @param $versions Array with Html5Wiki_Model_MediaVersion
+	 * @return Associative Array with Html5Wiki_Model_MediaVersion
+	 */
+	public function groupMediaVersionByTimespan($versions) {
+		$groupedVersions = array();
+		
+		foreach($versions as $version) {
+			$group = $this->getTimespanGroup($version->timestamp);
+			$groupedVersions[$group][] = $version;
+		}
+		
+		return $groupedVersions;
+	}
 
 
 	/**
@@ -99,8 +93,9 @@ class Html5Wiki_Model_MediaVersionManager {
 	 *
 	 * @param  $timestamp
 	 * @return timespan-Code (today,yesterday,daybeforeyesterday,thisweek,lastweek)
+	 * @author Nicolas Karrer <nkarrer@hsr.ch>
 	 */
-	public function getTimespanGroup($timestamp) {
+	private function getTimespanGroup($timestamp) {
 		$timestamp = intval($timestamp);
 
 		$today = array(
@@ -145,6 +140,7 @@ class Html5Wiki_Model_MediaVersionManager {
 	 *
 	 * @param $timestamp
 	 * @return weekstart as timestamp
+	 * @author Nicolas Karrer <nkarrer@hsr.ch>
 	 */
 	private function getWeekStart($timestamp) {
 		$diff = (date('w', $timestamp)+6)%7;
@@ -157,6 +153,7 @@ class Html5Wiki_Model_MediaVersionManager {
 	 *
 	 * @param $timestamp
 	 * @return weekend as timestamp
+	 * @author Nicolas Karrer <nkarrer@hsr.ch>
 	 */
 	private function getWeekEnd($timestamp) {
 		$diff = (7-date('w', $timestamp))%7;

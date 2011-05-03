@@ -15,9 +15,9 @@
 	<div class="grid_12">
 		
 		<ol class="versionhistory">
-			<?php //foreach($this->versions as $versionGroup => $versions) : ?>
+			<?php foreach($this->versions as $versionGroup => $versions) : ?>
 			<ol class="group <?php echo $versionGroup; ?>">
-				<?php foreach($this->versions as $version) : ?>
+				<?php foreach($versions as $version) : ?>
 				<?php $user = $version->getUser(); ?>
 				<li class="version">
 					<input type="radio" name="left" value="<?php $version->timestamp; ?>" class="diffselector" />
@@ -32,7 +32,7 @@
 				</li>
 				<?php endforeach; ?>
 			</ol>
-			<?php //endforeach; ?>
+			<?php endforeach; ?>
 		</ol>
 	</div>
 	<div class="clear"></div>
