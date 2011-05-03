@@ -15,7 +15,7 @@
  *
  * @author	Manuel Alabor
  */
-class Html5Wiki_Model_MediaManager {
+class Html5Wiki_Model_MediaVersionManager {
 	
 	private $table = null;
 	

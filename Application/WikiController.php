@@ -245,7 +245,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle']);
 		} else {
 			$permalink = $this->getPermalink();
-			$mediaManager = new Html5Wiki_Model_MediaManager();
+			$mediaManager = new Html5Wiki_Model_MediaVersionManager();
 			$versions = $mediaManager->getGroupedMediaVersionsByPermalink($permalink);
 		}
 
