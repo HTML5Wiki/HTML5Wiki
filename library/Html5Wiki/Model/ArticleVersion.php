@@ -27,7 +27,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 * </ul>
 	 */
 	public function init() {
-		if(count($this->_cleanData) == 0) {
+		if(count($this->_cleanData) === 0) {
 			$id = isset($this->mediaVersionId) ? intval($this->mediaVersionId) : 0;
 			$timestamp = isset($this->mediaVersionTimestamp) ? intval($this->mediaVersionTimestamp) : 0;
 			$permalink = isset($this->permalink) ? $this->permalink : '';
@@ -89,7 +89,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$select->where('mediaVersionTimestamp = ?', $timestamp);
 		
 		$articleVersion = $this->_getTable()->fetchRow($select);
-		$mediaVersion = $articleVersion->findParentRow('Html5Wiki_Model_MediaVersion_Table','MediaVersion');
+		$mediaVersion = $articleVersion->findParentRow('Html5Wiki_Model_MediaVersion_Table', 'MediaVersion');
 		
 		$articleVersionData = $articleVersion->toArray();
 		$mediaVersionData = $mediaVersion->toArray();
@@ -123,11 +123,6 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$this->_cleanData = $this->_data;
 		$this->_modifiedFields = array();
 	}
-	
-	public function save() {
-		parent::save();
-	}
-	
 }
 
 ?>

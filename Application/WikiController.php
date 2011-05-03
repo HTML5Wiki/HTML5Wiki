@@ -60,12 +60,23 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		if($this->handleUserRequest($parameters) != false) {
 			$user       = new Html5Wiki_Model_User();
-			$wikiPage   = new Html5Wiki_Model_ArticleVersion();
-		
-			$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink(), 'userId' => $user->id));
-			$wikiPage->save();
+			$mediaVersion   = new Html5Wiki_Model_MediaVersion_Table();
+			$row = $mediaVersion->createRow();
+			$row->setFromArray(array('permalink' => $this->getPermalink(), 'userId' => $user->id, 'timestamp' => time()));
+			$row->save();
+			
+			$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
+			$articleRow = $articleVersion->createRow();
+			$articleRow->setFromArray(array('mediaVersionId' => $row->id, 'mediaVersionTimestamp' => $row->timestamp));
+			$articleRow->save();
 		
 			$this->setTemplate('edit.php');
+			
+			// reload the wikipage because it needs also the MediaVersion informations.
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+				'mediaVersionId' => $articleRow->mediaVersionId,
+				'mediaVersionTimestamp' => $articleRow->mediaVersionTimestamp
+			)));
 			
 			$this->loadEditPage($wikiPage);
 		} else {
@@ -85,8 +96,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
 		}
-
-		$oldWikiPage = new Html5Wiki_Model_ArticleVersion($parameters['hiddenIdArticle'], $parameters['hiddenTimestampArticle']);
+		
+		$oldWikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+			'mediaVersionId' => $parameters['hiddenIdArticle'], 
+			'mediaVersionTimestamp' => $parameters['hiddenTimestampArticle']
+		)));
 		//TODO: some validation
 
 		$validate = true;
@@ -94,24 +108,33 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if ($validate) {
 			$user = $this->handleUserRequest($parameters);
 			if($user !== false) {
-
                  //TODO: handle Tag request
-				$wikiPage = new Html5Wiki_Model_ArticleVersion();
+				$wikiPage = new Html5Wiki_Model_MediaVersion_Table();
+				$mediaVersionRow = $wikiPage->createRow(array(
+					'id' => $oldWikiPage->id,
+					'timestamp' => time(),
+					'permalink' => $oldWikiPage->permalink,
+					'userId' => $user->id,
+					'versionComment' => $parameters['versionComment']
+				));
+				$mediaVersionRow->save();
 
 				$title = isset($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->title;
-
-                //TODO: fix permalink, previousVersion
-				$data = array(
-					'id'        => $oldWikiPage->id,
-					'permalink' => $oldWikiPage->permalink,
-					'title'     => $title,
-					'content'   => $parameters['contentEditor'],
-					'userId'    => $user->id,
-				);
-
-
-				$wikiPage->setData($data);
-				$wikiPage->save();
+				
+				$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
+				$articleVersionRow = $articleVersion->createRow(array(
+					'mediaVersionId' => $oldWikiPage->id,
+					'mediaVersionTimestamp' => $mediaVersionRow->timestamp,
+					'title' => $title,
+					'content' => $parameters['contentEditor']
+				));
+				$articleVersionRow->save();
+				
+				// reload the wikipage because it needs also the MediaVersion informations.
+				$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+					'mediaVersionId' => $articleVersionRow->mediaVersionId,
+					'mediaVersionTimestamp' => $articleVersionRow->mediaVersionTimestamp
+				)));
 
                 $this->loadPage($wikiPage);
             }
@@ -159,10 +182,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return unknown_type
 	 */
 	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
-
 		//Prepare article data for the view
-		$title = $wikiPage->title;
-		$content = $wikiPage->content;
+		$title = isset($wikiPage->title) ? $wikiPage->title : '';
+		$content = isset($wikiPage->content) ? $wikiPage->content : '';
 		//$tag = $wikiPage->getTags(); 
 
 		//Get author data from cookies
@@ -224,7 +246,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			if ($permalink === '' && $this->config->routing->defaultController !== 'wiki') {
 				throw new Html5Wiki_Exception_404("Empty permalink is not allowed");
 			} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
-				$permalink = $this->config->routing->defaultController . '/' . $this->config->routing->defaultAction;
+				$permalink = $this->config->routing->defaultAction;
 			}
 				
 			$data = array('permalink' => $permalink);
