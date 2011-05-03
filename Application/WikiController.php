@@ -30,7 +30,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle']);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion($parameters['idArticle']);
 		} else {
 			$permalink = $this->getPermalink();
 			$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
@@ -58,7 +58,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		if($this->handleUserRequest($parameters) != false) {
 			$user       = new Html5Wiki_Model_User();
-			$wikiPage   = new Html5Wiki_Model_Article();
+			$wikiPage   = new Html5Wiki_Model_ArticleVersion();
 		
 			$wikiPage->setData(array('permalink' => $this->getPermalink(), 'title' => $this->getPermalink(), 'userId' => $user->id));
 			$wikiPage->save();
@@ -84,7 +84,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		}
 
-		$oldWikiPage = new Html5Wiki_Model_Article($parameters['hiddenIdArticle'], $parameters['hiddenTimestampArticle']);
+		$oldWikiPage = new Html5Wiki_Model_ArticleVersion($parameters['hiddenIdArticle'], $parameters['hiddenTimestampArticle']);
 		//TODO: some validation
 
 		$validate = true;
@@ -94,7 +94,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			if($user !== false) {
 
                  //TODO: handle Tag request
-				$wikiPage = new Html5Wiki_Model_Article();
+				$wikiPage = new Html5Wiki_Model_ArticleVersion();
 
 				$title = isset($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->title;
 
@@ -122,9 +122,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * Loads the standard view page for a given article
 	 * 
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
-	 * @param	Html5Wiki_Model_Article $wikiPage
+	 * @param	Html5Wiki_Model_ArticleVersion $wikiPage
 	 */
-	private function loadPage(Html5Wiki_Model_Article $wikiPage) {
+	private function loadPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
 		$this->setTemplate('article.php');
 
 		$this->template->assign('wikiPage', $wikiPage);
@@ -156,7 +156,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(Html5Wiki_Model_Article $wikiPage) {
+	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
 
 		//Prepare article data for the view
 		$title = $wikiPage->title;
@@ -215,11 +215,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion($parameters['idArticle'], 0);
 		} else {
 			$permalink = $this->getPermalink();
-				//$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
-				$wikiPage = '';
+			$data = array('permalink' => $permalink);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
+			
 			if($wikiPage != null) {
 				$this->setTitle($wikiPage->title);
 			}
@@ -242,7 +243,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
 			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle']);
+			$wikiPage   = new Html5Wiki_Model_ArticleVersion($parameters['idArticle']);
 		} else {
 			$permalink = $this->getPermalink();
 			$mediaManager = new Html5Wiki_Model_MediaVersionManager();
