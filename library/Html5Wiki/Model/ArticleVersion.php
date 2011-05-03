@@ -37,7 +37,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 			} elseif($id > 0 && $timestamp > 0) {
 				$this->loadByIdAndTimestamp($id, $timestamp);
 			} elseif($id > 0 && $timestamp == 0) {
-				//$this->loadLatestById();
+				$this->loadLatestById($id);
 			}
 		}
 	}
@@ -83,8 +83,8 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 */
 	private function loadByIdAndTimestamp($id, $timestamp) {
 		$select = $this->select();
-		$select->where('mediaversionid = ?', $id);
-		$select->where('mediaversiontimestamp = ?', $timestamp);
+		$select->where('mediaVersionId = ?', $id);
+		$select->where('mediaVersionTimestamp = ?', $timestamp);
 		
 		$articleVersion = $this->_getTable()->fetchRow($select);
 		$mediaVersion = $articleVersion->findParentRow('Html5Wiki_Model_MediaVersion_Table','MediaVersion');
@@ -104,7 +104,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 *
 	 * @param $id
 	 */
-	private function loadById($id) {
+	private function loadLatestById($id) {
 		$select = $this->select();
 		$select->where('mediaVersionId = ?', $id);
 		$select->order('mediaVersionTimestamp DESC');
@@ -114,6 +114,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		
 		$articleVersionData = $articleVersion->toArray();
 		$mediaVersionData = $mediaVersion->toArray();
+		
 		$data = array_merge($articleVersionData,$mediaVersionData);
 		
 		$this->_data = $data;

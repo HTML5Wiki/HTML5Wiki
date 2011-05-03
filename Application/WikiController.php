@@ -30,10 +30,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_ArticleVersion($parameters['idArticle']);
+			$data = array('mediaVersionId' => $parameters['idArticle']);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		} else {
 			$permalink = $this->getPermalink();
-			$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			$data = array('permalink'=>$permalink);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		}
 	
 		if( $wikiPage == null ) {
@@ -215,7 +217,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_ArticleVersion($parameters['idArticle'], 0);
+			$data = array('mediaVersionId' => $parameters['idArticle']);
+			$wikiPage = new Html5Wiki_Model_ArticleVersion(array('data'=>$data));
 		} else {
 			$permalink = $this->getPermalink();
 			$data = array('permalink' => $permalink);
