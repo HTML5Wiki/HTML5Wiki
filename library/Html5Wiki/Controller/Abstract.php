@@ -101,7 +101,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		throw new Html5Wiki_Exception_404('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
 	}
 	
-	public function setTranslation() {
+	public function setTranslation() {;
 		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($this->router->getRequest()->getLanguage(), 
 						$this->config->languages->toArray());
 		$language = ($language !== null) ? $language : $this->config->defaultLanguage;

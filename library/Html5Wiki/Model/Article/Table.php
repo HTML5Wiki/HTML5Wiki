@@ -67,23 +67,6 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 
 		return $this->insert($localSaveData);
 	}
-	
-	/**
-	 * @param  $permalink
-	 * @return null|Zend_Db_Table_Row_Abstract
-	 */
-	public function fetchArticleByPermaLink($permalink) {
-		$selectStatement = $this->initSelectStatement('PUBLISHED');
-
-		$selectStatement->where('permalink = ?', $permalink);
-
-		$selectStatement = $this->addMediaVersionJoinStatement($selectStatement);
-
-		$selectStatement->limit(1);
-		$selectStatement->order('timestamp DESC');
-
-		return $this->fetchRow($selectStatement);
-	}
 
 	/**
 	 * @param  $idArticle
@@ -101,6 +84,31 @@ class Html5Wiki_Model_Article_Table extends Zend_Db_Table_Abstract {
 		$selectStatement->order('timestamp DESC');
 
 		return $this->fetchAll($selectStatement);
+	}
+	
+	/**
+	 * @return type 
+	 */
+	public function fetchLatestArticles() {
+		
+		$select = $this->select()->setIntegrityCheck(false);
+		
+		$subselect = $this->select()->setIntegrityCheck(false)
+				->from('MediaVersion')
+				->where('mediaVersionType = ?', 'ARTICLE')
+				->where('state = ?', 'PUBLISHED')
+				->order('timestamp DESC');
+		
+		$select->from($subselect);
+		
+		$idJoinCondition = 't.id = ' . $this->_name . '.' . $this->_primary[1];
+		$timestampJoinCondition =  't.timestamp = ' . $this->_name . '.' . $this->_primary[2];
+		
+		$select->join('ArticleVersion', $idJoinCondition . ' AND ' . $timestampJoinCondition);
+		$select->group('t.id');
+		$select->order('t.timestamp DESC');
+		
+		return $this->fetchAll($select);
 	}
 
 	/**

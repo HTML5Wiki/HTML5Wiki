@@ -70,7 +70,7 @@ class Html5Wiki_Controller_Front {
 		}
 
 		if (!$router) {
-			$this->router = new Html5Wiki_Routing_Router();
+			$this->router = new Html5Wiki_Routing_Router($this->config);
 		} else {
 			$this->router = $router;
 		}
@@ -87,6 +87,10 @@ class Html5Wiki_Controller_Front {
 		self::$instance = $instance;
 	}
 	
+	/**
+	 *
+	 * @return Html5Wiki_Controller_Front
+	 */
 	public static function getInstance() {
 		if (!self::$instance) {
 			throw new Html5Wiki_Exception("Front controller must be instantiated before usage of getInstance");
@@ -119,6 +123,14 @@ class Html5Wiki_Controller_Front {
 	 */
 	public function render() {
 		$this->controller->render();
+	}
+	
+	/**
+	 *
+	 * @return Zend_Config
+	 */
+	public function getConfig() {
+		return $this->config;
 	}
 
 	/**

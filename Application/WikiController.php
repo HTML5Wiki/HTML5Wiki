@@ -30,7 +30,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if (isset($parameters['ajax'])) {
 			$this->setNoLayout();
-			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
+			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle']);
 		} else {
 			$permalink = $this->getPermalink();
 			$wikiPage = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
@@ -90,14 +90,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$validate = true;
 
 		if ($validate) {
-			if($this->handleUserRequest($parameters) != false) {
+			$user = $this->handleUserRequest($parameters);
+			if($user !== false) {
 
                  //TODO: handle Tag request
-
-				$user     = new Html5Wiki_Model_User();
 				$wikiPage = new Html5Wiki_Model_Article();
 
-				$title = ( isset($parameters['txtTitle']) ) ? $parameters['txtTitle'] : $oldWikiPage->title;
+				$title = isset($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->title;
 
                 //TODO: fix permalink, previousVersion
 				$data = array(
@@ -167,7 +166,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//Get author data from cookies
 		$author	= new Html5Wiki_Model_User();
 		
-		if($this->layoutTemplate != null) $this->layoutTemplate->assign('title', $title);
+		if($this->layoutTemplate != null) {
+			$this->layoutTemplate->assign('title', $title);
+		}
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
 		$this->template->assign('author', $author);
@@ -182,17 +183,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function handleUserRequest(array $parameters) {
 		$userData	= array(
-			'id'        => $parameters['hiddenAuthorId'],
+			'id'        => intval($parameters['hiddenAuthorId']),
 			'name'      => $parameters['txtAuthor'],
 			'email' 	=> $parameters['txtAuthorEmail']
 		);
 		
-		$user	= new Html5Wiki_Model_User();
-		if($user->id > 0) {
+		$user = new Html5Wiki_Model_User(array('data' => $userData));
+		if($userData['id'] > 0) {
 			return $user;
 		} else {
-			if( $userData['email'] && $userData['name'] ) {
-				$user->setData($userData);
+			$userTable = new Html5Wiki_Model_User_Table();
+			$existingUser = $userTable->userExists($userData['name'], $userData['email']);
+			if (isset($existingUser->id)) {
+				return $existingUser;
+			}
+			if($userData['email'] && $userData['name']) {
 				$user->save();
 				
 				return $user;
@@ -213,7 +218,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$wikiPage = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
 		} else {
 			$permalink = $this->getPermalink();
-				$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+				//$wikiPage	= Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+				$wikiPage = '';
 			if($wikiPage != null) {
 				$this->setTitle($wikiPage->title);
 			}
@@ -236,19 +242,24 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( isset($parameters['ajax']) ) {
 			$this->setNoLayout();
 			// @todo change to all version of this idArticle (no timestamp)
-			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle'], 0);
+			$wikiPage   = new Html5Wiki_Model_Article($parameters['idArticle']);
 		} else {
-			$permalink  = $this->getPermalink();
-			$wikiPage   = Html5Wiki_Model_ArticleManager::getArticleByPermaLink($permalink);
+			$permalink = $this->getPermalink();
+			$mediaManager = new Html5Wiki_Model_MediaVersionManager();
+			
+			$versions = $mediaManager->getMediaVersionsByPermalink($permalink);
+			$latestVersion = $versions->current();
+			$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		}
 
-		if($wikiPage == null) {
+		if(count($versions) == 0) {
 			throw new Html5Wiki_Exception_404();
 		}
 
-		$wikiPage->loadHistory();
+		// todo get current wikipage title!
 
-		$this->template->assign('wikiPage', $wikiPage);
+		$this->template->assign('wikiPage', $latestVersion);
+		$this->template->assign('versions', $groupedVersions);
 	}
  }
 

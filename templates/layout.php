@@ -12,6 +12,10 @@
 	$jsHelper->appendFile($basePath . 'js/markitup/html5wiki-set.js');
 
 	$jsHelper->appendScript('Html5Wiki.init("'. $basePath .'");');
+	
+	$frontController = Html5Wiki_Controller_Front::getInstance();
+	$config = $frontController->getConfig();
+	$router = $frontController->getRouter();
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -32,10 +36,17 @@
 			<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
-					<li class="item home active">
+					<li class="item home<?php echo $router->getController() == $config->routing->defaultController && $router->getAction() == $config->routing->defaultAction ? ' active' : '' ?>">
 						<a href="<?php echo $basePath ?>" class="tab"><?php echo $this->translate->_("homepage") ?></a>
 					</li>
-					<li class="item updates"><a href="#" class="tab"><?php echo $this->translate->_("recentChanges") ?></a></li>
+					<li class="item updates<?php echo $router->getController() == 'index' && $router->getAction() == 'history' ? ' active' : '' ?>">
+						<a href="<?php echo $this->urlHelper('index', 'history') ?>" class="tab"><?php echo $this->translate->_("recentChanges") ?></a>
+					</li>
+					<?php if ($router->getController() === 'wiki' && $router->getAction() !== $config->routing->defaultAction): ?>
+					<li class="item article active">
+						<a href="<?php echo $this->urlHelper($router->getRequest()->getUri()) ?>" class="tab"><?php echo $this->title ?></a>
+					</li>
+					<?php endif; ?>
 					<li class="item search"><input placeholder="<?php echo $this->translate->_("search") ?>" class="searchterm" accesskey="s" /></li>
 				</ol>
 			</nav>

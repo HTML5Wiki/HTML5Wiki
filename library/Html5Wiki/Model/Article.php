@@ -13,7 +13,7 @@
  * @author	Nicolas Karrer <nkarrer@hsr.ch>
  *
  */
-class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
+class Html5Wiki_Model_Article extends Html5Wiki_Model_MediaVersion {
 	
 	/**
 	 * 
@@ -67,32 +67,10 @@ class Html5Wiki_Model_Article extends Html5Wiki_Model_Media {
 	}
 
 	/**
-	 * @return Html5Wiki_Model_User
-	 */
-	public function getUser() {
-		return new Html5Wiki_Model_User($this->data['userId']);
-	}
-
-	/**
 	 * @return string
 	 */
 	public function getTitle() {
 		return $this->data['title'] ? $this->data['title'] : 'No Title Set';
-	}
-
-	/**
-	 *
-	 * @return void
-	 */
-	public function loadHistory() {
-		$this->data['history'] = array();
-
-		$articles = $this->dbAdapter->fetchArticlesById($this->data['id']);
-
-		foreach($articles as $article) {
-			$historyArticle = new Html5Wiki_Model_Article($article['id'], $article['timestamp']);
-			$this->data['history'][Html5Wiki_Model_ArticleManager::getTimespanGroup($historyArticle->timestamp)][] = $historyArticle;
-		}
 	}
 }
 

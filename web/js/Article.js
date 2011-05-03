@@ -1,6 +1,5 @@
 Article = {
-	loadArticle: function(e, idArticle) {
-		var url = e.currentTarget.href;
+	loadArticle: function(url, idArticle) {
 		$.ajax({
 			type: 'POST',
 			'url':  url,
@@ -35,7 +34,7 @@ Article = {
 	
 	save: function(e) {
 		e.preventDefault();
-		var form	= $('#edit-article');
+		var form	= $(e.currentTarget);
 		if( form ) {
             var idArticle        = $('#hiddenIdArticle').val();
             var timestampArticle = $('#hiddenTimestampArticle').val();
@@ -57,12 +56,15 @@ Article = {
 				tags: tags.join(','),
 				ajax: true
 			};
-
 			$.ajax({
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				complete: Article.onEditFormLoaded.bind(Article)
+				complete: function(response) {
+					Article.replaceContent(response);
+					var url = window.location.href.replace('edit', 'read');
+					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
+				}
 			});
 		}
 	},
@@ -76,8 +78,7 @@ Article = {
 	 * @param idArticle
 	 * @param timestampArticle
 	 */
-    loadEditForm: function(e, idArticle) {
-		var url = e.currentTarget.href;
+    loadEditForm: function(url, idArticle) {
 		$.ajax({
             type:   'POST',
             url:    url,
@@ -105,8 +106,7 @@ Article = {
 	 * 
 	 * @param idArticle
 	 */
-	loadHistory: function(e, idArticle) {
-		var url = e.currentTarget.href;
+	loadHistory: function(url, idArticle) {
 		$.ajax({
 			type:   'POST',
             url:    url,
