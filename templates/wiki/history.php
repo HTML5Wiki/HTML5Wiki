@@ -6,7 +6,7 @@
 
 <article id="content" class="content history">
 	<header class="grid_12 title clearfix">
-		<h1 class="heading"><?php echo $this->wikiPage->title ?></h1>
+		<h1 class="heading"><?php echo $this->wikiPage->getTitle() ?></h1>
 		<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 	</header>
 
@@ -15,9 +15,10 @@
 	<div class="grid_12">
 		
 		<ol class="versionhistory">
-			<?php foreach($this->wikiPage->history as $versionGroup => $groupedHistoryArticles) : ?>
+			<?php //foreach($this->versions as $versionGroup => $versions) : ?>
 			<ol class="group <?php echo $versionGroup; ?>">
-				<?php foreach($groupedHistoryArticles as $version) : ?>
+				<?php foreach($this->versions as $version) : ?>
+				<?php $user = $version->getUser(); ?>
 				<li class="version">
 					<input type="radio" name="left" value="<?php $version->timestamp; ?>" class="diffselector" />
 					<input type="radio" name="right" value="<?php $version->timestamp; ?>" class="diffselector" />
@@ -25,13 +26,13 @@
 						<span class="time"><?php echo date('H:i', intval($version->timestamp)); ?></span>,
 						<span class="date"><?php echo date('d.m.Y', intval($version->timestamp)); ?></span>
 					</span>
-					<img src="http://www.gravatar.com/avatar/<?php echo md5( trim( strtolower( $version->getUser()->email ) ) ); ?>?s=16&d=mm" class="avatar" />
-					<span class="author"><?php echo $version->getUser()->toString(); ?></span> 
-					<span class="comment">&quot;<?php echo $version->versionComment;?>&quot;</span>
+					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
+					<span class="author"><?php echo $user->name; ?></span>
+					<span class="comment">&quot;<?php echo $version->versionComment; ?>&quot;</span>
 				</li>
 				<?php endforeach; ?>
 			</ol>
-			<?php endforeach; ?>
+			<?php //endforeach; ?>
 		</ol>
 	</div>
 	<div class="clear"></div>
