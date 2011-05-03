@@ -223,7 +223,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$permalink = $this->getPermalink();
 			if ($permalink === '' && $this->config->routing->defaultController !== 'wiki') {
 				throw new Html5Wiki_Exception_404("Empty permalink is not allowed");
-			} else if ($this->config->routing->defaultController == 'wiki') {
+			} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
 				$permalink = $this->config->routing->defaultController . '/' . $this->config->routing->defaultAction;
 			}
 				
