@@ -8,7 +8,7 @@
  */
 class Application_IndexController extends Html5Wiki_Controller_Abstract {
     public function historyAction() {
-		$articleTable = new Html5Wiki_Model_Article_Table();
+		$articleTable = new Html5Wiki_Model_ArticleVersion_Table();
 		$latestArticles = $articleTable->fetchLatestArticles();
 		
 		$this->template->assign('latestArticles', $latestArticles);
