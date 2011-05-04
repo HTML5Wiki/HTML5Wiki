@@ -24,7 +24,7 @@ class Html5Wiki_Model_MediaVersionManager {
 	 * ID, all versions of the Media can be retrived.
 	 *
 	 * @see MediaManager#getMediaByPermalink
-	 * @param $permalink
+	 * @param string $permalink
 	 * @return Zend_Db_Table_Rowset
 	 */
 	public function getMediaVersionsByPermalink($permalink) {
@@ -36,7 +36,31 @@ class Html5Wiki_Model_MediaVersionManager {
 		}
 		
 		return $versions;
-	}	
+	}
+	
+	/**
+	 * Fetches media versions by permalink and one or more timestamps. 
+	 * @param string $permalink
+	 * @param array $timestamps
+	 * @return type 
+	 */
+	public function getMediaVersionsByPermalinkAndTimestamps($permalink, array $timestamps) {
+		$table = new Html5Wiki_Model_MediaVersion_Table();
+		$select = $table->select()->setIntegrityCheck(false);
+		
+		$select->where('permalink = ?', $permalink);
+		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
+		
+		foreach ($timestamps as $timestamp) {
+			$select->orWhere('timestamp = ?', $timestamp);
+		}
+		
+		$select->order('timestamp DESC');
+		
+		$versions = $table->fetchAll($select);
+		
+		return $versions;
+	}
 	
 	/**
 	 * Returns the latest version of a Media by looking for its permalink.

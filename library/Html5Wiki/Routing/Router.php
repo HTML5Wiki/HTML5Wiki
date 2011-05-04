@@ -71,6 +71,12 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 			throw new Html5Wiki_Exception('Invalid action specified');
 		}
 	}
+	
+	public function redirect($url, $httpStatusCode = 302) {
+		header("Location: " . $url, true, $httpStatusCode);
+		ob_get_clean();
+		exit();
+	}
 
 	/**
 	 * Get request object

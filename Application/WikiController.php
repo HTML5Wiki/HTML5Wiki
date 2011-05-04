@@ -292,6 +292,54 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('wikiPage', $latestVersion);
 		$this->template->assign('versions', $groupedVersions);
 	}
+	
+	public function diffAction() {
+		$request = $this->router->getRequest();
+		$left = $request->getGet('left');
+		$right = $request->getGet('right');
+		$permalink = $this->getPermalink();
+		
+		if (!$left || !$right) {
+			throw new Html5Wiki_Exception("Left or right must be supplied. TODO: Redirect to history.");
+		}
+		
+		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
+		$versions = $mediaManager->getMediaVersionsByPermalinkAndTimestamps($permalink, array($left, $right));
+		
+		$leftVersion = null;
+		$rightVersion = null;
+		
+		foreach($versions as $version) {
+			$articleVersion = new Html5Wiki_Model_ArticleVersion(array('data' => array(
+				'mediaVersionId' => $version->id, 
+				'mediaVersionTimestamp' => $version->timestamp
+			)));
+			if ($version->timestamp === $left) {
+				$leftVersion = $articleVersion;
+			} else {
+				$rightVersion = $articleVersion;
+			}
+		}
+		$file1 = $this->writeContentToFile($leftVersion);
+		$file2 = $this->writeContentToFile($rightVersion);
+		
+		$diff = system('diff ' . $file1 . ' ' . $file2);
+		
+		$this->template->assign('diff', $diff);
+		$this->template->assign('leftContent', explode("\n", $leftVersion->content));
+		$this->template->assign('rightContent', explode("\n", $rightVersion->content));
+		$this->template->assign('leftVersion', $leftVersion);
+		$this->template->assign('rightVersion', $rightVersion);
+	}
+	
+	private function writeContentToFile(Html5Wiki_Model_ArticleVersion $article) {
+		$filename = '/tmp/file-' . $article->mediaVersionId . '-' . $article->mediaVersionTimestamp;
+		$file = fopen($filename, 'w');
+		fwrite($file, $article->content);
+		fclose($file);
+		
+		return $filename;
+	}
  }
 
 ?>

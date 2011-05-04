@@ -94,7 +94,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->template->assign('basePath', $this->router->getRequest()->getBasePath());
 
 		$actionMethod = $this->router->getAction() . 'Action';
-
+		
 		if (method_exists($this, $actionMethod)) {
 			return $this->$actionMethod();
 		}
@@ -146,6 +146,10 @@ abstract class Html5Wiki_Controller_Abstract {
 	protected function setTemplate($templateFile) {
 		$this->templateFile = strtolower($this->router->getController()) . DIRECTORY_SEPARATOR . $templateFile;
 		$this->template->setTemplateFile($this->templateFile);
+	}
+	
+	public function redirect($url, $httpStatusCode = 302) {
+		$this->router->redirect($url, $httpStatusCode);
 	}
 
 	/**

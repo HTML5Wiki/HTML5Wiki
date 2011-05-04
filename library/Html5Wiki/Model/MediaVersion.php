@@ -50,6 +50,7 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 		$select = $this->select();
 		$select->order('timestamp DESC');
 		$select->where('permalink = ?', $permalink);
+		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
 		
 		$mediaVersion = $this->_getTable()->fetchRow($select);
 		
@@ -67,9 +68,10 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	private function loadByIdAndTimestamp($id, $timestamp) {
 		$select = $this->select();
 		$select->where('id = ?', $id);
-		$where = $select->where('timestamp = ?', $timestamp);
+		$select->where('timestamp = ?', $timestamp);
+		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
 		
-		$row = $this->_getTable()->fetchRow($where);
+		$row = $this->_getTable()->fetchRow($select);
 		
 		$this->_data = $row->toArray();
 		$this->_cleanData = $this->_data;
@@ -84,9 +86,10 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	private function loadById($id) {
 		$select = $this->select();
 		$select->order('timestamp DESC');
-		$where = $select->where('id = ?', $id);
+		$select->where('id = ?', $id);
+		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
 		
-		$row = $this->_getTable()->fetchRow($where);
+		$row = $this->_getTable()->fetchRow($select);
 		
 		$this->_data = $row->toArray();
 		$this->_cleanData = $this->_data;

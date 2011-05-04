@@ -39,6 +39,15 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 		'DRAFT' => 'DRAFT',
 		'TRASH' => 'TRASH'
 	);
+	
+	/**
+	 * Returns specified state enum value
+	 * @param string $state
+	 * @return string 
+	 */
+	public static function getState($state) {
+		return self::$STATE[$state];
+	}
 
 
 	/**
