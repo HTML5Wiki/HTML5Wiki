@@ -97,10 +97,10 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .ui-ptags-tag-text{float:left;cursor:pointer;margin:0;padding:0;font-size:75%;}
 .ui-ptags-tag .ui-ptags-tag-remover{float:left;margin:1px 0 0 .2em;cursor:pointer;width:7px;height:8px;background:url('../images/icons16/bullet_delete.png') no-repeat -5px -4px;}
 .ui-ptags-clear{height:0px;}
-.history .versionhistory .timespan{font:bold 150% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;background:url('../images/icons16/calendar.png') no-repeat 0 6px;padding-left:23px;}
-.history .versionhistory .group{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;border-top:1px solid #a9a9a9;padding:5px 0;}.history .versionhistory .group:first-child{border-top-width:0;padding-top:0;}
-.history .versionhistory .group .version .diffselector{margin:0;padding:0;}
-.history .versionhistory .group .version .timestamp{margin:0 5px;}
-.history .versionhistory .group .version .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
-.history .versionhistory .group .version .comment{font-size:75%;font-style:italic;}
+.history .versionhistory .timespan-caption{font:bold 150% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;background:url('../images/icons16/calendar.png') no-repeat 0 6px;padding-left:23px;}
+.history .versionhistory .timespan{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;border-top:1px solid #a9a9a9;padding:5px 0;}.history .versionhistory .timespan:first-child{border-top-width:0;padding-top:0;}
+.history .versionhistory .timespan .version .diffselector{margin:0;padding:0;}
+.history .versionhistory .timespan .version .timestamp{margin:0 5px;}
+.history .versionhistory .timespan .version .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
+.history .versionhistory .timespan .version .comment{font-size:75%;font-style:italic;}
 .history .diff-button .caption{background-image:url('../images/icons16/compare.png');}
