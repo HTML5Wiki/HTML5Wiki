@@ -320,14 +320,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$rightVersion = $articleVersion;
 			}
 		}
-		$file1 = $this->writeContentToFile($leftVersion);
-		$file2 = $this->writeContentToFile($rightVersion);
 		
-		$diff = system('diff ' . $file1 . ' ' . $file2);
+		$opcodes = FineDiff_FineDiff::getDiffOpcodes($rightVersion->content, $leftVersion->content);
 		
-		$this->template->assign('diff', $diff);
-		$this->template->assign('leftContent', explode("\n", $leftVersion->content));
-		$this->template->assign('rightContent', explode("\n", $rightVersion->content));
+		$this->template->assign('opcodes', $opcodes);
 		$this->template->assign('leftVersion', $leftVersion);
 		$this->template->assign('rightVersion', $rightVersion);
 	}

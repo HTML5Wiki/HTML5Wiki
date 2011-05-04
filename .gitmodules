@@ -1,0 +1,3 @@
+[submodule "library/FineDiff"]
+	path = library/FineDiff
+	url = git://github.com/gorhill/PHP-FineDiff.git
