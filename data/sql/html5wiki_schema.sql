@@ -25,8 +25,7 @@ CREATE  TABLE IF NOT EXISTS `MediaVersion` (
   `versionComment` VARCHAR(140) NULL ,
   `mediaVersionType` ENUM('ARTICLE','FILE') NOT NULL DEFAULT ARTICLE ,
   PRIMARY KEY (`id`, `timestamp`) ,
-  UNIQUE INDEX `permalink_UNIQUE` (`permalink` ASC) ,
-  INDEX `fk_MediaVersion_User` (`userId` ASC) )
+  UNIQUE INDEX `fk_MediaVersion_User` (`userId` ASC) )
 ENGINE = MyISAM;
 
 

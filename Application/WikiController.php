@@ -67,7 +67,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			
 			$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
 			$articleRow = $articleVersion->createRow();
-			$articleRow->setFromArray(array('mediaVersionId' => $row->id, 'mediaVersionTimestamp' => $row->timestamp));
+			$articleRow->setFromArray(array('mediaVersionId' => $row->id, 'mediaVersionTimestamp' => $row->timestamp, 'title' => $this->getPermalink()));
 			$articleRow->save();
 		
 			$this->setTemplate('edit.php');
@@ -101,11 +101,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			'mediaVersionId' => $parameters['hiddenIdArticle'], 
 			'mediaVersionTimestamp' => $parameters['hiddenTimestampArticle']
 		)));
-		//TODO: some validation
 
-		$validate = true;
 
-		if ($validate) {
+
+		if ($this->validateArticleEditForm($parameters)) {
 			$user = $this->handleUserRequest($parameters);
 			if($user !== false) {
                  //TODO: handle Tag request
@@ -139,9 +138,61 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
                 $this->loadPage($wikiPage);
             }
         } else {
-            
+            //TODO: go back to the edit page
+            //      schow error messages
         }
 	}
+
+    /**
+     * Validate the form data after saving the article
+     *
+     * @param  $form
+     * @return bool
+     * @author Alexandre Joly <ajoly@hsr.ch>
+     *
+     */
+    private function validateArticleEditForm(array $parameters) {
+        return true;
+        $success = true;
+
+        //Test Title
+        $validatorChainTitle = new Zend_Validate();
+        $validatorChainTitle->addValidator(new Zend_Validate_Alnum(true))
+                            ->addValidator(new Zend_Validate_StringLength(5, 25));
+
+        if (isset($parameters['txtTitle']) && //the title was updated
+            !$validatorChainTitle->isValid($parameters['txtTitle'])) {
+            
+            $success = false;
+            echo "böse... title";
+        }      
+        
+        //Test Content
+        $validatorChainContent = new Zend_Validate();
+        $validatorChainContent->addValidator(new Zend_Validate_NotEmpty());
+
+        if (!$validatorChainContent->isValid($parameters['contentEditor'])) {
+            $success = false;
+            echo "böse... content";
+        }
+
+        //Test User
+        ////is it really necessary?? -> handleUserRequest
+
+        //Test Tag
+        $validatorChainTags = new Zend_Validate();
+        $validatorChainTags->addValidator(new Zend_Validate_NotEmpty());
+
+        if (!$validatorChainTags->isValid($parameters['tags'])) {
+            $success = false;
+            echo "böse... tags";
+        }
+
+        //Test VersionComment
+        ////Not needed
+
+        return $success;
+    }
 
 	/**
 	 * Loads the standard view page for a given article
@@ -206,11 +257,19 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return bool|Html5Wiki_Model_User
 	 */
 	private function handleUserRequest(array $parameters) {
-		$userData	= array(
-			'id'        => intval($parameters['hiddenAuthorId']),
-			'name'      => $parameters['txtAuthor'],
-			'email' 	=> $parameters['txtAuthorEmail']
-		);
+		if (isset($parameters['hiddenAuthorId'])) {
+            $userData	= array(
+                'id'        => intval($parameters['hiddenAuthorId']),
+                'name'      => $parameters['txtAuthor'],
+                'email' 	=> $parameters['txtAuthorEmail']
+		    );
+        } else {
+            $userData	= array(
+                'name'      => $parameters['txtAuthor'],
+                'email' 	=> $parameters['txtAuthorEmail']
+            );
+        }
+
 		
 		$user = new Html5Wiki_Model_User(array('data' => $userData));
 		if($userData['id'] > 0) {
@@ -322,19 +381,31 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		
 		$opcodes = FineDiff_FineDiff::getDiffOpcodes($rightVersion->content, $leftVersion->content);
+		$diff = FineDiff_FineDiff::renderFromOpcodes($rightVersion->content, $opcodes, array($this, 'renderDiff'));
 		
 		$this->template->assign('opcodes', $opcodes);
 		$this->template->assign('leftVersion', $leftVersion);
 		$this->template->assign('rightVersion', $rightVersion);
 	}
 	
-	private function writeContentToFile(Html5Wiki_Model_ArticleVersion $article) {
-		$filename = '/tmp/file-' . $article->mediaVersionId . '-' . $article->mediaVersionTimestamp;
-		$file = fopen($filename, 'w');
-		fwrite($file, $article->content);
-		fclose($file);
-		
-		return $filename;
+	public function renderDiff($from, $opcodes) {
+		ob_start();
+		FineDiff_FineDiff::renderFromOpcodes($from, $opcodes, array($this, 'renderDiffToHTMLFromOpcode'));
+		return ob_get_clean();
+	}
+	
+	public function renderDiffToHTMLFromOpcode($opcode, $from, $from_offset, $from_len) {
+		if ($opcode === 'c') {
+			echo htmlentities(substr($from, $from_offset, $from_len), null, 'UTF-8');
+		} else if ($opcode === 'd') {
+			$deletion = substr($from, $from_offset, $from_len);
+			if (strcspn($deletion, " \n\r") === 0) {
+				$deletion = str_replace(array("\n", "\r"), array('\n', '\r'), $deletion);
+			}
+			echo '<del>', htmlentities($deletion, null, 'UTF-8'), '</del>';
+		} else /* if ( $opcode === 'i' ) */ {
+			echo '<ins>', htmlentities(substr($from, $from_offset, $from_len), null, 'UTF-8'), '</ins>';
+		}
 	}
  }
 

@@ -1,3 +1,9 @@
+<?php
+    $basePath = $this->basePath . '/';
+	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
+    $this->javascriptHelper()->appendScript('Capsulebar.init("0");');
+?>
+
 <div id="content" class="content">
 	<h1 class="heading">
 		Artikel <?php echo $this->permalink ?> existiert noch nicht!
