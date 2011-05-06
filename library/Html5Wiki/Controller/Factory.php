@@ -28,7 +28,6 @@ class Html5Wiki_Controller_Factory {
 
 		while (false !== ($fileName = readdir($fileHandle))) {
 			if ($fileName != "." && $fileName != ".." && strpos($fileName, ".php") !== false) {
-
 				if (stripos($fileName, $router->getController()) === 0) {
 					$controller = self::APPLICATION_NAMESPACE . substr($fileName, 0, -4);
 					return new $controller();

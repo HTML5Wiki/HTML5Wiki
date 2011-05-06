@@ -14,20 +14,29 @@ require_once 'Html5Wiki/Routing/Router.php';
  * @subpackage Routing
  */
 class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
+	
+	const DEFAULT_CONTROLLER = 'wiki';
+	const DEFAULT_ACTION = 'index';
 
 	private $request;
 	private $router;
+	private $config = array(
+		'routing' => array(
+			'defaultController' => self::DEFAULT_CONTROLLER,
+			'defaultAction' => self::DEFAULT_ACTION
+		)
+	);
 
     public function setUp() {
 		$this->request = new Test_Unit_Routing_RequestStub();
-		$this->router  = new Html5Wiki_Routing_Router($this->request);
+		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $this->request);
 	}
 
 	public function testDefaultControllerAndAction() {
 		$this->router->route();
 
-		$this->assertEquals(Html5Wiki_Routing_Router::DEFAULT_CONTROLLER, $this->router->getController());
-		$this->assertEquals(Html5Wiki_Routing_Router::DEFAULT_ACTION, $this->router->getAction());
+		$this->assertEquals(self::DEFAULT_CONTROLLER, $this->router->getController());
+		$this->assertEquals(self::DEFAULT_ACTION, $this->router->getAction());
 	}
 
 	public function testControllerAndAction() {

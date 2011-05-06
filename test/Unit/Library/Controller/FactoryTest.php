@@ -16,12 +16,19 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 
 	private $testingBasePath = '';
 	private $router;
+	
+	private $config = array(
+		'routing' => array(
+			'defaultController' => 'wiki',
+			'defaultAction' => 'index'
+		)
+	);
 
 	public function setUp() {
 		$this->testingBasePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FactoryTest' . DIRECTORY_SEPARATOR;
 
 		$request = new Test_Unit_Routing_RequestStub();
-		$this->router  = new Html5Wiki_Routing_Router($request);
+		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $request);
 		$this->router->route();
 	}
 
@@ -61,7 +68,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 		$this->router->route();
 
 		$path = $this->testingBasePath . 'CorrectControllers';
-		include_once $path . DIRECTORY_SEPARATOR . 'IndexController.php';
+		include_once $path . DIRECTORY_SEPARATOR . 'WikiController.php';
 
 		$controller = Html5Wiki_Controller_Factory::factory($path, $this->router);
 		$this->assertTrue($controller instanceof Html5Wiki_Controller_Abstract);

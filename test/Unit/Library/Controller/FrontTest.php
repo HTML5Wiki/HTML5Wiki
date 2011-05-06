@@ -13,7 +13,7 @@ require_once 'Html5Wiki/Exception/404.php';
 require_once 'Html5Wiki/Exception/InvalidArgument.php';
 require_once 'Zend/Config.php';
 require_once 'Html5Wiki/Controller/Front.php';
-require_once 'FactoryTest/CorrectControllers/IndexController.php';
+require_once 'FactoryTest/CorrectControllers/WikiController.php';
 
 class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase {
 
@@ -44,14 +44,16 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 	}
 
 	public function testDispatchAgainstMock() {
+		$config = new Zend_Config($this->config);
+		
 		$request = new Test_Unit_Routing_RequestStub();
-		$router = new Html5Wiki_Routing_Router($request);
+		$router = new Html5Wiki_Routing_Router($config, $request);
 
-		$frontController = $this->getMock('Html5Wiki_Controller_Front', array('getController', 'dispatch', 'render'), array(new Zend_Config($this->config),
-				$this->basePath, $this->libraryPath, $this->applicationPath, $router));
+		$frontController = $this->getMock('Html5Wiki_Controller_Front', array('getController', 'dispatch', 'render'), 
+								array($config, $this->basePath, $this->libraryPath, $this->applicationPath, $router));
 		$frontController->expects($this->once())
 						->method('getController')
-						->will($this->returnValue(new Application_IndexController()));
+						->will($this->returnValue(new Application_WikiController()));
 		$frontController->expects($this->once())
 						->method('dispatch');
 		$frontController->expects($this->once())
