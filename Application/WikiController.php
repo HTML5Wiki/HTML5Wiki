@@ -381,19 +381,31 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		
 		$opcodes = FineDiff_FineDiff::getDiffOpcodes($rightVersion->content, $leftVersion->content);
+		$diff = FineDiff_FineDiff::renderFromOpcodes($rightVersion->content, $opcodes, array($this, 'renderDiff'));
 		
 		$this->template->assign('opcodes', $opcodes);
 		$this->template->assign('leftVersion', $leftVersion);
 		$this->template->assign('rightVersion', $rightVersion);
 	}
 	
-	private function writeContentToFile(Html5Wiki_Model_ArticleVersion $article) {
-		$filename = '/tmp/file-' . $article->mediaVersionId . '-' . $article->mediaVersionTimestamp;
-		$file = fopen($filename, 'w');
-		fwrite($file, $article->content);
-		fclose($file);
-		
-		return $filename;
+	public function renderDiff($from, $opcodes) {
+		ob_start();
+		FineDiff_FineDiff::renderFromOpcodes($from, $opcodes, array($this, 'renderDiffToHTMLFromOpcode'));
+		return ob_get_clean();
+	}
+	
+	public function renderDiffToHTMLFromOpcode($opcode, $from, $from_offset, $from_len) {
+		if ($opcode === 'c') {
+			echo htmlentities(substr($from, $from_offset, $from_len), null, 'UTF-8');
+		} else if ($opcode === 'd') {
+			$deletion = substr($from, $from_offset, $from_len);
+			if (strcspn($deletion, " \n\r") === 0) {
+				$deletion = str_replace(array("\n", "\r"), array('\n', '\r'), $deletion);
+			}
+			echo '<del>', htmlentities($deletion, null, 'UTF-8'), '</del>';
+		} else /* if ( $opcode === 'i' ) */ {
+			echo '<ins>', htmlentities(substr($from, $from_offset, $from_len), null, 'UTF-8'), '</ins>';
+		}
 	}
  }
 
