@@ -49,6 +49,9 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .article h2:first-child{margin-top:0;}
 .article p{font-family:Palatino,"Palatino Linotype",Georgia,Times,"Times New Roman",serif;line-height:140%;}
 .article em{font-style:italic;}
+.article ul,.article ol{margin:5px 0;}
+.article ul{list-style-type:disc;margin-left:18px;}
+.article ol{list-style-type:decimal;margin-left:24px;}
 .editor .title .heading{cursor:pointer;}
 .editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .txtTitle{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
 .editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;}
