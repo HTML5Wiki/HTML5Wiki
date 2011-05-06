@@ -10,14 +10,14 @@
 				
 			<fieldset name="author" class="group">
 				<legend class="groupname">Autoreninformation</legend>
-					<input type="hidden" value="<?php echo $this->author->id; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
+					<input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : ''; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 					<p>
 						<label for="txtAuthor" class="label">Ihr Name*</label>
-						<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" required value="<?php echo $this->author->name; ?>" />
+						<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" required value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
 					</p>
 					<p>
 						<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse*</label>
-						<input type="email" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" required value="<?php echo $this->author->email; ?>" />
+						<input type="email" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" required value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
 					</p>
 					<p class="hint">
 						Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
