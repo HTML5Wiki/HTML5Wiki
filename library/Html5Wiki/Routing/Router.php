@@ -18,7 +18,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	/**
 	 * Request object
 	 * 
-	 * @var Html5Wiki_Routing_Interface_Router
+	 * @var Html5Wiki_Routing_Interface_Request
 	 */
 	private $request = null;
 	
@@ -37,6 +37,9 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 
 	/**
 	 * Construct router -> creates a new request object and calls parse on it
+	 * 
+	 * @param Zend_Config                         $config  Configuration
+	 * @param Html5Wiki_Routing_Interface_Request $request Request object [optional]
 	 */
 	public function __construct(Zend_Config $config, Html5Wiki_Routing_Interface_Request $request = null) {
 		$this->config = $config;
@@ -62,6 +65,9 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 		$this->sanitizeControllerAndAction();
 	}
 
+	/**
+	 * Sanitize controller and action strings
+	 */
 	private function sanitizeControllerAndAction() {
 		$pattern = '/^[a-z]+[0-9]*[a-z]*$/i';
 		if (!preg_match($pattern, $this->controller)) {
@@ -72,6 +78,12 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 		}
 	}
 	
+	/**
+	 * Redirect to the specified url with the specified status code.
+	 * 
+	 * @param string $url            URL to redirect to
+	 * @param int    $httpStatusCode Status code for redirecting
+	 */
 	public function redirect($url, $httpStatusCode = 302) {
 		header("Location: " . $url, true, $httpStatusCode);
 		ob_get_clean();
