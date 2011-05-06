@@ -155,7 +155,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @param array  $systemLanguages
 	 * @param string|null
 	 */
-	public static function parseHttpAcceptLanguage($languageString, $systemLanguages) {
+	public static function parseHttpAcceptLanguage($languageString, array $systemLanguages) {
 		$locale = new Zend_Locale();
 		$validLanguages = $locale->getBrowser();
 		foreach ($validLanguages as $language => $quantity) {
@@ -169,7 +169,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 
 
 	/**
-	 *
+	 * Get all server variables
 	 * @return array
 	 */
 	public function getServerVariables() {
@@ -217,7 +217,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Gets base path of uri
 	 * @return string
 	 */
 	public function getBasePath() {
@@ -277,10 +277,10 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 	
 	/**
-	 * Get the whole POST paramters form the request
+	 * Get the whole POST paramters from the request
 	 * 
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
-	 * @return	Array
+	 * @return	array
 	 */
 	public function getPostParameters() {
 		return $this->post;
@@ -299,25 +299,25 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 	
 	/**
-	 * Get the whole GET paramters form the request
+	 * Get the whole GET paramters from the request
 	 * 
 	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
-	 * @return	Array
+	 * @return	array
 	 */
 	public function getGetParameters() {
 		return $this->get;
 	}
 	
 	/**
-	 *
+	 * Set server variables
 	 * @param array $serverVariables
 	 */
-	public function setServerVariables($serverVariables) {
+	public function setServerVariables(array $serverVariables) {
 		$this->serverVariables = $serverVariables;
 	}
 
 	/**
-	 *
+	 * Set host
 	 * @param string $host
 	 */
 	public function setHost($host) {
@@ -325,7 +325,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set Port
 	 * @param int $port
 	 */
 	public function setPort($port) {
@@ -333,7 +333,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set https
 	 * @param bool $https
 	 */
 	public function setHttps($https) {
@@ -341,7 +341,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set uri
 	 * @param string $uri
 	 */
 	public function setUri($uri) {
@@ -349,7 +349,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set path
 	 * @param string $path
 	 */
 	public function setPath($path) {
@@ -357,7 +357,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set base path
 	 * @param string $basePath
 	 */
 	public function setBasePath($basePath) {
@@ -365,7 +365,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set query string
 	 * @param string $queryString
 	 */
 	public function setQueryString($queryString) {
@@ -373,7 +373,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set user agent
 	 * @param string $userAgent
 	 */
 	public function setUserAgent($userAgent) {
@@ -381,7 +381,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set Ip address
 	 * @param string $ipAddress
 	 */
 	public function setIpAddress($ipAddress) {
@@ -389,7 +389,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set request method
 	 * @param string $requestMethod
 	 */
 	public function setRequestMethod($requestMethod) {
@@ -397,33 +397,41 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	}
 
 	/**
-	 *
+	 * Set arguments
 	 * @param array $arguments
 	 */
-	public function setArguments($arguments) {
+	public function setArguments(array $arguments) {
 		$this->arguments = $arguments;
 	}
 
 	/**
-	 *
+	 * Set post
 	 * @param array $post
 	 */
-	public function setPost($post) {
+	public function setPost(array $post) {
 		$this->post = $post;
 	}
 
 	/**
-	 *
+	 * Set get
 	 * @param array $get
 	 */
-	public function setGet($get) {
+	public function setGet(array $get) {
 		$this->get = $get;
 	}
 	
+	/**
+	 * Set language
+	 * @param string $language 
+	 */
 	public function setLanguage($language) {
 		$this->language = $language;
 	}
 	
+	/**
+	 * Get language
+	 * @return string
+	 */
 	public function getLanguage() {
 		return $this->language;
 	}
