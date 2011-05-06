@@ -79,6 +79,18 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		}
 		return isset($this->data[$name]) ? $this->data[$name] : null;
 	}
+	
+	/**
+	 * Check if variable is set in data and/or is empty
+	 * @param string $name
+	 * @return boolean 
+	 */
+	public function __isset($name) {
+		if ($name === 'translate' || (isset($this->data[$name]) && !empty($this->data[$name]))) {
+			return true;
+		}
+		return false;
+	}
 
 	public function render() {
 		// can be null

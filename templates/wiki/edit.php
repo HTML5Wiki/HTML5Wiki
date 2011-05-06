@@ -9,7 +9,7 @@
 		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
         <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
         <header class="grid_12 title clearfix">
-			<h1 class="heading"><?php echo !empty($this->title) ? $this->title : $this->translate->_('noTitle'); ?></h1>
+			<h1 class="heading"><?php echo strlen($this->title) > 0 ? $this->title : $this->translate->_('noTitle'); ?></h1>
 			<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 		</header>
 		<div class="clear"></div>
