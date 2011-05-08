@@ -102,9 +102,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			'mediaVersionTimestamp' => $parameters['hiddenTimestampArticle']
 		)));
 
+        $error = array();
 
-
-		if ($this->validateArticleEditForm($parameters)) {
+		if ($this->validateArticleEditForm($parameters, $error)) {
 			$user = $this->handleUserRequest($parameters);
 			if($user !== false) {
                  //TODO: handle Tag request
@@ -140,6 +140,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         } else {
             //TODO: go back to the edit page
             //      schow error messages
+
+            $user = $this->handleUserRequest($parameters);
+
+            $this->setTemplate('edit.php');
+            $this->loadEditPage($oldWikiPage, $error);
         }
 	}
 
@@ -151,8 +156,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
      * @author Alexandre Joly <ajoly@hsr.ch>
      *
      */
-    private function validateArticleEditForm(array $parameters) {
-        return true;
+    private function validateArticleEditForm(array $parameters, array &$error) {
+        
         $success = true;
 
         //Test Title
@@ -164,7 +169,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             !$validatorChainTitle->isValid($parameters['txtTitle'])) {
             
             $success = false;
-            echo "böse... title";
+
+            array_push($error, "Title ... BLUE SCREEN");
+            /*
+            foreach ($validatorChainTitle->getMessages() as $message) {
+                array_push($error, "Title " . $message);
+            }*/
         }      
         
         //Test Content
@@ -173,7 +183,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
         if (!$validatorChainContent->isValid($parameters['contentEditor'])) {
             $success = false;
-            echo "böse... content";
+
+
+            array_push($error, "content<br />Fatal Error! Please reboot your computer.");
+
+            /*foreach ($validatorChainContent->getMessages() as $message) {
+                array_push($error, "Content " . $message);
+            }*/
         }
 
         //Test User
@@ -185,7 +201,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
         if (!$validatorChainTags->isValid($parameters['tags'])) {
             $success = false;
-            echo "böse... tags";
+            array_push($error, "böse... tags");
         }
 
         //Test VersionComment
@@ -232,7 +248,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
+	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage, $error = null) {
 		//Prepare article data for the view
 		$title = isset($wikiPage->title) ? $wikiPage->title : '';
 		$content = isset($wikiPage->content) ? $wikiPage->content : '';
@@ -250,6 +266,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('wikiPage', $wikiPage);
 		$this->template->assign('request', $this->router->getRequest());
 		//$this->template->assign('tag', $tag);
+        
+        $this->template->assign('error', $error);
 	}
 	
 	/**

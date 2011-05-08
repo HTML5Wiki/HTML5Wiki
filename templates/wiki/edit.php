@@ -80,4 +80,12 @@
 		$('#edit-article').submit(Article.save.bind());
 	</script>
 	<?php endif; ?>
+
+    <?php if ($this->error !== null): ?>
+    <script type="text/javascript">
+        <?php foreach ($this->error as $errorValue): ?>
+        MessageController.addMessage('error','<?php echo $errorValue; ?>');
+        <?php endforeach; ?>
+    </script>
+    <?php endif; ?>
 </article>
