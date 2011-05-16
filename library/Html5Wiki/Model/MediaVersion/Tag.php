@@ -8,9 +8,13 @@
  * @subpackage	Library
  */
 
-class Html5Wiki_Model_Tag extends Html5Wiki_Model_MediaVersion {
+class Html5Wiki_Model_MediaVersion_Tag extends Html5Wiki_Model_MediaVersion {
 	
 	protected $_tableClass = 'Html5Wiki_Model_MediaVersion_Mediatag_Table';
+	
+	public function __toString() {
+		return $this->tagTag;
+	}
 }
 
 ?>

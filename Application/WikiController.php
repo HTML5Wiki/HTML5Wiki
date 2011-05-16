@@ -278,7 +278,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		//Prepare article data for the view
 		$title = isset($wikiPage->title) ? $wikiPage->title : '';
 		$content = isset($wikiPage->content) ? $wikiPage->content : '';
-		//$tag = $wikiPage->getTags(); 
+		$tagRows = $wikiPage->getTags();
+		
+		$tags = array();
+
+		foreach ($tagRows as $tag) {
+			$tags[] = $tag->tagTag;
+		}
 
 		//Get author data from cookies
 		$author	= new Html5Wiki_Model_User();
@@ -291,7 +297,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('author', $author);
 		$this->template->assign('wikiPage', $wikiPage);
 		$this->template->assign('request', $this->router->getRequest());
-		//$this->template->assign('tag', $tag);
+		$this->template->assign('tags', $tags);
         
         $this->template->assign('error', $error);
 	}

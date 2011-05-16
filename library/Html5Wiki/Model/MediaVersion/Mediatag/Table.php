@@ -17,6 +17,8 @@ class Html5Wiki_Model_MediaVersion_Mediatag_Table extends Zend_Db_Table_Abstract
 	 */
 	protected $_name		= 'MediaVersionTag';
 	
+	protected $_rowClass	= 'Html5Wiki_Model_MediaVersion_Tag';
+	
 	/**
 	 * 
 	 * @var array
@@ -37,5 +39,13 @@ class Html5Wiki_Model_MediaVersion_Mediatag_Table extends Zend_Db_Table_Abstract
 			,'refColumns' => array('id','timestamp')
 		)
 	);
+	
+	public function loadTags($id, $timestamp) {
+		$select = $this->select();
+		$select->where('mediaVersionId = ?', $id);
+		$select->where('mediaVersionTimestamp = ?', $timestamp);
+		
+		return $this->fetchAll($select);
+	}
 }
 ?>

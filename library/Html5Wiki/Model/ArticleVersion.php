@@ -98,6 +98,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$this->_cleanData = $this->_data;
 		$this->_modifiedFields = array();
 	}
+	
 }
 
 ?>

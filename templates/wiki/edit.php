@@ -47,7 +47,7 @@
 				<legend class="groupname">Tagging</legend>
 				<p class="clearfix">
 					<label for="txtTags" class="label">Tag</label>
-					<input type="text" name="txtTags" id="txtTags" value="<?php echo $this->tag; ?>" class="textfield" />
+					<input type="text" name="txtTags" id="txtTags" value="<?php echo implode(",", $this->tags); ?>" class="textfield" />
 				</p>
 				<p class="hint">
 					Ein Artikel kann mit verschiedenen Tags versehen werden,

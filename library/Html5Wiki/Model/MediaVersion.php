@@ -96,6 +96,16 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 		$this->_modifiedFields = array();
 	}
 	
+	public function getTags() {
+		if (!isset($this->id) || !isset($this->timestamp)) {
+			throw new Html5Wiki_Exception("MediaVersionRow must be fully loaded before getting tags");
+		}
+		
+		$tags = new Html5Wiki_Model_MediaVersion_Mediatag_Table();
+		
+		return $tags->loadTags($this->id, $this->timestamp);
+	}
+	
 	public function getUser() {
 		$data = array('id' => $this->userId);
 		$user = new Html5Wiki_Model_User(array('data'=>$data));
