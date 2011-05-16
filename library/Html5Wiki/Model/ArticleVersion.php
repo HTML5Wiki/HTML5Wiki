@@ -18,31 +18,6 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	protected $_tableClass = 'Html5Wiki_Model_ArticleVersion_Table';
 	
 	/**
-	 * Automatically loads model data if necessary information is present.<br/>
-	 * Following combinations are available:
-	 * <ul>
-	 *  <li>id & timestamp (loads specific version)</li>
-	 *  <li>id (loads the latest version)</li>
-	 *  <li>permalink (loads the latest version with given permalink)</li>
-	 * </ul>
-	 */
-	public function init() {
-		/*if(count($this->_cleanData) === 0) {
-			$id = isset($this->mediaVersionId) ? intval($this->mediaVersionId) : 0;
-			$timestamp = isset($this->mediaVersionTimestamp) ? intval($this->mediaVersionTimestamp) : 0;
-			$permalink = isset($this->permalink) ? $this->permalink : '';
-
-			if($permalink != '') {
-				$this->loadLatestByPermalink($permalink);
-			} elseif($id > 0 && $timestamp > 0) {
-				$this->loadByIdAndTimestamp($id, $timestamp);
-			} elseif($id > 0 && $timestamp == 0) {
-				$this->loadLatestById($id);
-			}
-		}*/
-	}
-	
-	/**
 	 * Loads a a complete ArticleVersion, specified by its permalink, into this
 	 * model.<br/>
 	 * Since is not completly unique, the latest article with the given permalink
