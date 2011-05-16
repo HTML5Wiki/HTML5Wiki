@@ -47,12 +47,11 @@ var MessageController = (function() {
 	 */
 	self.addMessage = function(type, message, options) {
 		var messageData = {
-			type: type
-			,message: message
-			,options: options
+			type: type,
+			message: message,
+			options: options
 		};
 		messageQueue = new Array(messageData).concat(messageQueue);
-	
 		if($('.messagebox').size() == 0) self.displayQueuedMessage();
 	}
 

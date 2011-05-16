@@ -27,7 +27,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 * </ul>
 	 */
 	public function init() {
-		if(count($this->_cleanData) === 0) {
+		/*if(count($this->_cleanData) === 0) {
 			$id = isset($this->mediaVersionId) ? intval($this->mediaVersionId) : 0;
 			$timestamp = isset($this->mediaVersionTimestamp) ? intval($this->mediaVersionTimestamp) : 0;
 			$permalink = isset($this->permalink) ? $this->permalink : '';
@@ -39,7 +39,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 			} elseif($id > 0 && $timestamp == 0) {
 				$this->loadLatestById($id);
 			}
-		}
+		}*/
 	}
 	
 	/**
@@ -50,7 +50,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 *
 	 * @param $permalink
 	 */
-	private function loadLatestByPermalink($permalink) {
+	public function loadLatestByPermalink($permalink) {
 		// Get MediaVersion (permalink is available there):
 		$mediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
 		$select = $mediaVersionTable->select();
@@ -83,7 +83,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 * @param $id
 	 * @param $timestamp
 	 */
-	private function loadByIdAndTimestamp($id, $timestamp) {
+	public function loadByIdAndTimestamp($id, $timestamp) {
 		$select = $this->select();
 		$select->where('mediaVersionId = ?', $id);
 		$select->where('mediaVersionTimestamp = ?', $timestamp);
@@ -106,7 +106,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	 *
 	 * @param $id
 	 */
-	private function loadLatestById($id) {
+	public function loadLatestById($id) {
 		$select = $this->select();
 		$select->where('mediaVersionId = ?', $id);
 		$select->order('mediaVersionTimestamp DESC');

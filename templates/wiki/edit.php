@@ -81,10 +81,10 @@
 	</script>
 	<?php endif; ?>
 
-    <?php if ($this->error !== null): ?>
+    <?php if (count($this->error)): ?>
     <script type="text/javascript">
         <?php foreach ($this->error as $errorValue): ?>
-        MessageController.addMessage('error','<?php echo $errorValue; ?>');
+        MessageController.addMessage('error','<?php echo addslashes($errorValue); ?>');
         <?php endforeach; ?>
     </script>
     <?php endif; ?>
