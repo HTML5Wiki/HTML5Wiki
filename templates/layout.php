@@ -12,6 +12,7 @@
 	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
 
 	$jsHelper->appendScript('Html5Wiki.init("'. $basePath .'");');
+	$jsHelper->appendScript('SearchBoxController.initWithSearchBox($("#searchBox"), "' . $this->urlHelper('index', 'search') . '")');
 	
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();
@@ -47,7 +48,7 @@
 						<a href="<?php echo $this->urlHelper($router->getRequest()->getUri()) ?>" class="tab"><?php echo $this->title ?></a>
 					</li>
 					<?php endif; ?>
-					<li class="item search"><input placeholder="<?php echo $this->translate->_("search") ?>" class="searchterm" accesskey="s" /></li>
+					<li class="item search"><input id="searchBox" placeholder="<?php echo $this->translate->_("search") ?>" class="searchterm" accesskey="s" /></li>
 				</ol>
 			</nav>
 		</header>

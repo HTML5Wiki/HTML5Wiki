@@ -10,20 +10,24 @@
  * @see SearchBoxController#initWithSearchBox
  */
 var SearchBoxController = (function() {
-	var self = {}
-		,selectedResultItem = -1
-		,totalResultItems = 0
-		,resultItems = ''
-		,resultContainer = '';
+	var self = {},
+		selectedResultItem = -1,
+		totalResultItems = 0,
+		resultItems = '',
+		resultContainer = '',
+		url = '';
 	
 	/**
 	 * Initializes the Event-Handling for a Searchbox
 	 * (Text-Inputfield)
 	 *
-	 * @param searchBox jQuery-DOM-Object
+	 * @param DOMElement searchBox jQuery-DOM-Object
+	 * @param string     url       Url to call for doing search
 	 * @access public
 	 */
-	self.initWithSearchBox = function(searchBox) {
+	self.initWithSearchBox = function(searchBox, url) {
+		self.url = url;
+
 		/* Eventbindings: */
 		// Bind search-functionalities:
 		$(searchBox).bind('keyup',handleKeyUp);
@@ -103,6 +107,15 @@ var SearchBoxController = (function() {
 		return wasAbleToSelect;
 	};
 	
+	function search(term) {
+		$.ajax({
+			type: 'GET',
+			url: self.url, 
+			data: {'term' : term},
+			success: displaySearchResults.bind(this, term)
+		});		
+	}
+	
 	
 	/**
 	 * Handles KeyEvents for the keyUp-Event.<br/>
@@ -117,39 +130,41 @@ var SearchBoxController = (function() {
 		var term = $(this).val();
 
 		if(keycodeTriggersSearch(keycode)) {
-			
-			
-			// @todo AJAX request
 			// Following line has to be replaced with an ajax request
-			var results = search(term);
-			
-			
-			// Save response data:
-			resultItems = results;
-			totalResultItems = results.length;
-			self.setSelectedResultItem(-1);
-			
-			// Show or hide Result-Container
-			if(totalResultItems > 0) resultContainer.show();
-			else resultContainer.hide();
-			
-			// Prepare result items:
-			var resultList = $('<ol/>');
-			for(var i = 0, l = totalResultItems; i < l; i++) {
-				var text = results[i].text;
-				var url = results[i].url;
-				
-				text = '<span class="typed">'
-					   + text.substring(0,term.length)
-					   + '</span>'
-					   + text.substring(term.length);
-				
-				resultList.append(createResultItem(text,url));
-			}
-			resultContainer.empty();
-			resultContainer.append(resultList);
+			search(term);
 		}
 	};
+	
+	function displaySearchResults(term, json) {
+		console.log(term, json);
+		var results = json.results;
+		// Save response data:
+		resultItems = results;
+		totalResultItems = results.length;
+		self.setSelectedResultItem(-1);
+
+		// Show or hide Result-Container
+		if(totalResultItems > 0) {
+			resultContainer.show();
+		}
+		else {
+			resultContainer.hide();
+		}
+
+		// Prepare result items:
+		var resultList = $('<ol/>');
+		for(var i = 0, l = totalResultItems; i < l; i++) {
+			var text = results[i].text;
+			var url = results[i].url;
+			
+			var re = new RegExp(term, "g");
+			text = text.replace(re, '<span class="typed">' + term + '</span>');
+
+			resultList.append(createResultItem(text,url));
+		}
+		resultContainer.empty();
+		resultContainer.append(resultList);
+	}
 	
 	/**
 	 * Handles KeyEvents for the keyDown-Event.<br/>
@@ -183,20 +198,10 @@ var SearchBoxController = (function() {
 					// If an item is selected, open that item;
 					// Otherwise, trigger search for the entered term.
 					if(selectedResultItem > -1) {
-						
-						
-						// @todo Open selected item
-						console.log('Open selected result item!');
-						window.href = resultItems[selectedResultItem].url;
-						
-						
+						window.location.href = resultItems[selectedResultItem].url;
 					} else {
-						
-						
 						// @todo Trigger search here
 						console.log('Trigger search here!')
-						
-						
 					}
 					break;
 				case 27 : // Escape
@@ -207,7 +212,9 @@ var SearchBoxController = (function() {
 					
 			}
 			
-			if(preventDefault) event.preventDefault();
+			if(preventDefault) {
+				event.preventDefault();
+			}
 		}
 	};
 	
@@ -265,9 +272,15 @@ var SearchBoxController = (function() {
 		item.hover(function() {
 			self.setSelectedResultItem($(this).index());
 		});
+		item.click(function() {
+			window.location.href = url;
+			e.preventDefault();
+		});
 		
 		// Ensures that the a-Element reacts as expected when clicked:
-		item.parent().click(function(event) { event.stopPropagation(); })
+		item.parent().click(function(event) { 
+			event.stopPropagation(); 
+		});
 		
 		return item;
 	}

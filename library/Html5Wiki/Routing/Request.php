@@ -27,6 +27,12 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @var bool
 	 */
 	private $https = false;
+	
+	/**
+	 * Is ajax request? (X-Requested-With = XMLHttpRequest)
+	 * @var bool
+	 */
+	private $isAjaxRequest = false;
 
 	/**
 	 * Called uri
@@ -122,6 +128,9 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->https = !empty($this->serverVariables['HTTPS']);
 		$this->uri = $this->serverVariables['REQUEST_URI'];
 		
+		$this->isAjaxRequest = isset($this->serverVariables['HTTP_X_REQUESTED_WITH']) 
+									&& $this->serverVariables['HTTP_X_REQUESTED_WITH'] === 'XMLHttpRequest';
+		
 		$this->language = $this->serverVariables['HTTP_ACCEPT_LANGUAGE'];
 
 		$this->path = isset($this->serverVariables['PATH_INFO']) ? $this->serverVariables['PATH_INFO'] : '';
@@ -198,6 +207,14 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 */
 	public function getHttps() {
 		return $this->https;
+	}
+	
+	/**
+	 * If request was a ajax request
+	 * @return bool 
+	 */
+	public function isAjax() {
+		return $this->isAjaxRequest;
 	}
 
 	/**
