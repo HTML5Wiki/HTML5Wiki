@@ -244,9 +244,17 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function loadPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
 		$this->setTemplate('article.php');
+		
+		$tagRows = $wikiPage->getTags();
+		$tags = array();
+
+		foreach ($tagRows as $tag) {
+			$tags[] = $tag->tagTag;
+		}
 
 		$this->template->assign('wikiPage', $wikiPage);
 		$this->template->assign('markDownParser', new Markdown_Parser());
+		$this->template->assign('tags', $tags);
 	} 
 	
 	/**

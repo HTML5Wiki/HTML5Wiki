@@ -12,6 +12,14 @@
 		<?php echo $this->markDownParser->transform($this->wikiPage->content) ?>
 	</section>
 	<div class="clear"></div>
+	<section>
+		<h2>Tags</h2>
+		<?php foreach ($this->tags as $tag): ?>
+		<div class="ui-state-default ui-corner-all ui-ptags-tag">
+			<div class="ui-ptags-tag-text"><?php echo $tag ?></div>
+		</div>
+		<?php endforeach; ?>
+	</section>
 	<?php if ($this->ajax === true): ?>
 	<script type="text/javascript">
 		Capsulebar.initializeClickEvents();
