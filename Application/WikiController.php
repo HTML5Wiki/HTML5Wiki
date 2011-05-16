@@ -125,6 +125,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				));
 				$articleVersionRow->save();
 				
+				$tags = explode(',', $parameters['tags']);
+				foreach($tags as $tag) {
+					$tagRow = new Html5Wiki_Model_Tag();
+					$tagRow->loadByTag($tag);
+					if (!isset($tagRow->tag)) {
+						$tagRow = new Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table();
+						$tagRow = $tagRow->createRow(array(
+							'tag' => $tag
+						));
+						$tagRow->save();
+					}
+					var_dump($tag);
+					$mediaTag = new Html5Wiki_Model_MediaVersion_Mediatag_Table();
+					$mediaTagRow = $mediaTag->createRow(array(
+						'tagTag' => $tag,
+						'mediaVersionId' => $oldWikiPage->id,
+						'mediaVersionTimestamp' => $mediaVersionRow->timestamp
+					));
+					$mediaTagRow->save();
+				}
+				
 				// reload the wikipage because it needs also the MediaVersion informations.
 				$wikiPage = new Html5Wiki_Model_ArticleVersion();
 				$wikiPage->loadByIdAndTimestamp($articleVersionRow->mediaVersionId, $articleVersionRow->mediaVersionTimestamp);
@@ -400,7 +421,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		
 		$diff = new PhpDiff_Diff(explode("\n", $rightVersion->content), explode("\n", $leftVersion->content));
-		
 		$this->template->assign('diff', $diff);
 	}
  }

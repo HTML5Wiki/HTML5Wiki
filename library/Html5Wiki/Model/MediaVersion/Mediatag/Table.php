@@ -9,7 +9,7 @@
  */
 
 
-class Html5Wiki_Model_Media_Mediatag_Table extends Zend_Db_Table_Abstract {
+class Html5Wiki_Model_MediaVersion_Mediatag_Table extends Zend_Db_Table_Abstract {
 		
 	/**
 	 * 
@@ -21,7 +21,7 @@ class Html5Wiki_Model_Media_Mediatag_Table extends Zend_Db_Table_Abstract {
 	 * 
 	 * @var array
 	 */
-	protected $_primary		= array('tagTag', 'mediaVersionId');
+	protected $_primary		= array('tagTag', 'mediaVersionId', 'mediaVersionTimestamp');
 	
 	/**
 	 * 
@@ -29,6 +29,13 @@ class Html5Wiki_Model_Media_Mediatag_Table extends Zend_Db_Table_Abstract {
 	 */
 	protected $_sequence	= false;
 	
-	
+	protected $_dependentTables = array('Html5Wiki_Model_MediaVersion_Table');
+	protected $_referenceMap = array(
+		'MediaVersion' => array(
+			'columns' => array('mediaVersionId','mediaVersionTimestamp')
+			,'refTableClass' => 'Html5Wiki_Model_MediaVersion_Table'
+			,'refColumns' => array('id','timestamp')
+		)
+	);
 }
 ?>
