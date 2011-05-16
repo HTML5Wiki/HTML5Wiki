@@ -5,6 +5,6 @@
 		</header>
 	</header>
 	<div class="grid_12">
-		<pre><?php echo FineDiff_FineDiff::renderDiffToHTMLFromOpcodes($this->leftVersion->content, $this->opcodes); ?></pre>
+		<?php echo $this->diff ?>
 	</div>
 </article>
