@@ -102,6 +102,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			'mediaVersionTimestamp' => $parameters['hiddenTimestampArticle']
 		)));
 
+        $title = isset($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->title;
+
         $error = array();
 
 		if ($this->validateArticleEditForm($parameters, $error)) {
@@ -118,8 +120,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				));
 				$mediaVersionRow->save();
 
-				$title = isset($parameters['txtTitle']) ? $parameters['txtTitle'] : $oldWikiPage->title;
-				
 				$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
 				$articleVersionRow = $articleVersion->createRow(array(
 					'mediaVersionId' => $oldWikiPage->id,
@@ -139,12 +139,22 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             }
         } else {
             //TODO: go back to the edit page
-            //      schow error messages
-
+            //      show error messages
             $user = $this->handleUserRequest($parameters);
+            if($user !== false) {
 
-            $this->setTemplate('edit.php');
-            $this->loadEditPage($oldWikiPage, $error);
+                $wrongUpdatedWikiPage = new Html5Wiki_Model_ArticleVersion(array(
+                    'id' => $oldWikiPage->id,
+                    'timestamp' => $oldWikiPage->timestamp,
+                    'permalink' => $oldWikiPage->permalink,
+                    'userId' => $user->id,
+                    'title' => $title,
+                    'content' => $parameters['contentEditor']
+                ));
+
+                $this->setTemplate('edit.php');
+                $this->loadEditPage($wrongUpdatedWikiPage, $error);
+            }
         }
 	}
 
@@ -176,7 +186,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
                 array_push($error, "Title " . $message);
             }*/
         }      
-        
+
         //Test Content
         $validatorChainContent = new Zend_Validate();
         $validatorChainContent->addValidator(new Zend_Validate_NotEmpty());
@@ -296,6 +306,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$userTable = new Html5Wiki_Model_User_Table();
 			$existingUser = $userTable->userExists($userData['name'], $userData['email']);
 			if (isset($existingUser->id)) {
+
 				return $existingUser;
 			}
 			if($userData['email'] && $userData['name']) {
