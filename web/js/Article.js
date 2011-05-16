@@ -4,7 +4,7 @@ Article = {
 			type: 'get',
 			'url':  url,
 			complete: this.replaceContent.bind(this),
-			data: 'ajax=true&idArticle=' + idArticle
+			data: 'idArticle=' + idArticle
 		});
 		return url;
 	},

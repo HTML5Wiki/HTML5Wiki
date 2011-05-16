@@ -28,7 +28,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function editAction() {		
 		$parameters = $this->router->getRequest()->getGetParameters();
 
-		if (isset($parameters['ajax'])) {
+		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadLatestById($parameters['idArticle']);
@@ -54,7 +54,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function createAction() {
 		$parameters	= $this->router->getRequest()->getPostParameters();
 		
-		if (isset($parameters['ajax'])) {
+		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 		}
 		
@@ -91,7 +91,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function saveAction() {
 		$parameters	= $this->router->getRequest()->getPostParameters();
 		
-		if (isset($parameters['ajax'])) {
+		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 		}
 		
@@ -264,9 +264,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param	$permalink
 	 */
 	private function loadNoArticlePage($permalink) {
-		$ajax = $this->router->getRequest()->getPost('ajax');		
-		
-		if ($ajax == true) {
+		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 		} 
 		
@@ -355,7 +353,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function readAction() {
 		$parameters = $this->router->getRequest()->getGetParameters();
 
-		if( isset($parameters['ajax']) ) {
+		if($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadLatestById($parameters['idArticle']);
@@ -390,7 +388,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$parameters = $this->router->getRequest()->getGetParameters();
 		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
 		
-		if(isset($parameters['ajax'])) {
+		if($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$id = $parameters['idArticle'];
 			$versions = $mediaManager->getMediaVersionsById($id);
