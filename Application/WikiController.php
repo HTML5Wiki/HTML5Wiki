@@ -400,11 +400,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		
 		$diff = new PhpDiff_Diff(explode("\n", $rightVersion->content), explode("\n", $leftVersion->content));
-		$renderer = new PhpDiff_Diff_Renderer_Html_SideBySide();
-		/*$opcodes = FineDiff_FineDiff::getDiffOpcodes($rightVersion->content, $leftVersion->content);
-		$diff = FineDiff_FineDiff::renderFromOpcodes($rightVersion->content, $opcodes, array($this, 'renderDiff'));*/
 		
-		$this->template->assign('diff', $diff->render($renderer));
+		$this->template->assign('diff', $diff);
 	}
  }
 
