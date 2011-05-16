@@ -364,8 +364,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			throw new Html5Wiki_Exception_404();
 		}
 		
-		$latestVersion = $versions->current();
-		$latestVersion = new Html5Wiki_Model_ArticleVersion(array('data'=>array('mediaVersionId'=>$latestVersion->id)));
+		$latestVersion = new Html5Wiki_Model_ArticleVersion();
+		$latestVersion->loadLatestById($versions->current()->id);
 		$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		
 		$this->setTitle($latestVersion->title);
@@ -391,7 +391,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		foreach($versions as $version) {
 			$articleVersion = new Html5Wiki_Model_ArticleVersion();
-			$articleVersion->loadByIdAndTimestamp($verison->id, $version->timestamp);
+			$articleVersion->loadByIdAndTimestamp($version->id, $version->timestamp);
 			if ($version->timestamp === $left) {
 				$leftVersion = $articleVersion;
 			} else {
