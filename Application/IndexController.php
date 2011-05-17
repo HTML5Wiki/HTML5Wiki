@@ -48,7 +48,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		}
 	}
 	
-	private function parseSearchResult(Zend_Db_Table_Rowset $result) {
+	private function parseSearchResult(array $result) {
 		$searchResult = array();
 		$markDownParser = new Markdown_Parser();
 		foreach ($result as $row) {
