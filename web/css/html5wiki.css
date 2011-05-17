@@ -114,3 +114,11 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .recentchanges .changes .timespan .change .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .recentchanges .changes .timespan .change .comment{font-size:75%;font-style:italic;}
 .searchresults .result{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;margin-bottom:8px;padding-left:21px;background:no-repeat 0 5px;}.searchresults .result.mediatype-article{background-image:url('../images/icons16/page.png');}
+.compareversions .differences{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;width:100%;}.compareversions .differences .linenumber{font-size:85%;font-weight:normal;color:#a9a9a9;background-color:#dcdcdc;width:35px;text-align:right;padding:0 4px;}.compareversions .differences .linenumber.to{border-left:2px white solid;}
+.compareversions .differences .left,.compareversions .differences .right{padding:1px 4px;}
+.compareversions .differences .change-insert{background-color:#d2eebd;}.compareversions .differences .change-insert ins{background-color:#9bda6b;}
+.compareversions .differences .change-insert del{background-color:#9bda6b;}
+.compareversions .differences .change-delete{background-color:#dea7a8;}.compareversions .differences .change-delete ins{background-color:#c25d5f;}
+.compareversions .differences .change-delete del{background-color:#c25d5f;}
+.compareversions .differences .change-replace{background-color:#f0f0bb;}.compareversions .differences .change-replace ins{background-color:#ddde67;}
+.compareversions .differences .change-replace del{background-color:#ddde67;}
