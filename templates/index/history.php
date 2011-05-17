@@ -8,7 +8,7 @@
 			<ol class="timespan <?php echo $changeGroup; ?>">
 				<?php foreach($changes as $change) : ?>
 				<?php $user = $change->getUser(); ?>
-				<li class="change">
+				<li class="change mediatype-<?php echo strtolower($change->mediaVersionType) ?>">
 					<h2 class="name">
 						<a href="<?php echo $this->urlHelper('wiki', $change->permalink) ?>">
 							<?php echo $change->getCommonName() ?>
