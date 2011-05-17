@@ -12,7 +12,7 @@
 	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
 
 	$jsHelper->appendScript('Html5Wiki.init("'. $basePath .'");');
-	$jsHelper->appendScript('SearchBoxController.initWithSearchBox($("#searchBox"), "' . $this->urlHelper('index', 'search') . '")');
+	$jsHelper->appendScript('SearchBoxController.initWithSearchBox($("#searchBox"), "' . $this->urlHelper('index', 'search') . '", "' . $this->translate->_("content") . '", "' . $this->translate->_("tags") . '")');
 	
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();
