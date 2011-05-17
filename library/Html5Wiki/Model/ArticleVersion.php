@@ -99,6 +99,16 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$this->_modifiedFields = array();
 	}
 	
+	/**
+	 * Delivers the title of this article.<br/>
+	 * This method is essential for the MediaVersion-compliance.
+	 *
+	 * @see MediaVersion#getName
+	 */
+	public function getCommonName() {
+		return $this->title;
+	}
+	
 }
 
 ?>
