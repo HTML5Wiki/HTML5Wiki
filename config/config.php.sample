@@ -20,5 +20,6 @@ $config = array(
 		'defaultAction'     => 'index'
 	),
 	'languages' => array('en', 'de'),
-	'defaultLanguage' => 'en'
+	'defaultLanguage' => 'en',
+	'defaultTimezone' => 'Europe/Zurich'
 );
