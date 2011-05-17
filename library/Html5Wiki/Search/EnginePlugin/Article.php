@@ -1,13 +1,13 @@
 <?php
 /**
- * ArticleModelEngine
+ * Article EnginePlugin
  *
  * @author Manuel Alabor <malabor@hsr.ch>
  * @copyright (c) HTML5Wiki Team 2011
  * @package Library
  * @subpackage Search
  */
-class Html5Wiki_Search_ModelEngine_Article extends Html5Wiki_Search_ModelEngine_Abstract {
+class Html5Wiki_Search_EnginePlugin_Article extends Html5Wiki_Search_EnginePlugin_Abstract {
 
 	private $_compatibleType = 'ARTICLE';
 

@@ -10,21 +10,22 @@
  */
 class Html5Wiki_Search_SearchEngine {
 	
-	private $modelEngines = array();
+	private $enginePlugins = array();
 	
 	/**
 	 * Creates a new instance of SearchEngine.
 	 */
 	public function __construct() {
-		$this->registerModelEngines();
+		$this->registerEnginePlugins();
 	}
 	
 	/**
 	 * Register all available model engines to the search engine.
 	 */
-	private function registerModelEngines() {
-		$this->modelEngines = array(
-			new Html5Wiki_Search_ModelEngine_Article()
+	private function registerEnginePlugins() {
+		$this->enginePlugins = array(
+			new Html5Wiki_Search_EnginePlugin_Article()
+			,new Html5Wiki_Search_EnginePlugin_Tag()
 		);
 	}
 	
@@ -59,14 +60,45 @@ class Html5Wiki_Search_SearchEngine {
 		$mediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
 		$select = $mediaVersionTable->select();
 		
-		$this->prepareBasicSearch($select, $mediaVersionTable, $term);
-		$this->prepareTagSearch($select, $term);
-		$this->prepareModelEngineSearch($select, $term);
+		$this->prepareSelect($select, $mediaVersionTable, $term);
+		$this->prepareEnginePluginsSearch($select, $term);
+		$this->prepareBasicSearch($select, $term);
 		
 		$rawResults = $mediaVersionTable->fetchAll($select);
 		$models = $this->createModelsFromRawResults($rawResults);
 		
 		return $models;
+	}
+	
+	/**
+	 * Creates a Zend_Db_Select-instance with initial values.
+	 *
+	 * @param Zend_Db_Select $select Select-instance
+	 * @param Html5Wiki_Model_MediaVersion_Table $mediaVersionTable instance
+	 * @param $term search term
+	 * @return Zend_Db_Select
+	 */
+	private function prepareSelect(Zend_Db_Select $select, Html5Wiki_Model_MediaVersion_Table $mediaVersionTable, $term) {
+		$select->setIntegrityCheck(false);
+		$select->from($mediaVersionTable);
+		
+		return $select;
+	}
+	
+	/**
+	 * Prepares a Zend_Db_Select-Statement for searching against all registred
+	 * EnginePlugins.
+	 *
+	 * @param Zend_Db_Select $select Select-instance
+	 * @param $term search term
+	 * @return Zend_Db_Select
+	 */
+	private function prepareEnginePluginsSearch(Zend_Db_select $select, $term) {
+		foreach($this->enginePlugins as $enginePlugin) {
+			$select = $enginePlugin->prepareSearchStatement($select, $term);
+		}
+		
+		return $select;
 	}
 	
 	/**
@@ -77,45 +109,10 @@ class Html5Wiki_Search_SearchEngine {
 	 * @param $term search term
 	 * @return Zend_Db_Select
 	 */
-	private function prepareBasicSearch(Zend_Db_Select $select, Html5Wiki_Model_MediaVersion_Table $mediaVersionTable, $term) {
-		$select->setIntegrityCheck(false);
-		$select->from($mediaVersionTable);
+	private function prepareBasicSearch(Zend_Db_Select $select, $term) {
 		$select->where('state = ?', 'PUBLISHED');
 		$select->group('id');
 		$select->order('timestamp DESC');
-		
-		return $select;
-	}
-	
-	/**
-	 * Prepares a Zend_Db_Select-Statement for searching against tags.
-	 *
-	 * @param Zend_Db_Select $select Select-instance
-	 * @param $term search term
-	 * @return Zend_Db_Select
-	 */
-	private function prepareTagSearch(Zend_Db_Select $select, $term) {
-		$select->orWhere('MediaVersionTag.tagTag LIKE ?', '%' . $term . '%');
-		$select->joinLeft('MediaVersionTag',
-			'MediaVersion.id = MediaVersionTag.mediaVersionId '
-			.'AND MediaVersion.timestamp = MediaVersionTag.mediaVersionTimestamp'
-		);
-		
-		return $select;
-	}
-	
-	/**
-	 * Prepares a Zend_Db_Select-Statement for searching against all registred
-	 * ModelEngines.
-	 *
-	 * @param Zend_Db_Select $select Select-instance
-	 * @param $term search term
-	 * @return Zend_Db_Select
-	 */
-	private function prepareModelEngineSearch(Zend_Db_select $select, $term) {
-		foreach($this->modelEngines as $modelEngine) {
-			$select = $modelEngine->prepareSearchStatement($select, $term);
-		}
 		
 		return $select;
 	}
@@ -148,9 +145,9 @@ class Html5Wiki_Search_SearchEngine {
 		$properModel = FALSE;
 		$data = $rawModel->toArray();
 		
-		foreach($this->modelEngines as $modelEngine) {
-			if($modelEngine->canPrepareModelForType($type)) {
-				$properModel = $modelEngine->prepareModelFromData($data);
+		foreach($this->enginePlugins as $enginePlugin) {
+			if($enginePlugin->canPrepareModelForType($type)) {
+				$properModel = $enginePlugin->prepareModelFromData($data);
 				break;
 			}
 		}

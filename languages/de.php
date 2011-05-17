@@ -7,6 +7,7 @@ return array(
 	'homepage' => 'Startseite',
 	'recentChanges' => 'Neuste Änderungen',
 	'search' => 'Suche',
+	'searchResultsFor' => 'Suchergebnisse f&uuml;r "%s"',
 	'articleContentLegend' => 'Artikelinhalt',
 	'content' => 'Inhalt',
 	'tags' => 'Tags'
