@@ -48,8 +48,9 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 	 * Loads User by existing cookie
 	 */
 	private function loadFromCookie() {
-		if(isset($_COOKIE['currentUserId'])) {
-			$this->loadById($_COOKIE['currentUserId']);
+		$request = Html5Wiki_Controller_Front::getInstance()->getRouter()->getRequest();
+		if($request->getCookie('currentUserId')) {
+			$this->loadById($request->getCookie('currentUserId'));
 		 }
 	}
 	

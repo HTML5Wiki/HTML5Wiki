@@ -1,10 +1,10 @@
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`User`
+-- Table `User`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`User` ;
+DROP TABLE IF EXISTS `User` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`User` (
+CREATE  TABLE IF NOT EXISTS `User` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `email` VARCHAR(255) NOT NULL ,
   `name` VARCHAR(255) NULL ,
@@ -14,39 +14,39 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`MediaVersion`
+-- Table `MediaVersion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`MediaVersion` ;
+DROP TABLE IF EXISTS `MediaVersion` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersion` (
+CREATE  TABLE IF NOT EXISTS `MediaVersion` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `timestamp` INT NOT NULL ,
   `userId` INT NOT NULL ,
   `permalink` VARCHAR(255) NOT NULL ,
-  `state` ENUM('PUBLISHED','DRAFT','TRASH') NOT NULL DEFAULT PUBLISHED ,
+  `state` ENUM('PUBLISHED','DRAFT','TRASH') NOT NULL DEFAULT 'PUBLISHED' ,
   `versionComment` VARCHAR(140) NULL ,
-  `mediaVersionType` ENUM('ARTICLE','FILE') NOT NULL DEFAULT ARTICLE ,
-  PRIMARY KEY (`id`, `timestamp`)
+  `mediaVersionType` ENUM('ARTICLE','FILE') NOT NULL DEFAULT 'ARTICLE' ,
+  PRIMARY KEY (`id`, `timestamp`))
 ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`Tag`
+-- Table `Tag`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`Tag` ;
+DROP TABLE IF EXISTS `Tag` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`Tag` (
+CREATE  TABLE IF NOT EXISTS `Tag` (
   `tag` VARCHAR(50) NOT NULL ,
   PRIMARY KEY (`tag`) )
 ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`ArticleVersion`
+-- Table `ArticleVersion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`ArticleVersion` ;
+DROP TABLE IF EXISTS `ArticleVersion` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`ArticleVersion` (
+CREATE  TABLE IF NOT EXISTS `ArticleVersion` (
   `mediaVersionId` INT NOT NULL ,
   `mediaVersionTimestamp` INT NOT NULL ,
   `title` VARCHAR(200) NOT NULL ,
@@ -56,11 +56,11 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`Mimetype`
+-- Table `Mimetype`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`Mimetype` ;
+DROP TABLE IF EXISTS `Mimetype` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`Mimetype` (
+CREATE  TABLE IF NOT EXISTS `Mimetype` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `type` VARCHAR(60) NULL ,
   PRIMARY KEY (`id`) ,
@@ -69,11 +69,11 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`License`
+-- Table `License`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`License` ;
+DROP TABLE IF EXISTS `License` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`License` (
+CREATE  TABLE IF NOT EXISTS `License` (
   `id` INT NOT NULL AUTO_INCREMENT ,
   `name` VARCHAR(140) NOT NULL ,
   `description` TEXT NULL ,
@@ -83,11 +83,11 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`FileVersion`
+-- Table `FileVersion`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`FileVersion` ;
+DROP TABLE IF EXISTS `FileVersion` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`FileVersion` (
+CREATE  TABLE IF NOT EXISTS `FileVersion` (
   `mediaVersionId` INT NOT NULL ,
   `mediaVersionTimestamp` INT NOT NULL ,
   `name` VARCHAR(200) NOT NULL ,
@@ -102,11 +102,11 @@ ENGINE = MyISAM;
 
 
 -- -----------------------------------------------------
--- Table `html5wiki`.`MediaVersionTag`
+-- Table `MediaVersionTag`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `html5wiki`.`MediaVersionTag` ;
+DROP TABLE IF EXISTS `MediaVersionTag` ;
 
-CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersionTag` (
+CREATE  TABLE IF NOT EXISTS `MediaVersionTag` (
   `tagTag` VARCHAR(50) NOT NULL ,
   `mediaVersionId` INT NOT NULL ,
   `mediaVersionTimestamp` INT NOT NULL ,

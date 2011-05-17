@@ -77,7 +77,8 @@
 	<?php if ($this->ajax === true): ?>
 	<script type="text/javascript">
 		Capsulebar.initializeClickEvents();
-		$('#edit-article').submit(Article.save.bind());
+		Article.bindEditorEvents();
+		$("#edit-article").submit(Article.save.bind());
 	</script>
 	<?php endif; ?>
 

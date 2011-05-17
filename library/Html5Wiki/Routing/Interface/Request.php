@@ -140,6 +140,16 @@ interface Html5Wiki_Routing_Interface_Request {
 	public function getGetParameters();
 	
 	/**
+	 * Get a COOKIE. If it doesn't exist, return default.
+	 * 
+	 * @param string $key
+	 * @param mixed $default [optional, default null]
+	 * 
+	 * @return mixed
+	 */
+	public function getCookie($key, $default = null);
+	
+	/**
 	 * Set server variables
 	 * @param array $serverVariables
 	 */

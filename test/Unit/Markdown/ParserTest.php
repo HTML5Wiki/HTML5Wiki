@@ -8,8 +8,6 @@
  * @subpackage  Markdown
  */
 
-require 'Markdown/Parser.php';
-
 class Test_Unit_Markdown_ParserTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Markdown parser instance

@@ -1,10 +1,15 @@
 <?php
 /**
- * Wiki controller
+ * This file is part of the HTML5Wiki Project.
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright (c) HTML5Wiki Team 2011
- * @package Application
+ * @copyright Html5Wiki 2011
+ * @package Html5Wiki
+ * @subpackage Application
+ */
+
+/**
+ * Wiki controller
  */
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
@@ -140,14 +145,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $user = $this->handleUserRequest($parameters);
             if($user !== false) {
 
-                $wrongUpdatedWikiPage = new Html5Wiki_Model_ArticleVersion(array('data' => array(
-                    'id' => $oldWikiPage->id,
-                    'timestamp' => $oldWikiPage->timestamp,
-                    'permalink' => $oldWikiPage->permalink,
-                    'userId' => $user->id,
-                    'title' => $title,
-                    'content' => $parameters['contentEditor']
-                )));
+                $wrongUpdatedWikiPage = new Html5Wiki_Model_ArticleVersion();
+				$wrongUpdatedWikiPage->loadByIdAndTimestamp($oldWikiPage->id, $oldWikiPage->timestamp);
+				$wrongUpdatedWikiPage->title = $title;
+				$wrongUpdatedWikiPage->content = $parameters['contentEditor'];
 
                 $this->setTemplate('edit.php');
                 $this->loadEditPage($wrongUpdatedWikiPage, $error);

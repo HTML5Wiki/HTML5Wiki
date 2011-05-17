@@ -24,7 +24,7 @@ class Test_Functional_IndexTest extends Test_Functional_SeleniumTestCase {
 
 	public function testTitle() {
 		$this->open(self::MAIN_URL);
-		$this->assertTitle('Hello World | HTML5Wiki');
+		$this->assertTitle('HTML5Wiki | HTML5Wiki');
 	}
 	
 	public function testLogo() {

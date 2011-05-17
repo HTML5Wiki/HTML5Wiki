@@ -111,6 +111,12 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @var array
 	 */
 	private $get = array();
+	
+	/**
+	 * Cookies
+	 * @var array
+	 */
+	private $cookie = array();
 
 	/**
 	 * Constructs a new request object
@@ -153,6 +159,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 
 		$this->post = $_POST;
 		$this->get = $_GET;
+		$this->cookie = $_COOKIE;
 	}
 	
 	/**
@@ -323,6 +330,18 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 */
 	public function getGetParameters() {
 		return $this->get;
+	}
+	
+	/**
+	 * Get a COOKIE. If it doesn't exist, return default.
+	 * 
+	 * @param string $key
+	 * @param mixed $default [optional, default null]
+	 * 
+	 * @return mixed
+	 */
+	public function getCookie($key, $default = null) {
+		return isset($this->cookie[$key]) ? $this->cookie[$key] : $default;
 	}
 	
 	/**
