@@ -8,13 +8,6 @@
  * @subpackage Controller
  */
 
-require_once 'Html5Wiki/Exception.php';
-require_once 'Html5Wiki/Exception/404.php';
-require_once 'Html5Wiki/Exception/InvalidArgument.php';
-require_once 'Zend/Config.php';
-require_once 'Html5Wiki/Controller/Front.php';
-require_once 'FactoryTest/CorrectControllers/WikiController.php';
-
 class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase {
 
 	private $config = array();

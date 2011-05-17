@@ -59,6 +59,11 @@ if (is_readable($testDir . DIRECTORY_SEPARATOR . 'TestConfiguration.php')) {
     require_once $testDir . DIRECTORY_SEPARATOR . 'TestConfiguration.php.sample';
 }
 
+require $libraryPath . 'Zend/Loader/Autoloader.php';
+
+$autoloader = Zend_Loader_Autoloader::getInstance();
+$autoloader->registerNamespace(array('Html5Wiki_', 'Application_', 'Markdown_', 'PhpDiff_'));
+
 /*
  * Unset global variables that are no longer needed.
  */

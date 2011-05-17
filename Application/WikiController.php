@@ -1,10 +1,15 @@
 <?php
 /**
- * Wiki controller
+ * This file is part of the HTML5Wiki Project.
  *
  * @author Michael Weibel <mweibel@hsr.ch>
- * @copyright (c) HTML5Wiki Team 2011
- * @package Application
+ * @copyright Html5Wiki 2011
+ * @package Html5Wiki
+ * @subpackage Application
+ */
+
+/**
+ * Wiki controller
  */
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
