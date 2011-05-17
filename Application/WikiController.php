@@ -52,7 +52,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( $wikiPage == null ) {
 			$this->loadNoArticlePage($permalink);
 		} else {
-			$this->loadEditPage($wikiPage);
+            $preparedData = $this->prepareEditPage($wikiPage);
+			$this->loadEditPage($preparedData);
 		}
 
 	}
@@ -86,8 +87,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			// reload the wikipage because it needs also the MediaVersion informations.
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadByIdAndTimestamp($articleRow->mediaVersionId, $articleRow->mediaVersionTimestamp);
-			
-			$this->loadEditPage($wikiPage);
+
+            $preparedData = $this->prepareEditPage($wikiPage);
+			$this->loadEditPage($preparedData);
 		} else {
 			$this->loadNoArticlePage($this->getPermalink());
 		}
@@ -150,13 +152,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $user = $this->handleUserRequest($parameters);
             if($user !== false) {
 
+                $tags = explode(',', $parameters['tags']); 
+
                 $wrongUpdatedWikiPage = new Html5Wiki_Model_ArticleVersion();
 				$wrongUpdatedWikiPage->loadByIdAndTimestamp($oldWikiPage->id, $oldWikiPage->timestamp);
 				$wrongUpdatedWikiPage->title = $title;
 				$wrongUpdatedWikiPage->content = $parameters['contentEditor'];
 
                 $this->setTemplate('edit.php');
-                $this->loadEditPage($wrongUpdatedWikiPage, $error);
+                $preparedData = $this->prepareEditPage($wrongUpdatedWikiPage, null, null, $tags);
+			    $this->loadEditPage($preparedData, $error);
             }
         }
 	}
@@ -201,7 +206,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             'author' => false,
             'authorEmail' => false,
             'tags' => false,
-            'versionComment' => false
+            'versionComment' => true
         );
 
         //Test Title
@@ -295,36 +300,73 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('permalink', $permalink);
 		$this->template->assign('author', new Html5Wiki_Model_User());
 	}
+
+    private function prepareEditPage(HTML5Wiki_Model_ArticleVersion $wikiPage,
+        string $title = null,
+        string $content = null,
+        array $tags = null,
+        string $versionComment = null) {
+
+        $data = array();
+
+        $data['wikiPage'] = $wikiPage;
+
+        if ($title !== null) {
+            $data['title'] = $title;
+        } else {
+            $data['title'] = isset($wikiPage->title) ? $wikiPage->title : '';
+        }
+
+        if ($content !== null) {
+            $data['content'] = $content;
+        } else {
+            $data['content'] = isset($wikiPage->content) ? $wikiPage->content : '';
+        }
+
+        if ($tags !== null) {
+            $data['tags'] = $tags;
+        } else {
+            $tagRows = $wikiPage->getTags();
+
+            $tags = array();
+
+            foreach ($tagRows as $tag) {
+                $tags[] = $tag->tagTag;
+            }
+
+            $data['tags'] = $tags;
+        }
+
+        if ($versionComment !== null) {
+            $data['versionComment'] = $versionComment;
+        } else {
+            $data['versionComment'] = '';
+        }
+
+        //author data from cookies
+        $data['author'] = new Html5Wiki_Model_User();
+
+        $data['request'] = $this->router->getRequest();
+
+        return $data;
+    }
 	
 	/**
 	 * 
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage, array $error = array()) {
-		//Prepare article data for the view
-		$title = isset($wikiPage->title) ? $wikiPage->title : '';
-		$content = isset($wikiPage->content) ? $wikiPage->content : '';
-		$tagRows = $wikiPage->getTags();
-		
-		$tags = array();
-
-		foreach ($tagRows as $tag) {
-			$tags[] = $tag->tagTag;
-		}
-
-		//Get author data from cookies
-		$author	= new Html5Wiki_Model_User();
-		
+	private function loadEditPage(array $preparedData, array $error = array()) {
 		if($this->layoutTemplate != null) {
-			$this->layoutTemplate->assign('title', $title);
+			$this->layoutTemplate->assign('title', $preparedData['title']);
 		}
-		$this->template->assign('title', $title);
-		$this->template->assign('content', $content);
-		$this->template->assign('author', $author);
-		$this->template->assign('wikiPage', $wikiPage);
-		$this->template->assign('request', $this->router->getRequest());
-		$this->template->assign('tags', $tags);
+		$this->template->assign('title', $preparedData['title']);
+		$this->template->assign('content', $preparedData['content']);
+		$this->template->assign('author', $preparedData['author']);
+		$this->template->assign('wikiPage', $preparedData['wikiPage']);
+		$this->template->assign('request', $preparedData['request']);
+		$this->template->assign('tags', $preparedData['tags']);
+        $this->template->assign('versionComment', $preparedData['versionComment']);
         
         $this->template->assign('error', $error);
 	}

@@ -24,7 +24,7 @@
                     $fieldToSet = isset($this->error['fields']['content']) ? $this->error['fields']['content'] : false;
                     $setErrorClass = $fieldToSet ? ' error' : '';
                 ?>
-				<legend class="groupname"><?php echo $this->translate->_("articleContentLegend") ?></legend>					
+				<legend class="groupname<?php echo $setErrorClass; ?>"><?php echo $this->translate->_("articleContentLegend") ?></legend>
 				<textarea class="<?php echo $setErrorClass; ?>" id="contentEditor" name="contentEditor"><?php echo $this->content; ?></textarea>
 			</fieldset>
 		</div>
@@ -39,7 +39,7 @@
                         $fieldToSet = isset($this->error['fields']['author']) ? $this->error['fields']['author'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtAuthor" class="label">Ihr Name</label>
+					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>">Ihr Name</label>
 					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
 				</p>
 				<p>
@@ -47,7 +47,7 @@
                         $fieldToSet = isset($this->error['fields']['authorEmail']) ? $this->error['fields']['authorEmail'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse</label>
+					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>">Ihre E-Mailadresse</label>
 					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
 				</p>
 				<p class="hint">
@@ -62,12 +62,12 @@
 			<fieldset name="tags" class="group">
 				<legend class="groupname">Tagging</legend>
                     <p class="clearfix">
-                        <?php
+                    <?php
                         $fieldToSet = isset($this->error['fields']['tags']) ? $this->error['fields']['tags'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtTags" class="label">Tag</label>
-					<input type="text" name="txtTags" id="txtTags" value="<?php echo implode(",", $this->tags); ?>" class="textfield" />
+					<label for="txtTags" class="label<?php echo $setErrorClass; ?>">Tag</label>
+					<input type="text" name="txtTags" id="txtTags" value="<?php echo implode(",", $this->tags); ?>" class="textfield<?php echo $setErrorClass; ?>" />
 				</p>
 				<p class="hint">
 					Ein Artikel kann mit verschiedenen Tags versehen werden,
@@ -79,10 +79,14 @@
 				</p>
 			</fieldset>	
 			<fieldset name="versionComment" class="group">
+                <?php
+                        $fieldToSet = isset($this->error['fields']['versionComment']) ? $this->error['fields']['versionComment'] : false;
+                        $setErrorClass = $fieldToSet ? ' error' : '';
+                    ?>
 				<legend class="groupname">Versionskommentar</legend>
 				<p class="clearfix">
-					<label for="versionComment" class="label">Kommentar zur Version <em>(optional)</em>:</label>
-					<input type="text" name="versionComment" id="versionComment" class="textfield"/>
+					<label for="versionComment" class="label<?php echo $setErrorClass; ?>">Kommentar zur Version <em>(optional)</em>:</label>
+					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo $this->versionComment; ?>" />
 				</p>
 			</fieldset>
 		</div>
