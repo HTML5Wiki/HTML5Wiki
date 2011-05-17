@@ -78,7 +78,7 @@
 	<script type="text/javascript">
 		Capsulebar.initializeClickEvents();
 		Article.bindEditorEvents();
-		$('#edit-article').submit(Article.save.bind());
+		$("#edit-article").submit(Article.save.bind());
 	</script>
 	<?php endif; ?>
 

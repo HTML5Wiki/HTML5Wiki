@@ -163,7 +163,9 @@ var SearchBoxController = (function() {
 			var url = results[i].url;
 			
 			var re = new RegExp(term, "gi");
-			title = title.replace(re, '<span class="typed">' + term + '</span>');
+			if (title.length) {
+				title = title.replace(re, '<span class="typed">' + term + '</span>');
+			}
 			tags  = tags.replace(re, '<span class="typed">' + term + '</span>');
 			
 			var termPos = text.toLowerCase().indexOf(term.toLowerCase());
@@ -210,8 +212,7 @@ var SearchBoxController = (function() {
 					if(selectedResultItem > -1) {
 						window.location.href = resultItems[selectedResultItem].url;
 					} else {
-						// @todo Trigger search here
-						console.log('Trigger search here!')
+						window.location.href = self.url + '?term=' + $(this).val();
 					}
 					break;
 				case 27 : // Escape
