@@ -2,13 +2,23 @@
 	<header>
 		<h1><?php echo $this->translate->_('recentChanges') ?></h1>
 	</header>
-	<section>
-		<ol class="latest-articles">
-			<?php foreach($this->latestArticles as $article): ?>
-			<li>
-				<a href="<?php echo $this->urlHelper('wiki', $article->permalink) ?>"><?php echo $article->title ?></a>
-				<time><?php echo date('d.m.Y H:i', $article->mediaVersionTimestamp) ?></time>
-			</li>
+	<section class="grid_12">
+		<ol class="latest-changes">
+			<?php foreach($this->latestChanges as $changeGroup => $changes) : ?>
+			<ol class="timespan <?php echo $changeGroup; ?>">
+				<?php foreach($changes as $change) : ?>
+				<?php $user = $change->getUser(); ?>
+				<li class="version">
+					<span class="timestamp">
+						<span class="time"><?php echo date('H:i', intval($change->timestamp)); ?></span>,
+						<span class="date"><?php echo date('d.m.Y', intval($change->timestamp)); ?></span>
+					</span>
+					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
+					<span class="author"><?php echo $user->name; ?></span>
+					<span class="comment">&quot;<?php echo $change->versionComment; ?>&quot;</span>
+				</li>
+				<?php endforeach; ?>
+			</ol>
 			<?php endforeach; ?>
 		</ol>
 	</section>
