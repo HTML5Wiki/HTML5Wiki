@@ -26,13 +26,14 @@ abstract class Html5Wiki_Search_ModelEngine_Abstract {
 	}
 	
 	/**
-	 * Adds specific sql-statements to a Zend_Db_Select-instance and returns
-	 * it.
+	 * Adds model specific sql-statements to a Zend_Db_Select-instance and
+	 * returns it.
 	 *
 	 * @param $select Zend_Db_Select
+	 * @param $forTerm
 	 * @return Zend_Db_Select
 	 */
-	public abstract function prepareSearchStatement(Zend_Db_Select $select);
+	public abstract function prepareSearchStatement(Zend_Db_Select $select, $forTerm);
 	
 	/**
 	 * Returns true, if this ModelEngine can handle a specific type of MediaVersion.<br/>

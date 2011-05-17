@@ -11,7 +11,7 @@ class Html5Wiki_Search_ArticleModelEngine extends Html5Wiki_Search_ModelEngine_A
 
 	private $_compatibleType = 'ARTICLE';
 
-	public function prepareSearchStatement(Zend_Db_Select $select) {
+	public function prepareSearchStatement(Zend_Db_Select $select, $forTerm) {
 		
 	}
 	
