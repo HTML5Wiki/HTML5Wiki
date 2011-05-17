@@ -8,37 +8,9 @@
  * @subpackage	Library
  */
 
-/**
- * @author Manuel Alabor <malabor@hsr.ch>
- */
 class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 
 	protected $_tableClass = 'Html5Wiki_Model_MediaVersion_Table';
-	
-	/**
-	 * Automatically loads model data if necessary information is present.<br/>
-	 * Following combinations are available:
-	 * <ul>
-	 *  <li>id & timestamp (loads specific version)</li>
-	 *  <li>id (loads the latest version)</li>
-	 *  <li>permalink (loads the latest version with given permalink)</li>
-	 * </ul>
-	 */
-	public function init() {
-		if(count($this->_cleanData) == 0) {
-			$id = isset($this->id) ? intval($this->id) : 0;
-			$timestamp = isset($this->timestamp) ? intval($this->timestamp) : 0;
-			$permalink = isset($this->permalink) ? $this->permalink : '';
-
-			if($permalink != '') {
-				$this->loadLatestByPermalink($permalink);
-			} elseif($id > 0 && $timestamp > 0) {
-				$this->loadByIdAndTimestamp($id, $timestamp);
-			} elseif($id > 0 && $timestamp == 0) {
-				$this->loadLatestById();
-			}
-		}
-	}
 	
 	/**
 	 * Fills the model with the data of the latest version with the given
@@ -119,7 +91,7 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	 * @returns Name as String
 	 */
 	public function getCommonName() {
-		return "";
+		return '';
 	}
 	
 	public function save() {
