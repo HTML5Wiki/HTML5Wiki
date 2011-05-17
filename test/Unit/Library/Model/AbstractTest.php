@@ -23,7 +23,6 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 			'password' => DATABASE_PASSWORD,
 			'dbname'   => DATABASE_SCHEMA
 		));
-
 	}
 
 	public function tearDown() {

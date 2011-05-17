@@ -1,5 +1,5 @@
 <section class="grid_12 content recentchanges">
-	<header>
+	<header class="title">
 		<h1><?php echo $this->translate->_('recentChanges') ?></h1>
 	</header>
 	<ol class="changes">

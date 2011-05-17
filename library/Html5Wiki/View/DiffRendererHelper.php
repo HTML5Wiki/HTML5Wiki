@@ -14,7 +14,7 @@
 class Html5Wiki_View_DiffRendererHelper extends Html5Wiki_View_Helper {
 
 	public function diffRendererHelper($args) {
-		$renderer = new PhpDiff_Diff_Renderer_Html_SideBySide();
+		$renderer = new PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide();
 		return $args[0]->render($renderer);
 	}
 	
