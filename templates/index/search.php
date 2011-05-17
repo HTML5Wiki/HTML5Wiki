@@ -1,6 +1,6 @@
 <section id="content" class="grid_12 content searchresults">
-	<header class="title clearfix">
-		<h1 class="heading"><?php echo $this->translate->_('search') ?></h1>
+	<header class="title">
+		<h1><?php printf($this->translate->_('searchResultsFor'), $this->term); ?></h1>
 	</header>
 	<ol class="results">
 		<?php foreach($this->results as $result) : ?>
