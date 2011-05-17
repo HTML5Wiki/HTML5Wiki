@@ -26,7 +26,7 @@ CREATE  TABLE IF NOT EXISTS `html5wiki`.`MediaVersion` (
   `state` ENUM('PUBLISHED','DRAFT','TRASH') NOT NULL DEFAULT 'PUBLISHED' ,
   `versionComment` VARCHAR(140) NULL ,
   `mediaVersionType` ENUM('ARTICLE','FILE') NOT NULL DEFAULT 'ARTICLE' ,
-  PRIMARY KEY (`id`, `timestamp`)
+  PRIMARY KEY (`id`, `timestamp`))
 ENGINE = MyISAM;
 
 
