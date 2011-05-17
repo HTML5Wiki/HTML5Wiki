@@ -7,10 +7,6 @@
  * @package Test
  * @subpackage Controller
  */
-require_once 'Html5Wiki/Exception.php';
-require_once 'Html5Wiki/Exception/404.php';
-require_once 'Html5Wiki/Exception/InvalidArgument.php';
-require_once 'Html5Wiki/Controller/Factory.php';
 
 class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCase {
 

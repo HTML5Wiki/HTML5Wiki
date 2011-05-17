@@ -8,8 +8,6 @@
  * @subpackage  Model
  */
 
-require_once 'Zend/Db/Adapter/Pdo/Mysql.php';
-
 abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_TestCase {
 
 	/**
