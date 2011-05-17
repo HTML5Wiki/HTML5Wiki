@@ -18,7 +18,7 @@ abstract class Html5Wiki_Search_ModelEngine_Abstract {
 	 * @param $data Array with data
 	 * @return Html5Wiki_Model_MediaVersion-instance (or child class of it)
 	 */
-	public function createModelFromData(array $data) {
+	public function prepareModelFromData(array $data) {
 		$className = $this->getModelClassName();
 		$model = new $className(array('data'=>$data));
 		
@@ -33,6 +33,16 @@ abstract class Html5Wiki_Search_ModelEngine_Abstract {
 	 * @return Zend_Db_Select
 	 */
 	public abstract function prepareSearchStatement(Zend_Db_Select $select);
+	
+	/**
+	 * Returns true, if this ModelEngine can handle a specific type of MediaVersion.<br/>
+	 * Type is equivalent to the Database field "mediaVersionType", which is an
+	 * ENUM.
+	 *
+	 * @param $type
+	 * @return true/false
+	 */
+	public abstract function canPrepareModelForType($type);
 	
 	/**
 	 * Returns the class name of the model, which this SearchEngine searchs for.
