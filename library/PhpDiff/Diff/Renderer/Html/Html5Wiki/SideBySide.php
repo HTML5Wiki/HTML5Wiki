@@ -47,8 +47,11 @@
 
 require_once dirname(__FILE__).'/../Array.php';
 
-class PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide extends PhpDiff_Diff_Renderer_Html_Array
-{
+class PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide extends PhpDiff_Diff_Renderer_Html_Array {
+	
+	private $leftTimestamp = '';
+	private $rightTimestamp = '';
+	
 	/**
 	 * Render a and return diff with changes between the two sequences
 	 * displayed side by side.
@@ -64,6 +67,14 @@ class PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide extends PhpDiff_Diff_Rende
 		}
 
 		$html .= '<table class="differences">';
+		if($this->leftTimestamp != '' && $this->rightTimestamp != '') {
+			$html .= '<thead>';
+			$html .= '<tr>';
+			$html .= '<th colspan="2" class="versiontitle left">'. date('d.m.Y H:m', $this->leftTimestamp). '</th>';
+			$html .= '<th colspan="2" class="versiontitle right">'. date('d.m.Y H:m', $this->rightTimestamp). '</th>';
+			$html .= '</tr>';
+			$html .= '</thead>';
+		}
 		foreach($changes as $i => $blocks) {
 			if($i > 0) {
 				$html .= '<tbody class="skipped">';
@@ -158,4 +169,13 @@ class PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide extends PhpDiff_Diff_Rende
 		$html .= '</table>';
 		return $html;
 	}
+		
+	public function setLeftTimestamp($left) {
+		$this->leftTimestamp = $left;
+	}
+	
+	public function setRightTimestamp($right) {
+		$this->rightTimestamp = $right;
+	}
+	
 }

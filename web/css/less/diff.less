@@ -11,6 +11,15 @@
 		font: @font_normalsize @font_ui;
 		width: 100%;
 		
+		.versiontitle {
+			color: @color_paragraph;
+			background-color: lighten(@color_secondary,10%);
+			border-bottom: 1px solid @color_secondary;
+			padding: 5px 10px !important;
+			
+			&.right { border-left: 2px #fff solid; }
+		}
+		
 		.linenumber {
 			font-size: @font_normalsize;
 			font-weight: normal;
@@ -20,7 +29,7 @@
 			text-align: right;
 			padding: 0 4px;
 			
-			&.to { border-left: 2px white solid; }
+			&.to { border-left: 2px #fff solid; }
 		}
 		
 		.left, .right { padding: 1px 4px; }

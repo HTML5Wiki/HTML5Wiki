@@ -438,6 +438,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$diff = new PhpDiff_Diff(explode("\n", $rightVersion->content), explode("\n", $leftVersion->content));
 		$this->template->assign('diff', $diff);
+		$this->template->assign('leftTimestamp', $left);
+		$this->template->assign('rightTimestamp', $right);
 		$this->setTitle($leftVersion->getCommonName());
 	}
  }

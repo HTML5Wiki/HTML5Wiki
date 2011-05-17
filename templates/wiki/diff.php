@@ -5,6 +5,6 @@
 		</header>
 	</header>
 	<div class="grid_12">
-		<?php print_r( $this->diffRendererHelper($this->diff)) ?>
+		<?php echo $this->diffRendererHelper($this->diff, $this->leftTimestamp, $this->rightTimestamp) ?>
 	</div>
 </article>
