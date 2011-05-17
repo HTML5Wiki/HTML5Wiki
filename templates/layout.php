@@ -29,7 +29,6 @@
 	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
-	<link rel="stylesheet" href="<?php echo $basePath ?>css/editor.css" />
 </head> 
 <body>
 	<div class="container_12">
