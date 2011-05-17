@@ -181,6 +181,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		$needle .= method_exists($this, $this->router->getAction() . 'Action') ? $this->router->getAction() . '/' : '';
 		
 		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
+		$permalink = str_replace('?'.$this->router->getRequest()->getQueryString(), '', $permalink);
 		
 		return $permalink;
 	}
