@@ -7,6 +7,7 @@
  * @package Application
  */
 class Application_IndexController extends Html5Wiki_Controller_Abstract {
+	
     public function historyAction() {
 		$articleTable = new Html5Wiki_Model_ArticleVersion_Table();
 		$changes = $articleTable->fetchLatestArticles();
@@ -32,13 +33,13 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			return;
 		}
 		
-		$result = $this->search($term);
+		$results = $this->search($term);
 		
 		if ($this->router->getRequest()->isAjax()) {
-			$this->template->assign('results', $this->parseSearchResult($result));
+			$this->template->assign('results', $this->parseSearchResult($results));
 		} else {
 			// don't parse search results when the search page is displayed - more info can be displayed.
-			$this->template->assign('result', $result);
+			$this->template->assign('results', $results);
 			$this->template->assign('markDownParser', new Markdown_Parser());
 			$this->template->assign('term', $term);
 		}
