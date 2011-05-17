@@ -4,8 +4,11 @@
 		<modificationset quietperiod="60">
 			<git localworkingcopy="projects/${project.name}/source/"></git>
 		</modificationset>
+		<bootstrappers>
+			<gitbootstrapper localWorkingCopy="projects/${project.name}/source/"/>
+		</bootstrappers>
 		<schedule interval="43200">
-			<ant buildfile="projects/${project.name}/source/build/build.xml" anthome="apache-ant-1.7.0"></ant>
+			<ant buildfile="projects/${project.name}/source/build/build.xml" anthome="apache-ant-1.7.0" uselogger="false"></ant>
 		</schedule>
 		<listeners>
 			<currentbuildstatuslistener file="logs/${project.name}/status.txt"></currentbuildstatuslistener>
@@ -17,7 +20,7 @@
 			<artifactspublisher subdirectory="api" dest="artifacts/${project.name}" dir="projects/${project.name}/build/api"></artifactspublisher>
 			<artifactspublisher subdirectory="coverage" dest="artifacts/${project.name}" dir="projects/${project.name}/build/coverage"></artifactspublisher>
 			<artifactspublisher subdirectory="graph" dest="artifacts/${project.name}" dir="projects/${project.name}/build/graph"></artifactspublisher>
-			<execute command="phpuc graph logs/${project.name} artifacts/${project.name}"></execute> 
+			<execute command="phpuc graph logs/${project.name} artifacts/${project.name}"></execute>
 			<execute command="projects/${project.name}/source/build/updateToLatestBuild.sh /var/www/html5wiki/"></execute>
 			<email skipusers="false" buildresultsurl="http://ci.vs01.openflex.net/cruisecontrol/buildresults/html5wiki" reportsuccess="fixes" spamwhilebroken="false" returnname="HTML5Wiki Continuous Integration" returnaddress="cruisecontrol@vs01.openflex.net" mailhost="localhost">
 			</email>
