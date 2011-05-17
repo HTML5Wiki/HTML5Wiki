@@ -143,7 +143,7 @@ Article = {
 
 		var container = $('<div class="editor-wrapper" />');
 		container.append(titleEditor);
-		container.append('<br/><span class="cancel">M&ouml;chten Sie den Titel wiederherstellen?</span> ');
+		container.append('<br/><span class="cancel">M&ouml;chten Sie den urspr&uuml;nglichen Titel wiederherstellen?</span> ');
 		container.append(cancelButton);
 		heading.replaceWith(container);
 
