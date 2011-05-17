@@ -5,7 +5,7 @@
  * @author Manuel Alabor <malabor@hsr.ch>
  * @copyright (c) HTML5Wiki Team 2011
  * @package Library
- * @subpackage SearchEngine
+ * @subpackage Search
  */
 class Html5Wiki_Search_ArticleModelEngine extends Html5Wiki_Search_ModelEngine_Abstract {
 
