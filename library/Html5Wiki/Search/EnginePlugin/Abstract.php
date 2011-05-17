@@ -1,15 +1,13 @@
 <?php
 /**
- * ModelEngine abstract class
- * Subclass to implement specific domain knowledge for searching different
- * MediaVersion-types.
+ * EnginePlugin abstract class
  *
  * @author Manuel Alabor <malabor@hsr.ch>
  * @copyright (c) HTML5Wiki Team 2011
  * @package Library
  * @subpackage Search
  */
-abstract class Html5Wiki_Search_ModelEngine_Abstract {
+abstract class Html5Wiki_Search_EnginePlugin_Abstract {
 
 	/**
 	 * Creates from an array with result data a specific model-object, fitting to
