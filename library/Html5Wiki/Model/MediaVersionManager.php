@@ -60,7 +60,6 @@ class Html5Wiki_Model_MediaVersionManager {
 			$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
 			$select->where('timestamp in (?)', $timestamps);
 
-			echo $select;
 			$versions = $table->fetchAll($select);
 		}
 		
