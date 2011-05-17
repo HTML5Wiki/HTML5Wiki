@@ -441,6 +441,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$diff = new PhpDiff_Diff(explode("\n", $rightVersion->content), explode("\n", $leftVersion->content));
 		$this->template->assign('diff', $diff);
+		$this->setTitle($leftVersion->getCommonName());
 	}
  }
 
