@@ -64,9 +64,13 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 	
 	private function parseSearchResult(Zend_Db_Table_Rowset $result) {
 		$searchResult = array();
+		$markDownParser = new Markdown_Parser();
 		foreach ($result as $row) {
 			$searchResult[] = array(
-				'text' => $row->title,
+				'title' => $row->title,
+				// transform markdown & strip tags for not disturbing the view
+				'text'  => strip_tags($markDownParser->transform($row->content)),
+				'tags'  => $row->tagTag,
 				'url'  => '/wiki/' . $row->permalink
 			);
 		}

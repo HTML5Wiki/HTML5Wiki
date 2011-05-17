@@ -7,6 +7,8 @@ return array(
 	'homepage' => 'Startseite',
 	'recentChanges' => 'Neuste Änderungen',
 	'search' => 'Suche',
-	'articleContentLegend' => 'Artikelinhalt'
+	'articleContentLegend' => 'Artikelinhalt',
+	'content' => 'Inhalt',
+	'tags' => 'Tags'
 );
 ?>

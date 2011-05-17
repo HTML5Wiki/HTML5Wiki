@@ -37,9 +37,11 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 		$where = $this->select()->where('id = ?', $userId);
 		$row = $this->_getTable()->fetchRow($where);
 		
-		$this->_data = $row->toArray();
-        $this->_cleanData = $this->_data;
-        $this->_modifiedFields = array();
+		if (isset($row->id)) {
+			$this->_data = $row->toArray();
+			$this->_cleanData = $this->_data;
+			$this->_modifiedFields = array();
+		}
 	}
 	
 	/**

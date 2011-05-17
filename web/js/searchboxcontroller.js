@@ -15,7 +15,9 @@ var SearchBoxController = (function() {
 		totalResultItems = 0,
 		resultItems = '',
 		resultContainer = '',
-		url = '';
+		url = '',
+		textTxt = '',
+		tagsTxt = '';
 	
 	/**
 	 * Initializes the Event-Handling for a Searchbox
@@ -25,8 +27,10 @@ var SearchBoxController = (function() {
 	 * @param string     url       Url to call for doing search
 	 * @access public
 	 */
-	self.initWithSearchBox = function(searchBox, url) {
+	self.initWithSearchBox = function(searchBox, url, textTxt, tagsTxt) {
 		self.url = url;
+		self.textTxt = textTxt;
+		self.tagsTxt = tagsTxt;
 
 		/* Eventbindings: */
 		// Bind search-functionalities:
@@ -136,7 +140,6 @@ var SearchBoxController = (function() {
 	};
 	
 	function displaySearchResults(term, json) {
-		console.log(term, json);
 		var results = json.results;
 		// Save response data:
 		resultItems = results;
@@ -154,13 +157,20 @@ var SearchBoxController = (function() {
 		// Prepare result items:
 		var resultList = $('<ol/>');
 		for(var i = 0, l = totalResultItems; i < l; i++) {
+			var title = results[i].title;
 			var text = results[i].text;
+			var tags = results[i].tags
 			var url = results[i].url;
 			
-			var re = new RegExp(term, "g");
+			var re = new RegExp(term, "gi");
+			title = title.replace(re, '<span class="typed">' + term + '</span>');
+			tags  = tags.replace(re, '<span class="typed">' + term + '</span>');
+			
+			var termPos = text.toLowerCase().indexOf(term.toLowerCase());
+			text = text.substr(termPos > 10 ? termPos - 10 : 0, termPos + term.length + 10);
 			text = text.replace(re, '<span class="typed">' + term + '</span>');
 
-			resultList.append(createResultItem(text,url));
+			resultList.append(createResultItem(title, text, tags, url));
 		}
 		resultContainer.empty();
 		resultContainer.append(resultList);
@@ -267,8 +277,8 @@ var SearchBoxController = (function() {
 	 * @see SearchBoxController#handleKeyUp
 	 * @access private
 	 */
-	function createResultItem(text, url) {
-		var item = $('<li class="result-item"><a href="'+url+'">'+text+'</a></li>');
+	function createResultItem(title, text, tags, url) {
+		var item = $('<li class="result-item"><a href="'+url+'">'+title+'</a><p>' + self.textTxt + ': <em>' + text + '</em></p><p>' + self.tagsTxt + ': ' + tags + '</p></li>');
 		item.hover(function() {
 			self.setSelectedResultItem($(this).index());
 		});
