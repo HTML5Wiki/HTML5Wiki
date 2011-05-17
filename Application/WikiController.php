@@ -6,6 +6,12 @@
  * @copyright (c) HTML5Wiki Team 2011
  * @package Application
  */
+
+
+define('TITLEFIELD_MIN_LENGTH', 2);
+define('TITLEFIELD_MAX_LENGTH', 100);
+
+
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
@@ -105,7 +111,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if ($this->validateArticleEditForm($parameters, $error)) {
 			$user = $this->handleUserRequest($parameters);
 			if($user !== false) {
-                 //TODO: handle Tag request
 				$wikiPage = new Html5Wiki_Model_MediaVersion_Table();
 				$mediaVersionRow = $wikiPage->createRow(array(
 					'id' => $oldWikiPage->id,
@@ -188,18 +193,28 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
     private function validateArticleEditForm(array $parameters, array &$error) {
         
         $success = true;
+        $errorMsg = array();
+        $errorFields = array(
+            'title' => false,
+            'content' => false,
+            'author' => false,
+            'authorEmail' => false,
+            'tags' => false,
+            'versionComment' => false
+        );
 
         //Test Title
         $validatorChainTitle = new Zend_Validate();
         $validatorChainTitle->addValidator(new Zend_Validate_Alnum(true))
-                            ->addValidator(new Zend_Validate_StringLength(5, 25));
+                            ->addValidator(new Zend_Validate_StringLength(TITLEFIELD_MIN_LENGTH, TITLEFIELD_MAX_LENGTH));
 
         if (isset($parameters['txtTitle']) && //the title was updated
             !$validatorChainTitle->isValid($parameters['txtTitle'])) {            
             $success = false;
 
             foreach ($validatorChainTitle->getMessages() as $message) {
-                array_push($error, "Title " . $message);
+                array_push($errorMsg, "Title " . $message);
+                $errorFields['title'] = true;
             }
         }
 
@@ -211,7 +226,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $success = false;
 			
             foreach ($validatorChainContent->getMessages() as $message) {
-                array_push($error, "Content " . $message);
+                array_push($errorMsg, "Content " . $message);
+                $errorFields['content'] = true;
             }
         }
 
@@ -226,12 +242,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $success = false;
 			
             foreach ($validatorChainTags->getMessages() as $message) {
-                array_push($error, "Tags " . $message);
+                array_push($errorMsg, "Tags " . $message);
+                $errorFields['tags'] = true;
             }
         }
 
         //Test VersionComment
         ////Not needed
+
+        $error['messages'] = $errorMsg;
+        $error['fields'] = $errorFields;
 
         return $success;
     }
