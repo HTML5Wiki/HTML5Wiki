@@ -4,7 +4,7 @@
 	</header>
 	<ol class="results">
 		<?php foreach($this->results as $result) : ?>
-			<li class="result mediatype-<?php echo strtolower($change->mediaVersionType) ?>">
+			<li class="result mediatype-<?php echo strtolower($result->mediaVersionType) ?>">
 				<h2 class="name">
 					<a href="<?php echo $this->urlHelper('wiki', $result->permalink) ?>">
 						<?php echo $result->getCommonName() ?>
@@ -13,4 +13,4 @@
 			</li>
 		<?php endforeach; ?>
 	</ol>
-</article>
+</section>
