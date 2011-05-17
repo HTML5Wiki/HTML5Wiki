@@ -7,6 +7,7 @@
  * @package Html5Wiki
  * @subpackage Test
  */
+
 require_once 'PHPUnit/Autoload.php';
 
 /**

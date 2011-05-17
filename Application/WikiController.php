@@ -46,7 +46,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( $wikiPage == null ) {
 			$this->loadNoArticlePage($permalink);
 		} else {
-			$this->loadEditPage($wikiPage);
+			$this->loadEditPage($wikiPage, new Html5Wiki_Model_User());
 		}
 
 	}
@@ -83,7 +83,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadByIdAndTimestamp($articleRow->mediaVersionId, $articleRow->mediaVersionTimestamp);
 			
-			$this->loadEditPage($wikiPage);
+			$this->loadEditPage($wikiPage, $user);
 		} else {
 			$this->loadNoArticlePage($this->getPermalink());
 		}
@@ -153,7 +153,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$wrongUpdatedWikiPage->content = $parameters['contentEditor'];
 
                 $this->setTemplate('edit.php');
-                $this->loadEditPage($wrongUpdatedWikiPage, $error);
+                $this->loadEditPage($wrongUpdatedWikiPage, $user, $error);
             }
         }
 	}
@@ -283,7 +283,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage, array $error = array()) {
+	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage, Html5Wiki_Model_User $user, array $error = array()) {
 		//Prepare article data for the view
 		$title = isset($wikiPage->title) ? $wikiPage->title : '';
 		$content = isset($wikiPage->content) ? $wikiPage->content : '';
@@ -294,16 +294,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		foreach ($tagRows as $tag) {
 			$tags[] = $tag->tagTag;
 		}
-
-		//Get author data from cookies
-		$author	= new Html5Wiki_Model_User();
 		
 		if($this->layoutTemplate != null) {
 			$this->layoutTemplate->assign('title', $title);
 		}
 		$this->template->assign('title', $title);
 		$this->template->assign('content', $content);
-		$this->template->assign('author', $author);
+		$this->template->assign('author', $user);
 		$this->template->assign('wikiPage', $wikiPage);
 		$this->template->assign('request', $this->router->getRequest());
 		$this->template->assign('tags', $tags);
