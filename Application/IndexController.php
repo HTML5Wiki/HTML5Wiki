@@ -44,6 +44,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			$this->template->assign('results', $results);
 			$this->template->assign('markDownParser', new Markdown_Parser());
 			$this->template->assign('term', $term);
+			$this->layoutTemplate->assign('title', sprintf($this->layoutTemplate->getTranslate()->_('searchResultsFor'), $term));
 		}
 	}
 	
