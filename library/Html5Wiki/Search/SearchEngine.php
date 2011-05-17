@@ -24,7 +24,7 @@ class Html5Wiki_Search_SearchEngine {
 	 */
 	private function registerModelEngines() {
 		$this->modelEngines = array(
-			new Html5Wiki_Search_ArticleModelEngine()
+			new Html5Wiki_Search_ModelEngine_Article()
 		);
 	}
 	

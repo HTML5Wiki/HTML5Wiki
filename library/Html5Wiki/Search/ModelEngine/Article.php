@@ -7,7 +7,7 @@
  * @package Library
  * @subpackage Search
  */
-class Html5Wiki_Search_ArticleModelEngine extends Html5Wiki_Search_ModelEngine_Abstract {
+class Html5Wiki_Search_ModelEngine_Article extends Html5Wiki_Search_ModelEngine_Abstract {
 
 	private $_compatibleType = 'ARTICLE';
 
