@@ -35,7 +35,7 @@ class Html5Wiki_Search_SearchEngine {
 	 * @param $term
 	 * @return true or an array with validation errors
 	 */
-	public function termIsValid($term) {
+	public function isTermValid($term) {
 		$validatorChain = new Zend_Validate();
 		$validatorChain->addValidator(new Zend_Validate_Alnum(true));
 		$validatorChain->addValidator(new Zend_Validate_StringLength(array('min' => 1, 'encoding' => 'UTF-8')));
