@@ -22,7 +22,11 @@
 .messagebox .options .button:active{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-color:#fbfbfb;background-image:-moz-linear-gradient(center top, #e9e9e9 20%, #fdfdfd 45%);}
 .overlay{position:fixed;top:0;left:0;width:100%;height:100%;background-color:rgba(0, 0, 0, 0.19999999999999996);z-index:1000;}
 body{background:url('../images/headerBackground.png') repeat-x;}
-.content{margin-top:10px;margin-bottom:30px;}.content h1{font:bold 200% "Trebuchet MS",Tahoma,Arial,sans-serif;}
+.content{margin-top:10px;margin-bottom:30px;}.content h1{font:bold 200% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#000000;}
+.content h2,.content h3,.content h4,.content h5{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}.content h2 a,.content h3 a,.content h4 a,.content h5 a{text-decoration:none;color:#000000;}.content h2 a:hover,.content h3 a:hover,.content h4 a:hover,.content h5 a:hover{background-color:#fbe2db;}
+.content h2{font-size:150%;color:#000000;margin:30px 0 5px 0;}
+.content h3{font-size:110%;color:#000000;margin:10px 0 0 0;}
+.content h2:first-child{margin-top:0;}
 .content .button{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;text-decoration:none;outline:none;border:1px solid #bdbdbd;font-size:75%;padding:2px 4px;color:#7b7b7b;background-color:#f0f0f0;border-color:#bdbdbd;background-image:-moz-linear-gradient(center bottom, #e1e1e1 20%, #f0f0f0 45%);-moz-border-radius:4px;-webkit-border-radius:4px;border-radius:4px;}.content .button:hover{color:#a9a9a9;background-color:#fbfbfb;background-image:-moz-linear-gradient(center bottom, #e9e9e9 20%, #fdfdfd 45%);-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.5);box-shadow:0 0 5px rgba(255, 255, 255, 0.5);}
 .content .button:active{-webkit-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);-moz-box-shadow:0 0 5px rgba(255, 255, 255, 0.95);box-shadow:0 0 5px rgba(255, 255, 255, 0.95);text-shadow:0px 1px 1px rgba(0, 0, 0, 0.19999999999999996);background-color:#fbfbfb;background-image:-moz-linear-gradient(center top, #e9e9e9 20%, #fdfdfd 45%);}
 .content .title{margin-bottom:20px;}.content .title .heading{float:left;}
@@ -43,10 +47,6 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .content .bottom-button-bar .large-button .caption{background-position:0 center;padding-left:22px;}
 .content .bottom-button-bar .link-button{color:#a9a9a9;font-size:85%;}.content .bottom-button-bar .link-button:hover{color:#9c9c9c;background-color:#f0f0f0;}
 .article a{color:#e44d26;text-decoration:none;}.article a:hover{background-color:#fdf4f2;}
-.article h2,.article h3,.article h4,.article h5{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}
-.article h2{font-size:150%;margin:30px 0 5px 0;}
-.article h3{font-size:110%;margin:10px 0 0 0;}
-.article h2:first-child{margin-top:0;}
 .article p{font-family:Palatino,"Palatino Linotype",Georgia,Times,"Times New Roman",serif;line-height:140%;}
 .article em{font-style:italic;}
 .article ul:not(.capsulebar),.article ol:not(.capsulebar){margin:5px 0;}
@@ -107,8 +107,7 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .history .versionhistory .timespan .version .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .history .versionhistory .timespan .version .comment{font-size:75%;font-style:italic;}
 .history .diff-button .caption{background-image:url('../images/icons16/compare.png');}
-.recentchanges .changes .timespan-caption{font:bold 150% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;background:url('../images/icons16/calendar.png') no-repeat 0 6px;padding-left:23px;}
 .recentchanges .changes .timespan{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;border-top:1px solid #a9a9a9;padding:5px 0;}.recentchanges .changes .timespan:first-child{border-top-width:0;padding-top:0;}
-.recentchanges .changes .timespan .change .timestamp{margin:0 5px 0 0;}
+.recentchanges .changes .timespan .change{margin-bottom:10px;}.recentchanges .changes .timespan .change .timestamp{margin:0 5px 0 0;}
 .recentchanges .changes .timespan .change .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .recentchanges .changes .timespan .change .comment{font-size:75%;font-style:italic;}

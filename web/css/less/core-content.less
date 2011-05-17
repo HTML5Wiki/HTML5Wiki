@@ -16,7 +16,19 @@ body { 	background: @img_headerbackground repeat-x; }
 	margin-bottom: 30px;
 	
 	
-	h1 { font: bold @font_h1size @font_title; }
+	h1 { font: bold @font_h1size @font_title; color: @color_h1; }
+	h2, h3, h4, h5 {
+		a {
+			text-decoration: none;
+			color: @color_h1;
+			
+			&:hover { background-color: lighten(@color_primary,40%); }
+		}
+		font-family: @font_title;
+	}
+	h2 { font-size: @font_h2size; color: @color_h2; margin: 30px 0 5px 0; }
+	h3 { font-size: @font_h3size; color: @color_h3; margin: 10px 0 0 0; }
+	h2:first-child { margin-top: 0; }
 	
 	.button {
 		#buttons > .colored-button(@color_secondary,@font_smallsize);
