@@ -9,9 +9,14 @@
 class Application_IndexController extends Html5Wiki_Controller_Abstract {
     public function historyAction() {
 		$articleTable = new Html5Wiki_Model_ArticleVersion_Table();
-		$latestArticles = $articleTable->fetchLatestArticles();
+		$changes = $articleTable->fetchLatestArticles();
 		
-		$this->template->assign('latestArticles', $latestArticles);
+		// todo fetch latest changes from mediaversion, not articleversion
+		
+		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
+		$groupedChanges = $mediaManager->groupMediaVersionByTimespan($changes);
+		
+		$this->template->assign('latestChanges', $groupedChanges);
 		$this->layoutTemplate->assign('title', $this->layoutTemplate->getTranslate()->_('recentChanges'));
 	}
 	

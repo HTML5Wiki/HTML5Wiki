@@ -1,0 +1,49 @@
+//
+// HTML5Wiki
+// LessCSS-Sourcefile
+// 
+// Stylings for the content view of recent changes.
+//
+// @author Manuel Alabor
+//
+.recentchanges {
+	
+	.changes {
+		.timespan-caption {
+			font: bold @font_h2size @font_title;
+			font-weight: bold;
+			background: @icon_16_calendar no-repeat 0 6px;
+			padding-left: 23px;
+		}
+
+		.timespan {
+			font: @font_normalsize @font_ui;
+			border-top: 1px solid @color_secondary;
+			padding: 5px 0;
+			&:first-child {
+				border-top-width: 0;
+				padding-top: 0;
+			}
+			
+			.change {
+				.timestamp {
+					margin: 0 5px 0 0;
+				}
+				
+				.avatar {
+					display: inline-block;
+					width: 16px;
+					height: 16px;
+					vertical-align: middle;
+					margin-right: 3px;
+				}
+				
+				.comment {
+					font-size: @font_smallsize;
+					font-style: italic;
+				}
+			}
+		}
+	}
+	
+}

@@ -108,3 +108,8 @@ form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
 .history .versionhistory .timespan .version .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .history .versionhistory .timespan .version .comment{font-size:75%;font-style:italic;}
 .history .diff-button .caption{background-image:url('../images/icons16/compare.png');}
+.recentchanges .changes .timespan-caption{font:bold 150% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;background:url('../images/icons16/calendar.png') no-repeat 0 6px;padding-left:23px;}
+.recentchanges .changes .timespan{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;border-top:1px solid #a9a9a9;padding:5px 0;}.recentchanges .changes .timespan:first-child{border-top-width:0;padding-top:0;}
+.recentchanges .changes .timespan .change .timestamp{margin:0 5px 0 0;}
+.recentchanges .changes .timespan .change .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
+.recentchanges .changes .timespan .change .comment{font-size:75%;font-style:italic;}
