@@ -60,8 +60,9 @@ class Html5Wiki_Search_SearchEngine {
 		$mediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
 		$select = $mediaVersionTable->select();
 		
-		$this->prepareBasicSearch($select, $mediaVersionTable, $term);
+		$this->prepareSelect($select, $mediaVersionTable, $term);
 		$this->prepareEnginePluginsSearch($select, $term);
+		$this->prepareBasicSearch($select, $term);
 		
 		$rawResults = $mediaVersionTable->fetchAll($select);
 		$models = $this->createModelsFromRawResults($rawResults);
@@ -70,19 +71,16 @@ class Html5Wiki_Search_SearchEngine {
 	}
 	
 	/**
-	 * Prepares a Zend_Db_Select-Statement for basic search.
+	 * Creates a Zend_Db_Select-instance with initial values.
 	 *
 	 * @param Zend_Db_Select $select Select-instance
 	 * @param Html5Wiki_Model_MediaVersion_Table $mediaVersionTable instance
 	 * @param $term search term
 	 * @return Zend_Db_Select
 	 */
-	private function prepareBasicSearch(Zend_Db_Select $select, Html5Wiki_Model_MediaVersion_Table $mediaVersionTable, $term) {
+	private function prepareSelect(Zend_Db_Select $select, Html5Wiki_Model_MediaVersion_Table $mediaVersionTable, $term) {
 		$select->setIntegrityCheck(false);
 		$select->from($mediaVersionTable);
-		$select->where('state = ?', 'PUBLISHED');
-		$select->group('id');
-		$select->order('timestamp DESC');
 		
 		return $select;
 	}
@@ -99,6 +97,22 @@ class Html5Wiki_Search_SearchEngine {
 		foreach($this->enginePlugins as $enginePlugin) {
 			$select = $enginePlugin->prepareSearchStatement($select, $term);
 		}
+		
+		return $select;
+	}
+	
+	/**
+	 * Prepares a Zend_Db_Select-Statement for basic search.
+	 *
+	 * @param Zend_Db_Select $select Select-instance
+	 * @param Html5Wiki_Model_MediaVersion_Table $mediaVersionTable instance
+	 * @param $term search term
+	 * @return Zend_Db_Select
+	 */
+	private function prepareBasicSearch(Zend_Db_Select $select, $term) {
+		$select->where('state = ?', 'PUBLISHED');
+		$select->group('id');
+		$select->order('timestamp DESC');
 		
 		return $select;
 	}
