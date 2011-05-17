@@ -15,7 +15,7 @@ var SearchBoxController = (function() {
 		totalResultItems = 0,
 		resultItems = '',
 		resultContainer = '',
-		url = '',
+		url = 'index/search',
 		textTxt = '',
 		tagsTxt = '';
 	
@@ -115,7 +115,7 @@ var SearchBoxController = (function() {
 		$.ajax({
 			type: 'GET',
 			url: self.url, 
-			data: {'term' : term},
+			data: { 'term' : term },
 			success: displaySearchResults.bind(this, term)
 		});		
 	}
@@ -141,16 +141,17 @@ var SearchBoxController = (function() {
 	
 	function displaySearchResults(term, json) {
 		var results = json.results;
+		
 		// Save response data:
 		resultItems = results;
-		totalResultItems = results.length;
+		if(results) totalResultItems = results.length;
+		else totalResultItems = 0;
 		self.setSelectedResultItem(-1);
 
 		// Show or hide Result-Container
 		if(totalResultItems > 0) {
 			resultContainer.show();
-		}
-		else {
+		} else {
 			resultContainer.hide();
 		}
 
@@ -163,10 +164,11 @@ var SearchBoxController = (function() {
 			var url = results[i].url;
 			
 			var re = new RegExp(term, "gi");
-			if (title.length) {
+			if(title.length) {
 				title = title.replace(re, '<span class="typed">' + term + '</span>');
 			}
-			tags  = tags.replace(re, '<span class="typed">' + term + '</span>');
+			if(tags) tags = tags.replace(re, '<span class="typed">' + term + '</span>');
+			else tags = '';
 			
 			var termPos = text.toLowerCase().indexOf(term.toLowerCase());
 			text = text.substr(termPos > 10 ? termPos - 10 : 0, termPos + term.length + 10);
