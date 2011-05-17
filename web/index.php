@@ -34,6 +34,8 @@ $config = new Zend_Config($config);
 $adapter = Zend_Db::factory($config->databaseAdapter, $config->database);
 Zend_Db_Table::setDefaultAdapter($adapter);
 
+date_default_timezone_set($config->defaultTimezone);
+
 $frontController = new Html5Wiki_Controller_Front($config, $basePath, $libraryPath, $applicationPath);
 $frontController->run();
 
