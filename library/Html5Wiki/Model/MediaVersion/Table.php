@@ -124,8 +124,8 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 		}
 		$select->where('state = ?', self::$STATE['PUBLISHED']);
 		
-		$select->join('ArticleVersion', 'MediaVersion.id = ArticleVersion.mediaVersionId AND MediaVersion.timestamp = ArticleVersion.mediaVersionTimestamp');
-		$select->join('MediaVersionTag', 'MediaVersion.id = MediaVersionTag.mediaVersionId AND MediaVersion.timestamp = MediaVersionTag.mediaVersionTimestamp');
+		$select->joinLeft('ArticleVersion', 'MediaVersion.id = ArticleVersion.mediaVersionId AND MediaVersion.timestamp = ArticleVersion.mediaVersionTimestamp');
+		$select->joinLeft('MediaVersionTag', 'MediaVersion.id = MediaVersionTag.mediaVersionId AND MediaVersion.timestamp = MediaVersionTag.mediaVersionTimestamp');
 		
 		$select->group('id');
 		$select->order('timestamp DESC');
