@@ -8,7 +8,6 @@ var Capsulebar = (function() {
 	return {
 		init: function(articleId) {
 			this.articleId = articleId;
-			this.initializeHistory();
 			this.initializeClickEvents();
 			
 			$(window).bind('popstate', this.onPopState.bind(this));
@@ -28,12 +27,6 @@ var Capsulebar = (function() {
 			e.preventDefault();
 		},
 		
-		initializeHistory: function() {
-			var url = window.location.pathname;
-			
-			this.updateHistory(this.getPage(url), url);
-		},
-		
 		updateHistory: function(toPageTitle, toPageUrl) {
 			history.pushState(
 				{
@@ -44,8 +37,17 @@ var Capsulebar = (function() {
 		},
 		
 		onPopState: function(e) {
-			this.setContent(this.getPage(history.state.url), history.state.articleId, e.currentTarget.location.href);
-			
+			var url, articleId, href;
+			if (history.state) {
+				url = history.state.url;
+				articleId = history.state.articleId;
+				href = e.currentTarget.location.href;
+			} else {
+				url = e.currentTarget.location.href;
+				articleId = this.articleId;
+				href = url;
+			}
+			this.setContent(this.getPage(url), articleId, href);
 			e.preventDefault();
 		},
 		

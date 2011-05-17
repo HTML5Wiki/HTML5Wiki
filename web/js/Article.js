@@ -19,8 +19,7 @@ Article = {
 			var mediaData = {
 				txtAuthor: name,
 				txtAuthorEmail: email,
-				hiddenAuthorId: id,
-				ajax: true		
+				hiddenAuthorId: id	
 			};
 
 			$.ajax({
@@ -55,8 +54,7 @@ Article = {
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,
-				tags: tags.join(','),
-				ajax: true
+				tags: tags.join(',')
 			};
 			$.ajax({
 				type: 'POST',
@@ -84,7 +82,7 @@ Article = {
 		$.ajax({
             type:   'get',
             url:    url,
-            data:   'ajax=true&idArticle=' + idArticle,
+            data:   'idArticle=' + idArticle,
 			complete: Article.onEditFormLoaded.bind(this)
         });
 		return url;
@@ -112,7 +110,7 @@ Article = {
 		$.ajax({
 			type:   'get',
             url:    url,
-            data:   'ajax=true&idArticle=' + idArticle,
+            data:   'idArticle=' + idArticle,
 			complete: Article.replaceContent.bind(this)
         });
 		

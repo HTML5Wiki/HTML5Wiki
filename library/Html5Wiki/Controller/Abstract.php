@@ -113,6 +113,7 @@ abstract class Html5Wiki_Controller_Abstract {
 					'locale'  => $language
 				)
 		);
+		Zend_Validate_Abstract::setDefaultTranslator($translate);
 		
 		$this->layoutTemplate->setTranslate($translate);
 		$this->template->setTranslate($translate);
