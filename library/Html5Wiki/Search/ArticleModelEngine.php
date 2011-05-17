@@ -12,7 +12,15 @@ class Html5Wiki_Search_ArticleModelEngine extends Html5Wiki_Search_ModelEngine_A
 	private $_compatibleType = 'ARTICLE';
 
 	public function prepareSearchStatement(Zend_Db_Select $select, $forTerm) {
+		$forTerm = '%' . $forTerm . '%';
+		$select->orWhere('ArticleVersion.title LIKE ?', $forTerm);
+		$select->orWhere('ArticleVersion.content LIKE ?', $forTerm);
+		$select->joinLeft('ArticleVersion',
+			 'MediaVersion.id = ArticleVersion.mediaVersionId '
+			.'AND MediaVersion.timestamp = ArticleVersion.mediaVersionTimestamp'
+		);
 		
+		return $select;
 	}
 	
 	protected function getModelClassName() {
