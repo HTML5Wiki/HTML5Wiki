@@ -12,7 +12,10 @@
 
 .editor {
 	.title {
-		.heading { cursor: pointer; }
+		.heading {
+			cursor: pointer;
+			&:hover { background-color: lighten(@color_primary, 45%); }
+		}
 		
 		.editor-wrapper {
 			float: left;
