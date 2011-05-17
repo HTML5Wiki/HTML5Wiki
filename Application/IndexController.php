@@ -26,14 +26,16 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			$this->template = new Html5Wiki_Template_Json();
 		}
 		
+		$searchEngine = new Html5Wiki_Search_SearchEngine();
 		$term = urldecode($this->router->getRequest()->getGet('term'));
-		$errors = $this->termIsValid($term);
+		
+		$errors = $searchEngine->isTermValid($term);
 		if (is_array($errors)) {
 			$this->template->assign('errors', $errors);
 			return;
 		}
 		
-		$results = $this->search($term);
+		$results = $searchEngine->search($term);
 		
 		if ($this->router->getRequest()->isAjax()) {
 			$this->template->assign('results', $this->parseSearchResult($results));
@@ -43,24 +45,6 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			$this->template->assign('markDownParser', new Markdown_Parser());
 			$this->template->assign('term', $term);
 		}
-	}
-	
-	private function termIsValid($term) {
-		$validatorChain = new Zend_Validate();
-		$validatorChain->addValidator(new Zend_Validate_Alnum(true));
-		$validatorChain->addValidator(new Zend_Validate_StringLength(array('min' => 1, 'encoding' => 'UTF-8')));
-		
-		if ($validatorChain->isValid($term)) {
-			return true;
-		}
-		return $validatorChain->getErrors();
-	}
-	
-	private function search($term) {
-		$mediaVersion = new Html5Wiki_Model_MediaVersion_Table();
-		$result = $mediaVersion->search($term);
-		
-		return $result;
 	}
 	
 	private function parseSearchResult(Zend_Db_Table_Rowset $result) {
