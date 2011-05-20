@@ -112,9 +112,20 @@
         if (count($this->error['messages'])):
     ?>
     <script type="text/javascript">
-        <?php foreach ($this->error['messages'] as $errorMessage): ?>
-        MessageController.addMessage('error','<?php echo addslashes($errorMessage); ?>');
-        <?php endforeach; ?>
+        <?php
+            $msg = "<ul>";
+            foreach ($this->error['messages'] as $errorMessage) {
+                $msg .= "<li>" . addslashes($errorMessage) . "</li>";
+            }
+            $msg .= "</ul>";
+        ?>
+        var options = [
+				{
+					text : 'Ok',
+					button : true
+				}
+			];
+			MessageController.addMessage('question','<?php echo $msg; ?>', options);
     </script>
     <?php
         endif;
