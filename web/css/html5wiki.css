@@ -55,14 +55,16 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .article ul:not(.capsulebar){list-style-type:disc;margin-left:18px;}
 .article ol:not(.capsulebar){list-style-type:decimal;margin-left:24px;}
 .editor .title .heading{cursor:pointer;}.editor .title .heading:hover{background-color:#fdf4f2;}
-.editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .txtTitle{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
-.editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;}
+.editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .textfield{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
+.editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;margin-right:3px;}
 .editor .save-button.caption{background-image:url('../images/icons16/accept.png');background-repeat:no-repeat;background-position:5px 9px;padding-left:25px;}
 form{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}form .group{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px solid #a9a9a9;padding:5px 10px;margin-bottom:10px;background-color:#f8f8f8;}
 form .groupname{font-size:75%;color:#959595;padding:0 4px;}
 form .textfield{margin-bottom:6px;width:98%;}
 form .label{font-size:75%;display:block;margin-bottom:3px;}
 form .hint{font-size:75%;color:#959595;margin-bottom:5px;line-height:120%;}
+form label.error{color:#bd2e15;}
+form input.error{background-color:#f9d4cd;}
 .markItUp*{margin:0;padding:0;outline:none;}
 .markItUp a:link,.markItUp a:visited{color:#000;text-decoration:none;}
 .markItUpContainer{font:11px Verdana,Arial,Helvetica,sans-serif;}
