@@ -42,6 +42,11 @@ body { 	background: @img_headerbackground repeat-x; }
 		.meta {
 			font-size: @font_normalsize;
 			color: @color_secondary;
+			
+			.tag {
+				color: @color_secondary;
+				&:hover { background-color: lighten(@color_secondary,28%); }
+			}
 		}
 		
 		.capsulebar {
