@@ -31,7 +31,7 @@
 				<span class="intro">Zuletzt ge&auml;ndert</span>: <span class="lastchange"><?php echo date('d.m.Y H:m', $this->wikiPage->timestamp) ?></span>
 				<?php if($tagSlug != '') : ?>
 				&nbsp;-&nbsp;
-				<span class="intro"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?>
+				<span class="tags"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?>
 				<?php endif; ?>
 			</p>
 		</div>

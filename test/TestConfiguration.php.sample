@@ -13,6 +13,11 @@
 define('SKIP_FUNCTIONAL_TESTS', false);
 
 /**
+ * Selenium host
+ */
+define('SELENIUM_HOST', 'http://vs01.openflex.net');
+
+/**
  * Database Configuration
  */
 define('DATABASE_HOST', '127.0.0.1');

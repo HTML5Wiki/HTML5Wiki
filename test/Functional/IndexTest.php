@@ -14,33 +14,27 @@ require_once 'SeleniumTestCase.php';
  * Index Test case
  */
 class Test_Functional_IndexTest extends Test_Functional_SeleniumTestCase {
-	
-	const MAIN_URL = 'http://vs01.openflex.net';
-
 	public function setUp() {
 		parent::setUp();
-		$this->setBrowserUrl(self::MAIN_URL);
+		$this->setBrowserUrl(TEST_HOST);
+		$this->open(TEST_HOST);
 	}
 
 	public function testTitle() {
-		$this->open(self::MAIN_URL);
 		$this->assertTitle('HTML5Wiki | HTML5Wiki');
 	}
 	
 	public function testLogo() {
-		$this->open(self::MAIN_URL);
 		$this->assertElementPresent('css=.logo');
 	}
 	
 	public function testMainMenu() {
-		$this->open(self::MAIN_URL);
 		$this->assertElementPresent('css=.main-menu');
 		$this->assertElementPresent('css=.main-menu li.home');
 		$this->assertElementPresent('css=.main-menu li.updates');
 	}
 	
 	public function testSearchField() {
-		$this->open(self::MAIN_URL);
 		$this->assertElementPresent('css=.main-menu');
 		$this->assertElementPresent('css=.main-menu li.search');
 	}
