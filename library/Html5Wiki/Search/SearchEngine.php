@@ -54,7 +54,7 @@ class Html5Wiki_Search_SearchEngine {
 	 * class.
 	 *
 	 * @param $term search term
-	 * @return array with Html5Wiki_Model_MediaVersion instances
+	 * @return array
 	 */
 	public function search($term) {
 		$mediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
@@ -64,10 +64,10 @@ class Html5Wiki_Search_SearchEngine {
 		$this->prepareEnginePluginsSearch($select, $term);
 		$this->prepareBasicSearch($select, $term);
 		
-		$rawResults = $mediaVersionTable->fetchAll($select);
-		$models = $this->createModelsFromRawResults($rawResults);
+		$rawModels = $mediaVersionTable->fetchAll($select);
+		$results = $this->createResultList($rawModels, $term);
 		
-		return $models;
+		return $results;
 	}
 	
 	/**
@@ -138,41 +138,85 @@ class Html5Wiki_Search_SearchEngine {
 	}
 	
 	/**
-	 * Creates an array of models out of the "raw" search results.
-	 * 
-	 * @param $rawResults
-	 * @return array
+	 * Returns an array with results for each matched raw model.
+	 *
+	 * @param $rawResults array with "raw" Html5Wiki_Model_MediaVersion's
+	 * @param $term search term used for search
+	 * @return array with results
 	 */
-	private function createModelsFromRawResults($rawResults) {
-		$properModels = array();
+	private function createResultList($rawResults, $term) {
+		$results = array();
 		foreach($rawResults as $raw) {
-			$properModel = $this->createProperModel($raw, $raw->mediaVersionType);
-			if($properModel != '') $properModels[] = $properModel;
+			$result = $this->createResult($raw, $raw->mediaVersionType, $term);
+			if($result != '') $results[] = $result;
 		}
 		
-		return $properModels;
+		return $results;
 	}
 	
 	/**
-	 * Takes a "raw" search result and picks its specific ModelEngine to convert
-	 * it into a proper model.
+	 * Returns an array with a properly populated model and an array with the
+	 * places, where the search term matched.
 	 *
 	 * @param Html5Wiki_Model_MediaVersion $rawModel
 	 * @param $type type of result -> see MediaVersion.mediaVersionType on DB
-	 * @return model or FALSE, if no fitting ModelEngine was found
+	 * @param $term the search term used
+	 * @return array or FALSE, if no fitting ModelEngine was found
+	 */
+	private function createResult(Html5Wiki_Model_MediaVersion $rawModel, $type, $term) {
+		$result = FALSE;
+		$properModel = $this->createProperModel($rawModel, $type);
+		
+		if($properModel !== FALSE) {
+			$matchOrigins = $this->createMatchOrigins($properModel, $term);
+			$result = array(
+				'model' => $properModel
+				,'matchOrigins' => $matchOrigins
+			);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Creates a specific Model instance out of a "raw" Html5Wiki_Model_MediaVersion
+	 *
+	 * @param $rawModel Html5Wiki_Model_MediaVersion
+	 * @param $type type of the "raw" model (see mediaVersionType enum on DB)
+	 * @return model instance or FALSE, if type was not able to handled by plugins
 	 */
 	private function createProperModel(Html5Wiki_Model_MediaVersion $rawModel, $type) {
 		$properModel = FALSE;
-		$data = $rawModel->toArray();
 		
 		foreach($this->enginePlugins as $enginePlugin) {
 			if($enginePlugin->canPrepareModelForType($type)) {
+				$data = $rawModel->toArray();
 				$properModel = $enginePlugin->prepareModelFromData($data);
 				break;
 			}
 		}
 		
 		return $properModel;
+	}
+	
+	/**
+	 * Asks all EnginePlugins, where the searchterm $term matched the model
+	 * $model.
+	 *
+	 * @param $model Html5Wiki_Model_MediaVersion-instance/child
+	 * @param $term search term
+	 * @return array
+	 */
+	private function createMatchOrigins($model, $term) {
+		$matchOrigins = array();
+		foreach($this->enginePlugins as $enginePlugin) {
+			$matchOrigins = array_merge(
+				$matchOrigins,
+				$enginePlugin->getMatchOrigins($term, $model)
+			);
+		}
+		
+		return $matchOrigins;
 	}
 	
 }

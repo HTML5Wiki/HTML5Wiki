@@ -159,22 +159,10 @@ var SearchBoxController = (function() {
 		var resultList = $('<ol/>');
 		for(var i = 0, l = totalResultItems; i < l; i++) {
 			var title = results[i].title;
-			var text = results[i].text;
-			var tags = results[i].tags
+			var matchOrigins = results[i].matchOrigins
 			var url = results[i].url;
 			
-			var re = new RegExp(term, "gi");
-			if(title.length) {
-				title = title.replace(re, '<span class="typed">' + term + '</span>');
-			}
-			if(tags) tags = tags.replace(re, '<span class="typed">' + term + '</span>');
-			else tags = '';
-			
-			var termPos = text.toLowerCase().indexOf(term.toLowerCase());
-			text = text.substr(termPos > 10 ? termPos - 10 : 0, termPos + term.length + 10);
-			text = text.replace(re, '<span class="typed">' + term + '</span>');
-
-			resultList.append(createResultItem(title, text, tags, url));
+			resultList.append(createResultItem(title, matchOrigins, url));
 		}
 		resultContainer.empty();
 		resultContainer.append(resultList);
@@ -281,8 +269,14 @@ var SearchBoxController = (function() {
 	 * @see SearchBoxController#handleKeyUp
 	 * @access private
 	 */
-	function createResultItem(title, text, tags, url) {
-		var item = $('<li class="result-item"><a href="'+url+'">'+title+'</a><p>' + self.textTxt + ': <em>' + text + '</em></p><p>' + self.tagsTxt + ': ' + tags + '</p></li>');
+	function createResultItem(title, matchOrigins, url) {
+		var matchOriginSlug = '';
+		for(i=0,l=matchOrigins.length; i<l; i++) {
+			matchOriginSlug += matchOrigins[i];
+			if(i<l-1) matchOriginSlug += ', ';
+		}
+		
+		var item = $('<li class="result-item"><a href="'+url+'">'+title+'</a><p>Gefunden in: '+ matchOriginSlug + '</p></li>');
 		item.hover(function() {
 			self.setSelectedResultItem($(this).index());
 		});

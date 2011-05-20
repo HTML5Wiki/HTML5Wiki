@@ -38,7 +38,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		$results = $searchEngine->search($term);
 		
 		if ($this->router->getRequest()->isAjax()) {
-			$this->template->assign('results', $this->parseSearchResult($results));
+			$this->template->assign('results', $this->prepareAjaxSearchResults($results));
 		} else {
 			// don't parse search results when the search page is displayed - more info can be displayed.
 			$this->template->assign('results', $results);
@@ -48,20 +48,25 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		}
 	}
 	
-	private function parseSearchResult(array $result) {
-		$searchResult = array();
-		$markDownParser = new Markdown_Parser();
-		foreach ($result as $row) {
-			$searchResult[] = array(
-				'title' => $row->title,
-				// transform markdown & strip tags for not disturbing the view
-				'text'  => strip_tags($markDownParser->transform($row->content)),
-				'tags'  => $row->tagTag,
-				'url'  => '/wiki/' . $row->permalink
+	/**
+	 * Prepares an array with search results (model plus matchorigins) to pass
+	 * it as a JSON array trough AJAX.
+	 *
+	 * @param $results searchresults
+	 * @return prepared array
+	 */
+	private function prepareAjaxSearchResults(array $results) {
+		$preparedResults = array();
+		
+		foreach ($results as $result) {
+			$preparedResults[] = array(
+				'title' => $result['model']->getCommonName()
+				,'matchOrigins' => $result['matchOrigins']
+				,'url'  => $this->router->getRequest()->getBasePath(). '/wiki/' . $result['model']->permalink
 			);
 		}
 		
-		return $searchResult;
+		return $preparedResults;
 	}
 }
 ?>
