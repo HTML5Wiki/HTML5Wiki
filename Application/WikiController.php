@@ -417,7 +417,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function readAction() {
 		$parameters = $this->router->getRequest()->getGetParameters();
-
+		$this->template->assign('request', $this->router->getRequest());
+		
 		if($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
@@ -436,8 +437,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			if($wikiPage != null && isset($wikiPage->title)) {
 				$this->setTitle($wikiPage->title);
 			}
-			
-			$this->template->assign('request', $this->router->getRequest());
 		}
 
 		if(!isset($wikiPage->id)) {
