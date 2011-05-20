@@ -20,14 +20,16 @@
 ?>
 <article id="content" class="grid_12 content article">
 	<header class="title clearfix">		
-		<?php if($tagSlug != '') : ?>
 		<div class="heading">
 			<h1><?php echo $this->wikiPage->title ?></h1>
-			<p class="tags"><span class="intro"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?></p>
+			<p class="meta">
+				<span class="intro">Zuletzt ge&auml;ndert</span>: <span class="lastchange"><?php echo date('d.m.Y H:m', $this->wikiPage->timestamp) ?></span>
+				<?php if($tagSlug != '') : ?>
+				&nbsp;-&nbsp;
+				<span class="intro"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?>
+				<?php endif; ?>
+			</p>
 		</div>
-		<?php else : ?>
-		<h1 class="heading"><?php echo $this->wikiPage->title ?></h1>
-		<?php endif; ?>
 		
 		<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 	</header>
