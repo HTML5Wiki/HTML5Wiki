@@ -110,6 +110,26 @@ class Html5Wiki_Search_SearchEngine {
 	 * @return Zend_Db_Select
 	 */
 	private function prepareBasicSearch(Zend_Db_Select $select, $term) {
+		/* The actual sql statement:
+		 *
+		 * SELECT data.* FROM MediaVersion data
+		 *   JOIN (SELECT id, MAX(timestamp) as timestamp FROM MediaVersion GROUP BY id) latest
+		 *     ON latest.id = data.id
+		 *    AND data.timestamp = latest.timestamp
+		 */
+		$mediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
+		$joinSelect = $mediaVersionTable->select();
+		$joinSelect->from(
+			$mediaVersionTable
+			,array(
+				'id as latestId'
+				,'MAX(timestamp) as latestTimestamp'
+			)
+		);
+		$joinSelect->group('latestId');
+		
+		
+		$select->join($joinSelect, 't.latestId = id AND timestamp = t.latestTimestamp');
 		$select->where('state = ?', 'PUBLISHED');
 		$select->group('id');
 		$select->order('timestamp DESC');
