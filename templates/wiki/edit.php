@@ -9,15 +9,23 @@
 		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
         <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
         <header class="grid_12 title clearfix">
-			<h1 class="heading"><?php echo strlen($this->title) > 0 ? $this->title : $this->translate->_('noTitle'); ?></h1>
+            <?php
+                $fieldToSet = isset($this->error['fields']['title']) ? $this->error['fields']['title'] : false;
+                $setErrorClass = $fieldToSet ? ' error' : '';
+            ?>
+			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->translate->_('noTitle'); ?></h1>
 			<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
 		</header>
 		<div class="clear"></div>
 
 		<div class="grid_12">
 			<fieldset name="content" class="group">
-				<legend class="groupname"><?php echo $this->translate->_("articleContentLegend") ?></legend>					
-				<textarea id="contentEditor" name="contentEditor"><?php echo $this->content; ?></textarea>
+                <?php
+                    $fieldToSet = isset($this->error['fields']['content']) ? $this->error['fields']['content'] : false;
+                    $setErrorClass = $fieldToSet ? ' error' : '';
+                ?>
+				<legend class="groupname<?php echo $setErrorClass; ?>"><?php echo $this->translate->_("articleContentLegend") ?></legend>
+				<textarea class="<?php echo $setErrorClass; ?>" id="contentEditor" name="contentEditor"><?php echo $this->content; ?></textarea>
 			</fieldset>
 		</div>
 		<div class="clear"></div>
@@ -27,12 +35,20 @@
 				<legend class="groupname">Autoreninformation</legend>
                 <input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : 0; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
-					<label for="txtAuthor" class="label">Ihr Name</label>
-					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
+                    <?php
+                        $fieldToSet = isset($this->error['fields']['author']) ? $this->error['fields']['author'] : false;
+                        $setErrorClass = $fieldToSet ? ' error' : '';
+                    ?>
+					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>">Ihr Name</label>
+					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
 				</p>
 				<p>
-					<label for="txtAuthorEmail" class="label">Ihre E-Mailadresse</label>
-					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
+                    <?php
+                        $fieldToSet = isset($this->error['fields']['authorEmail']) ? $this->error['fields']['authorEmail'] : false;
+                        $setErrorClass = $fieldToSet ? ' error' : '';
+                    ?>
+					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>">Ihre E-Mailadresse</label>
+					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
 				</p>
 				<p class="hint">
 					Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
@@ -45,9 +61,13 @@
 		<div class="grid_8">
 			<fieldset name="tags" class="group">
 				<legend class="groupname">Tagging</legend>
-				<p class="clearfix">
-					<label for="txtTags" class="label">Tag</label>
-					<input type="text" name="txtTags" id="txtTags" value="<?php echo implode(",", $this->tags); ?>" class="textfield" />
+                    <p class="clearfix">
+                    <?php
+                        $fieldToSet = isset($this->error['fields']['tags']) ? $this->error['fields']['tags'] : false;
+                        $setErrorClass = $fieldToSet ? ' error' : '';
+                    ?>
+					<label for="txtTags" class="label<?php echo $setErrorClass; ?>">Tag</label>
+					<input type="text" name="txtTags" id="txtTags" value="<?php echo implode(",", $this->tags); ?>" class="textfield<?php echo $setErrorClass; ?>" />
 				</p>
 				<p class="hint">
 					Ein Artikel kann mit verschiedenen Tags versehen werden,
@@ -59,10 +79,14 @@
 				</p>
 			</fieldset>	
 			<fieldset name="versionComment" class="group">
+                <?php
+                        $fieldToSet = isset($this->error['fields']['versionComment']) ? $this->error['fields']['versionComment'] : false;
+                        $setErrorClass = $fieldToSet ? ' error' : '';
+                    ?>
 				<legend class="groupname">Versionskommentar</legend>
 				<p class="clearfix">
-					<label for="versionComment" class="label">Kommentar zur Version <em>(optional)</em>:</label>
-					<input type="text" name="versionComment" id="versionComment" class="textfield"/>
+					<label for="versionComment" class="label<?php echo $setErrorClass; ?>">Kommentar zur Version <em>(optional)</em>:</label>
+					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo $this->versionComment; ?>" />
 				</p>
 			</fieldset>
 		</div>
@@ -82,11 +106,18 @@
 	</script>
 	<?php endif; ?>
 
-    <?php if (count($this->error)): ?>
+    <?php
+    if (isset($this->error['messages'])):
+        if (count($this->error['messages'])):
+    ?>
     <script type="text/javascript">
-        <?php foreach ($this->error as $errorValue): ?>
-        MessageController.addMessage('error','<?php echo addslashes($errorValue); ?>');
+        <?php foreach ($this->error['messages'] as $errorMessage): ?>
+        MessageController.addMessage('error','<?php echo addslashes($errorMessage); ?>');
         <?php endforeach; ?>
     </script>
-    <?php endif; ?>
+    <?php
+        endif;
+    endif;
+    ?>
+
 </article>

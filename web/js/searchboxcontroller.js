@@ -255,7 +255,8 @@ var SearchBoxController = (function() {
 	}
 	
 	/**
-	 * Ensures that keys like CTRL or SHIFT don't trigger a search request.
+	 * Ensures that keys like CTRL or SHIFT don't trigger a search request.<br/>
+	 * These are JavaScript Keycodes! No ascii codes :-)
 	 *
 	 * @param keycode
 	 * @returns true/false
