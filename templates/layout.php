@@ -5,14 +5,20 @@
 	$jsHelper->appendFile($basePath . 'js/jquery.markitup.js');
 	$jsHelper->appendFile($basePath . 'js/markitup/html5wiki-set.js');
 	$jsHelper->appendFile($basePath . 'js/jquery.ptags.min.js');
-	$jsHelper->appendFile($basePath . 'js/init.js');
-	$jsHelper->appendFile($basePath . 'js/messagecontroller.js');
-	$jsHelper->appendFile($basePath . 'js/searchboxcontroller.js');
-	$jsHelper->appendFile($basePath . 'js/Article.js');
-	$jsHelper->appendFile($basePath . 'js/html5wiki.js');
+	$jsHelper->appendFile($basePath . 'js/core.js');
+	$jsHelper->appendFile($basePath . 'js/classes/messagecontroller.js');
+	$jsHelper->appendFile($basePath . 'js/classes/searchboxcontroller.js');
+	$jsHelper->appendFile($basePath . 'js/classes/html5wiki.js');
 
-	$jsHelper->appendScript('Html5Wiki.init("'. $basePath .'");');
-	$jsHelper->appendScript('SearchBoxController.initWithSearchBox($("#searchBox"), "' . $this->urlHelper('index', 'search') . '", "' . $this->translate->_("content") . '", "' . $this->translate->_("tags") . '")');
+	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $basePath .'"]);');
+	$jsHelper->appendScript('appendPageReadyCallback(function() {
+		SearchBoxController.initWithSearchBox(
+			$("#searchBox")
+			,"' . $this->urlHelper('index', 'search') . '"		
+			,"' . $this->translate->_("content") . '"
+			,"' . $this->translate->_("tags") . '"
+		);
+	});');
 	
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();

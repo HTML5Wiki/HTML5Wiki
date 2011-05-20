@@ -1,5 +1,12 @@
-Article = {
-	loadArticle: function(url, idArticle) {
+/**
+ * Encapsulates methods for working with the article editor.
+ *
+ * @see templates/wiki/edit.php
+ */
+var Article = (function() {
+	var self = {};
+	
+	self.loadArticle = function(url, idArticle) {
 		$.ajax({
 			type: 'get',
 			'url':  url,
@@ -7,9 +14,9 @@ Article = {
 			data: 'idArticle=' + idArticle
 		});
 		return url;
-	},
+	}
 
-	create: function() {
+	self.create = function() {
 		var form	= $('#create-article');
 		if( form ) {
 			var name    = $('#txtAuthor').val();
@@ -29,9 +36,9 @@ Article = {
 				complete: Article.onEditFormLoaded.bind(this)
 			});
 		}
-	},
+	}
 	
-	save: function(e) {
+	self.save = function(e) {
 		e.preventDefault();
 		var form	= $(e.currentTarget);
 		if( form ) {
@@ -67,18 +74,26 @@ Article = {
 				}
 			});
 		}
-	},
-
-	replaceContent: function(response, textStatus) {
-		$('#content').replaceWith(response.responseText);
-	},
+	}
 
 	/**
-	 * 
-	 * @param idArticle
-	 * @param timestampArticle
+	 * Setup the article editor GUI with ptags and markitup.
+	 *
+	 * @author Manuel Alabor <malabor@hsr.ch>
 	 */
-    loadEditForm: function(url, idArticle) {
+	self.setupArticleEditorGui = function() {
+		$("#edit-article").submit(Article.save.bind());
+		
+		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
+		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
+		$('.editor #txtTags').ptags();
+	}
+	
+	self.replaceContent = function(response, textStatus) {
+		$('#content').replaceWith(response.responseText);
+	}
+	
+	self.loadEditForm = function(url, idArticle) {
 		$.ajax({
             type:   'get',
             url:    url,
@@ -86,31 +101,23 @@ Article = {
 			complete: Article.onEditFormLoaded.bind(this)
         });
 		return url;
-    },
+    }
 
-	/**
-	 * 
-	 * @param response
-	 */
-	onEditFormLoaded: function(response, textStatus) {
+	self.onEditFormLoaded = function(response, textStatus) {
 		this.replaceContent(response);
 		
 		this.bindEditorEvents();
-	},
+	}
 	
-	bindEditorEvents: function() {
+	self.bindEditorEvents = function() {
 		// templates/wiki/edit.php-Stuff
 		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
 		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 		$('.editor #txtTags').ptags();
 		$('.editor #txtTags').bind('change', Article.collectMediaTags);
-	},
-
-	/**
-	 * 
-	 * @param idArticle
-	 */
-	loadHistory: function(url, idArticle) {
+	}
+	
+	self.loadHistory = function(url, idArticle) {
 		$.ajax({
 			type:   'get',
             url:    url,
@@ -119,8 +126,8 @@ Article = {
         });
 		
 		return url;
-	},
-
+	}
+	
 	/**
      * Changes the h1 of the Article-Editor into a textfield for editing the title
      * of an article.
@@ -129,7 +136,7 @@ Article = {
      * @author Manuel Alabor
      * @access public
      */
-	handleEditArticleTitle: function() {
+	self.handleEditArticleTitle = function() {
 		var heading = $(this);
 		var title = heading.text();
 		var titleEditor = $('<input value="'+title+'" class="txtTitle" id="txtTitle" name="txtTitle" />');
@@ -145,26 +152,26 @@ Article = {
 
 		var container = $('<div class="editor-wrapper" />');
 		container.append(titleEditor);
-		container.append('<br/><span class="cancel">M&ouml;chten Sie den urspr&uuml;nglichen Titel wiederherstellen?</span> ');
+		container.append('<br/><span class="cancel">M&ouml;chten Sie den urspr&uuml;nglichen Titel wiederherstellen?</span>');
 		container.append(cancelButton);
 		heading.replaceWith(container);
 
 		return false;
-	},
-
-	/**
-	 * collects the media tags in the form.
-	 *
-	 * @return  Array
-	 */
-	collectMediaTags: function() {
+	}
+	
+	self.collectMediaTags = function() {
 		var tags = [];
-
+		
+		// @todo Not necessary like this! Tags are backed in the original
+		// input field
+		
 		$('.ui-ptags-tag-text').each(function(element, test, test2) {
 			tags.push($.trim(test.innerHTML));
 		});
 
 		return tags;
 	}
+
+	return self;
 	
-};
+}());  // end Article
