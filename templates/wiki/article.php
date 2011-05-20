@@ -3,7 +3,7 @@
 
 	$this->javascriptHelper()->appendFile($basePath . '/js/classes/article.js');
 	$this->javascriptHelper()->appendFile($basePath . '/js/classes/capsulebar.js');
-	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["1"]);');
+	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->wikiPage->id . '"]);');
 	$tagSlug = getTagSlug($this->tags, $this);
 	
 	function getTagSlug($tags, $template) {
