@@ -39,25 +39,29 @@ class Html5Wiki_Model_MediaVersionManager {
 	}
 	
 	/**
-	 * Fetches media versions by permalink and one or more timestamps. 
+	 * Fetches media versions by id and one or more timestamps.<br/>
+	 * To achieve this, the ID of the Media has to be fetched. After getting the
+	 * ID, all demanded versions of the Media can be retrived.
+	 *
 	 * @param string $permalink
 	 * @param array $timestamps
 	 * @return type 
 	 */
 	public function getMediaVersionsByPermalinkAndTimestamps($permalink, array $timestamps) {
-		$table = new Html5Wiki_Model_MediaVersion_Table();
-		$select = $table->select()->setIntegrityCheck(false);
+		$versions = null;
+		$permalinksModel = $this->getLatestMediaVersionByPermaLink($permalink);
 		
-		$select->where('permalink = ?', $permalink);
-		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
-		
-		foreach ($timestamps as $timestamp) {
-			$select->orWhere('timestamp = ?', $timestamp);
+		if($permalinksModel->id > 0) {
+			$id = $permalinksModel->id;
+			$table = new Html5Wiki_Model_MediaVersion_Table();
+			$select = $table->select()->setIntegrityCheck(false);
+
+			$select->where('id = ?', $id);
+			$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
+			$select->where('timestamp in (?)', $timestamps);
+
+			$versions = $table->fetchAll($select);
 		}
-		
-		$select->order('timestamp DESC');
-		
-		$versions = $table->fetchAll($select);
 		
 		return $versions;
 	}
@@ -69,8 +73,8 @@ class Html5Wiki_Model_MediaVersionManager {
 	 * @return Html5Wiki_Model_MediaVersion
 	 */
 	public function getLatestMediaVersionByPermaLink($permalink) {
-		$data = array('permalink' => $permalink);
-		$model = new Html5Wiki_Model_MediaVersion(array('data' => $data));
+		$model = new Html5Wiki_Model_MediaVersion();
+		$model->loadLatestByPermalink($permalink);
 		
 		return $model;
 	}

@@ -1,14 +1,19 @@
 <?php
 
 return array(
-	'read' => 'Read',
-	'edit' => 'Edit',
-	'history' => 'History',
-	'homepage' => 'Homepage',
-	'recentChanges' => 'Recent Changes',
-	'search' => 'Search',
-	'articleContentLegend' => 'Article content',
-	'content' => 'Content',
-	'tags' => 'Tags'
+	'read' => 'Read'
+	,'edit' => 'Edit'
+	,'history' => 'History'
+	,'homepage' => 'Homepage'
+	,'recentChanges' => 'Recent Changes'
+	,'search' => 'Search'
+	,'searchResultsFor' => 'Search results for "%1"'
+	,'articleContentLegend' => 'Article content'
+	,'content' => 'Content'
+	
+	,'tags' => 'Tags'
+	,'searchForOtherObjectsWithTag' => 'Search for other objects containing the tag \'%s\''
+	
+	,'compareVersions' => 'Compare Versions'
 );
 ?>

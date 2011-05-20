@@ -27,7 +27,6 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 		));
 	}
 
-
     public function setUp() {
 		$this->db = self::$pdo;
 

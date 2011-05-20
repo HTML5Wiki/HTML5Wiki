@@ -11,6 +11,12 @@
 /**
  * Wiki controller
  */
+
+
+define('TITLEFIELD_MIN_LENGTH', 2);
+define('TITLEFIELD_MAX_LENGTH', 100);
+
+
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 	/**
@@ -46,7 +52,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if( $wikiPage == null ) {
 			$this->loadNoArticlePage($permalink);
 		} else {
-			$this->loadEditPage($wikiPage);
+            $preparedData = $this->prepareEditPage($wikiPage);
+			$this->loadEditPage($preparedData);
 		}
 
 	}
@@ -63,11 +70,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		}
 		
-		if($this->handleUserRequest($parameters) != false) {
-			$user       = new Html5Wiki_Model_User();
+		if(($user = $this->handleUserRequest($parameters)) != false) {
 			$mediaVersion   = new Html5Wiki_Model_MediaVersion_Table();
-			$row = $mediaVersion->createRow();
-			$row->setFromArray(array('permalink' => $this->getPermalink(), 'userId' => $user->id, 'timestamp' => time()));
+			$row = $mediaVersion->createRow(array(
+				'permalink' => $this->getPermalink(), 
+				'userId' => $user->id, 
+				'timestamp' => time()
+			));
 			$row->save();
 			
 			$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
@@ -80,8 +89,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			// reload the wikipage because it needs also the MediaVersion informations.
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadByIdAndTimestamp($articleRow->mediaVersionId, $articleRow->mediaVersionTimestamp);
-			
-			$this->loadEditPage($wikiPage);
+
+            $preparedData = $this->prepareEditPage($wikiPage);
+			$this->loadEditPage($preparedData);
 		} else {
 			$this->loadNoArticlePage($this->getPermalink());
 		}
@@ -110,7 +120,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if ($this->validateArticleEditForm($parameters, $error)) {
 			$user = $this->handleUserRequest($parameters);
 			if($user !== false) {
-                 //TODO: handle Tag request
 				$wikiPage = new Html5Wiki_Model_MediaVersion_Table();
 				$mediaVersionRow = $wikiPage->createRow(array(
 					'id' => $oldWikiPage->id,
@@ -145,13 +154,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $user = $this->handleUserRequest($parameters);
             if($user !== false) {
 
+                $tags = explode(',', $parameters['tags']); 
+
                 $wrongUpdatedWikiPage = new Html5Wiki_Model_ArticleVersion();
 				$wrongUpdatedWikiPage->loadByIdAndTimestamp($oldWikiPage->id, $oldWikiPage->timestamp);
 				$wrongUpdatedWikiPage->title = $title;
 				$wrongUpdatedWikiPage->content = $parameters['contentEditor'];
 
                 $this->setTemplate('edit.php');
-                $this->loadEditPage($wrongUpdatedWikiPage, $error);
+                $preparedData = $this->prepareEditPage($wrongUpdatedWikiPage, null, null, $tags);
+			    $this->loadEditPage($preparedData, $error);
             }
         }
 	}
@@ -189,18 +201,28 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
     private function validateArticleEditForm(array $parameters, array &$error) {
         
         $success = true;
+        $errorMsg = array();
+        $errorFields = array(
+            'title' => false,
+            'content' => false,
+            'author' => false,
+            'authorEmail' => false,
+            'tags' => false,
+            'versionComment' => true
+        );
 
         //Test Title
         $validatorChainTitle = new Zend_Validate();
         $validatorChainTitle->addValidator(new Zend_Validate_Alnum(true))
-                            ->addValidator(new Zend_Validate_StringLength(5, 25));
+                            ->addValidator(new Zend_Validate_StringLength(TITLEFIELD_MIN_LENGTH, TITLEFIELD_MAX_LENGTH));
 
         if (isset($parameters['txtTitle']) && //the title was updated
             !$validatorChainTitle->isValid($parameters['txtTitle'])) {            
             $success = false;
 
             foreach ($validatorChainTitle->getMessages() as $message) {
-                array_push($error, "Title " . $message);
+                array_push($errorMsg, "Title " . $message);
+                $errorFields['title'] = true;
             }
         }
 
@@ -212,7 +234,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $success = false;
 			
             foreach ($validatorChainContent->getMessages() as $message) {
-                array_push($error, "Content " . $message);
+                array_push($errorMsg, "Content " . $message);
+                $errorFields['content'] = true;
             }
         }
 
@@ -227,12 +250,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $success = false;
 			
             foreach ($validatorChainTags->getMessages() as $message) {
-                array_push($error, "Tags " . $message);
+                array_push($errorMsg, "Tags " . $message);
+                $errorFields['tags'] = true;
             }
         }
 
         //Test VersionComment
         ////Not needed
+
+        $error['messages'] = $errorMsg;
+        $error['fields'] = $errorFields;
 
         return $success;
     }
@@ -275,36 +302,73 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('permalink', $permalink);
 		$this->template->assign('author', new Html5Wiki_Model_User());
 	}
+
+    private function prepareEditPage(HTML5Wiki_Model_ArticleVersion $wikiPage,
+        string $title = null,
+        string $content = null,
+        array $tags = null,
+        string $versionComment = null) {
+
+        $data = array();
+
+        $data['wikiPage'] = $wikiPage;
+
+        if ($title !== null) {
+            $data['title'] = $title;
+        } else {
+            $data['title'] = isset($wikiPage->title) ? $wikiPage->title : '';
+        }
+
+        if ($content !== null) {
+            $data['content'] = $content;
+        } else {
+            $data['content'] = isset($wikiPage->content) ? $wikiPage->content : '';
+        }
+
+        if ($tags !== null) {
+            $data['tags'] = $tags;
+        } else {
+            $tagRows = $wikiPage->getTags();
+
+            $tags = array();
+
+            foreach ($tagRows as $tag) {
+                $tags[] = $tag->tagTag;
+            }
+
+            $data['tags'] = $tags;
+        }
+
+        if ($versionComment !== null) {
+            $data['versionComment'] = $versionComment;
+        } else {
+            $data['versionComment'] = '';
+        }
+
+        //author data from cookies
+        $data['author'] = new Html5Wiki_Model_User();
+
+        $data['request'] = $this->router->getRequest();
+
+        return $data;
+    }
 	
 	/**
 	 * 
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(Html5Wiki_Model_ArticleVersion $wikiPage, array $error = array()) {
-		//Prepare article data for the view
-		$title = isset($wikiPage->title) ? $wikiPage->title : '';
-		$content = isset($wikiPage->content) ? $wikiPage->content : '';
-		$tagRows = $wikiPage->getTags();
-		
-		$tags = array();
-
-		foreach ($tagRows as $tag) {
-			$tags[] = $tag->tagTag;
-		}
-
-		//Get author data from cookies
-		$author	= new Html5Wiki_Model_User();
-		
+	private function loadEditPage(array $preparedData, array $error = array()) {
 		if($this->layoutTemplate != null) {
-			$this->layoutTemplate->assign('title', $title);
+			$this->layoutTemplate->assign('title', $preparedData['title']);
 		}
-		$this->template->assign('title', $title);
-		$this->template->assign('content', $content);
-		$this->template->assign('author', $author);
-		$this->template->assign('wikiPage', $wikiPage);
-		$this->template->assign('request', $this->router->getRequest());
-		$this->template->assign('tags', $tags);
+		$this->template->assign('title', $preparedData['title']);
+		$this->template->assign('content', $preparedData['content']);
+		$this->template->assign('author', $preparedData['author']);
+		$this->template->assign('wikiPage', $preparedData['wikiPage']);
+		$this->template->assign('request', $preparedData['request']);
+		$this->template->assign('tags', $preparedData['tags']);
+        $this->template->assign('versionComment', $preparedData['versionComment']);
         
         $this->template->assign('error', $error);
 	}
@@ -314,7 +378,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @return bool|Html5Wiki_Model_User
 	 */
 	private function handleUserRequest(array $parameters) {
-		if (isset($parameters['hiddenAuthorId'])) {
+		if (isset($parameters['hiddenAuthorId']) && $parameters['hiddenAuthorId'] !== '') {
             $userData	= array(
                 'id'        => intval($parameters['hiddenAuthorId']),
                 'name'      => $parameters['txtAuthor'],
@@ -329,16 +393,16 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		
 		$user = new Html5Wiki_Model_User(array('data' => $userData));
-		if($userData['id'] > 0) {
+		if(isset($userData['id']) && $userData['id'] > 0) {
 			return $user;
 		} else {
 			$userTable = new Html5Wiki_Model_User_Table();
 			$existingUser = $userTable->userExists($userData['name'], $userData['email']);
 			if (isset($existingUser->id)) {
-
 				return $existingUser;
 			}
 			if($userData['email'] && $userData['name']) {
+				$user = $userTable->createRow(array('email' => $userData['email'], 'name' => $userData['name']));
 				$user->save();
 				
 				return $user;
@@ -353,7 +417,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function readAction() {
 		$parameters = $this->router->getRequest()->getGetParameters();
-
+		$this->template->assign('request', $this->router->getRequest());
+		
 		if($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
@@ -365,7 +430,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
 				$permalink = $this->config->routing->defaultAction;
 			}
-				
+			
 			$data = array('permalink' => $permalink);
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadLatestByPermalink($permalink);
@@ -439,6 +504,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$diff = new PhpDiff_Diff(explode("\n", $rightVersion->content), explode("\n", $leftVersion->content));
 		$this->template->assign('diff', $diff);
+		$this->template->assign('leftTimestamp', $left);
+		$this->template->assign('rightTimestamp', $right);
+		$this->setTitle($leftVersion->getCommonName());
 	}
  }
 

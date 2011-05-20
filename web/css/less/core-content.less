@@ -38,6 +38,17 @@ body { 	background: @img_headerbackground repeat-x; }
 	.title {
 		margin-bottom: 20px;
 		.heading { float: left; }
+		
+		.meta {
+			font-size: @font_normalsize;
+			color: @color_secondary;
+			
+			.tag {
+				color: @color_secondary;
+				&:hover { background-color: lighten(@color_secondary,28%); }
+			}
+		}
+		
 		.capsulebar {
 			#buttons > .colored-capsule-bar(@color_secondary);
 			float: right;
