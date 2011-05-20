@@ -27,5 +27,15 @@ class Html5Wiki_Search_EnginePlugin_Tag extends Html5Wiki_Search_EnginePlugin_Ab
 		return false;
 	}
 	
+	public function getMatchOrigins($forTerm, $model) {
+		$matchOrigins = array();
+		
+		if(stripos($model->tagTag, $forTerm) !== FALSE) {
+			$matchOrigins[] = 'tag';
+		}
+		
+		return $matchOrigins;
+	}
+	
 }
 ?>

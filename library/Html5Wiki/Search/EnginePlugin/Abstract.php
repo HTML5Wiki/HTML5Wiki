@@ -50,5 +50,13 @@ abstract class Html5Wiki_Search_EnginePlugin_Abstract {
 	 */
 	protected abstract function getModelClassName();
 	
+	/**
+	 * Returns an array with indicators (strings), where a search term $forTerm
+	 * in the result $result was found.
+	 *
+	 * @param $forTerm
+	 */
+	public abstract function getMatchOrigins($forTerm, $model);
+	
 }
 ?>

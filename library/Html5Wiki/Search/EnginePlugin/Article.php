@@ -31,5 +31,16 @@ class Html5Wiki_Search_EnginePlugin_Article extends Html5Wiki_Search_EnginePlugi
 		return strtoupper($type) == $this->_compatibleType;
 	}
 	
+	public function getMatchOrigins($forTerm, $model) {
+		$matchOrigins = array();
+		
+		if($model instanceof Html5Wiki_Model_ArticleVersion) {
+			if(stripos($model->title, $forTerm) !== FALSE) $matchOrigins[] = 'title';
+			if(stripos($model->content, $forTerm) !== FALSE) $matchOrigins[] = 'content';
+		}
+		
+		return $matchOrigins;
+	}
+	
 }
 ?>
