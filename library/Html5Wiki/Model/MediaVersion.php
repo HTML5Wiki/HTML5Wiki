@@ -68,6 +68,10 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 		$this->_modifiedFields = array();
 	}
 	
+	/**
+	 * Gets tags
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
 	public function getTags() {
 		if (!isset($this->id) || !isset($this->timestamp)) {
 			throw new Html5Wiki_Exception("MediaVersionRow must be fully loaded before getting tags");

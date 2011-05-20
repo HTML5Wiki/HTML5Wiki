@@ -11,6 +11,8 @@ return array(
 	,'articleContentLegend' => 'Artikelinhalt'
 	,'content' => 'Inhalt'
 	
+	,'title' => 'Titel'
+	
 	,'tags' => 'Tags'
 	,'searchForOtherObjectsWithTag' => 'Andere Objekte mit dem Tag \'%s\' suchen...'
 	

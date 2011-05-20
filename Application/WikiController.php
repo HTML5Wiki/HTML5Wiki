@@ -520,11 +520,33 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 		
-		$diff = new PhpDiff_Diff(explode("\n", $rightVersion->content), explode("\n", $leftVersion->content));
+		$translatedTitle = $this->template->getTranslate()->_('title');
+		$translatedTags   = $this->template->getTranslate()->_('tags');
+		
+		$leftContent = $translatedTitle . ': ' . $leftVersion->getCommonName() 
+						. "\n\n" . $translatedTags . ': ' 
+						. $this->getFormattedTags($leftVersion->getTags());
+		$leftContent .= "\n\n" . $leftVersion->content;
+		
+		$rightContent = $translatedTitle . ': ' . $rightVersion->getCommonName() 
+						. "\n\n" . $translatedTags . ': ' 
+						. $this->getFormattedTags($rightVersion->getTags());
+		$rightContent .= "\n\n" . $rightVersion->content;
+		
+		$diff = new PhpDiff_Diff(explode("\n", $rightContent), explode("\n", $leftContent));
 		$this->template->assign('diff', $diff);
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
 		$this->setTitle($leftVersion->getCommonName());
+	}
+	
+	private function getFormattedTags(Zend_Db_Table_Rowset_Abstract $tagset) {
+		$tags = array();
+		foreach ($tagset as $tag) {
+			$tags[] = $tag->__toString();
+		}
+		
+		return implode(", ", $tags);
 	}
  }
 

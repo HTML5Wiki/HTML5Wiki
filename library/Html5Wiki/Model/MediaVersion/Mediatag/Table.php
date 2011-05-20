@@ -40,6 +40,12 @@ class Html5Wiki_Model_MediaVersion_Mediatag_Table extends Zend_Db_Table_Abstract
 		)
 	);
 	
+	/**
+	 * Gets tags.
+	 * @param int $id
+	 * @param int $timestamp
+	 * @return Zend_Db_Table_Rowset_Abstract
+	 */
 	public function loadTags($id, $timestamp) {
 		$select = $this->select();
 		$select->where('mediaVersionId = ?', $id);
