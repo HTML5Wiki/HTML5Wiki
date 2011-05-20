@@ -29,7 +29,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		$searchEngine = new Html5Wiki_Search_SearchEngine();
 		$term = urldecode($this->router->getRequest()->getGet('term'));
 		
-		$errors = $searchEngine->isTermValid($term);
+		$errors = $searchEngine->validateTerm($term);
 		if (is_array($errors)) {
 			$this->template->assign('errors', $errors);
 			return;

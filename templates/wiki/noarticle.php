@@ -1,6 +1,7 @@
 <?php
     $basePath = $this->basePath . '/';
-	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
+	$this->javascriptHelper()->appendFile($basePath . 'js/classes/capsulebar.js');
+	$this->javascriptHelper()->appendFile($basePath . 'js/classes/article.js');
 ?>
 
 <div id="content" class="content">

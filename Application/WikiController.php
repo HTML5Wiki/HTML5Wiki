@@ -11,13 +11,16 @@
 /**
  * Wiki controller
  */
-
-
-define('TITLEFIELD_MIN_LENGTH', 2);
-define('TITLEFIELD_MAX_LENGTH', 100);
-
-
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
+	
+	const TITLEFIELD_MIN_LENGTH = 2;
+	const TITLEFIELD_MAX_LENGTH = 100;
+	
+	/**
+	 * Current user
+	 * @var Html5Wiki_Model_User
+	 */
+	private $user = null;
 
 	/**
 	 * @override
@@ -70,7 +73,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setNoLayout();
 		}
 		
-		if(($user = $this->handleUserRequest($parameters)) != false) {
+		if(($user = $this->getUser($parameters)) !== null) {
 			$mediaVersion   = new Html5Wiki_Model_MediaVersion_Table();
 			$row = $mediaVersion->createRow(array(
 				'permalink' => $this->getPermalink(), 
@@ -118,7 +121,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         $error = array();
 
 		if ($this->validateArticleEditForm($parameters, $error)) {
-			$user = $this->handleUserRequest($parameters);
+			$user = $this->getUser($parameters);
 			if($user !== false) {
 				$wikiPage = new Html5Wiki_Model_MediaVersion_Table();
 				$mediaVersionRow = $wikiPage->createRow(array(
@@ -151,7 +154,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         } else {
             //TODO: go back to the edit page
             //      show error messages
-            $user = $this->handleUserRequest($parameters);
+            $user = $this->getUser($parameters);
             if($user !== false) {
 
                 $tags = explode(',', $parameters['tags']); 
@@ -214,7 +217,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         //Test Title
         $validatorChainTitle = new Zend_Validate();
         $validatorChainTitle->addValidator(new Zend_Validate_Alnum(true))
-                            ->addValidator(new Zend_Validate_StringLength(TITLEFIELD_MIN_LENGTH, TITLEFIELD_MAX_LENGTH));
+                            ->addValidator(new Zend_Validate_StringLength(self::TITLEFIELD_MIN_LENGTH, self::TITLEFIELD_MAX_LENGTH));
 
         if (isset($parameters['txtTitle']) && //the title was updated
             !$validatorChainTitle->isValid($parameters['txtTitle'])) {            
@@ -347,7 +350,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         }
 
         //author data from cookies
-        $data['author'] = new Html5Wiki_Model_User();
+        $data['author'] = $this->getUser() !== null ? $this->getUser() : new Html5Wiki_Model_User();
 
         $data['request'] = $this->router->getRequest();
 
@@ -372,6 +375,20 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         $this->template->assign('versionComment', $preparedData['versionComment']);
         
         $this->template->assign('error', $error);
+	}
+	
+	/**
+	 * Returns user. When already set as field, use it. Otherwise handle user request according to params.
+	 * 
+	 * For preventing losing user informations when only doing an ajax request (which does not send cookie-headers).
+	 * @param array $parameters
+	 * @return Html5Wiki_Model_User 
+	 */
+	private function getUser(array $parameters = array()) {
+		if ($this->user === null && count($parameters)) {
+			$this->user = $this->handleUserRequest($parameters);
+		}
+		return $this->user;
 	}
 	
 	/**
@@ -410,7 +427,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 		
-		return false;
+		return null;
 	}
 
 	/**
