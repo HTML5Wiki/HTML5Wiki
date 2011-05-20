@@ -3,15 +3,18 @@
 	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
 	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '");');
 	
-	$tagSlug = getTagSlug($this->tags);
+	$tagSlug = getTagSlug($this->tags, $this);
 	
 	
-	function getTagSlug($tags) {
+	function getTagSlug($tags, $template) {
 		$tagSlug = '';
+		$tagTemplate = '<a href="../index/search?term=%s&mediaType=tag" title="'
+					 . $template->translate->_('searchForOtherObjectsWithTag')
+					 . '" class="tag">%s</a>';
 		
 		for($i = 0, $l = sizeof($tags); $i < $l; $i++) {
 			$tag = $tags[$i];
-			$tagSlug .= '<span class="tag">'. $tag. '</span>';
+			$tagSlug .= sprintf($tagTemplate, $tag, $tag, $tag);
 			if($i < $l-1) $tagSlug .= ', ';
 		}
 		
