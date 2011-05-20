@@ -139,7 +139,7 @@ var Article = (function() {
 	self.handleEditArticleTitle = function() {
 		var heading = $(this);
 		var title = heading.text();
-		var titleEditor = $('<input value="'+title+'" class="txtTitle" id="txtTitle" name="txtTitle" />');
+		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" name="txtTitle" />');
 
 		var cancelButton = $('<a href="#" class="button">Wiederherstellen</a>');
 		cancelButton.bind('mouseup',{title:title}, function(event) {
