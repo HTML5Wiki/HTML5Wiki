@@ -1,14 +1,14 @@
 <?php
-	$basePath = $this->basePath . '/';
+	$basePath = $this->request->getBasePath();
 	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
 	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '");');
-	
 	$tagSlug = getTagSlug($this->tags, $this);
-	
 	
 	function getTagSlug($tags, $template) {
 		$tagSlug = '';
-		$tagTemplate = '<a href="../index/search?term=%s&mediaType=tag" title="'
+		$tagTemplate = '<a href="'
+					 . $template->request->getBasePath()
+					 . '/index/search?term=%s&mediaType=tag" title="'
 					 . $template->translate->_('searchForOtherObjectsWithTag')
 					 . '" class="tag">%s</a>';
 		
