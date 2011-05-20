@@ -8,18 +8,20 @@
  */
 
 $config = array(
-	'databaseAdapter' => 'PDO_MYSQL',
+	'databaseAdapter' => 'PDO_MYSQL',				// Database System
 	'database' => array(
-		'host'     => 'localhost',
-		'dbname'   => 'html5wiki',
-		'username' => 'html5wiki',
-		'password' => 'mySuperCoolPassword1337'
+		'host'     => 'localhost',					// Database Host
+		'dbname'   => 'html5wiki',					// Database Name
+		'username' => 'html5wiki',					// Database User
+		'password' => 'mySuperCoolPassword1337'		// Database Password
 	),
 	'routing' => array(
-		'defaultController' => 'wiki',
-		'defaultAction'     => 'index'
+		'defaultController' => 'wiki',				// Default Controller
+		'defaultAction'     => 'index'				// If Default Controller = Wiki,
+													// this defines the default
+													// wikipage to show
 	),
-	'languages' => array('en', 'de'),
-	'defaultLanguage' => 'en',
-	'defaultTimezone' => 'Europe/Zurich'
+	'languages' => array('en', 'de'),				// Available languages
+	'defaultLanguage' => 'en',						// Default language
+	'defaultTimezone' => 'Europe/Zurich'			// Timezone of the server
 );
