@@ -10,7 +10,10 @@ return array(
 	,'searchResultsFor' => 'Search results for "%1"'
 	,'articleContentLegend' => 'Article content'
 	,'content' => 'Content'
+	
 	,'tags' => 'Tags'
+	,'searchForOtherObjectsWithTag' => 'Search for other objects containing the tag \'%s\''
+	
 	,'compareVersions' => 'Compare Versions'
 );
 ?>

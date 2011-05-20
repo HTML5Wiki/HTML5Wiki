@@ -281,6 +281,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 
 		$this->template->assign('wikiPage', $wikiPage);
+        $this->template->assign('request', $this->router->getRequest());
 		$this->template->assign('markDownParser', new Markdown_Parser());
 		$this->template->assign('tags', $tags);
 	} 
@@ -417,7 +418,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function readAction() {
 		$parameters = $this->router->getRequest()->getGetParameters();
-
+		$this->template->assign('request', $this->router->getRequest());
+		
 		if($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
@@ -429,7 +431,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
 				$permalink = $this->config->routing->defaultAction;
 			}
-				
+			
 			$data = array('permalink' => $permalink);
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadLatestByPermalink($permalink);

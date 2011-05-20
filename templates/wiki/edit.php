@@ -1,8 +1,9 @@
 <?php
 	$basePath = $this->basePath . '/';
-	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
-	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '");');
-	$this->javascriptHelper()->appendScript('$("#edit-article").submit(Article.save.bind());');
+	$this->javascriptHelper()->appendFile($basePath . 'js/classes/capsulebar.js');
+	$this->javascriptHelper()->appendFile($basePath . 'js/classes/article.js');
+	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->wikiPage->id . '"]);');
+	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->wikiPage->permalink ?>" method="post">
@@ -94,7 +95,7 @@
 		
 		<div class="grid_12 bottom-button-bar">
 			<input id="article-save" type="submit" value="Speichern" class="caption large-button save-button"/>
-			<a href="#" class="link-button cancel-button">&Auml;nderungen verwerfen</a>
+			<a href="#" class="link-button delete-button">Diesen Artikel komplett l&ouml;schen</a>
 		</div>
 		<div class="clear"></div>
 	</form>
@@ -111,9 +112,20 @@
         if (count($this->error['messages'])):
     ?>
     <script type="text/javascript">
-        <?php foreach ($this->error['messages'] as $errorMessage): ?>
-        MessageController.addMessage('error','<?php echo addslashes($errorMessage); ?>');
-        <?php endforeach; ?>
+        <?php
+            $msg = "<ul>";
+            foreach ($this->error['messages'] as $errorMessage) {
+                $msg .= "<li>" . addslashes($errorMessage) . "</li>";
+            }
+            $msg .= "</ul>";
+        ?>
+        var options = [
+				{
+					text : 'Ok',
+					button : true
+				}
+			];
+			MessageController.addMessage('question','<?php echo $msg; ?>', options);
     </script>
     <?php
         endif;

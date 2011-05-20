@@ -21,7 +21,7 @@
 			float: left;
 			width: 50%;
 			
-			.txtTitle {				
+			.textfield {				
 				font: @font_h1size @font_ui;
 				font-weight: bold;
 				width: 100%;
@@ -31,6 +31,7 @@
 			.cancel {
 				font: @font_smallsize @font_ui;
 				color: @color_secondary;
+				margin-right: 3px;
 			}
 		}
 	}
@@ -77,6 +78,9 @@ form {
 		margin-bottom: 5px;
 		line-height: 120%;
 	}
+	
+	label.error { color: darken(@color_errormessage,10%); }
+	input.error { background-color: lighten(@color_errormessage, 38%); }
 }
 
 
