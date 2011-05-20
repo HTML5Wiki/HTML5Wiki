@@ -11,7 +11,7 @@
 		
 		for($i = 0, $l = sizeof($tags); $i < $l; $i++) {
 			$tag = $tags[$i];
-			$tagSlug .= $tag;
+			$tagSlug .= '<span class="tag">'. $tag. '</span>';
 			if($i < $l-1) $tagSlug .= ', ';
 		}
 		
@@ -23,7 +23,7 @@
 		<?php if($tagSlug != '') : ?>
 		<div class="heading">
 			<h1><?php echo $this->wikiPage->title ?></h1>
-			<p class="tags">Tags: <?php echo $tagSlug ?></p>
+			<p class="tags"><span class="intro"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?></p>
 		</div>
 		<?php else : ?>
 		<h1 class="heading"><?php echo $this->wikiPage->title ?></h1>
