@@ -10,6 +10,11 @@
  */
 class Html5Wiki_Search_SearchEngine {
 	
+	/**
+	 * Registered engine plugins
+	 * 
+	 * @var array
+	 */
 	private $enginePlugins = array();
 	
 	/**
