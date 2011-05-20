@@ -64,15 +64,17 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$select->where('mediaVersionTimestamp = ?', $timestamp);
 		
 		$articleVersion = $this->_getTable()->fetchRow($select);
-		$mediaVersion = $articleVersion->findParentRow('Html5Wiki_Model_MediaVersion_Table', 'MediaVersion');
-		
-		$articleVersionData = $articleVersion->toArray();
-		$mediaVersionData = $mediaVersion->toArray();
-		$data = array_merge($articleVersionData,$mediaVersionData);
-		
-		$this->_data = $data;
-		$this->_cleanData = $this->_data;
-		$this->_modifiedFields = array();
+		if ($articleVersion) {
+			$mediaVersion = $articleVersion->findParentRow('Html5Wiki_Model_MediaVersion_Table', 'MediaVersion');
+
+			$articleVersionData = $articleVersion->toArray();
+			$mediaVersionData = $mediaVersion->toArray();
+			$data = array_merge($articleVersionData,$mediaVersionData);
+
+			$this->_data = $data;
+			$this->_cleanData = $this->_data;
+			$this->_modifiedFields = array();
+		}
 	}
 	
 	/**
