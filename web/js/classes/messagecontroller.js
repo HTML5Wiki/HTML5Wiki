@@ -152,11 +152,17 @@ var MessageController = (function() {
     			$(this).parents('.messagebox').slideUp(message_slideup_time, function() {
 					$(this).remove();
 					
-					$('.overlay').fadeOut(overlay_fadeout_time, function() {
-        				$(this).remove();
+					var overlay = $('.overlay');
+					if(overlay.length > 0) {
+						overlay.fadeOut(overlay_fadeout_time, function() {
+	        				$(this).remove();
+	        				if(event.data.callback != undefined) event.data.callback();
+	        				self.displayQueuedMessage();
+						});						
+					} else {
         				if(event.data.callback != undefined) event.data.callback();
         				self.displayQueuedMessage();
-					});
+					}
     			});
     		});
     		
