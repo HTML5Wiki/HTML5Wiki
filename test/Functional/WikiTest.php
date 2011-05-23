@@ -62,8 +62,8 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->open($this->wikiTestUrl);
 		$this->type('css=#txtAuthor', self::AUTHOR);
 		$this->type('css=#txtAuthorEmail', self::AUTHOR_EMAIL);
-		$this->assertElementPresent('css=.save-button');
-		$this->click('css=.save-button');
+		$this->assertElementPresent('css=#article-create');
+		$this->click('css=#article-create');
 		$this->waitForAjax();
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-test-create-page.png');

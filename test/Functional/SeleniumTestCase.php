@@ -24,7 +24,7 @@ abstract class Test_Functional_SeleniumTestCase extends PHPUnit_Extensions_Selen
 	}
 	
 	protected function waitForAjax() {
-		$this->waitForCondition("selenium.browserbot.getCurrentWindow().$.active == 0;", 10000);
+		$this->waitForCondition("selenium.browserbot.getCurrentWindow().$ !== undefined && selenium.browserbot.getCurrentWindow().$.active == 0;", 10000);
 	}
 }
 ?>
