@@ -17,24 +17,27 @@ class Test_Functional_IndexTest extends Test_Functional_SeleniumTestCase {
 	public function setUp() {
 		parent::setUp();
 		$this->setBrowserUrl(TEST_HOST);
-		$this->open(TEST_HOST);
 	}
 
 	public function testTitle() {
+		$this->open(TEST_HOST);
 		$this->assertTitle('HTML5Wiki | HTML5Wiki');
 	}
 	
 	public function testLogo() {
+		$this->open(TEST_HOST);
 		$this->assertElementPresent('css=.logo');
 	}
 	
 	public function testMainMenu() {
+		$this->open(TEST_HOST);
 		$this->assertElementPresent('css=.main-menu');
 		$this->assertElementPresent('css=.main-menu li.home');
 		$this->assertElementPresent('css=.main-menu li.updates');
 	}
 	
 	public function testSearchField() {
+		$this->open(TEST_HOST);
 		$this->assertElementPresent('css=.main-menu');
 		$this->assertElementPresent('css=.main-menu li.search');
 	}
