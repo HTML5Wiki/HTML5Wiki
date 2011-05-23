@@ -35,9 +35,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 
 	/**
-	 * Edit Article
-	 * 
-	 * @author	Alexandre Joly <ajoly@hsr.ch>
+	 * Handles an edit-request for the given permalink in the url.<br/>
+	 * If the permalink was not found, the user gets redirected to the search
+	 * page where he can choose to create a fresh article with the permalink
+	 * entered.
 	 */
 	public function editAction() {		
 		$parameters = $this->router->getRequest()->getGetParameters();
@@ -52,22 +53,23 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$wikiPage->loadLatestByPermalink($permalink);
 		}
 	
-		if( $wikiPage == null ) {
-			$this->loadNoArticlePage($permalink);
+		if($wikiPage == null) {
+			$this->redirectToArticleNotFoundSearch($permalink);
 		} else {
-            $preparedData = $this->prepareEditPage($wikiPage);
-			$this->loadEditPage($preparedData);
+            $preparedData = $this->prepareArticleModelForEditor($wikiPage);
+			$this->showArticleEditor($preparedData);
 		}
 
 	}
 	
 	/**
-	 * Creates new article. Afterwards it loads the edit page.
-	 * 
-	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 * Creates new article. Afterwards it loads the edit page.<br/>
+	 * If there was an error during creation of the article, the user gets
+	 * redirected to the search page.
 	 */
 	public function createAction() {
 		$parameters	= $this->router->getRequest()->getPostParameters();
+		$permalink = $this->getPermalink();
 		
 		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
@@ -76,27 +78,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if(($user = $this->getUser($parameters)) !== null) {
 			$mediaVersion   = new Html5Wiki_Model_MediaVersion_Table();
 			$row = $mediaVersion->createRow(array(
-				'permalink' => $this->getPermalink(), 
-				'userId' => $user->id, 
-				'timestamp' => time()
+				'permalink' => $permalink
+				,'userId' => $user->id
+				,'timestamp' => time()
 			));
 			$row->save();
 			
 			$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
 			$articleRow = $articleVersion->createRow();
-			$articleRow->setFromArray(array('mediaVersionId' => $row->id, 'mediaVersionTimestamp' => $row->timestamp, 'title' => $this->getPermalink()));
+			$articleRow->setFromArray(array('mediaVersionId' => $row->id, 'mediaVersionTimestamp' => $row->timestamp, 'title' => $permalink));
 			$articleRow->save();
 		
 			$this->setTemplate('edit.php');
 			
-			// reload the wikipage because it needs also the MediaVersion informations.
+			// reload the article because it needs also the MediaVersion informations.
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadByIdAndTimestamp($articleRow->mediaVersionId, $articleRow->mediaVersionTimestamp);
 
-            $preparedData = $this->prepareEditPage($wikiPage);
-			$this->loadEditPage($preparedData);
+            $preparedData = $this->prepareArticleModelForEditor($wikiPage);
+			$this->showArticleEditor($preparedData);
 		} else {
-			$this->loadNoArticlePage($this->getPermalink());
+			$this->redirectToArticleNotFoundSearch($permalink);
 		}
 	}
 	
@@ -149,7 +151,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$wikiPage = new Html5Wiki_Model_ArticleVersion();
 				$wikiPage->loadByIdAndTimestamp($articleVersionRow->mediaVersionId, $articleVersionRow->mediaVersionTimestamp);
 
-                $this->loadPage($wikiPage);
+                $this->showArticle($wikiPage);
             }
         } else {
             //TODO: go back to the edit page
@@ -165,8 +167,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$wrongUpdatedWikiPage->content = $parameters['contentEditor'];
 
                 $this->setTemplate('edit.php');
-                $preparedData = $this->prepareEditPage($wrongUpdatedWikiPage, null, null, $tags);
-			    $this->loadEditPage($preparedData, $error);
+                $preparedData = $this->prepareArticleModelForEditor($wrongUpdatedWikiPage, null, null, $tags);
+			    $this->showArticleEditor($preparedData, $error);
             }
         }
 	}
@@ -268,12 +270,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
     }
 
 	/**
-	 * Loads the standard view page for a given article
-	 * 
-	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
+	 * Shows an article model in the proper template.
+	 *
 	 * @param	Html5Wiki_Model_ArticleVersion $wikiPage
 	 */
-	private function loadPage(Html5Wiki_Model_ArticleVersion $wikiPage) {
+	private function showArticle(Html5Wiki_Model_ArticleVersion $wikiPage) {
 		$this->setTemplate('article.php');
 		
 		$tagRows = $wikiPage->getTags();
@@ -288,26 +289,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('markDownParser', new Markdown_Parser());
 		$this->template->assign('tags', $tags);
 	} 
-	
-	/**
-	 * Loads the noarticle page. With a button to add an article with the requested permalink
-	 * 
-	 * @author	Nicolas Karrer <nkarrer@hsr.ch>
-	 * @param	$permalink
-	 */
-	private function loadNoArticlePage($permalink) {
-		if ($this->router->getRequest()->isAjax()) {
-			$this->setNoLayout();
-		} 
-		
-		$this->setTemplate('noarticle.php');
-		
-		$this->template->assign('request', $this->router->getRequest());		
-		$this->template->assign('permalink', $permalink);
-		$this->template->assign('author', new Html5Wiki_Model_User());
-	}
 
-    private function prepareEditPage(HTML5Wiki_Model_ArticleVersion $wikiPage,
+	/**
+	 * Prepares an article-model for using it in the editor page.
+	 *
+	 * @param $wikiPage model
+	 * @param $title
+	 * @param $content
+	 * @param $tags
+	 * @param $versionComment
+	 * @return Html5Wiki_Model_ArticleVersion
+	 */
+    private function prepareArticleModelForEditor(HTML5Wiki_Model_ArticleVersion $wikiPage,
         string $title = null,
         string $content = null,
         array $tags = null,
@@ -362,7 +355,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $wikiPage
 	 * @return unknown_type
 	 */
-	private function loadEditPage(array $preparedData, array $error = array()) {
+	private function showArticleEditor(array $preparedData, array $error = array()) {
 		if($this->layoutTemplate != null) {
 			$this->layoutTemplate->assign('title', $preparedData['title']);
 		}
@@ -375,6 +368,20 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         $this->template->assign('versionComment', $preparedData['versionComment']);
         
         $this->template->assign('error', $error);
+	}
+	
+	/**
+	 * If an article permalink was not found, this method redirects the user to
+	 * the search page and gives the possibility to create a fresh article with
+	 * the given permalink.
+	 *
+	 * @param $permalink
+	 */
+	private function redirectToArticleNotFoundSearch($permalink) {
+		$searchUrl = $this->router->getRequest()->getBasePath()
+		           . '/index/search?term='. $permalink
+				   . '&newarticle=1';
+		$this->router->redirect($searchUrl);
 	}
 	
 	/**
@@ -431,18 +438,24 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 
 	/**
-	 * @return void
+	 * Tries to load an article with the given permalink from the URL.<br/>
+	 * If the article was not found, the user will be redirected to the search
+	 * with an option to create a new page with the entered permalink/title.
+	 *
+	 * @see Application_IndexController#searchAction
+	 * @see Html5Wiki_Routing_Router#redirect
 	 */
 	public function readAction() {
-		$parameters = $this->router->getRequest()->getGetParameters();
-		$this->template->assign('request', $this->router->getRequest());
+ 	 	$parameters = $this->router->getRequest()->getGetParameters();
+		$permalink = $this->getPermalink();
+		
+		$this->template->assign('request', $this->router->getRequest()); 
 		
 		if($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$wikiPage = new Html5Wiki_Model_ArticleVersion();
 			$wikiPage->loadLatestById($parameters['idArticle']);
 		} else {
-			$permalink = $this->getPermalink();
 			if ($permalink === '' && $this->config->routing->defaultController !== 'wiki') {
 				throw new Html5Wiki_Exception_404("Empty permalink is not allowed");
 			} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
@@ -457,10 +470,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 
-		if(!isset($wikiPage->id)) {
-			$this->loadNoArticlePage($permalink);
+		if(isset($wikiPage->id)) {
+			$this->showArticle($wikiPage);
 		} else {
-			$this->loadPage($wikiPage);
+			$this->redirectToArticleNotFoundSearch($permalink);
 		}
 	}
 
