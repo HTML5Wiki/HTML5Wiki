@@ -34,6 +34,44 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 	}
 
+
+	public function newAction() {
+		$parameters = $this->router->getRequest()->getGetParameters();
+
+		if ($this->router->getRequest()->isAjax()) {
+			$this->setNoLayout();
+			// todo Exception?
+		} else {
+			$permalink = $this->getPermalink();			
+		}
+		
+		$this->setTemplate('edit.php');
+		$this->showArticleEditor(array(
+			'title'=>$permalink
+			,'content'=>''
+			,'author'=>''
+			,'tags'=>''
+			,'versionComment'=>''
+			,'request' => $this->router->getRequest()
+
+		));
+		
+		/*
+	$this->template->assign('title', $preparedData['title']);
+	$this->template->assign('content', $preparedData['content']);
+	$this->template->assign('author', $preparedData['author']);
+	$this->template->assign('tags', $preparedData['tags']);
+    $this->template->assign('versionComment', $preparedData['versionComment']);
+
+	$this->template->assign('wikiPage', $preparedData['wikiPage']);
+	$this->template->assign('request', $preparedData['request']);
+		*/
+		//$preparedData = $this->prepareArticleModelForEditor($wikiPage);
+		//$this->showArticleEditor($preparedData);
+	}
+
+
+
 	/**
 	 * Handles an edit-request for the given permalink in the url.<br/>
 	 * If the permalink was not found, the user gets redirected to the search
@@ -59,7 +97,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
             $preparedData = $this->prepareArticleModelForEditor($wikiPage);
 			$this->showArticleEditor($preparedData);
 		}
-
 	}
 	
 	/**
@@ -362,10 +399,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('title', $preparedData['title']);
 		$this->template->assign('content', $preparedData['content']);
 		$this->template->assign('author', $preparedData['author']);
-		$this->template->assign('wikiPage', $preparedData['wikiPage']);
-		$this->template->assign('request', $preparedData['request']);
 		$this->template->assign('tags', $preparedData['tags']);
         $this->template->assign('versionComment', $preparedData['versionComment']);
+
+		$this->template->assign('wikiPage', $preparedData['wikiPage']);
+		$this->template->assign('request', $preparedData['request']);
         
         $this->template->assign('error', $error);
 	}
