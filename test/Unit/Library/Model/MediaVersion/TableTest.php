@@ -1,0 +1,26 @@
+<?php
+/**
+ * Created by JetBrains PhpStorm.
+ * User: nicolas
+ * Date: 23.05.11
+ * Time: 13:27
+ * To change this template use File | Settings | File Templates.
+ */
+ 
+class Test_Unit_Library_Model_MediaVersion_TableTest extends Test_Unit_Library_Model_AbstractTest {
+
+	public function setUp() {
+		parent::setUp();
+
+		$this->table	= new Html5Wiki_Model_MediaVersion_Table();
+
+		$this->timestamp = time();
+	}
+
+	public function testSaveMediaVersion() {
+		$primary = $this->table->saveMediaVersion(array('id' => 1));
+
+		$this->assertEquals(1, $primary['id']);
+		$this->assertInternalType('integer', $primary['timestamp']);
+	}
+}
