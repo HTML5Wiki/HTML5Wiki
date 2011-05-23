@@ -15,9 +15,9 @@ var Capsulebar = (function() {
 	}
 	
 	self.initializeClickEvents = function() {
-		$("#capsulebar-read").bind('click', this.onClick.bind(this, 'read'));
-		$("#capsulebar-edit").bind('click', this.onClick.bind(this, 'edit'));
-		$("#capsulebar-history").bind('click', this.onClick.bind(this, 'history'));
+		$("#capsulebar-read").bind('click', self.onClick.bind(this, 'read'));
+		$("#capsulebar-edit").bind('click', self.onClick.bind(this, 'edit'));
+		$("#capsulebar-history").bind('click', self.onClick.bind(this, 'history'));
 	}
 	
 	self.onClick = function(page, e) {
