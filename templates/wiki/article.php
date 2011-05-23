@@ -10,7 +10,7 @@
 		$tagSlug = '';
 		$tagTemplate = '<a href="'
 					 . $template->request->getBasePath()
-					 . '/index/search?term=%s&mediaType=tag" title="'
+					 . '/index/search?term=%s&mediatype=tag" title="'
 					 . $template->translate->_('searchForOtherObjectsWithTag')
 					 . '" class="tag">%s</a>';
 		
