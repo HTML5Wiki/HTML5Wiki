@@ -26,11 +26,11 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			$this->template = new Html5Wiki_Template_Json();
 		}
 		
+		$request = $this->router->getRequest();
 		$searchEngine = new Html5Wiki_Search_SearchEngine();
-		$term = urldecode($this->router->getRequest()->getGet('term'));
-		$mediaTypes = explode(',',$this->router->getRequest()->getGet('mediatype'));
-		var_dump($mediaTypes);
-		
+		$term = urldecode($request->getGet('term'));
+		$mediaTypes = explode(',',$request->getGet('mediatype'));
+		$showCreateNewArticle = $request->getGet('newarticle');
 		
 		$errors = $searchEngine->validateTerm($term);
 		if (is_array($errors)) {
@@ -38,15 +38,18 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			return;
 		}
 		
+		if($showCreateNewArticle === '1') $showCreateNewArticle = TRUE;
+		else $showCreateNewArticle = FALSE;
+		
 		$results = $searchEngine->search($term);
 		
 		if ($this->router->getRequest()->isAjax()) {
 			$this->template->assign('results', $this->prepareAjaxSearchResults($results));
 		} else {
-			// don't parse search results when the search page is displayed - more info can be displayed.
 			$this->template->assign('results', $results);
 			$this->template->assign('markDownParser', new Markdown_Parser());
 			$this->template->assign('term', $term);
+			$this->template->assign('showCreateNewArticle', $showCreateNewArticle);
 			$this->layoutTemplate->assign('title', sprintf($this->layoutTemplate->getTranslate()->_('searchResultsFor'), $term));
 		}
 	}

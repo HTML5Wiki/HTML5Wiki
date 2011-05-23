@@ -1,4 +1,23 @@
 <?php
+	if($this->showCreateNewArticle === TRUE) {
+		$this->javascriptHelper()->appendScript('
+		appendPageReadyCallback(function() {
+			MessageController.addMessage(
+				"question"
+				,"'. sprintf($this->translate->_('desiredArticleWithPermalinkNotFound'), $this->term). '"
+				,{
+					\'modal\': false
+					,\'buttons\': [{
+						\'text\' : \''. $this->translate->_('create'). '\'
+						,\'button\' : true
+					},{
+						\'text\' : \''. $this->translate->_('noDontCreate'). '\'
+					}]
+				}
+			);
+		});
+		');
+	}
 
 	function createMatchOriginsSlug($matchOrigins) {
 		$slug = '';
