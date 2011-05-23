@@ -159,10 +159,11 @@ var SearchBoxController = (function() {
 		var resultList = $('<ol/>');
 		for(var i = 0, l = totalResultItems; i < l; i++) {
 			var title = results[i].title;
+			var mediaType = results[i].mediaType;
 			var matchOrigins = results[i].matchOrigins
 			var url = results[i].url;
 			
-			resultList.append(createResultItem(title, matchOrigins, url));
+			resultList.append(createResultItem(title, mediaType, matchOrigins, url));
 		}
 		resultContainer.empty();
 		resultContainer.append(resultList);
@@ -269,14 +270,14 @@ var SearchBoxController = (function() {
 	 * @see SearchBoxController#handleKeyUp
 	 * @access private
 	 */
-	function createResultItem(title, matchOrigins, url) {
+	function createResultItem(title, mediaType, matchOrigins, url) {
 		var matchOriginSlug = '';
 		for(i=0,l=matchOrigins.length; i<l; i++) {
 			matchOriginSlug += matchOrigins[i];
 			if(i<l-1) matchOriginSlug += ', ';
 		}
 		
-		var item = $('<li class="result-item"><a href="'+url+'">'+title+'</a><p>Gefunden in: '+ matchOriginSlug + '</p></li>');
+		var item = $('<li class="result-item mediatype-'+mediaType+'"><a href="'+url+'"><p class="title">'+title+'</p><p class="matchorigins">In '+ matchOriginSlug + '</p></a></li>');
 		item.hover(function() {
 			self.setSelectedResultItem($(this).index());
 		});

@@ -67,6 +67,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		foreach ($results as $result) {
 			$preparedResults[] = array(
 				'title' => $result['model']->getCommonName()
+				,'mediaType' => strtolower($result['model']->mediaVersionType)
 				,'matchOrigins' => $result['matchOrigins']
 				,'url'  => $this->router->getRequest()->getBasePath(). '/wiki/' . $result['model']->permalink
 			);
