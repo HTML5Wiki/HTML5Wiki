@@ -9,10 +9,11 @@
 .header-overall .main-menu .menu-items .updates .tab{background-image:url('../images/icons16/clockHistoryFrame.png');}
 .header-overall .main-menu .menu-items .article .tab{background-image:url('../images/icons16/page.png');}
 .header-overall .main-menu .menu-items .search{float:right;margin:-10px 0 0 0;}.header-overall .main-menu .menu-items .search .searchterm{width:150px;font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;padding:5px 3px 3px 22px;background:url('../images/icons16/magnifier.png') no-repeat 3px 2px #ffffff;border:1px solid #ea7253;}
-.header-overall .searchbox-results{margin:-1px 0 0 0;position:absolute;width:175px;background:#fff;border:1px solid #ea7253;border-top:1px solid #fbe2db;}.header-overall .searchbox-results .result-item{list-style:none;padding:4px;font-size:85%;}.header-overall .searchbox-results .result-item .typed{font-weight:bold;background-color:#fbe2db;}
-.header-overall .searchbox-results .result-item em{color:#777;}
-.header-overall .searchbox-results .result-item a{text-decoration:none;color:#000;}
+.header-overall .searchbox-results{margin:-1px 0 0 0;position:absolute;width:175px;background:#fff;border:1px solid #ea7253;border-top:1px solid #fbe2db;}.header-overall .searchbox-results .result-item{list-style:none;padding:4px;font-size:85%;}.header-overall .searchbox-results .result-item a{text-decoration:none;color:#000;}
+.header-overall .searchbox-results .result-item .title{font-weight:bold;padding:2px 0 5px 20px;background:no-repeat 0 0;}
+.header-overall .searchbox-results .result-item .matchorigins{padding-left:20px;font-style:italic;color:#a9a9a9;}
 .header-overall .searchbox-results .selected{background-color:#f5bdae;}
+.header-overall .searchbox-results .mediatype-article .title{background-image:url('../images/icons16/page.png');}
 .messagebox{position:absolute;top:55px;left:25%;width:50%;display:box;overflow:hidden;z-index:1001;}.messagebox .barshadow{position:absolute;height:10px;width:100%;top:-10px;box-shadow:0 0 2px black;}
 .messagebox .message{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;color:#fff;-moz-border-radius:0 0 4px 4px;-webkit-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px;-moz-border-radius:0 0 4px 4px;-webkit-border-radius:0 0 4px 4px;border-radius:0 0 4px 4px;-webkit-box-shadow:0 0 2px #000000;-moz-box-shadow:0 0 2px #000000;box-shadow:0 0 2px #000000;padding:6px 8px 4px 28px;margin:0 5px 5px 5px;background:no-repeat 6px 4px;border:1px solid;border-top-width:0;}
 .messagebox .info{background-image:url('../images/icons16/information.png');background-color:#7ab7e6;border-color:#2888d2;}

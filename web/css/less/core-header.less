@@ -73,18 +73,26 @@
 			padding: 4px;
 			font-size: @font_normalsize;
 			
-			.typed {
+			a {
+				text-decoration: none;
+				color: #000;
+			}
+			
+			.title {
 				font-weight: bold;
-				background-color: lighten(@color_primary,40%);
+				padding: 2px 0 5px 20px;
+				background: no-repeat 0 0;
 			}
 			
-			em {
-				color: #777;
+			.matchorigins {
+				padding-left: 20px;
+				font-style: italic;
+				color: @color_secondary;
 			}
-			
-			a { text-decoration: none; color: #000; }
 		}
 		
 		.selected { background-color: lighten(@color_primary,30%); }
+		
+		.mediatype-article .title { background-image: @icon_16_page; }
 	}
 }
