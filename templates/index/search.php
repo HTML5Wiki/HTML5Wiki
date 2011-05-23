@@ -5,11 +5,12 @@
 			MessageController.addMessage(
 				"question"
 				,"'. sprintf($this->translate->_('desiredArticleWithPermalinkNotFound'), $this->term). '"
-				,{
-					\'modal\': false
-					,\'buttons\': [{
+				,{\'buttons\': [{
 						\'text\' : \''. $this->translate->_('create'). '\'
 						,\'button\' : true
+						,\'callback\' : function() {
+							window.location = \''. $this->basePath. '/wiki/create/'. $this->term. '\';
+						}
 					},{
 						\'text\' : \''. $this->translate->_('noDontCreate'). '\'
 					}]
