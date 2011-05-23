@@ -44,6 +44,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 	public function setUp() {
 		parent::setUp();
 		
+		$this->setBrowserLogLevel("debug");
 		$this->setBrowserUrl(TEST_HOST);
 		$this->wikiTestPage .= self::$time;
 		$this->wikiTestUrl = TEST_HOST . '/wiki/' . $this->wikiTestPage;
@@ -64,7 +65,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->type('css=#txtAuthorEmail', self::AUTHOR_EMAIL);
 		$this->assertElementPresent('css=#article-create');
 		$this->click('css=#article-create');
-		$this->waitForAjax();
+		$this->waitForPageToLoad('50000');
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-test-create-page.png');
 		
@@ -83,7 +84,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		
 		$this->assertElementPresent('css=#capsulebar-edit');
 		$this->click('css=#capsulebar-edit');
-		$this->waitForAjax();
+		$this->waitForPageToLoad('50000');
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page2.png');
 		
@@ -103,9 +104,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		
 		$this->type('css=#contentEditor', self::TEST_CONTENT);
 		
-		$this->fireEvent('css=#txtTags__ptags', 'focus');
-		$this->type('css=#txtTags__ptags', self::TEST_TAG_INSERT);
-		$this->fireEvent('css=#txtTags__ptags', 'blur');
+		$this->type('css=#txtTags', self::TEST_TAG_INSERT);
 		
 		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
 		
@@ -116,7 +115,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page5.png');
 		
 		$this->click('css=.save-button');
-		$this->waitForAjax();
+		$this->waitForPageToLoad('50000');
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page6.png');
 		
@@ -145,7 +144,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->assertElementPresent('css=.heading');
 		$this->assertElementPresent('css=#edit-article');
 		$this->assertElementPresent('css=#contentEditor');
-		$this->assertElementPresent('css=#txtTags__ptags');
+		$this->assertElementPresent('css=#txtTags');
 		$this->assertElementPresent('css=#versionComment');
 		$this->assertElementPresent('css=#txtAuthor');
 		$this->assertElementPresent('css=#txtAuthorEmail');
