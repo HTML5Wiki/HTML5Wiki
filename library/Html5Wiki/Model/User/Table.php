@@ -58,9 +58,14 @@ class Html5Wiki_Model_User_Table extends Zend_Db_Table_Abstract {
 			'name'	=> $data['name']
 		);
 		
-		$this->update($data, $where);
+		$this->update($updateData, $where);
 	}
 
+	/**
+	 * @param	String		$name
+	 * @param	String		$email
+	 * @return	Boolean
+	 */
     public function userExists($name, $email) {
         $selectStatement = $this->select()->setIntegrityCheck(false);
 

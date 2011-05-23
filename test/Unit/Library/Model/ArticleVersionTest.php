@@ -9,11 +9,9 @@
 
 require_once 'PHPUnit/Autoload.php';
 
-class ArticleVersionTest extends Test_Unit_Library_Model_AbstractTest {
+class Test_Unit_Library_Model_ArticleVersionTest extends Test_Unit_Library_Model_AbstractTest {
 
 	protected $articleData1 = array();
-
-	protected $articleData2 = array();
 
 	protected $mediaVersionData1 = array();
 
@@ -49,16 +47,13 @@ class ArticleVersionTest extends Test_Unit_Library_Model_AbstractTest {
 			'userId'        => 1,
 			'timestamp'     => $timestamp
 		);
-
-
 	}
 
 	/**
 	 * @return void
 	 */
 	public function testCreateArticle() {
-		$mediaRow   = $this->tableMediaVersion->createRow();
-		$mediaRow->setFromArray($this->mediaVersionData1);
+		$mediaRow   = $this->tableMediaVersion->createRow($this->mediaVersionData1);
 		$mediaRow->save();
 
 		$this->articleData1['mediaVersionId'] = $mediaRow->id;
@@ -115,7 +110,6 @@ class ArticleVersionTest extends Test_Unit_Library_Model_AbstractTest {
 		$article->loadLatestById(1);
 
 		$this->assertEquals($this->articleData1['title'], $article->getCommonName());
-
 	}
 
 }
