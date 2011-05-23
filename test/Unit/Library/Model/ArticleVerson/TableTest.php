@@ -11,6 +11,9 @@ include 'Unit/Library/Model/MediaVersion/FakeTable.php';
 
 class Test_Unit_Library_Model_ArticleVersion_TableTest extends Test_Unit_Library_Model_AbstractTest {
 
+	/**
+	 * @var Html5Wiki_Library_Model_ArticleVersion_Table
+	 */
 	protected $table;
 	protected $mediaVersionTable;
 
@@ -25,6 +28,9 @@ class Test_Unit_Library_Model_ArticleVersion_TableTest extends Test_Unit_Library
 		$this->timestamp = time();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function testSaveArticle() {
 		$this->mediaVersionTable->saveMediaVersion(array('id' => 1, 'timestamp' => $this->timestamp));
 		$primary = $this->table->saveArticle(array('mediaVersionId' => 1, 'mediaVersionTimestamp' => $this->timestamp, 'title' => 'Test Article'));
@@ -33,6 +39,9 @@ class Test_Unit_Library_Model_ArticleVersion_TableTest extends Test_Unit_Library
 		$this->assertEquals($primary['mediaVersionTimestamp'], $this->timestamp);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function testFetchLatestArticles() {
 		$this->mediaVersionTable->saveMediaVersion(array('id' => 1, 'timestamp' => ($this->timestamp + 3600)));
 		$this->table->saveArticle(array('mediaVersionId' => 1, 'mediaVersionTimestamp' => ($this->timestamp + 3600), 'title' => 'Test Article', 'content' => '<bold>My New Text</bold>'));
@@ -45,6 +54,18 @@ class Test_Unit_Library_Model_ArticleVersion_TableTest extends Test_Unit_Library
 		$this->assertEquals(2, sizeof($articles));
 		$this->assertEquals(2, $articles[0]['mediaVersionId']);
 		$this->assertEquals(1, $articles[1]['mediaVersionId']);
+	}
+
+
+	public function testFetchArticlesById() {
+		$articles	= $this->table->fetchArticlesById(1);
+
+
+		$this->assertEquals(2, sizeof($articles));
+		$this->assertEquals(1, $articles[0]['mediaVersionId']);
+		$this->assertEquals(1, $articles[1]['mediaVersionId']);
+		$this->assertEquals($this->timestamp + 3600, $articles[0]['mediaVersionTimestamp']);
+		$this->assertEquals($this->timestamp, $articles[1]['mediaVersionTimestamp']);
 	}
 
 }

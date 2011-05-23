@@ -17,10 +17,22 @@ class Test_Unit_Library_Model_MediaVersion_TableTest extends Test_Unit_Library_M
 		$this->timestamp = time();
 	}
 
+	/**
+	 * @return void
+	 */
 	public function testSaveMediaVersion() {
-		$primary = $this->table->saveMediaVersion(array('id' => 1));
+		$primary = $this->table->saveMediaVersion(array('id' => 1, 'permalink' => 'test/testarticle'));
 
 		$this->assertEquals(1, $primary['id']);
 		$this->assertInternalType('integer', $primary['timestamp']);
+	}
+
+	/**
+	 * @return void
+	 */
+	public function testFechtchMediaByPermaLink() {
+		$article	= $this->table->fetchMediaByPermaLink('test/testarticle');
+
+		$this->assertEquals(1, $article['id']);
 	}
 }
