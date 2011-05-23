@@ -67,23 +67,35 @@ var MessageController = (function() {
 	
 		if(messageData != undefined) {
 			var messageBox = createMessageBox(messageData);
+			var modal = false;
 			$('.header-overall').after(messageBox);
 			
-			if(messageData.options == undefined || messageData.options.length == 0) {
-				$(messageBox).slideDown(message_slidedown_time)
-				.delay(message_show_time)
-				.slideUp(message_slideup_time,function() {
-					$(this).remove();
-					self.displayQueuedMessage();
-				});					
-			} else {
+			if(messageData.options != undefined) {
+				if(messageData.options.modal != undefined) modal = messageData.options.modal;
+			}
+			
+			if(modal) {
+				// Show modal with overlay:
 				var overlay = createOverlay();
 				$('body').append(overlay);
 				overlay.fadeIn(overlay_fadein_time, function() {
 					$(messageBox).slideDown(message_slidedown_time);
 				});
+			} else {
+				if(messageData.options != undefined && messageData.options.buttons != undefined && messageData.options.buttons.length > 0) {
+					// If buttons are available, only slide down the message:
+					$(messageBox).slideDown(message_slidedown_time);
+				} else {
+					// If no buttons are there, slide down, wait and slide up after:
+					$(messageBox).slideDown(message_slidedown_time)
+					.delay(message_show_time)
+					.slideUp(message_slideup_time,function() {
+						$(this).remove();
+						self.displayQueuedMessage();
+					});
+				}
 			}
-
+			
 		}
 	}
 
@@ -100,8 +112,9 @@ var MessageController = (function() {
         messagebox.append('<div class="barshadow">&nbsp;</div>');
 
         if(messageData.options != undefined
-			&& messageData.options.length > 0) {
-			content.append(createOptions(messageData.options));
+			&& messageData.options.buttons != undefined
+			&& messageData.options.buttons.length > 0) {
+			content.append(createButtons(messageData.options.buttons));
 		}
 
         messagebox.append(content);
@@ -111,21 +124,21 @@ var MessageController = (function() {
 	}
 	
 	/**
-	 * Creates clickable buttons and links from a options Information
+	 * Creates clickable buttons and links from a buttons Information
 	 * Array.
 	 *
-	 * @param options Array with information about the options
+	 * @param buttonsData Array with information about the options
 	 * @see MessageController#addMessage
 	 * @see MessageController#createMessageBox
 	 * @access private
 	 */
-	function createOptions(optionsData) {
+	function createButtons(buttonsData) {
 		var container = $('<div class="options" />');
 		
-    	for(var i = 0, l = optionsData.length; i < l; i++) {
-			var text = optionsData[i]['text'];
-    		var showAsButton = optionsData[i]['button'];
-			var callback = optionsData[i]['callback'];
+    	for(var i = 0, l = buttonsData.length; i < l; i++) {
+			var text = buttonsData[i]['text'];
+    		var showAsButton = buttonsData[i]['button'];
+			var callback = buttonsData[i]['callback'];
 			
 			// The option:
     		var class = ' class="option"';

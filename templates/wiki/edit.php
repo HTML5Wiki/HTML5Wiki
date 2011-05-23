@@ -119,13 +119,13 @@
             }
             $msg .= "</ul>";
         ?>
-        var options = [
-				{
-					text : 'Ok',
-					button : true
-				}
-			];
-			MessageController.addMessage('question','<?php echo $msg; ?>', options);
+        var options = {
+			'buttons' : [{
+				'text': 'OK'
+				,'button': true
+			}];
+		};
+		MessageController.addMessage('question','<?php echo $msg; ?>', options);
     </script>
     <?php
         endif;
