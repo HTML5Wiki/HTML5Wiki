@@ -12,12 +12,14 @@ return array(
 	,'content' => 'Inhalt'
 	
 	,'title' => 'Titel'
+	,'lastChanged' => 'Zuletzt ge&auml;ndert'
 	
 	,'tags' => 'Tags'
 	,'searchForOtherObjectsWithTag' => 'Andere Objekte mit dem Tag \'%s\' suchen...'
 	,'desiredArticleWithPermalinkNotFound' => 'Der gew&uuml;nschte Artikel mit der Adresse \'%s\' konnte leider nicht gefunden werden.<br/>M&ouml;chten Sie einen neuen Artikel mit diesem Titel erstellen?'
 	,'create' => 'Erstellen'
 	,'noDontCreate' => 'Nein, nichts unternehmen'
+	,'matchedOn' => 'Gefunden in'
 	
 	,'compareVersions' => 'Versionen vergleichen'
 );
