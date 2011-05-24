@@ -247,18 +247,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$user = $this->getUser($params);
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
 			$user->saveCookie();
-			$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
-			
-			// reload the article because it needs also the MediaVersion informations.
-			$article = new Html5Wiki_Model_ArticleVersion();
-			$article->loadByIdAndTimestamp($articleVersion->mediaVersionId, $articleVersion->mediaVersionTimestamp);
-			
-			$this->showArticle($article);
-        } else {
-			$this->template->assign('errors', $errors);
-			$this->template->assign('author', $user);
-			$this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
+
+            if ($this->hasIntermediateVersion($oldArticleVersion)) {
+
+            } else {
+                $articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
+
+                // reload the article because it needs also the MediaVersion informations.
+                $article = new Html5Wiki_Model_ArticleVersion();
+                $article->loadByIdAndTimestamp($articleVersion->mediaVersionId, $articleVersion->mediaVersionTimestamp);
+
+                $this->showArticle($article);
+
+                return;
+            }
+
         }
+
+        $this->template->assign('errors', $errors);
+        $this->template->assign('author', $user);
+        $this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
+
 	}
 	
 	/**
@@ -511,6 +520,23 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		return $success;
 	}
+
+    /**
+     * Check if the article was save from an other user while editing
+     *
+     * @param  Html5Wiki_Model_ArticleVersion $oldArticleVersion
+     *
+     * @return boolean
+     */
+    private function hasIntermediateVersion(Html5Wiki_Model_ArticleVersion $oldArticleVersion) {
+        $permalink = $this->checkAndGetPermalink();
+
+        $latestArticle = new Html5Wiki_Model_ArticleVersion();
+		$latestArticle->loadLatestByPermalink($permalink);
+
+        return !($latestArticle->id === $oldArticleVersion->id &&
+                 $latestArticle->timestamp === $oldArticleVersion->timestamp);
+    }
 	
 	/**
 	 * Handles an edit-request for the given permalink in the url.<br/>
