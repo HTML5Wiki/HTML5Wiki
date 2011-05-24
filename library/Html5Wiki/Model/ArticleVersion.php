@@ -113,6 +113,13 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	public function getCommonName() {
 		return $this->title;
 	}
+
+	/**
+	 * @return int
+	 */
+	public function getMediaVersionTimestamp() {
+		return intval($this->_data['mediaVersionTimestamp']);
+	}
 	
 }
 
