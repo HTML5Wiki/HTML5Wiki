@@ -39,7 +39,7 @@
 	<div class="clear"></div>
 
 	<div class="grid_12 bottom-button-bar">
-		<input id="article-history" type="submit" value="Versionen Vergleichen" class="caption large-button diff-button"/>
+		<input id="article-history" type="submit" value="<?php echo $this->translate->_('compareVersions') ?>" class="caption large-button diff-button"/>
 	</div>
 	</form>
 	
