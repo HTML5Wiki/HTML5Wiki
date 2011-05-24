@@ -116,7 +116,7 @@ var Article = (function() {
      * @access public
      */
 	self.handleEditArticleTitle = function() {
-		var heading = $(this);
+		var heading = $('.heading');
 		var title = heading.text();
 		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" name="txtTitle" />');
 
@@ -127,7 +127,6 @@ var Article = (function() {
 			$('.editor-wrapper').replaceWith(heading);
 			return false;
 		});
-
 
 		var container = $('<div class="editor-wrapper" />');
 		container.append(titleEditor);
