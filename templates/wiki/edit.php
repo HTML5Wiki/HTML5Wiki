@@ -16,7 +16,7 @@
                 $setErrorClass = $fieldToSet ? ' error' : '';
             ?>
 			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->translate->_('noTitle'); ?></h1>
-			<?php echo isset($this->wikiPage) ? $this->capsulebarHelper($this->wikiPage->permalink) : ''; ?>
+			<?php echo isset($this->permalink) ? $this->capsulebarHelper($this->permalink) : ''; ?>
 		</header>
 		<div class="clear"></div>
 
