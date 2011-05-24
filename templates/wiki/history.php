@@ -6,7 +6,7 @@
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->article->id . '"]);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(History.init);');
 
-	$numberOfVersions = sizeof($this->versions);
+	$numberOfVersions = countVersions($this->versions);
 	$overallVersionCounter = -1;
 	
 	function isVersionChecked($index, $side, $numberOfVersions) {
@@ -21,6 +21,14 @@
 		}
 		
 		return $checked;
+	}
+	
+	function countVersions($versionGroups) {
+		$total = 0;
+		foreach($versionGroups as $group) {
+			$total += sizeof($group);
+		}
+		return $total;
 	}
 ?>
 
