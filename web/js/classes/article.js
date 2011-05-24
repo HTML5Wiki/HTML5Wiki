@@ -69,6 +69,8 @@ var Article = (function() {
 				data: mediaData,
 				complete: function(response) {
 					Article.replaceContent(response);
+				},
+				success: function(response) {
 					var url = window.location.href.replace(/(edit|new)/, 'read');
 					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
 				}

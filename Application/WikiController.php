@@ -453,7 +453,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		$validatorChainName = new Zend_Validate();
 		$validatorChainName->addValidator(new Zend_Validate_StringLength(self::USERNAME_MIN_LENGTH, self::USERNAME_MAX_LENGTH))
-						   ->addValidator(new Zend_Validate_Alpha());
+						   ->addValidator(new Zend_Validate_Alpha(true));
 		$success = $this->validatorIsValid($success, $validatorChainName, 'authorName', $params['authorName'], $errorMsg, $errorFields);
 		
 		$validatorChainEmail = new Zend_Validate();
