@@ -203,7 +203,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param array $preparedData
 	 * @param array $errors 
 	 */
-	private function showArticleEditor(array $preparedData, array $errors = array()) {
+	private function showArticleEditor(array $preparedData) {
 		$this->setTemplate('edit.php');
 		$this->setNoCache();
 
@@ -224,7 +224,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$this->template->assign('request', $this->router->getRequest());
 
-		$this->template->assign('error', $errors);
+		
+		$this->template->assign('author', $this->getUser());
 	}
 
 	/**
@@ -266,7 +267,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         }
 
         $this->template->assign('errors', $errors);
-        $this->template->assign('author', $user);
         $this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
 	}
 
@@ -538,6 +538,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
         $latestArticle = new Html5Wiki_Model_ArticleVersion();
 		$latestArticle->loadLatestByPermalink($permalink);
+		
+		if (!isset($latestArticle->id)) {
+			return false;
+		}
 
         return !($latestArticle->id === $oldArticleVersion->id &&
                  $latestArticle->timestamp === $oldArticleVersion->timestamp);
@@ -565,7 +569,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if (!isset($article->id)) {
 			$this->redirectToArticleNotFoundSearch($permalink);
 		} else {
-			$this->template->assign('author', $this->getUser());
 			$this->showArticleEditor($this->prepareData($article, array('tags' => $article->getTags())));
 		}
 	}
