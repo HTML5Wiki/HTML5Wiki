@@ -233,6 +233,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         $errors = array();
 		$user = $this->getUser($params);
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
+			$user->saveCookie();
 			$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 			
 			// reload the article because it needs also the MediaVersion informations.

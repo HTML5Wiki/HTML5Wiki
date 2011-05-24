@@ -29,8 +29,6 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 			$this->_data = $row->toArray();
 			$this->_cleanData = $this->_data;
 			$this->_modifiedFields = array();
-			
-			$this->saveCookie();
 			return true;
 		}
 		return false;
@@ -45,8 +43,6 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 			$this->_data = $row->toArray();
 			$this->_cleanData = $this->_data;
 			$this->_modifiedFields = array();
-			
-			$this->saveCookie();
 			return true;
 		}
 		return false;
