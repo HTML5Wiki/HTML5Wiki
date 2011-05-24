@@ -19,15 +19,16 @@
 		});
 		');
 	}
-
-	function createMatchOriginsSlug($matchOrigins) {
-		$slug = '';
-		for($i = 0, $l = sizeof($matchOrigins); $i < $l; $i++) {
-			$slug .= $matchOrigins[$i];
-			if($i < $l-1) $slug .= ', ';
-		}
+	
+	function translateMatchOrigins($matchOrigins, $translate) {
+		$translated = array();
 		
-		return $slug;
+		foreach($matchOrigins as $matchOrigin) {
+			$translated[] = $translate->_($matchOrigin);
+		}
+		sort($translated);
+		
+		return $translated;
 	}
 ?>
 
@@ -38,13 +39,18 @@
 	
 	<ol class="results">
 		<?php foreach($this->results as $result) : ?>
-			<li class="result mediatype-<?php echo strtolower($result['model']->mediaVersionType) ?>">
-				<h2 class="name">
+			<li class="result title mediatype-<?php echo strtolower($result['model']->mediaVersionType) ?>">
+				<h2>
 					<a href="<?php echo $this->urlHelper('wiki', $result['model']->permalink) ?>">
 						<?php echo $result['model']->getCommonName() ?>
 					</a>
 				</h2>
-				<p>Gefunden in: <?php echo createMatchOriginsSlug($result['matchOrigins']) ?></p>
+				<p class="meta">
+					<span class="intro"><?php echo $this->translate->_('matchedOn') ?></span>:
+					<?php echo implode(', ', translateMatchOrigins($result['matchOrigins'], $this->translate)) ?>
+					&nbsp;-&nbsp;
+					<span class="intro"><?php echo $this->translate->_('lastChanged') ?></span>: <span class="lastchange"><?php echo date('d.m.Y H:m', $result['model']->timestamp) ?></span>
+				</p>
 			</li>
 		<?php endforeach; ?>
 	</ol>
