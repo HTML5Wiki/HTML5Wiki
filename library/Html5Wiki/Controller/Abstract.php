@@ -203,6 +203,12 @@ abstract class Html5Wiki_Controller_Abstract {
 		$permalink = substr_replace($uri, '', strpos($uri, $needle), strlen($needle));
 		$permalink = str_replace('?'.$this->router->getRequest()->getQueryString(), '', $permalink);
 		
+		if(strlen($permalink) > 0) {
+			if($permalink[strlen($permalink) - 1] === '/') {
+				$permalink = substr($permalink, 0, strlen($permalink) - 1);
+			}
+		}
+		
 		return $permalink;
 	}
 		

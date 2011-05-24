@@ -45,10 +45,9 @@ class Html5Wiki_Model_MediaVersionManager {
 	 *
 	 * @param string $permalink
 	 * @param array $timestamps
-	 * @return type 
+	 * @return Zend_Db_Table_Rowset_Abstract 
 	 */
 	public function getMediaVersionsByPermalinkAndTimestamps($permalink, array $timestamps) {
-		$versions = null;
 		$permalinksModel = $this->getLatestMediaVersionByPermaLink($permalink);
 		
 		if($permalinksModel->id > 0) {
@@ -60,10 +59,10 @@ class Html5Wiki_Model_MediaVersionManager {
 			$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
 			$select->where('timestamp in (?)', $timestamps);
 
-			$versions = $table->fetchAll($select);
+			return $table->fetchAll($select);
 		}
 		
-		return $versions;
+		return null;
 	}
 	
 	/**

@@ -9,7 +9,7 @@
  
 class Test_Unit_Library_Model_MediaVersionManagerTest extends Test_Unit_Library_Model_AbstractTest {
 
-	public function testGetTimespanGroup() {
+	public function testGroupMediaVersionByTimespan() {
 		
 	}
 }

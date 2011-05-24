@@ -26,9 +26,11 @@ class Html5Wiki_Model_MediaVersion extends Html5Wiki_Model_Abstract {
 		
 		$mediaVersion = $this->_getTable()->fetchRow($select);
 		
-		$this->_data = $mediaVersion->toArray();
-		$this->_cleanData = $this->_data;
-		$this->_modifiedFields = array();
+		if ($mediaVersion) {
+			$this->_data = $mediaVersion->toArray();
+			$this->_cleanData = $this->_data;
+			$this->_modifiedFields = array();
+		}
 	}
 	
 	/**
@@ -48,6 +50,28 @@ class Html5Wiki_Model_MediaVersion extends Html5Wiki_Model_Abstract {
 		$this->_data = $row->toArray();
 		$this->_cleanData = $this->_data;
 		$this->_modifiedFields = array();
+	}
+	
+	
+	/**
+	 * Loads a specific version of a MediaVersion into this Model.
+	 *
+	 * @param string $permalink
+	 * @param int $timestamp
+	 */
+	public function loadByPermalinkAndTimestamp($permalink, $timestamp) {
+		$select = $this->select();
+		$select->where('permalink = ?', $permalink);
+		$select->where('timestamp = ?', $timestamp);
+		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
+
+		$row = $this->_getTable()->fetchRow($select);
+		
+		if ($row) {
+			$this->_data = $row->toArray();
+			$this->_cleanData = $this->_data;
+			$this->_modifiedFields = array();
+		}
 	}
 	
 	/**

@@ -458,7 +458,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		
 		if (!empty($params['versionComment'])) {
 			$validatorChainVersionComment = new Zend_Validate();
-			$validatorChainVersionComment->addValidator(new Zend_Validate_Alpha());
+			$validatorChainVersionComment->addValidator(new Zend_Validate_Alpha(true));
 			$success = $this->validatorIsValid($success, $validatorChainVersionComment, 'versionComment', $params['versionComment'], $errorMsg, $errorFields);
 		}
 		
@@ -609,6 +609,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$request = $this->router->getRequest();
 		$left = $request->getGet('left');
 		$right = $request->getGet('right');
+		
 		$permalink = $this->getPermalink();
 		
 		if (!$left || !$right) {
@@ -624,14 +625,14 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		foreach($versions as $version) {
 			$articleVersion = new Html5Wiki_Model_ArticleVersion();
 			$articleVersion->loadByIdAndTimestamp($version->id, $version->timestamp);
-			if ($articleVersion->timestamp === $left) {
+			if ($articleVersion->mediaVersionTimestamp === intval($left)) {
 				$leftVersion = $articleVersion;
 			} else {
 				$rightVersion = $articleVersion;
 			}
 		}
 		
-		$lastArticle = max($leftVersion->timestamp, $rightVersion->timestamp) == $leftVersion->timestamp ? $leftVersion : $rightVersion;
+		$lastArticle = max($leftVersion->mediaVersionTimestamp, $rightVersion->mediaVersionTimestamp) == $leftVersion->mediaVersionTimestamp ? $leftVersion : $rightVersion;
 		$this->setCachingHeader($lastArticle);
 		
 		$translatedTitle = $this->template->getTranslate()->_('title');
@@ -651,7 +652,54 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('diff', $diff);
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
+		
+		$this->template->assign('permalink', $permalink);
+		
 		$this->setPageTitle($leftVersion->getCommonName());
+	}
+	
+	public function rollbackAction() {
+		$permalink = $this->getPermalink();
+		$request = $this->router->getRequest();
+		
+		$toTimestamp = $request->getGet('to');
+		if (!$toTimestamp) {
+			throw new Html5Wiki_Exception("Timestamp must be supplied. TODO: Redirect to history.");
+		}
+
+		$mediaVersion = new Html5Wiki_Model_MediaVersion();
+		$mediaVersion->loadByPermalinkAndTimestamp($permalink, $toTimestamp);
+
+		$articleVersion = new Html5Wiki_Model_ArticleVersion();
+		$articleVersion->loadByIdAndTimestamp($mediaVersion->id, $toTimestamp);
+		
+		if($request->getPost('rollback')) {
+			$userData = array(
+				'authorName' => $request->getPost('authorName'),
+				'authorEmail' => $request->getPost('authorEmail')
+			);
+			
+			$newMediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
+			$newMediaVersion = $newMediaVersionTable->createRow($mediaVersion->toArray());
+			
+			$newArticleVersionTable = new Html5Wiki_Model_ArticleVersion_Table();
+			$newArticleVersion = $newArticleVersionTable->createRow($articleVersion->toArray());
+
+			$newMediaVersion->timestamp = time();
+			$newMediaVersion->userId = $this->getUser($userData)->id;
+			
+			$newArticleVersion->mediaVersionTimestamp = $newMediaVersion->timestamp;
+
+			$newMediaVersion->save();
+			$newArticleVersion->save();
+
+			$this->redirect('/wiki/' . $permalink);
+		} else {
+			$this->template->assign('permalink', $permalink);
+			$this->template->assign('toTimestamp', $toTimestamp);
+			$this->template->assign('author', $this->getUser());
+			$this->template->assign('title', $articleVersion->getCommonName());
+		}
 	}
 	
 	public function previewAction() {

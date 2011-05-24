@@ -52,7 +52,7 @@ function appendPageReadyCallback(callback, parameters) {
 function runPageReadyCallbacks() {
 	for(var i = 0, l = pageReadyCallbacks.length; i < l; i++) {
 		var callback = pageReadyCallbacks[i];
-		
+
 		if(callback.method != undefined) {
 			// Direct methodcall:
 			callback.method();
