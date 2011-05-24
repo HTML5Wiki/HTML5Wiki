@@ -69,7 +69,7 @@ var Article = (function() {
 				data: mediaData,
 				complete: function(response) {
 					Article.replaceContent(response);
-					var url = window.location.href.replace('edit', 'read');
+					var url = window.location.href.replace(/(edit|new)/, 'read');
 					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
 				}
 			});

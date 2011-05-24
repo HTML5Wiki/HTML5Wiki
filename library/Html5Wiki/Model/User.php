@@ -23,7 +23,7 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 		if($userId > 0 && (!isset($this->name) && !isset($this->email))) {
 			$this->loadById($userId);
 			$this->saveCookie($userId);
-		} elseif (isset($this->id) && isset($this->name) && isset($this->email)) {
+		} elseif ($userId > 0 && isset($this->name) && isset($this->email) && !empty($this->name) && !empty($this->name)) {
 			$this->saveCookie($userId);
 		} else {
 			$this->loadFromCookie();

@@ -125,7 +125,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * Set Page title
 	 * @param string $title
 	 */
-	protected function setTitle($title) {
+	protected function setPageTitle($title) {
 		if(isset($this->layoutTemplate)) {
 			$this->layoutTemplate->assign('title', $title);
 		}

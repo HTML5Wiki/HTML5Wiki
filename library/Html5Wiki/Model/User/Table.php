@@ -73,7 +73,7 @@ class Html5Wiki_Model_User_Table extends Zend_Db_Table_Abstract {
 
         $selectStatement->where('name = ?', $name);
         $selectStatement->where('email = ?', $email);
-		
+
         return $this->fetchRow($selectStatement);
 	}
 }

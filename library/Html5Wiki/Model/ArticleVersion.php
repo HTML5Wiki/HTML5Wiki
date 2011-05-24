@@ -39,7 +39,10 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 			$select->where('mediaVersionId = ?', $mediaVersion->id);
 			$select->where('mediaVersionTimestamp = ?', $mediaVersion->timestamp);
 			$articleVersion = $this->_getTable()->fetchRow($select);
-
+			
+			if (!isset($articleVersion->mediaVersionId)) {
+				throw new Html5Wiki_Exception("MediaVersion {$mediaVersion->id} does not have an articleVersion!");
+			}
 
 			$articleVersionData = $articleVersion->toArray();
 			$mediaVersionData = $mediaVersion->toArray();
@@ -94,7 +97,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$articleVersionData = $articleVersion->toArray();
 		$mediaVersionData = $mediaVersion->toArray();
 		
-		$data = array_merge($articleVersionData,$mediaVersionData);
+		$data = array_merge($articleVersionData, $mediaVersionData);
 		
 		$this->_data = $data;
 		$this->_cleanData = $this->_data;
