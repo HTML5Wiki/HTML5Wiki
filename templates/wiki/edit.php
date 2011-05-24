@@ -2,28 +2,28 @@
 	$basePath = $this->basePath . '/';
 	$this->javascriptHelper()->appendFile($basePath . 'js/classes/capsulebar.js');
 	$this->javascriptHelper()->appendFile($basePath . 'js/classes/article.js');
-	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->wikiPage->id . '"]);');
+	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->id . '"]);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorEvents);');
 ?>
 <article id="content" class="content editor">
-	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->wikiPage->permalink ?>" method="post">
-		<input type="hidden" value="<?php echo $this->wikiPage->id; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
-        <input type="hidden" value="<?php echo $this->wikiPage->timestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
+	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
+		<input type="hidden" value="<?php echo $this->mediaVersionId; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
+		<input type="hidden" value="<?php echo $this->mediaVersionTimestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
         <header class="grid_12 title clearfix">
             <?php
-                $fieldToSet = isset($this->error['fields']['title']) ? $this->error['fields']['title'] : false;
+                $fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
                 $setErrorClass = $fieldToSet ? ' error' : '';
             ?>
 			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->translate->_('noTitle'); ?></h1>
-			<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
+			<?php echo isset($this->wikiPage) ? $this->capsulebarHelper($this->wikiPage->permalink) : ''; ?>
 		</header>
 		<div class="clear"></div>
 
 		<div class="grid_12">
 			<fieldset name="content" class="group">
                 <?php
-                    $fieldToSet = isset($this->error['fields']['content']) ? $this->error['fields']['content'] : false;
+                    $fieldToSet = isset($this->errors['fields']['content']) ? $this->errors['fields']['content'] : false;
                     $setErrorClass = $fieldToSet ? ' error' : '';
                 ?>
 				<legend class="groupname<?php echo $setErrorClass; ?>"><?php echo $this->translate->_("articleContentLegend") ?></legend>
@@ -38,7 +38,7 @@
                 <input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : 0; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
                     <?php
-                        $fieldToSet = isset($this->error['fields']['author']) ? $this->error['fields']['author'] : false;
+                        $fieldToSet = isset($this->errors['fields']['authorName']) ? $this->errors['fields']['authorName'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>">Ihr Name</label>
@@ -46,7 +46,7 @@
 				</p>
 				<p>
                     <?php
-                        $fieldToSet = isset($this->error['fields']['authorEmail']) ? $this->error['fields']['authorEmail'] : false;
+                        $fieldToSet = isset($this->errors['fields']['authorEmail']) ? $this->errors['fields']['authorEmail'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>">Ihre E-Mailadresse</label>
@@ -65,11 +65,11 @@
 				<legend class="groupname">Tagging</legend>
                     <p class="clearfix">
                     <?php
-                        $fieldToSet = isset($this->error['fields']['tags']) ? $this->error['fields']['tags'] : false;
+                        $fieldToSet = isset($this->errors['fields']['tags']) ? $this->errors['fields']['tags'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtTags" class="label<?php echo $setErrorClass; ?>">Tag</label>
-					<input type="text" name="txtTags" id="txtTags" value="<?php echo implode(",", $this->tags); ?>" class="textfield<?php echo $setErrorClass; ?>" />
+					<input type="text" name="txtTags" id="txtTags" value="<?php echo $this->tags ?>" class="textfield<?php echo $setErrorClass; ?>" />
 				</p>
 				<p class="hint">
 					Ein Artikel kann mit verschiedenen Tags versehen werden,
@@ -82,7 +82,7 @@
 			</fieldset>	
 			<fieldset name="versionComment" class="group">
                 <?php
-                        $fieldToSet = isset($this->error['fields']['versionComment']) ? $this->error['fields']['versionComment'] : false;
+                        $fieldToSet = isset($this->errors['fields']['versionComment']) ? $this->errors['fields']['versionComment'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 				<legend class="groupname">Versionskommentar</legend>
@@ -112,16 +112,16 @@
     <script type="text/javascript">
         <?php
             $msg = "<ul>";
-            foreach ($this->error['messages'] as $errorMessage) {
+            foreach ($this->errors['messages'] as $errorMessage):
                 $msg .= "<li>" . addslashes($errorMessage) . "</li>";
-            }
+            endforeach;
             $msg .= "</ul>";
         ?>
         var options = {
 			'buttons' : [{
 				'text': 'OK'
 				,'button': true
-			}];
+			}]
 		};
 		MessageController.addMessage('question','<?php echo $msg; ?>', options);
     </script>

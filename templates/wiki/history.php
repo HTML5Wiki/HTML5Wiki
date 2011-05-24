@@ -6,13 +6,13 @@
 
 <article id="content" class="content history">
 	<header class="grid_12 title clearfix">
-		<h1 class="heading"><?php echo $this->wikiPage->title ?></h1>
-		<?php echo $this->capsulebarHelper($this->wikiPage->permalink); ?>
+		<h1 class="heading"><?php echo $this->article->title ?></h1>
+		<?php echo $this->capsulebarHelper($this->article->permalink); ?>
 	</header>
 
 	<div class="clear"></div>
 
-	<form action="<?php echo $this->urlHelper('wiki', 'diff', $this->wikiPage->permalink) ?>" method="get">
+	<form action="<?php echo $this->urlHelper('wiki', 'diff', $this->article->permalink) ?>" method="get">
 	<div class="grid_12">
 		<ol class="versionhistory">
 			<?php foreach($this->versions as $versionGroup => $versions) : ?>

@@ -98,10 +98,6 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 		return '';
 	}
 	
-	public function save() {
-		parent::save();
-	}
-	
 	public function __toString() {
 		return $this->permalink;
 	}
