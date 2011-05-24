@@ -83,8 +83,8 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	}
 	
 	public function getUser() {
-		$data = array('id' => $this->userId);
-		$user = new Html5Wiki_Model_User(array('data'=>$data));
+		$user = new Html5Wiki_Model_User();
+		$user->loadById($this->userId);
 		return $user;
 	}
 	

@@ -132,6 +132,26 @@ abstract class Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
+	 * Set generated ETag hash to header
+	 * @param string $eTag 
+	 */
+	protected function setETag($eTag) {
+		header("Etag: " . $eTag);
+	}
+	
+	/**
+	 * Set last modified according to unix timestamp to header
+	 * @param int $unixTimestamp 
+	 */
+	protected function setLastModified($unixTimestamp) {
+		header("Last-Modified:" . gmdate("D, d M Y H:i:s", $unixTimestamp) . " GMT");
+	}
+	
+	protected function setNoCache() {
+		header("Cache-Control: no-cache, no-store");
+	}
+	
+	/**
 	 * Disable layout
 	 */
 	protected function setNoLayout() {

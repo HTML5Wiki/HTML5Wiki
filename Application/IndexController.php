@@ -12,6 +12,8 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		$articleTable = new Html5Wiki_Model_ArticleVersion_Table();
 		$changes = $articleTable->fetchLatestArticles();
 		
+		$this->setNoCache();
+		
 		// todo fetch latest changes from mediaversion, not articleversion
 		
 		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
@@ -25,6 +27,8 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 		if ($this->router->getRequest()->isAjax()) {
 			$this->template = new Html5Wiki_Template_Json();
 		}
+		
+		$this->setNoCache();
 		
 		$request = $this->router->getRequest();
 		$searchEngine = new Html5Wiki_Search_SearchEngine();

@@ -18,22 +18,10 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 	
 	protected $_tableClass = 'Html5Wiki_Model_User_Table';
 	
-	public function init() {
-		$userId = isset($this->id) ? intval($this->id) : 0;
-		if($userId > 0 && (!isset($this->name) && !isset($this->email))) {
-			$this->loadById($userId);
-			$this->saveCookie($userId);
-		} elseif ($userId > 0 && isset($this->name) && isset($this->email) && !empty($this->name) && !empty($this->name)) {
-			$this->saveCookie($userId);
-		} else {
-			$this->loadFromCookie();
-		}
-	}
-	
 	/**
 	 * Loads User by its id
 	 */
-	private function loadById($userId) {
+	public function loadById($userId) {
 		$where = $this->select()->where('id = ?', $userId);
 		$row = $this->_getTable()->fetchRow($where);
 		
@@ -41,13 +29,29 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 			$this->_data = $row->toArray();
 			$this->_cleanData = $this->_data;
 			$this->_modifiedFields = array();
+			return true;
 		}
+		return false;
+	}
+	
+	public function loadByIdNameAndEmail($id, $name, $email) {
+		$where = $this->select()->where('id = ?', $id)
+					->where('name = ?', $name)
+					->where('email = ?', $email);
+		$row = $this->_getTable()->fetchRow($where);
+		if (isset($row->id)) {
+			$this->_data = $row->toArray();
+			$this->_cleanData = $this->_data;
+			$this->_modifiedFields = array();
+			return true;
+		}
+		return false;
 	}
 	
 	/**
 	 * Loads User by existing cookie
 	 */
-	private function loadFromCookie() {
+	public function loadFromCookie() {
 		$request = Html5Wiki_Controller_Front::getInstance()->getRouter()->getRequest();
 		if($request->getCookie('currentUserId')) {
 			$this->loadById($request->getCookie('currentUserId'));
@@ -58,7 +62,7 @@ class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
 	 * Save user cookie (currentUserId)
 	 * @return bool return of setcookie.
 	 */
-	private function saveCookie() {
+	public function saveCookie() {
 		return setcookie('currentUserId', $this->id, time() + 3600, '/', null, false, true);
 	}
 	

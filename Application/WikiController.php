@@ -87,12 +87,24 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
+	 * Set ETag and LastModified caching headers
+	 * 
+	 * @param Html5Wiki_Model_ArticleVersion $article 
+	 */
+	private function setCachingHeader(Html5Wiki_Model_ArticleVersion $article) {
+		$this->setETag(md5($article->mediaVersionId . $article->mediaVersionTimestamp));
+		$this->setLastModified($article->mediaVersionTimestamp);
+	}
+	
+	/**
 	 * Shows an article model in the proper template.
 	 *
 	 * @param Html5Wiki_Model_ArticleVersion $article
 	 */
 	private function showArticle(Html5Wiki_Model_ArticleVersion $article) {
 		$this->setTemplate('read.php');
+		
+		$this->setCachingHeader($article);
 
 		$this->template->assign('article', $article);
         $this->template->assign('request', $this->router->getRequest());
@@ -193,6 +205,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function showArticleEditor(array $preparedData, array $errors = array()) {
 		$this->setTemplate('edit.php');
+		$this->setNoCache();
 		
 		if (!empty($preparedData['title'])) {
 			$this->setPageTitle($preparedData['title']);
@@ -233,6 +246,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         $errors = array();
 		$user = $this->getUser($params);
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
+			$user->saveCookie();
 			$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 			
 			// reload the article because it needs also the MediaVersion informations.
@@ -242,6 +256,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->showArticle($article);
         } else {
 			$this->template->assign('errors', $errors);
+			$this->template->assign('author', $user);
 			$this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
         }
 	}
@@ -331,36 +346,44 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
+	 * Handle user request by checking params and getting the correct user if possible.
 	 * 
 	 * @param array $params
-	 * @return bool|Html5Wiki_Model_User
+	 * @return mixed Html5Wiki_Model_User or null
 	 */
 	private function handleUserRequest(array $params) {
-		$userData = array();
-		if (count($params)) {
-			$userData	= array(
-				'name'      => $params['authorName'],
-				'email' 	=> $params['authorEmail']
-			);
-			if (isset($params['userId']) && $params['userId'] !== 0) {
-				$userData['id'] = $params['userId'];
+		$user = new Html5Wiki_Model_User();
+		// load user by id
+		if(isset($params['userId']) && !isset($params['authorName']) && !isset($params['authorEmail'])) {
+			$user->loadById($params['userId']);
+			if (isset($user->id)) {
+				return $user;
 			}
 		}
-		$user = new Html5Wiki_Model_User(array('data' => $userData));
-		if(isset($user->id) && $user->id > 0) {
-			return $user;
-		} elseif (count($params) && strlen($params['authorName']) && strlen($params['authorEmail'])) {
+		// check if correct userId has been loaded
+		if (isset($params['userId']) && isset($params['authorName']) && isset($params['authorEmail'])) {
+			$user->loadByIdNameAndEmail($params['userId'], $params['authorName'], $params['authorEmail']);
+			if (isset($user->id)) {
+				return $user;
+			}
+		}
+		if (isset($params['authorName']) && isset($params['authorEmail']) && strlen($params['authorName']) && strlen($params['authorEmail'])) {
 			$userTable = new Html5Wiki_Model_User_Table();
-			$existingUser = $userTable->userExists($userData['name'], $userData['email']);
+			$existingUser = $userTable->userExists($params['authorName'], $params['authorEmail']);
 			if (isset($existingUser->id)) {
 				return $existingUser;
 			}
-			$user = $userTable->createRow(array('email' => $userData['email'], 'name' => $userData['name']));
+			$user = $userTable->createRow(array('email' => $params['authorEmail'], 'name' => $params['authorName']));
 			$user->save();
 
 			return $user;
 		}
 		
+		// as a last option, load from cookie
+		$user->loadFromCookie();
+		if (isset($user->id)) {
+			return $user;
+		}
 		return null;
 	}
 	
@@ -544,6 +567,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$latestVersion->loadLatestById($versions->current()->id);
 		$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		
+		$this->setCachingHeader($latestVersion);
+		
 		$this->setPageTitle($latestVersion->title);
 		$this->template->assign('article', $latestVersion);
 		$this->template->assign('versions', $groupedVersions);
@@ -580,6 +605,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 		
+		$lastArticle = max($leftVersion->timestamp, $rightVersion->timestamp) == $leftVersion->timestamp ? $leftVersion : $rightVersion;
+		$this->setCachingHeader($lastArticle);
+		
 		$translatedTitle = $this->template->getTranslate()->_('title');
 		$translatedTags   = $this->template->getTranslate()->_('tags');
 		
@@ -598,6 +626,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
 		$this->setPageTitle($leftVersion->getCommonName());
+	}
+	
+	public function previewAction() {
+		$content = $this->router->getRequest()->getPost('data');
+		
+		$this->setPageTitle($this->template->getTranslate()->_('preview'));
+		
+		$this->template->assign('content', $content);
+		$this->template->assign('markDownParser', new Markdown_Parser());
 	}
 	
 	/**
