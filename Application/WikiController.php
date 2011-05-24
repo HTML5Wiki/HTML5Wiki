@@ -87,12 +87,24 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
+	 * Set ETag and LastModified caching headers
+	 * 
+	 * @param Html5Wiki_Model_ArticleVersion $article 
+	 */
+	private function setCachingHeader(Html5Wiki_Model_ArticleVersion $article) {
+		$this->setETag(md5($article->mediaVersionId . $article->mediaVersionTimestamp));
+		$this->setLastModified($article->mediaVersionTimestamp);
+	}
+	
+	/**
 	 * Shows an article model in the proper template.
 	 *
 	 * @param Html5Wiki_Model_ArticleVersion $article
 	 */
 	private function showArticle(Html5Wiki_Model_ArticleVersion $article) {
 		$this->setTemplate('read.php');
+		
+		$this->setCachingHeader($article);
 
 		$this->template->assign('article', $article);
         $this->template->assign('request', $this->router->getRequest());
@@ -193,6 +205,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function showArticleEditor(array $preparedData, array $errors = array()) {
 		$this->setTemplate('edit.php');
+		$this->setNoCache();
 		
 		if (!empty($preparedData['title'])) {
 			$this->setPageTitle($preparedData['title']);
@@ -554,6 +567,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$latestVersion->loadLatestById($versions->current()->id);
 		$groupedVersions = $mediaManager->groupMediaVersionByTimespan($versions);
 		
+		$this->setCachingHeader($latestVersion);
+		
 		$this->setPageTitle($latestVersion->title);
 		$this->template->assign('article', $latestVersion);
 		$this->template->assign('versions', $groupedVersions);
@@ -589,6 +604,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$rightVersion = $articleVersion;
 			}
 		}
+		
+		$lastArticle = max($leftVersion->timestamp, $rightVersion->timestamp) == $leftVersion->timestamp ? $leftVersion : $rightVersion;
+		$this->setCachingHeader($lastArticle);
 		
 		$translatedTitle = $this->template->getTranslate()->_('title');
 		$translatedTags   = $this->template->getTranslate()->_('tags');
