@@ -148,7 +148,7 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 		$this->queryString = $this->serverVariables['QUERY_STRING'];
 		$this->userAgent = $this->serverVariables['HTTP_USER_AGENT'];
 		$this->ipAddress = $this->serverVariables['REMOTE_ADDR'];
-		$this->requestMethod = $this->serverVariables['REQUEST_METHOD'];
+		$this->requestMethod = strtolower($this->serverVariables['REQUEST_METHOD']);
 
 		// strip base path & index.php from request uri to get only the relevant parts
 		$arguments = str_replace($this->basePath, '', str_replace('/index.php', '', $this->uri));

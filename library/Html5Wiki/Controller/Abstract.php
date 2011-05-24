@@ -136,7 +136,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @param string $eTag 
 	 */
 	protected function setETag($eTag) {
-		header("Etag: " . $eTag);
+		header("Etag: " . $eTag, true);
 	}
 	
 	/**
@@ -144,11 +144,11 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @param int $unixTimestamp 
 	 */
 	protected function setLastModified($unixTimestamp) {
-		header("Last-Modified:" . gmdate("D, d M Y H:i:s", $unixTimestamp) . " GMT");
+		header("Last-Modified:" . gmdate("D, d M Y H:i:s", $unixTimestamp) . " GMT", true);
 	}
 	
 	protected function setNoCache() {
-		header("Cache-Control: no-cache, no-store");
+		header("Cache-Control: no-cache, no-store", true);
 	}
 	
 	/**

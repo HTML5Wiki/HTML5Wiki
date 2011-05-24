@@ -6,11 +6,14 @@
 	$jsHelper->appendFile($basePath . 'js/markitup/html5wiki-set.js');
 	$jsHelper->appendFile($basePath . 'js/jquery.ptags.min.js');
 	$jsHelper->appendFile($basePath . 'js/core.js');
+	$jsHelper->appendFile($basePath . 'js/classes/menu.js');
 	$jsHelper->appendFile($basePath . 'js/classes/messagecontroller.js');
 	$jsHelper->appendFile($basePath . 'js/classes/searchboxcontroller.js');
 	$jsHelper->appendFile($basePath . 'js/classes/html5wiki.js');
+	$jsHelper->appendFile($basePath . 'js/classes/translate.js');
 
 	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $basePath .'"]);');
+	$jsHelper->appendScript('appendPageReadyCallback(function() { Translate.init('. json_encode($this->translate->getAdapter()->getMessages()) .') });');
 	$jsHelper->appendScript('appendPageReadyCallback(function() {
 		SearchBoxController.initWithSearchBox(
 			$("#searchBox")
@@ -51,7 +54,7 @@
 					<li class="item updates<?php echo $router->getController() == 'index' && $router->getAction() == 'history' ? ' active' : '' ?>">
 						<a href="<?php echo $this->urlHelper('index', 'history') ?>" class="tab"><?php echo $this->translate->_("recentChanges") ?></a>
 					</li>
-					<?php if ($router->getController() === 'wiki' && $router->getAction() !== $config->routing->defaultAction): ?>
+					<?php if ($router->getController() === 'wiki' && $router->getAction() !== $config->routing->defaultAction && $router->getAction() !== 'new'): ?>
 					<li class="item article active">
 						<a href="<?php echo $this->urlHelper($router->getRequest()->getUri()) ?>" class="tab"><?php echo $this->title ?></a>
 					</li>

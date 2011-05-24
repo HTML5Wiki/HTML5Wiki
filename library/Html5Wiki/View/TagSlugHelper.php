@@ -19,7 +19,7 @@ class Html5Wiki_View_TagSlugHelper extends Html5Wiki_View_Helper {
 		$tagSlug = '';
 		$tagTemplate = '<a href="'
 					 . $this->template->request->getBasePath()
-					 . '/index/search?term=%s&mediatype=tag" title="'
+					 . '/index/search?term=%s&amp;mediatype=tag" title="'
 					 . $this->template->translate->_('searchForOtherObjectsWithTag')
 					 . '" class="tag">%s</a>';
 		

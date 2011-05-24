@@ -16,8 +16,15 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 	 */
 	protected $db = null;
 
+	/**
+	 * @var	Zend_Db_Adapter_Pdo_Mysql
+	 */
 	protected static $pdo = null;
 
+	/**
+	 * @static
+	 * @return void
+	 */
 	public static function setUpBeforeClass() {
 		self::$pdo = new Zend_Db_Adapter_Pdo_Mysql(array(
 			'host'     => DATABASE_HOST,
@@ -27,16 +34,26 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 		));
 	}
 
+	/**
+	 * @return void
+	 */
     public function setUp() {
 		$this->db = self::$pdo;
 
 	    Zend_Db_Table::setDefaultAdapter($this->db);
 	}
 
+	/**
+	 * @return void
+	 */
 	public function tearDown() {
 		$this->db = null;
 	}
 
+	/**
+	 * @static
+	 * @return void
+	 */
 	public static function tearDownAfterClass() {
 		foreach(self::$pdo->listTables() as $table) {
 			self::$pdo->query('TRUNCATE TABLE ' . $table);

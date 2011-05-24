@@ -1,4 +1,5 @@
 <?php
+
 /**
  * This file is part of the HTML5Wiki Project.
  *
@@ -12,7 +13,6 @@
  * Wiki controller
  */
 class Application_WikiController extends Html5Wiki_Controller_Abstract {
-
 	/**
 	 * Minimum length of the title
 	 * @var int
@@ -76,10 +76,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$article->loadLatestByPermalink($permalink);
 		}
 
-		if(isset($article->title)) {
+		if (isset($article->title)) {
 			$this->setPageTitle($article->title);
 		}
-		if(isset($article->id)) {
+		if (isset($article->id)) {
 			$this->showArticle($article);
 		} else {
 			$this->redirectToArticleNotFoundSearch($permalink);
@@ -121,8 +121,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function redirectToArticleNotFoundSearch($permalink) {
 		$searchUrl = $this->router->getRequest()->getBasePath()
-				   . '/index/search?term='. $permalink
-				   . '&newarticle=1';
+				. '/index/search?term=' . $permalink
+				. '&newarticle=1';
 		$this->redirect($searchUrl);
 	}
 
@@ -168,14 +168,14 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function prepareData(Html5Wiki_Model_ArticleVersion $article = null, array $data = array()) {
 		return array(
-			'mediaVersionId'        => $this->getArticleColumn('mediaVersionId', $article, $data),
+			'mediaVersionId' => $this->getArticleColumn('mediaVersionId', $article, $data),
 			'mediaVersionTimestamp' => $this->getArticleColumn('mediaVersionTimestamp', $article, $data),
-			'title'          => $this->getArticleColumn('title', $article, $data),
-			'content'        => $this->getArticleColumn('content', $article, $data),
-			'userId'         => $this->getArticleColumn('userId', $article, $data),
-			'tags'           => $this->getArticleColumn('tags', $article, $data),
+			'title' => $this->getArticleColumn('title', $article, $data),
+			'content' => $this->getArticleColumn('content', $article, $data),
+			'userId' => $this->getArticleColumn('userId', $article, $data),
+			'tags' => $this->getArticleColumn('tags', $article, $data),
 			'versionComment' => $this->getArticleColumn('versionComment', $article, $data),
-			'permalink'      => $this->getArticleColumn('permalink', $article, $data)
+			'permalink' => $this->getArticleColumn('permalink', $article, $data)
 		);
 	}
 
@@ -186,7 +186,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param array $data
 	 * @return string
 	 */
-	private function getArticleColumn($columnName, Html5Wiki_Model_ArticleVersion $article = null, array $data = array()) {
+	private function getArticleColumn($columnName, Html5Wiki_Model_ArticleVersion $article = null,
+			array $data = array()) {
 		if (isset($article->$columnName) &&
 				(!isset($data[$columnName]) || isset($data[$columnName]) && empty($data[$columnName]))) {
 			return $article->$columnName;
@@ -196,14 +197,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return '';
 	}
 
-
 	/**
 	 * Show the editor for an article.
 	 *
 	 * @param array $preparedData
 	 * @param array $errors
 	 */
-	private function showArticleEditor(array $preparedData, array $errors = array()) {
+	private function showArticleEditor(array $preparedData) {
 		$this->setTemplate('edit.php');
 		$this->setNoCache();
 
@@ -224,7 +224,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$this->template->assign('request', $this->router->getRequest());
 
-		$this->template->assign('error', $errors);
+		$this->template->assign('author', $this->getUser());
 	}
 
 	/**
@@ -232,7 +232,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * or if the validation failed, to the edit page
 	 */
 	public function saveAction() {
-		$params	= $this->matchPostParamsWithColumns();
+		$params = $this->matchPostParamsWithColumns();
 		$permalink = $this->getPermalink();
 
 		if ($this->router->getRequest()->isAjax()) {
@@ -240,7 +240,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		$oldArticleVersion = new Html5Wiki_Model_ArticleVersion();
 		if ($params['mediaVersionId'] !== 0 && $params['mediaVersionTimestamp'] !== 0) {
-			$oldArticleVersion->loadByIdAndTimestamp($params['mediaVersionId'], $params['mediaVersionTimestamp']);
+			$oldArticleVersion->loadByIdAndTimestamp($params['mediaVersionId'],
+					$params['mediaVersionTimestamp']);
 		}
 
 		$errors = array();
@@ -269,12 +270,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				return;
 			}
 
-		}
-
-		$this->template->assign('errors', $errors);
-		$this->template->assign('author', $user);
-		$this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
-
+        $this->template->assign('errors', $errors);
+        $this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
 	}
 
 	/**
@@ -343,6 +340,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $mediaVersionRow;
 	}
 
+		$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
+		$article = $articleVersion->createRow(array(
+					'mediaVersionId' => $primaryKeys['id'],
+					'mediaVersionTimestamp' => $primaryKeys['timestamp'],
+					'title' => $params['title'],
+					'content' => $params['content']
+				));
+		$article->save();
+
+		$tags = explode(',', $params['tags']);
+		$this->saveTags($tags, $primaryKeys['id'], $primaryKeys['timestamp']);
+
+		return $article;
+	}
+
 	/**
 	 * Saves tags
 	 * @param array $tags
@@ -350,29 +362,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param int $mediaVersionTimestamp
 	 */
 	private function saveTags(array $tags, $mediaVersionId, $mediaVersionTimestamp) {
-		foreach($tags as $tag) {
+		foreach ($tags as $tag) {
 			$tag = trim($tag);
 			$tagRow = new Html5Wiki_Model_Tag();
 			$tagRow->loadByTag($tag);
 			if (!isset($tagRow->tag)) {
 				$tagRow = new Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table();
 				$tagRow = $tagRow->createRow(array(
-					'tag' => $tag
-				));
+							'tag' => $tag
+						));
 				$tagRow->save();
 			}
 
 			$mediaTag = new Html5Wiki_Model_MediaVersion_Mediatag_Table();
 			$mediaTagRow = $mediaTag->createRow(array(
-				'tagTag' => $tag,
-				'mediaVersionId' => $mediaVersionId,
-				'mediaVersionTimestamp' => $mediaVersionTimestamp
-			));
+						'tagTag' => $tag,
+						'mediaVersionId' => $mediaVersionId,
+						'mediaVersionTimestamp' => $mediaVersionTimestamp
+					));
 			$mediaTagRow->save();
 		}
 	}
-
-
 
 	/**
 	 * Returns user. When already set as field, use it. Otherwise handle user request according to params.
@@ -397,7 +407,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	private function handleUserRequest(array $params) {
 		$user = new Html5Wiki_Model_User();
 		// load user by id
-		if(isset($params['userId']) && !isset($params['authorName']) && !isset($params['authorEmail'])) {
+		if (isset($params['userId']) && !isset($params['authorName']) && !isset($params['authorEmail'])) {
 			$user->loadById($params['userId']);
 			if (isset($user->id)) {
 				return $user;
@@ -437,11 +447,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	private function matchPostParamsWithColumns() {
 		$request = $this->router->getRequest();
 		return array(
-			'mediaVersionId'    => intval($request->getPost('hiddenIdArticle', 0)),
+			'mediaVersionId' => intval($request->getPost('hiddenIdArticle', 0)),
 			'mediaVersionTimestamp' => intval($request->getPost('hiddenTimestampArticle', 0)),
 			'title' => $request->getPost('txtTitle', null),
 			'content' => $request->getPost('contentEditor', ''),
-			'tags'    => $request->getPost('tags', ''),
+			'tags' => $request->getPost('tags', ''),
 			'versionComment' => $request->getPost('versionComment'),
 			'userId' => intval($request->getPost('hiddenAuthorId', 0)),
 			'authorName' => $request->getPost('txtAuthor'),
@@ -449,18 +459,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		);
 	}
 
-
 	/**
 	 * Validate the form data after saving the article
 	 *
 	 * @param array $params
 	 * @param array $errors Reference to an errors array
-	 *
+	 * 
 	 * @author Alexandre Joly <ajoly@hsr.ch>
-	 *
+	 * 
 	 * @return bool
 	 */
-	private function validateArticleEditForm(Html5Wiki_Model_ArticleVersion $oldArticleVersion, array $params, array &$errors) {
+	private function validateArticleEditForm(Html5Wiki_Model_ArticleVersion $oldArticleVersion,
+			array $params, array &$errors) {
 		$success = true;
 		$errorMsg = array();
 		$errorFields = array(
@@ -476,24 +486,28 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if ($params['title'] !== null) {
 			$validatorChainTitle = new Zend_Validate();
 			$validatorChainTitle->addValidator(new Zend_Validate_Regex('/[a-z0-9\?\.-_\/\,]/i'))
-								->addValidator(new Zend_Validate_StringLength(self::TITLEFIELD_MIN_LENGTH, self::TITLEFIELD_MAX_LENGTH));
-			$success = $this->validatorIsValid($success, $validatorChainTitle, 'title', $params['title'], $errorMsg, $errorFields);
+					->addValidator(new Zend_Validate_StringLength(self::TITLEFIELD_MIN_LENGTH, self::TITLEFIELD_MAX_LENGTH));
+			$success = $this->validatorIsValid($success, $validatorChainTitle, 'title', $params['title'],
+							$errorMsg, $errorFields);
 		}
 
 		// Test Content
 		$validatorChainContent = new Zend_Validate();
 		$validatorChainContent->addValidator(new Zend_Validate_NotEmpty());
-		$success = $this->validatorIsValid($success, $validatorChainContent, 'content', $params['content'], $errorMsg, $errorFields);
+		$success = $this->validatorIsValid($success, $validatorChainContent, 'content',
+						$params['content'], $errorMsg, $errorFields);
 
 		// Test Tag
 		$validatorChainTags = new Zend_Validate();
 		$validatorChainTags->addValidator(new Zend_Validate_NotEmpty());
-		$success = $this->validatorIsValid($success, $validatorChainTags, 'tags', $params['tags'], $errorMsg, $errorFields);
+		$success = $this->validatorIsValid($success, $validatorChainTags, 'tags', $params['tags'],
+						$errorMsg, $errorFields);
 
 		if (!empty($params['versionComment'])) {
 			$validatorChainVersionComment = new Zend_Validate();
 			$validatorChainVersionComment->addValidator(new Zend_Validate_Alpha(true));
-			$success = $this->validatorIsValid($success, $validatorChainVersionComment, 'versionComment', $params['versionComment'], $errorMsg, $errorFields);
+			$success = $this->validatorIsValid($success, $validatorChainVersionComment, 'versionComment',
+							$params['versionComment'], $errorMsg, $errorFields);
 		}
 
 		$errors['messages'] = $errorMsg;
@@ -519,12 +533,14 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$validatorChainName = new Zend_Validate();
 		$validatorChainName->addValidator(new Zend_Validate_StringLength(self::USERNAME_MIN_LENGTH, self::USERNAME_MAX_LENGTH))
-						   ->addValidator(new Zend_Validate_Alpha(true));
-		$success = $this->validatorIsValid($success, $validatorChainName, 'authorName', $params['authorName'], $errorMsg, $errorFields);
+				->addValidator(new Zend_Validate_Alpha(true));
+		$success = $this->validatorIsValid($success, $validatorChainName, 'authorName',
+						$params['authorName'], $errorMsg, $errorFields);
 
 		$validatorChainEmail = new Zend_Validate();
 		$validatorChainEmail->addValidator(new Zend_Validate_EmailAddress());
-		$success = $this->validatorIsValid($success, $validatorChainEmail, 'authorEmail', $params['authorEmail'], $errorMsg, $errorFields);
+		$success = $this->validatorIsValid($success, $validatorChainEmail, 'authorEmail',
+						$params['authorEmail'], $errorMsg, $errorFields);
 
 		$errors['messages'] = array_merge($errors['messages'], $errorMsg);
 		$errors['fields'] = array_merge($errors['fields'], $errorFields);
@@ -543,7 +559,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 *
 	 * @return boolean
 	 */
-	private function validatorIsValid($success, $validatorChain, $key, $value, array &$errorMsg, array &$errorFields) {
+	private function validatorIsValid($success, $validatorChain, $key, $value, array &$errorMsg,
+			array &$errorFields) {
 		if (!$validatorChain->isValid($value)) {
 			$success = false;
 
@@ -555,22 +572,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $success;
 	}
 
-	/**
-	 * Check if the article was save from an other user while editing
-	 *
-	 * @param  Html5Wiki_Model_ArticleVersion $oldArticleVersion
-	 *
-	 * @return boolean
-	 */
-	private function hasIntermediateVersion(Html5Wiki_Model_ArticleVersion $oldArticleVersion) {
-		$permalink = $this->checkAndGetPermalink();
+
+    /**
+     * Check if the article was save from an other user while editing
+     *
+     * @param  Html5Wiki_Model_ArticleVersion $oldArticleVersion
+     *
+     * @return boolean
+     */
+    private function hasIntermediateVersion(Html5Wiki_Model_ArticleVersion $oldArticleVersion) {
+        $permalink = $this->checkAndGetPermalink();
 
 		$latestArticle = new Html5Wiki_Model_ArticleVersion();
 		$latestArticle->loadLatestByPermalink($permalink);
+		
+		if (!isset($latestArticle->id)) {
+			return false;
+		}
 
-		return !($latestArticle->id === $oldArticleVersion->id &&
-				 $latestArticle->timestamp === $oldArticleVersion->timestamp);
-	}
+        return !($latestArticle->id === $oldArticleVersion->id &&
+                 $latestArticle->timestamp === $oldArticleVersion->timestamp);
+    }
 
 	/**
 	 * Handles an edit-request for the given permalink in the url.<br/>
@@ -590,15 +612,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$article = new Html5Wiki_Model_ArticleVersion();
 			$article->loadLatestByPermalink($permalink);
 		}
-
-		if($article == null) {
+		
+		if (!isset($article->id)) {
 			$this->redirectToArticleNotFoundSearch($permalink);
 		} else {
-			$this->template->assign('author', $this->getUser());
 			$this->showArticleEditor($this->prepareData($article, array('tags' => $article->getTags())));
 		}
 	}
-
 
 	/**
 	 * Show history overview of an article.
@@ -610,7 +630,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$parameters = $this->router->getRequest()->getGetParameters();
 		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
 
-		if($this->router->getRequest()->isAjax()) {
+		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
 			$id = $parameters['idArticle'];
 			$versions = $mediaManager->getMediaVersionsById($id);
@@ -619,7 +639,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$versions = $mediaManager->getMediaVersionsByPermalink($permalink);
 		}
 
-		if(count($versions) == 0) {
+		if (count($versions) == 0) {
 			throw new Html5Wiki_Exception_404();
 		}
 
@@ -651,12 +671,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 
 		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
-		$versions = $mediaManager->getMediaVersionsByPermalinkAndTimestamps($permalink, array($left, $right));
+		$versions = $mediaManager->getMediaVersionsByPermalinkAndTimestamps($permalink,
+						array($left, $right));
 
 		$leftVersion = null;
 		$rightVersion = null;
 
-		foreach($versions as $version) {
+		foreach ($versions as $version) {
 			$articleVersion = new Html5Wiki_Model_ArticleVersion();
 			$articleVersion->loadByIdAndTimestamp($version->id, $version->timestamp);
 			if ($articleVersion->mediaVersionTimestamp === intval($left)) {
@@ -726,7 +747,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$articleVersion = new Html5Wiki_Model_ArticleVersion();
 		$articleVersion->loadByIdAndTimestamp($mediaVersion->id, $toTimestamp);
 
-		if($request->getPost('rollback')) {
+		if ($request->getPost('rollback')) {
 			$userData = array(
 				'authorName' => $request->getPost('authorName'),
 				'authorEmail' => $request->getPost('authorEmail')
@@ -774,11 +795,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$tags = array();
 		foreach ($tagset as $tag) {
-			$tags[] = (string)$tag;
+			$tags[] = (string) $tag;
 		}
 
 		return implode(",", $tags);
 	}
- }
+
+}
 
 ?>
