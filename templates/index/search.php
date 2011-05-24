@@ -37,6 +37,7 @@
 		<h1><?php printf($this->translate->_('searchResultsFor'), $this->term); ?></h1>
 	</header>
 	
+	<?php if(sizeof($this->results) > 0) : ?>
 	<ol class="results">
 		<?php foreach($this->results as $result) : ?>
 			<li class="result title mediatype-<?php echo strtolower($result['model']->mediaVersionType) ?>">
@@ -54,4 +55,8 @@
 			</li>
 		<?php endforeach; ?>
 	</ol>
+	<?php else : ?>
+	<h2><?php echo $this->translate->_('noSearchResultsTitle') ?></h2>
+	<p><?php printf($this->translate->_('noSearchResultsText'), $this->term) ?></p>
+	<?php endif; ?>
 </section>
