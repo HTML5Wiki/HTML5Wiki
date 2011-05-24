@@ -15,8 +15,8 @@
 				</h2>
 				<p class="meta">
 					<span class="timestamp">
-						<span class="time"><?php echo date('H:i', intval($change->timestamp)); ?></span>,
-						<span class="date"><?php echo date('d.m.Y', intval($change->timestamp)); ?></span>
+						<span class="time"><?php echo date($this->translate->_('timeFormat'), intval($change->timestamp)); ?></span>,
+						<span class="date"><?php echo date($this->translate->_('dateFormat'), intval($change->timestamp)); ?></span>
 					</span>
 					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
 					<span class="author"><?php echo $user->name; ?></span>

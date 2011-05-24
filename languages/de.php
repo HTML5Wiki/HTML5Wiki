@@ -1,7 +1,11 @@
 <?php
 
 return array(
-	'read' => 'Lesen'
+	'timestampFormat' => 'd.m.Y H:i'
+	,'timeFormat' => 'H:i'
+	,'dateFormat' => 'd.m.Y'
+	
+	,'read' => 'Lesen'
 	,'edit' => 'Bearbeiten'
 	,'history' => 'Änderungsgeschichte'
 	,'homepage' => 'Startseite'
@@ -23,13 +27,15 @@ return array(
 	,'noSearchResultsTitle' => 'Nichts passendes'
 	,'noSearchResultsText' => 'Leider konnte in der gesamten Wiki nichts passendes zum Begriff "%s" gefunden werden.<br/>Haben Sie einen &auml;hnlichen Begriff bereits versucht?'
 	
-	,'compareVersions' => 'Versionen vergleichen',
+	,'compareVersions' => 'Versionen vergleichen'
 	
-	'preview' => 'Vorschau',
-	'rollbackTo' => 'Version "%s" wiederherstellen',
-	'rollbackToQuestion' => 'Soll Version "%s" mit dem Titel "%s" wirklich wiederhergestellt werden?',
+	,'preview' => 'Vorschau'
+	,'rollbackTo' => 'Version "%s" wiederherstellen'
+	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version "%s" mit dem Titel "%s" wirklich wiederherstellen?<br/><em>Hinweis: Die aktuelle Version wird damit nicht verloren</em>'
+	,'yesRollback' => 'Ja, Version wiederherstellen'
+	,'noDontRollback' => 'Nein, nichts unternehmen'
 	
-	'yes' => 'Ja',
-	'no'  => 'Nein'
+	,'yes' => 'Ja'
+	,'no'  => 'Nein'
 );
 ?>

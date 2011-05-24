@@ -57,8 +57,8 @@
 					<input type="radio" name="right" value="<?php echo $version->timestamp; ?>" class="diffselector" <?php echo isVersionChecked($overallVersionCounter,'right',$numberOfVersions) ?>/>
 					<?php endif; ?>
 					<span class="timestamp">
-						<span class="time"><?php echo date('H:i', intval($version->timestamp)); ?></span>,
-						<span class="date"><?php echo date('d.m.Y', intval($version->timestamp)); ?></span>
+						<span class="time"><?php echo date($this->translate->_('timeFormat'), intval($version->timestamp)); ?></span>,
+						<span class="date"><?php echo date($this->translate->_('dateFormat'), intval($version->timestamp)); ?></span>
 					</span>
 					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
 					<span class="author"><?php echo $user->name; ?></span>

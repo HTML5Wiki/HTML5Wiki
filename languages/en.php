@@ -1,7 +1,11 @@
 <?php
 
 return array(
-	'read' => 'Read'
+	'timestampFormat' => 'Y-m-d H:i'
+	,'timeFormat' => 'H:i'
+	,'dateFormat' => 'Y-m-d'
+	
+	,'read' => 'Read'
 	,'edit' => 'Edit'
 	,'history' => 'History'
 	,'homepage' => 'Homepage'
@@ -23,13 +27,15 @@ return array(
 	,'noSearchResultsTitle' => 'No matches'
 	,'noSearchResultsText' => 'Unfortunatly, there where no matches with "%s" in the wiki.<br/>Have you already tried to refine you search term?'
 	
-	,'compareVersions' => 'Compare Versions',
+	,'compareVersions' => 'Compare Versions'
 	
-	'preview' => 'Preview',
-	'rollbackTo' => 'Rollback to version "%s"',
-	'rollbackToQuestion' => 'Please confirm that the version "%s" with title "%s" should be rollbacked.',
+	,'preview' => 'Preview'
+	,'rollbackTo' => 'Rollback to version "%s"'
+	,'rollbackToQuestion' => 'Would you really rollback to the version "%s" with title "%s"?<br/><em>Hint: You\'ll not loose your current version.</em>'
+	,'yesRollback' => 'Yes, rollback to this version'
+	,'noDontRollback' => 'No, don\'t do anything'
 	
-	'yes' => 'Yes',
-	'no'  => 'No'
+	,'yes' => 'Yes'
+	,'no'  => 'No'
 );
 ?>
