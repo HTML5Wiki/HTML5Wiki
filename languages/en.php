@@ -23,6 +23,8 @@ return array(
 	,'noSearchResultsTitle' => 'No matches'
 	,'noSearchResultsText' => 'Unfortunatly, there where no matches with "%s" in the wiki.<br/>Have you already tried to refine you search term?'
 	
-	,'compareVersions' => 'Compare Versions'
+	,'compareVersions' => 'Compare Versions',
+	
+	'preview' => 'Preview'
 );
 ?>

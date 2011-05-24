@@ -23,6 +23,8 @@ return array(
 	,'noSearchResultsTitle' => 'Nichts passendes'
 	,'noSearchResultsText' => 'Leider konnte in der gesamten Wiki nichts passendes zum Begriff "%s" gefunden werden.<br/>Haben Sie einen &auml;hnlichen Begriff bereits versucht?'
 	
-	,'compareVersions' => 'Versionen vergleichen'
+	,'compareVersions' => 'Versionen vergleichen',
+	
+	'preview' => 'Vorschau'
 );
 ?>

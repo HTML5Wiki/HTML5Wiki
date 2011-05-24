@@ -610,6 +610,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->setPageTitle($leftVersion->getCommonName());
 	}
 	
+	public function previewAction() {
+		$content = $this->router->getRequest()->getPost('data');
+		
+		$this->setPageTitle($this->template->getTranslate()->_('preview'));
+		
+		$this->template->assign('content', $content);
+		$this->template->assign('markDownParser', new Markdown_Parser());
+	}
+	
 	/**
 	 * Formats a tagset by imploding it with commas.
 	 * 
