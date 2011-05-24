@@ -293,6 +293,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function saveTags(array $tags, $mediaVersionId, $mediaVersionTimestamp) {
 		foreach($tags as $tag) {
+			$tag = trim($tag);
 			$tagRow = new Html5Wiki_Model_Tag();
 			$tagRow->loadByTag($tag);
 			if (!isset($tagRow->tag)) {
@@ -612,7 +613,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$tags[] = (string)$tag;
 		}
 		
-		return implode(", ", $tags);
+		return implode(",", $tags);
 	}
  }
 
