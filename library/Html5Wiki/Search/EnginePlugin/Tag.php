@@ -31,7 +31,7 @@ class Html5Wiki_Search_EnginePlugin_Tag extends Html5Wiki_Search_EnginePlugin_Ab
 		$matchOrigins = array();
 		
 		if(stripos($model->tagTag, $forTerm) !== FALSE) {
-			$matchOrigins[] = 'tag';
+			$matchOrigins[] = 'tags';
 		}
 		
 		return $matchOrigins;
