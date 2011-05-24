@@ -10,8 +10,10 @@
 	$jsHelper->appendFile($basePath . 'js/classes/messagecontroller.js');
 	$jsHelper->appendFile($basePath . 'js/classes/searchboxcontroller.js');
 	$jsHelper->appendFile($basePath . 'js/classes/html5wiki.js');
+	$jsHelper->appendFile($basePath . 'js/classes/translate.js');
 
 	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $basePath .'"]);');
+	$jsHelper->appendScript('appendPageReadyCallback(function() { Translate.init('. json_encode($this->translate->getAdapter()->getMessages()) .') });');
 	$jsHelper->appendScript('appendPageReadyCallback(function() {
 		SearchBoxController.initWithSearchBox(
 			$("#searchBox")
