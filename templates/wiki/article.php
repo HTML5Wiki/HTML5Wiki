@@ -28,7 +28,7 @@
 		<div class="heading">
 			<h1><?php echo $this->wikiPage->title ?></h1>
 			<p class="meta">
-				<span class="intro">Zuletzt ge&auml;ndert</span>: <span class="lastchange"><?php echo date('d.m.Y H:m', $this->wikiPage->timestamp) ?></span>
+				<span class="intro"><?php echo $this->translate->_('lastChanged') ?></span> <span class="lastchange"><?php echo date('d.m.Y H:m', $this->wikiPage->timestamp) ?></span>
 				<?php if($tagSlug != '') : ?>
 				&nbsp;-&nbsp;
 				<span class="tags"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?>
