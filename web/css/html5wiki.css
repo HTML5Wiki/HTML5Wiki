@@ -117,7 +117,8 @@ form input.error{background-color:#f9d4cd;}
 .recentchanges .changes .timespan .change .timestamp{margin:0 5px 0 0;}
 .recentchanges .changes .timespan .change .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .recentchanges .changes .timespan .change .comment{font-size:75%;font-style:italic;}
-.searchresults .result{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;margin-bottom:8px;padding-left:21px;background:no-repeat 0 5px;}.searchresults .result.mediatype-article{background-image:url('../images/icons16/page.png');}
+.searchresults p{font-family:Palatino,"Palatino Linotype",Georgia,Times,"Times New Roman",serif;line-height:140%;}
+.searchresults .result{margin-bottom:12px;padding-left:21px;background:no-repeat 0 5px;}.searchresults .result.mediatype-article{background-image:url('../images/icons16/page.png');}
 .compareversions .differences{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;width:100%;}.compareversions .differences .versiontitle{color:#000000;background-color:#c3c3c3;border-bottom:1px solid #a9a9a9;padding:5px 10px !important;}.compareversions .differences .versiontitle.right{border-left:2px #fff solid;}
 .compareversions .differences .linenumber{font-size:85%;font-weight:normal;color:#a9a9a9;background-color:#dcdcdc;width:35px;text-align:right;padding:0 4px;}.compareversions .differences .linenumber.to{border-left:2px #fff solid;}
 .compareversions .differences .left,.compareversions .differences .right{padding:1px 4px;}
