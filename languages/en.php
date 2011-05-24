@@ -27,7 +27,9 @@ return array(
 	
 	'preview' => 'Preview',
 	'rollbackTo' => 'Rollback to version "%s"',
-	'rollbackToQuestion' => 'Please confirm that the version "%s" with title "%s" should be rollbacked.',
+	'rollbackToQuestion' => 'Would you really rollback to the version "%s" with title "%s"?<br/><em>Hint: You\'ll not loose your current version.</em>',
+	'yesRollback' => 'Yes, rollback to this version',
+	'noDontRollback' => 'No, don\'t do anything',
 	
 	'yes' => 'Yes',
 	'no'  => 'No'

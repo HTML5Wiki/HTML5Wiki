@@ -27,7 +27,9 @@ return array(
 	
 	'preview' => 'Vorschau',
 	'rollbackTo' => 'Version "%s" wiederherstellen',
-	'rollbackToQuestion' => 'Soll Version "%s" mit dem Titel "%s" wirklich wiederhergestellt werden?',
+	'rollbackToQuestion' => 'M&ouml;chten Sie die Version "%s" mit dem Titel "%s" wirklich wiederherstellen?<br/><em>Hinweis: Die aktuelle Version wird damit nicht verloren</em>',
+	'yesRollback' => 'Ja, Version wiederherstellen',
+	'noDontRollback' => 'Nein, nichts unternehmen',
 	
 	'yes' => 'Ja',
 	'no'  => 'Nein'
