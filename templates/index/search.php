@@ -50,7 +50,7 @@
 					<span class="intro"><?php echo $this->translate->_('matchedOn') ?></span>:
 					<?php echo implode(', ', translateMatchOrigins($result['matchOrigins'], $this->translate)) ?>
 					&nbsp;-&nbsp;
-					<span class="intro"><?php echo $this->translate->_('lastChanged') ?></span>: <span class="lastchange"><?php echo date('d.m.Y H:m', $result['model']->timestamp) ?></span>
+					<span class="intro"><?php echo $this->translate->_('lastChanged') ?></span>: <span class="lastchange"><?php echo date($this->translate->_('timestampFormat'), $result['model']->timestamp) ?></span>
 				</p>
 			</li>
 		<?php endforeach; ?>

@@ -11,7 +11,7 @@
 		<div class="heading">
 			<h1><?php echo $this->article->title ?></h1>
 			<p class="meta">
-				<span class="intro"><?php echo $this->translate->_('lastChanged') ?></span> <span class="lastchange"><?php echo date('d.m.Y H:i', $this->article->timestamp) ?></span>
+				<span class="intro"><?php echo $this->translate->_('lastChanged') ?></span> <span class="lastchange"><?php echo date($this->translate->_('timestampFormat'), $this->article->timestamp) ?></span>
 				<?php if($tagSlug != '') : ?>
 				&nbsp;-&nbsp;
 				<span class="tags"><?php echo $this->translate->_('tags') ?>:</span> <?php echo $tagSlug ?>

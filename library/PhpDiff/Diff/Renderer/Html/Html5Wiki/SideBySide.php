@@ -70,8 +70,8 @@ class PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide extends PhpDiff_Diff_Rende
 		if($this->leftTimestamp != '' && $this->rightTimestamp != '') {
 			$html .= '<thead>';
 			$html .= '<tr>';
-			$html .= '<th colspan="2" class="versiontitle left">'. date('d.m.Y H:i:s', $this->leftTimestamp). '</th>';
-			$html .= '<th colspan="2" class="versiontitle right">'. date('d.m.Y H:i:s', $this->rightTimestamp). '</th>';
+			$html .= '<th colspan="2" class="versiontitle left">'. $this->leftTimestamp. '</th>';
+			$html .= '<th colspan="2" class="versiontitle right">'. $this->rightTimestamp. '</th>';
 			$html .= '</tr>';
 			$html .= '</thead>';
 		}
