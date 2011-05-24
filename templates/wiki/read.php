@@ -1,8 +1,8 @@
 <?php
 	$basePath = $this->request->getBasePath();
-
 	$this->javascriptHelper()->appendFile($basePath . '/js/classes/article.js');
 	$this->javascriptHelper()->appendFile($basePath . '/js/classes/capsulebar.js');
+	$this->javascriptHelper()->appendFile($basePath . 'js/classes/history.js');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->article->id . '"]);');
 	$tagSlug = $this->tagSlugHelper($this->tags);
 ?>
