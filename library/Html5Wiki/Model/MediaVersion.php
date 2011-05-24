@@ -8,7 +8,7 @@
  * @subpackage	Library
  */
 
-class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
+class Html5Wiki_Model_MediaVersion extends Html5Wiki_Model_Abstract {
 
 	protected $_tableClass = 'Html5Wiki_Model_MediaVersion_Table';
 	
@@ -97,9 +97,19 @@ class Html5Wiki_Model_MediaVersion extends Zend_Db_Table_Row_Abstract {
 	public function getCommonName() {
 		return '';
 	}
-	
+
+	/**
+	 * @return	String
+	 */
 	public function __toString() {
 		return $this->permalink;
+	}
+
+	/**
+	 * @return	Integer
+	 */
+	public function getTimestamp() {
+		return intval($this->_data['timestamp']);
 	}
 	
 }

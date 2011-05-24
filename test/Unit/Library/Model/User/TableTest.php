@@ -38,7 +38,7 @@ class Test_Unit_Library_Model_User_TableTest extends Test_Unit_Library_Model_Abs
 
 
 	public function testUserExists() {
-		$this->assertFalse($this->table->userExists('notest@test.com', 'No User'));
-		$this->assertTrue($this->table->userExists('test@test.com', 'Test User'));
+		$this->assertInstanceOf('Html5Wiki_Model_User', $this->table->userExists('Test User', 'test@test.com'));
+		$this->assertNull($this->table->userExists('No User', 'notest@test.com'));
 	}
 }

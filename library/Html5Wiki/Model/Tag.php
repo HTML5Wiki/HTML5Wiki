@@ -8,7 +8,7 @@
  * @subpackage	Library
  */
 
-class Html5Wiki_Model_Tag extends Zend_Db_Table_Row_Abstract {
+class Html5Wiki_Model_Tag extends Html5Wiki_Model_Abstract {
 	
 	protected $_tableClass = 'Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table';
 	
