@@ -12,22 +12,38 @@
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
 		<input type="hidden" value="<?php echo $this->mediaVersionId; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
 		<input type="hidden" value="<?php echo $this->mediaVersionTimestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
-        <header class="grid_12 title clearfix">
-            <?php
-                $fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
-                $setErrorClass = $fieldToSet ? ' error' : '';
-            ?>
+		<header class="grid_12 title clearfix">
+			<?php
+				$fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
+				$setErrorClass = $fieldToSet ? ' error' : '';
+			?>
 			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
 			<?php echo isset($this->permalink) ? $this->capsulebarHelper($this->permalink) : ''; ?>
 		</header>
 		<div class="clear"></div>
 
+		<?php if (isset($this->diff)) : ?>
+		<div class="grid_12 compareversions">
+			<fieldset name="author" class="group">
+				<legend class="groupname"><?php echo $this->translate->_('compareVersions') ?></legend>
+				<p class="hint">
+					TODO: Text: What happens!
+				</p>
+				<?php echo $this->diffRendererHelper($this->diff, $this->leftTimestamp, $this->rightTimestamp) ?>
+				<p class="hint">
+					TODO: Buttons to reject or save the new ArticleVersion
+				</p>
+			</fieldset>
+		</div>
+		<div class="clear"></div>
+		<?php endif; ?>
+
 		<div class="grid_12">
 			<fieldset name="content" class="group">
-                <?php
-                    $fieldToSet = isset($this->errors['fields']['content']) ? $this->errors['fields']['content'] : false;
-                    $setErrorClass = $fieldToSet ? ' error' : '';
-                ?>
+				<?php
+					$fieldToSet = isset($this->errors['fields']['content']) ? $this->errors['fields']['content'] : false;
+					$setErrorClass = $fieldToSet ? ' error' : '';
+				?>
 				<legend class="groupname<?php echo $setErrorClass; ?>"><?php echo $this->translate->_("articleContentLegend") ?></legend>
 				<textarea class="<?php echo $setErrorClass; ?>" id="contentEditor" name="contentEditor"><?php echo $this->content; ?></textarea>
 			</fieldset>
