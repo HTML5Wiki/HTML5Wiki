@@ -331,36 +331,44 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
+	 * Handle user request by checking params and getting the correct user if possible.
 	 * 
 	 * @param array $params
-	 * @return bool|Html5Wiki_Model_User
+	 * @return mixed Html5Wiki_Model_User or null
 	 */
 	private function handleUserRequest(array $params) {
-		$userData = array();
-		if (count($params)) {
-			$userData	= array(
-				'name'      => $params['authorName'],
-				'email' 	=> $params['authorEmail']
-			);
-			if (isset($params['userId']) && $params['userId'] !== 0) {
-				$userData['id'] = $params['userId'];
+		$user = new Html5Wiki_Model_User();
+		// load user by id
+		if(isset($params['userId']) && !isset($params['authorName']) && !isset($params['authorEmail'])) {
+			$user->loadById($params['userId']);
+			if (isset($user->id)) {
+				return $user;
 			}
 		}
-		$user = new Html5Wiki_Model_User(array('data' => $userData));
-		if(isset($user->id) && $user->id > 0) {
-			return $user;
-		} elseif (count($params) && strlen($params['authorName']) && strlen($params['authorEmail'])) {
+		// check if correct userId has been loaded
+		if (isset($params['userId']) && isset($params['authorName']) && isset($params['authorEmail'])) {
+			$user->loadByIdNameAndEmail($params['userId'], $params['authorName'], $params['authorEmail']);
+			if (isset($user->id)) {
+				return $user;
+			}
+		}
+		if (isset($params['authorName']) && isset($params['authorEmail']) && strlen($params['authorName']) && strlen($params['authorEmail'])) {
 			$userTable = new Html5Wiki_Model_User_Table();
-			$existingUser = $userTable->userExists($userData['name'], $userData['email']);
+			$existingUser = $userTable->userExists($params['authorName'], $params['authorEmail']);
 			if (isset($existingUser->id)) {
 				return $existingUser;
 			}
-			$user = $userTable->createRow(array('email' => $userData['email'], 'name' => $userData['name']));
+			$user = $userTable->createRow(array('email' => $params['authorEmail'], 'name' => $params['authorName']));
 			$user->save();
 
 			return $user;
 		}
 		
+		// as a last option, load from cookie
+		$user->loadFromCookie();
+		if (isset($user->id)) {
+			return $user;
+		}
 		return null;
 	}
 	
