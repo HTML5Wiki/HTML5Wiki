@@ -50,7 +50,7 @@ var Article = (function() {
 			var name      = $('#txtAuthor').val();
 			var email     = $('#txtAuthorEmail').val();
             var id        = $('#hiddenAuthorId').val();
-			var tags      = Article.collectMediaTags();
+			var tags      = $('#txtTags').val();
 
 			var mediaData = {
                 hiddenIdArticle: idArticle,
@@ -61,7 +61,7 @@ var Article = (function() {
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,
-				tags: tags.join(',')
+				tags: tags
 			};
 			$.ajax({
 				type: 'POST',
@@ -74,19 +74,6 @@ var Article = (function() {
 				}
 			});
 		}
-	}
-
-	/**
-	 * Setup the article editor GUI with ptags and markitup.
-	 *
-	 * @author Manuel Alabor <malabor@hsr.ch>
-	 */
-	self.setupArticleEditorGui = function() {
-		$("#edit-article").submit(Article.save.bind());
-		
-		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
-		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
-		$('.editor #txtTags').ptags();
 	}
 	
 	self.replaceContent = function(response, textStatus) {
@@ -105,16 +92,7 @@ var Article = (function() {
 
 	self.onEditFormLoaded = function(response, textStatus) {
 		this.replaceContent(response);
-		
-		this.bindEditorEvents();
-	}
-	
-	self.bindEditorEvents = function() {
-		// templates/wiki/edit.php-Stuff
-		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
-		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
-		$('.editor #txtTags').ptags();
-		$('.editor #txtTags').bind('change', Article.collectMediaTags);
+		this.setupArticleEditorGui();
 	}
 	
 	self.loadHistory = function(url, idArticle) {
@@ -133,7 +111,6 @@ var Article = (function() {
      * of an article.
      * A button with the possibility to cancel the title-editor is appended.
      *
-     * @author Manuel Alabor
      * @access public
      */
 	self.handleEditArticleTitle = function() {
@@ -159,17 +136,14 @@ var Article = (function() {
 		return false;
 	}
 	
-	self.collectMediaTags = function() {
-		var tags = [];
-		
-		// @todo Not necessary like this! Tags are backed in the original
-		// input field
-		
-		$('.ui-ptags-tag-text').each(function(element, test, test2) {
-			tags.push($.trim(test.innerHTML));
-		});
-
-		return tags;
+	self.setupArticleEditorGui = function() {
+		$('.editor #contentEditor').markItUp(html5WikiMarkItUpSettings);
+		$('.editor #txtTags').ptags();
+	}
+	
+	self.setupArticleEditorEvents = function() {
+		$("#edit-article").submit(Article.save.bind());
+		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 	}
 
 	return self;

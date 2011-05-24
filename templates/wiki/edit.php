@@ -4,6 +4,7 @@
 	$this->javascriptHelper()->appendFile($basePath . 'js/classes/article.js');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->wikiPage->id . '"]);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
+	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorEvents);');
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->wikiPage->permalink ?>" method="post">
@@ -99,18 +100,15 @@
 		</div>
 		<div class="clear"></div>
 	</form>
-	<?php if ($this->ajax === true): ?>
-	<script type="text/javascript">
+	
+	<?php if($this->ajax === true) : ?>
+    <script type="text/javascript">
 		Capsulebar.initializeClickEvents();
-		Article.bindEditorEvents();
-		$("#edit-article").submit(Article.save.bind());
+		Article.setupArticleEditorEvents();
 	</script>
 	<?php endif; ?>
 
-    <?php
-    if (isset($this->error['messages'])):
-        if (count($this->error['messages'])):
-    ?>
+    <?php if (isset($this->error['messages']) && count($this->error['messages'])) : ?>
     <script type="text/javascript">
         <?php
             $msg = "<ul>";
@@ -127,9 +125,5 @@
 		};
 		MessageController.addMessage('question','<?php echo $msg; ?>', options);
     </script>
-    <?php
-        endif;
-    endif;
-    ?>
-
+    <?php endif; ?>
 </article>
