@@ -15,7 +15,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	
 	/**
 	 * Minimum length of the title
-	 * √ar int
+	 * @var int
 	 */
 	const TITLEFIELD_MIN_LENGTH = 2;
 	
