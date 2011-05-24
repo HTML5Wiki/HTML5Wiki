@@ -1,7 +1,7 @@
 <?php
 	$basePath = $this->basePath . '/';
 	$this->javascriptHelper()->appendFile($basePath . 'js/Capsulebar.js');
-	$this->javascriptHelper()->appendScript('Capsulebar.init("' . $this->wikiPage->id . '");');
+	$this->javascriptHelper()->appendScript('appendPageReadyCallback(function(){Capsulebar.init("' . $this->wikiPage->id . '");});');
 ?>
 
 <article id="content" class="content history">
