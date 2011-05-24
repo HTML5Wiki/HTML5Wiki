@@ -25,6 +25,11 @@ return array(
 	
 	,'compareVersions' => 'Versionen vergleichen',
 	
-	'preview' => 'Vorschau'
+	'preview' => 'Vorschau',
+	'rollbackTo' => 'Version "%s" wiederherstellen',
+	'rollbackToQuestion' => 'Soll Version "%s" mit dem Titel "%s" wirklich wiederhergestellt werden?',
+	
+	'yes' => 'Ja',
+	'no'  => 'Nein'
 );
 ?>

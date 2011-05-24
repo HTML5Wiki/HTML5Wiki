@@ -25,6 +25,11 @@ return array(
 	
 	,'compareVersions' => 'Compare Versions',
 	
-	'preview' => 'Preview'
+	'preview' => 'Preview',
+	'rollbackTo' => 'Rollback to version "%s"',
+	'rollbackToQuestion' => 'Please confirm that the version "%s" with title "%s" should be rollbacked.',
+	
+	'yes' => 'Yes',
+	'no'  => 'No'
 );
 ?>
