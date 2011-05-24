@@ -6,6 +6,7 @@
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->mediaVersionId . '"]);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorEvents);');
+	//if(strlen($this->title) == 0) $this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.handleEditArticleTitle);');
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
@@ -16,7 +17,7 @@
                 $fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
                 $setErrorClass = $fieldToSet ? ' error' : '';
             ?>
-			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->translate->_('noTitle'); ?></h1>
+			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
 			<?php echo isset($this->permalink) ? $this->capsulebarHelper($this->permalink) : ''; ?>
 		</header>
 		<div class="clear"></div>
