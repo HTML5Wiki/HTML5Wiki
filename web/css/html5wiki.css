@@ -58,7 +58,6 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .editor .title .heading{cursor:pointer;}.editor .title .heading:hover{background-color:#fdf4f2;}
 .editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .textfield{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
 .editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;margin-right:3px;}
-.editor .save-button.caption{background-image:url('../images/icons16/accept.png');background-repeat:no-repeat;background-position:5px 9px;padding-left:25px;}
 form{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}form .group{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px solid #a9a9a9;padding:5px 10px;margin-bottom:10px;background-color:#f8f8f8;}
 form .groupname{font-size:75%;color:#959595;padding:0 4px;}
 form .textfield{margin-bottom:6px;width:98%;}
@@ -111,7 +110,6 @@ form input.error{background-color:#f9d4cd;}
 .history .versionhistory .timespan .version .timestamp{margin:0 5px;}
 .history .versionhistory .timespan .version .avatar{display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:3px;}
 .history .versionhistory .timespan .version .comment{font-size:75%;font-style:italic;}
-.history .diff-button .caption{background-image:url('../images/icons16/compare.png');}
 .recentchanges .changes .timespan{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;border-top:1px solid #a9a9a9;padding:5px 0;}.recentchanges .changes .timespan:first-child{border-top-width:0;padding-top:0;}
 .recentchanges .changes .timespan .change{margin-bottom:8px;padding-left:21px;background:no-repeat 0 5px;}.recentchanges .changes .timespan .change.mediatype-article{background-image:url('../images/icons16/page.png');}
 .recentchanges .changes .timespan .change .timestamp{margin:0 5px 0 0;}
