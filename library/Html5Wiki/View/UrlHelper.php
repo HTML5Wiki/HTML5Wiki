@@ -17,7 +17,7 @@ class Html5Wiki_View_UrlHelper extends Html5Wiki_View_Helper {
 		if (strpos($args[0], '/') === 0) {
 			$args[0] = substr($args[0], 1);
 		}
-		return $request->getBasePath() . '/' . implode("/", $args);
+		return '/' . implode("/", $args);
 	}
 }
 
