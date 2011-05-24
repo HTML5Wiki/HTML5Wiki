@@ -94,7 +94,6 @@ var Article = (function() {
 
 	self.onEditFormLoaded = function(response, textStatus) {
 		this.replaceContent(response);
-		this.setupArticleEditorGui();
 	}
 	
 	self.loadHistory = function(url, idArticle) {
