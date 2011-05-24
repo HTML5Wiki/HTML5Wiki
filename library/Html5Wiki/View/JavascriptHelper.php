@@ -32,9 +32,13 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 		foreach (self::$javascriptFiles as $file) {
 			$string .= $this->fileString($file);
 		}
+		
+		$string .= '<script type="text/javascript">';
 		foreach (self::$javascriptScripts as $script) {
 			$string .= $this->scriptString($script);
 		}
+		$string .= '</script>';
+		
 		return $string;
 	}
 
@@ -43,7 +47,7 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 	}
 
 	private function scriptString($script) {
-		return '<script type="text/javascript">' . $script .'</script>' . "\n";
+		return $script . "\n";
 	}
 }
 ?>
