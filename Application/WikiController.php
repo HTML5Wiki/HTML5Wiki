@@ -269,6 +269,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 				return;
 			}
+		}
 
         $this->template->assign('errors', $errors);
         $this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
@@ -338,21 +339,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		$mediaVersionRow = $mediaVersionTable->createRow($data);
 		return $mediaVersionRow;
-	}
-
-		$articleVersion = new Html5Wiki_Model_ArticleVersion_Table();
-		$article = $articleVersion->createRow(array(
-					'mediaVersionId' => $primaryKeys['id'],
-					'mediaVersionTimestamp' => $primaryKeys['timestamp'],
-					'title' => $params['title'],
-					'content' => $params['content']
-				));
-		$article->save();
-
-		$tags = explode(',', $params['tags']);
-		$this->saveTags($tags, $primaryKeys['id'], $primaryKeys['timestamp']);
-
-		return $article;
 	}
 
 	/**
