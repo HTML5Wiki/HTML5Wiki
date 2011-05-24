@@ -55,7 +55,7 @@
 					<?php if($numberOfVersions > 1) : ?>
 					<input type="radio" name="left" value="<?php echo $version->timestamp; ?>" class="diffselector" <?php echo isVersionChecked($overallVersionCounter,'left',$numberOfVersions) ?>/>
 					<input type="radio" name="right" value="<?php echo $version->timestamp; ?>" class="diffselector" <?php echo isVersionChecked($overallVersionCounter,'right',$numberOfVersions) ?>/>
-					<? endif; ?>
+					<?php endif; ?>
 					<span class="timestamp">
 						<span class="time"><?php echo date('H:i', intval($version->timestamp)); ?></span>,
 						<span class="date"><?php echo date('d.m.Y', intval($version->timestamp)); ?></span>
@@ -76,7 +76,7 @@
 		<input id="article-history" type="submit" value="<?php echo $this->translate->_('compareVersions') ?>" class="caption large-button diff-button"/>
 	</div>
 	</form>
-	<? endif; ?>
+	<?php endif; ?>
 	
 	<div class="clear"></div>
 	<?php if ($this->ajax === true): ?>
