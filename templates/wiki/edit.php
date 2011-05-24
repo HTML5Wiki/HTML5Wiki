@@ -95,7 +95,7 @@
 		<div class="clear"></div>
 		
 		<div class="grid_12 bottom-button-bar">
-			<input id="article-save" type="submit" value="Speichern" class="caption large-button save-button"/>
+			<input id="article-save" type="submit" value="Speichern" class="caption large-button"/>
 			<a href="#" class="link-button delete-button">Diesen Artikel komplett l&ouml;schen</a>
 		</div>
 		<div class="clear"></div>
