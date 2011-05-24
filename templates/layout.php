@@ -15,8 +15,11 @@
 		SearchBoxController.initWithSearchBox(
 			$("#searchBox")
 			,"' . $this->urlHelper('index', 'search') . '"		
-			,"' . $this->translate->_("content") . '"
-			,"' . $this->translate->_("tags") . '"
+			,{
+				"content": "' . $this->translate->_("content") . '"
+				,"tags": "' . $this->translate->_("tags") . '"
+				,"title": "' . $this->translate->_("title") . '"
+			}
 		);
 	});');
 	

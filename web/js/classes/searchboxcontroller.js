@@ -10,14 +10,13 @@
  * @see SearchBoxController#initWithSearchBox
  */
 var SearchBoxController = (function() {
-	var self = {},
-		selectedResultItem = -1,
-		totalResultItems = 0,
-		resultItems = '',
-		resultContainer = '',
-		url = 'index/search',
-		textTxt = '',
-		tagsTxt = '';
+	var self = {}
+		,selectedResultItem = -1
+		,totalResultItems = 0
+		,resultItems = ''
+		,resultContainer = ''
+		,url = 'index/search'
+		,matchOriginTranslations = new Array()
 	
 	/**
 	 * Initializes the Event-Handling for a Searchbox
@@ -25,12 +24,12 @@ var SearchBoxController = (function() {
 	 *
 	 * @param DOMElement searchBox jQuery-DOM-Object
 	 * @param string     url       Url to call for doing search
+	 * @param matchOriginTranslations	An array with translations for the matchorigins
 	 * @access public
 	 */
-	self.initWithSearchBox = function(searchBox, url, textTxt, tagsTxt) {
+	self.initWithSearchBox = function(searchBox, url, matchOriginTranslations) {
 		self.url = url;
-		self.textTxt = textTxt;
-		self.tagsTxt = tagsTxt;
+		self.matchOriginTranslations = matchOriginTranslations;
 
 		/* Eventbindings: */
 		// Bind search-functionalities:
@@ -273,11 +272,11 @@ var SearchBoxController = (function() {
 	function createResultItem(title, mediaType, matchOrigins, url) {
 		var matchOriginSlug = '';
 		for(i=0,l=matchOrigins.length; i<l; i++) {
-			matchOriginSlug += matchOrigins[i];
+			matchOriginSlug += translateMatchOrigin(matchOrigins[i]);
 			if(i<l-1) matchOriginSlug += ', ';
 		}
 		
-		var item = $('<li class="result-item mediatype-'+mediaType+'"><a href="'+url+'"><p class="title">'+title+'</p><p class="matchorigins">In '+ matchOriginSlug + '</p></a></li>');
+		var item = $('<li class="result-item mediatype-'+mediaType+'"><a href="'+url+'"><p class="title">'+title+'</p><p class="matchorigins">'+ matchOriginSlug + '</p></a></li>');
 		item.hover(function() {
 			self.setSelectedResultItem($(this).index());
 		});
@@ -292,6 +291,22 @@ var SearchBoxController = (function() {
 		});
 		
 		return item;
+	}
+	
+	/**
+	 * Translates a match origin of a search result with the translation array.
+	 * If theres no fitting entry in the array, the original origin is returned.
+	 *
+	 * @param $matchOrigion
+	 * @return Translated origin
+	 * @see SearchBoxController#matchOriginTranslations
+	 * @access private
+	 */
+	function translateMatchOrigin(matchOrigin) {
+		var translated = self.matchOriginTranslations[matchOrigin];
+		if(translated == undefined) translated = matchOrigin;
+		
+		return translated;
 	}
 	
 	return self;
