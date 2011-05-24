@@ -242,6 +242,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->showArticle($article);
         } else {
 			$this->template->assign('errors', $errors);
+			$this->template->assign('author', $user);
 			$this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
         }
 	}

@@ -88,7 +88,7 @@
 				<legend class="groupname">Versionskommentar</legend>
 				<p class="clearfix">
 					<label for="versionComment" class="label<?php echo $setErrorClass; ?>">Kommentar zur Version <em>(optional)</em>:</label>
-					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo $this->versionComment; ?>" />
+					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo count($this->errors) ? $this->versionComment : ''; ?>" />
 				</p>
 			</fieldset>
 		</div>
