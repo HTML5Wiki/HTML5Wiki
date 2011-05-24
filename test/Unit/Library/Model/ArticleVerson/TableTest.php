@@ -56,7 +56,9 @@ class Test_Unit_Library_Model_ArticleVersion_TableTest extends Test_Unit_Library
 		$this->assertEquals(1, $articles[1]['mediaVersionId']);
 	}
 
-
+	/**
+	 * @return void
+	 */
 	public function testFetchArticlesById() {
 		$articles	= $this->table->fetchArticlesById(1);
 

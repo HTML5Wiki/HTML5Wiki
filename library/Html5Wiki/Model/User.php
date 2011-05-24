@@ -14,7 +14,7 @@
  * @author Nicolas Karrer <nkarrer@hsr.ch>
  *
  */
-class Html5Wiki_Model_User extends Zend_Db_Table_Row_Abstract {
+class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 	
 	protected $_tableClass = 'Html5Wiki_Model_User_Table';
 	
