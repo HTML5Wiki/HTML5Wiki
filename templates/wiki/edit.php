@@ -104,11 +104,12 @@
 	<?php if($this->ajax === true) : ?>
     <script type="text/javascript">
 		Capsulebar.initializeClickEvents();
+		Article.setupArticleEditorGui();
 		Article.setupArticleEditorEvents();
 	</script>
 	<?php endif; ?>
 
-    <?php if (isset($this->error['messages']) && count($this->error['messages'])) : ?>
+    <?php if (isset($this->errors['messages']) && count($this->errors['messages'])) : ?>
     <script type="text/javascript">
         <?php
             $msg = "<ul>";

@@ -232,7 +232,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
         $errors = array();
 		$user = $this->getUser($params);
-		if ($user !== false && $this->validateArticleEditForm($params, $errors)) {
+		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
 			$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 			
 			// reload the article because it needs also the MediaVersion informations.
@@ -372,7 +372,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return array(
 			'mediaVersionId'    => intval($request->getPost('hiddenIdArticle', 0)),
 			'mediaVersionTimestamp' => intval($request->getPost('hiddenTimestampArticle', 0)),
-			'title' => $request->getPost('txtTitle', ''),
+			'title' => $request->getPost('txtTitle', null),
 			'content' => $request->getPost('contentEditor', ''),
 			'tags'    => $request->getPost('tags', ''),
 			'versionComment' => $request->getPost('versionComment'),
@@ -393,7 +393,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * 
 	 * @return bool
      */
-    private function validateArticleEditForm(array $params, array &$errors) {
+    private function validateArticleEditForm(Html5Wiki_Model_ArticleVersion $oldArticleVersion, array $params, array &$errors) {
         $success = true;
         $errorMsg = array();
         $errorFields = array(
@@ -406,32 +406,34 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
         );
 
         // Test Title
-        $validatorChainTitle = new Zend_Validate();
-        $validatorChainTitle->addValidator(new Zend_Validate_Alnum(true))
-                            ->addValidator(new Zend_Validate_StringLength(self::TITLEFIELD_MIN_LENGTH, self::TITLEFIELD_MAX_LENGTH));
-		$success = $this->validatorIsValid($validatorChainTitle, 'title', $params['title'], $errorMsg, $errorFields);
+		if ($params['title'] !== null) {
+			$validatorChainTitle = new Zend_Validate();
+			$validatorChainTitle->addValidator(new Zend_Validate_Regex('/[a-z0-9\?\.-_\/\,]/i'))
+								->addValidator(new Zend_Validate_StringLength(self::TITLEFIELD_MIN_LENGTH, self::TITLEFIELD_MAX_LENGTH));
+			$success = $this->validatorIsValid($success, $validatorChainTitle, 'title', $params['title'], $errorMsg, $errorFields);
+		}
 
         // Test Content
         $validatorChainContent = new Zend_Validate();
         $validatorChainContent->addValidator(new Zend_Validate_NotEmpty());
-		$success = $this->validatorIsValid($validatorChainContent, 'content', $params['content'], $errorMsg, $errorFields);
+		$success = $this->validatorIsValid($success, $validatorChainContent, 'content', $params['content'], $errorMsg, $errorFields);
 
         // Test Tag
         $validatorChainTags = new Zend_Validate();
         $validatorChainTags->addValidator(new Zend_Validate_NotEmpty());
-        $success = $this->validatorIsValid($validatorChainTags, 'tags', $params['tags'], $errorMsg, $errorFields);
+        $success = $this->validatorIsValid($success, $validatorChainTags, 'tags', $params['tags'], $errorMsg, $errorFields);
 		
 		if (!empty($params['versionComment'])) {
 			$validatorChainVersionComment = new Zend_Validate();
 			$validatorChainVersionComment->addValidator(new Zend_Validate_Alpha());
-			$success = $this->validatorIsValid($validatorChainVersionComment, 'versionComment', $params['versionComment'], $errorMsg, $errorFields);
+			$success = $this->validatorIsValid($success, $validatorChainVersionComment, 'versionComment', $params['versionComment'], $errorMsg, $errorFields);
 		}
 		
         $errors['messages'] = $errorMsg;
         $errors['fields'] = $errorFields;
 		
 		if ($params['authorName'] !== null || $params['authorEmail'] !== null) {
-			$success = $this->validateAuthor($params, $errors);
+			$success = $this->validateAuthor($success, $params, $errors);
 		}
 
         return $success;
@@ -444,19 +446,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param array $errors Reference to an errors array
 	 * @return boolean 
 	 */
-	private function validateAuthor(array $params, array &$errors) {
-		$success = true;
+	private function validateAuthor($success, array $params, array &$errors) {
 		$errorMsg = array();
 		$errorFields = array();
 		
 		$validatorChainName = new Zend_Validate();
 		$validatorChainName->addValidator(new Zend_Validate_StringLength(self::USERNAME_MIN_LENGTH, self::USERNAME_MAX_LENGTH))
 						   ->addValidator(new Zend_Validate_Alpha());
-		$success = $this->validatorIsValid($validatorChainName, 'authorName', $params['authorName'], $errorMsg, $errorFields);
+		$success = $this->validatorIsValid($success, $validatorChainName, 'authorName', $params['authorName'], $errorMsg, $errorFields);
 		
 		$validatorChainEmail = new Zend_Validate();
 		$validatorChainEmail->addValidator(new Zend_Validate_EmailAddress());
-		$success = $this->validatorIsValid($validatorChainEmail, 'authorEmail', $params['authorEmail'], $errorMsg, $errorFields);
+		$success = $this->validatorIsValid($success, $validatorChainEmail, 'authorEmail', $params['authorEmail'], $errorMsg, $errorFields);
 		
 		$errors['messages'] = array_merge($errors['messages'], $errorMsg);
 		$errors['fields'] = array_merge($errors['fields'], $errorFields);
@@ -475,8 +476,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * 
 	 * @return boolean 
 	 */
-	private function validatorIsValid($validatorChain, $key, $value, array &$errorMsg, array &$errorFields) {
-		$success = true;
+	private function validatorIsValid($success, $validatorChain, $key, $value, array &$errorMsg, array &$errorFields) {
 		if (!$validatorChain->isValid($value)) {
 			$success = false;
 			
