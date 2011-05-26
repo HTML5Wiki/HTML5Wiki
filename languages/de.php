@@ -37,5 +37,7 @@ return array(
 	
 	,'yes' => 'Ja'
 	,'no'  => 'Nein'
+
+	,'hasIntermediateVersionText' => 'Da war jemand schneller als Sie.<br/>Sie haben nun zwei M&ouml;glichkeiten:<br/> - Speichern Sie Ihren Artikel nochmals und die Version wird &uuml;berschrieben.<br/> - L&ouml;schen Sie Ihre Version, um die \'andere Version\' beizubehalten.'
 );
 ?>

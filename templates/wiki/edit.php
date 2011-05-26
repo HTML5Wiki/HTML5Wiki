@@ -23,16 +23,14 @@
 		<div class="clear"></div>
 
 		<?php if (isset($this->diff)) : ?>
+		<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
 		<div class="grid_12 compareversions">
 			<fieldset name="author" class="group">
 				<legend class="groupname"><?php echo $this->translate->_('compareVersions') ?></legend>
 				<p class="hint">
-					TODO: Text: What happens!
+					<?php echo $this->translate->_('hasIntermediateVersionText'); ?>
 				</p>
 				<?php echo $this->diffRendererHelper($this->diff, $this->leftTimestamp, $this->rightTimestamp) ?>
-				<p class="hint">
-					TODO: Buttons to reject or save the new ArticleVersion
-				</p>
 			</fieldset>
 		</div>
 		<div class="clear"></div>

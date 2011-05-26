@@ -37,5 +37,7 @@ return array(
 	
 	,'yes' => 'Yes'
 	,'no'  => 'No'
+
+	,'hasIntermediateVersionText' => '<blink>What happens</blink>'
 );
 ?>

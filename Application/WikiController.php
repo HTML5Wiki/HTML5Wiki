@@ -249,7 +249,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
 			$user->saveCookie();
 
-			if ($this->hasIntermediateVersion($oldArticleVersion)) {
+			if ($this->hasIntermediateVersion($oldArticleVersion) && !$params['overwrite']) {
 				$intermediateArticle = new Html5Wiki_Model_ArticleVersion();
 				$intermediateArticle->loadLatestByPermalink($permalink);
 
@@ -441,7 +441,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			'versionComment' => $request->getPost('versionComment'),
 			'userId' => intval($request->getPost('hiddenAuthorId', 0)),
 			'authorName' => $request->getPost('txtAuthor'),
-			'authorEmail' => $request->getPost('txtAuthorEmail')
+			'authorEmail' => $request->getPost('txtAuthorEmail'),
+			'overwrite' => $request->getPost('hiddenOverwrite', 0)
 		);
 	}
 

@@ -51,6 +51,7 @@ var Article = (function() {
 			var email     = $('#txtAuthorEmail').val();
             var id        = $('#hiddenAuthorId').val();
 			var tags      = $('#txtTags').val();
+			var overwrite = $('#hiddenOverwrite').val();
 
 			var mediaData = {
                 hiddenIdArticle: idArticle,
@@ -61,7 +62,8 @@ var Article = (function() {
 				txtAuthor: name,
 				txtAuthorEmail: email,
 				hiddenAuthorId: id,
-				tags: tags
+				tags: tags,
+				hiddenOverwrite: overwrite
 			};
 			$.ajax({
 				type: 'POST',
