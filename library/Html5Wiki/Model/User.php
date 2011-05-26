@@ -15,6 +15,8 @@
  *
  */
 class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
+
+	const USER_COOKIE_EXPIRE = 18396000; // 1 Year
 	
 	protected $_tableClass = 'Html5Wiki_Model_User_Table';
 	
@@ -63,7 +65,7 @@ class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 	 * @return bool return of setcookie.
 	 */
 	public function saveCookie() {
-		return setcookie('currentUserId', $this->id, time() + 3600, '/', null, false, true);
+		return setcookie('currentUserId', $this->id, time() + USER_COOKIE_EXPIRE, '/', null, false, true);
 	}
 	
 	/**
