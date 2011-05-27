@@ -17,20 +17,55 @@ class Test_Unit_Library_Model_MediaVersionManagerTest extends Test_Unit_Library_
 	public function setUp() {
 		parent::setUp();
 
+		// create fake table because of the original saves own timestamps.
 		$this->table	= new Html5Wiki_Model_MediaVersion_Table();
 	}
 
-	public function testGroupMediaVersionByTimespan() {
+	public function testGetMediaVersionByPermalink() {
+		$testData	= $this->createTestMediaVersions();
+
 		$manager	= new Html5Wiki_Model_MediaVersionManager();
 
-		$version1	= $this->table->createRow(array('id' => 1, 'timestamp' => time()));
-		$version1->save();
-		$version2	= $this->table->createRow(array('id' => 1, 'timestamp' => time() - 7 * 24 * 3600));
-		$version2->save();
+		$versions	= $manager->getMediaVersionsByPermalink('test');
 
-		$grouped	= $manager->groupMediaVersionByTimespan(array($version1, $version2));
+		$this->assertEquals(2, sizeof($versions));
+		$this->assertEquals(1, $versions[0]->id);
+
+		return $testData;
+
+	}
+
+	/**
+	 * @depends		testGetMediaVersionByPermalink
+	 */
+	public function testGroupMediaVersionByTimespan(array $testData) {
+		$manager	= new Html5Wiki_Model_MediaVersionManager();
+
+		$grouped	= $manager->groupMediaVersionByTimespan($testData);
 
 		$this->assertArrayHasKey('lastweek', $grouped);
+		$this->assertArrayHasKey('daybeforeyesterday', $grouped);
 		$this->assertArrayHasKey('today', $grouped);
+
+		return $testData;
+	}
+
+	/**
+	 * @return		void
+	 */
+	protected function createTestMediaVersions() {
+		$testData = array();
+
+		$version = $this->table->createRow(array('id' => 1, 'timestamp' => time(), 'permalink' => 'test'));
+		$version->save();
+		array_push($testData, $version);
+		$version = $this->table->createRow(array('id' => 1, 'timestamp' => (time() - 7 * 24 * 3600), 'permalink' => 'test'));
+		$version->save();
+		array_push($testData, $version);
+		$version = $this->table->createRow(array('id' => 2, 'timestamp' => time() - 2 * 24 * 3600, 'permalink' => 'test/anothertest'));
+		$version->save();
+		array_push($testData, $version);
+
+		return $testData;
 	}
 }
