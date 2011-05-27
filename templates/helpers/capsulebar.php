@@ -41,14 +41,12 @@
 			break;
 		}
 	}
-
-
 ?>
 <ol class="capsulebar">
-	<?php foreach($items as $item) : ?>
+	<?php foreach($items as $key => $item) : ?>
 	<?php $i++; ?>
 	<li class="item <?php echo $item['cssClass']; ?><? if($item['active'] === true) echo ' active'; ?><? if($i == 0) echo ' first' ?><? if($i == sizeof($items)-1) echo ' last' ?>">
-		<a href="<?php echo $item['url']; ?>" class="capsule" id="capsulebar-read">
+		<a href="<?php echo $item['url']; ?>" class="capsule" id="capsulebar-<?php echo $key ?>">
 			<span class="caption"><?php echo $item['name']; ?></span>
 		</a>
 	</li>
