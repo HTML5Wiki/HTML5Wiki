@@ -53,7 +53,7 @@
 <ol class="capsulebar">
 	<?php foreach($items as $key => $item) : ?>
 	<?php $i++; ?>
-	<li class="item <?php echo $item['cssClass']; ?><? if($item['active'] === true) echo ' active'; ?><? if($i == 0) echo ' first' ?><? if($i == sizeof($items)-1) echo ' last' ?>">
+	<li class="item <?php echo $item['cssClass']; ?><?php if($item['active'] === true) echo ' active'; ?><?php if($i == 0) echo ' first' ?><?php if($i == sizeof($items)-1) echo ' last' ?>">
 		<a href="<?php echo $item['url']; ?>" class="capsule" id="capsulebar-<?php echo $key ?>">
 			<span class="caption"><?php echo $item['name']; ?></span>
 		</a>
