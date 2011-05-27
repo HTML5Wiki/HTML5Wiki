@@ -571,8 +571,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$latestArticle = new Html5Wiki_Model_ArticleVersion();
 		$latestArticle->loadLatestByPermalink($permalink);
-		
-		if (!isset($latestArticle->id)) {
+
+		if (!isset($latestArticle->id) || !isset($oldArticleVersion->id)) {
 			return false;
 		}
 
