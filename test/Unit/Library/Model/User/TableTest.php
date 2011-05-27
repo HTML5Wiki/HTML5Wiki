@@ -41,4 +41,13 @@ class Test_Unit_Library_Model_User_TableTest extends Test_Unit_Library_Model_Abs
 		$this->assertInstanceOf('Html5Wiki_Model_User', $this->table->userExists('Test User', 'test@test.com'));
 		$this->assertNull($this->table->userExists('No User', 'notest@test.com'));
 	}
+
+	public function testUpdateUser() {
+		$this->table->updateUser(1, array('email' => 'test@test.ch', 'name' => 'Test Benutzer'));
+
+		$user	= $this->table->fetchUser(1);
+
+		$this->assertEquals('test@test.ch', $user['email']);
+		$this->assertEquals('Test Benutzer', $user['name']);
+	}
 }
