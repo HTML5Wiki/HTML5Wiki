@@ -33,8 +33,9 @@ return array(
 	,'compareVersions' => 'Versionen vergleichen'
 	
 	,'preview' => 'Vorschau'
-	,'rollbackTo' => 'Version "%s" wiederherstellen'
-	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version "%s" mit dem Titel "%s" wirklich wiederherstellen?<br/><em>Hinweis: Die aktuelle Version wird damit nicht verloren</em>'
+	,'rollback' => 'Version wiederherstellen'
+	,'rollbackTo' => 'Version vom %s wiederherstellen'
+	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version vom %s wirklich wiederherstellen?<br/>Die momentan aktuelle Version wird als alte Version abgelegt und geht somit nicht verloren.'
 	,'yesRollback' => 'Ja, Version wiederherstellen'
 	,'noDontRollback' => 'Nein, nichts unternehmen'
 	

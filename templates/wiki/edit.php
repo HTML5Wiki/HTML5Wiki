@@ -143,7 +143,6 @@
 			}]
 		};
 		MessageController.addMessage('question','<?php echo $msg; ?>', options);
-		Capsulebar.setActive('edit');
     </script>
     <?php endif; ?>
 </article>

@@ -11,10 +11,8 @@ var Menu = (function() {
 	var self = {};
 	
 	self.addOrReplaceArticleTab = function(url, title) {
-		console.log('fo');
 		var articleTab = $('.menu-items .article');
 		if (articleTab.length) {
-			articleTab = articleTab[0];
 			articleTab.attr('href', url);
 			articleTab.text(title);
 		} else {

@@ -76,9 +76,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$article->loadLatestByPermalink($permalink);
 		}
 
-		if (isset($article->title)) {
-			$this->setPageTitle($article->title);
-		}
 		if (isset($article->id)) {
 			$this->showArticle($article);
 		} else {
@@ -105,6 +102,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->setTemplate('read.php');
 
 		$this->setCachingHeader($article);
+		
+		$this->setPageTitle($article->getCommonName());
 
 		$this->template->assign('article', $article);
 		$this->template->assign('request', $this->router->getRequest());
@@ -636,7 +635,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$this->setCachingHeader($latestVersion);
 
-		$this->setPageTitle($latestVersion->title);
+		$this->setPageTitle($latestVersion->getCommonName());
 		$this->template->assign('article', $latestVersion);
 		$this->template->assign('versions', $groupedVersions);
 	}
@@ -680,6 +679,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$diff = $this->createLeftRightDiffContent($leftVersion, $rightVersion);
 
 		$this->template->assign('diff', $diff);
+		$this->template->assign('title', $lastArticle->getCommonName());
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
 
@@ -760,6 +760,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->template->assign('toTimestamp', $toTimestamp);
 			$this->template->assign('author', $this->getUser());
 			$this->template->assign('title', $articleVersion->getCommonName());
+			$this->setPageTitle($articleVersion->getCommonName());
 		}
 	}
 

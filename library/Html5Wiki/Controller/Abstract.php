@@ -11,7 +11,7 @@
 /**
  * Description of AbstractController
  *
- * @author michael
+ * @todo Refactor header-Status settings into an own "Response" class containing also the rendered-response.
  */
 abstract class Html5Wiki_Controller_Abstract {
 
@@ -19,6 +19,14 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * default layout file
 	 */
 	const DEFAULT_LAYOUT_FILE = 'layout.php';
+	
+	/**
+	 * HTTP Response Status Messages
+	 * @var array
+	 */
+	public static $RESPONSE_STATUS = array(
+		400 => "Bad Request"
+	);
 
 	/**
 	 * Router
@@ -147,8 +155,25 @@ abstract class Html5Wiki_Controller_Abstract {
 		header("Last-Modified:" . gmdate("D, d M Y H:i:s", $unixTimestamp) . " GMT", true);
 	}
 	
+	/**
+	 * Set cache-control to no-cache, no-store
+	 */
 	protected function setNoCache() {
 		header("Cache-Control: no-cache, no-store", true);
+	}
+	
+	/**
+	 * Set http response status. 
+	 * If the static field RESPONSE_STATUS contains a status message for this status code, 
+	 * also set the correct HTTP/1.1 status.
+	 * 
+	 * @param int $status
+	 */
+	protected function setHttpResponseStatus($status) {
+		header("Status: " . intval($status));
+		if (isset(self::$RESPONSE_STATUS[$status])) {
+			header("HTTP/1.1 " . intval($status) . " " . self::$RESPONSE_STATUS[$status]);
+		}
 	}
 	
 	/**
