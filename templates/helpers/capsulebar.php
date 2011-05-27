@@ -26,7 +26,7 @@
 	// TODO could this been solved with a  pritier class or something?
 	if($this->activePage == 'diff') {
 		$items['diff'] = array(
-			'url' => $this->urlHelper('wiki/diff/' . $this->permalink)
+			'url' => '#'
 			,'name' => $this->translate->_('compareVersions')
 			,'cssClass' => 'diff'
 			,'active' => false
