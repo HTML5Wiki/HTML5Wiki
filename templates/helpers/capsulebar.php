@@ -3,19 +3,19 @@
 	$i = -1;  // item counter
 	$items = array(
 		'read' => array(
-			'url' => $this->urlHelper('wiki/' . $this->permalink)
+			'url' => $this->urlHelper('wiki', $this->permalink)
 			,'name' => $this->translate->_('read')
 			,'cssClass' => 'read'
 			,'active' => true
 		)
 		,'edit' => array(
-			'url' => $this->urlHelper('wiki/edit/' . $this->permalink)
+			'url' => $this->urlHelper('wiki', 'edit', $this->permalink)
 			,'name' => $this->translate->_('edit')
 			,'cssClass' => 'edit'
 			,'active' => false
 		)
 		,'history' => array(
-			'url' => $this->urlHelper('wiki/history/' . $this->permalink)
+			'url' => $this->urlHelper('wiki', 'history', $this->permalink)
 			,'name' => $this->translate->_('history')
 			,'cssClass' => 'history'
 			,'active' => false

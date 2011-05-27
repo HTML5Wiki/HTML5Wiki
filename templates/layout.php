@@ -1,18 +1,17 @@
 <?php
-	$basePath = $this->basePath . '/';
 	$jsHelper = $this->javascriptHelper();
-	$jsHelper->appendFile($basePath . 'js/jquery.min.js');
-	$jsHelper->appendFile($basePath . 'js/jquery.markitup.js');
-	$jsHelper->appendFile($basePath . 'js/markitup/html5wiki-set.js');
-	$jsHelper->appendFile($basePath . 'js/jquery.ptags.min.js');
-	$jsHelper->appendFile($basePath . 'js/core.js');
-	$jsHelper->appendFile($basePath . 'js/classes/menu.js');
-	$jsHelper->appendFile($basePath . 'js/classes/messagecontroller.js');
-	$jsHelper->appendFile($basePath . 'js/classes/searchboxcontroller.js');
-	$jsHelper->appendFile($basePath . 'js/classes/html5wiki.js');
-	$jsHelper->appendFile($basePath . 'js/classes/translate.js');
+	$jsHelper->appendFile($this->urlHelper('js','jquery.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','jquery.markitup.js'));
+	$jsHelper->appendFile($this->urlHelper('js','markitup','html5wiki-set.js'));
+	$jsHelper->appendFile($this->urlHelper('js','jquery.ptags.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','core.js'));
+	$jsHelper->appendFile($this->urlHelper('js','classes','menu.js'));
+	$jsHelper->appendFile($this->urlHelper('js','classes','messagecontroller.js'));
+	$jsHelper->appendFile($this->urlHelper('js','classes','searchboxcontroller.js'));
+	$jsHelper->appendFile($this->urlHelper('js','classes','html5wiki.js'));
+	$jsHelper->appendFile($this->urlHelper('js','classes','translate.js'));
 
-	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $basePath .'"]);');
+	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $this->urlHelper() .'"]);');
 	$jsHelper->appendScript('appendPageReadyCallback(function() { Translate.init('. json_encode($this->translate->getAdapter()->getMessages()) .') });');
 	$jsHelper->appendScript('appendPageReadyCallback(function() {
 		SearchBoxController.initWithSearchBox(
@@ -38,18 +37,18 @@
 	<meta name="description" content=""/>
  	<meta name="author" content="HTML5Wiki"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link rel="shortcut icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="<?php echo $basePath ?>images/favicon.ico" type="image/ico" />
-	<link rel="stylesheet" href="<?php echo $basePath ?>css/html5wiki.css" />
+	<link rel="shortcut icon" href="<?php echo $this->urlHelper('images','favicon.ico') ?>" type="image/x-icon" />
+	<link rel="icon" href="<?php echo $this->urlHelper('images','favicon.ico') ?>" type="image/ico" />
+	<link rel="stylesheet" href="<?php echo $this->urlHelper('css','html5wiki.css') ?>" />
 </head> 
 <body>
 	<div class="container_12">
 		<header class="grid_12 header-overall">
-			<a href="<?php echo $basePath ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
+			<a href="<?php echo $this->urlHelper() ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
 					<li class="item home<?php echo $router->getController() == $config->routing->defaultController && $router->getAction() == $config->routing->defaultAction ? ' active' : '' ?>">
-						<a href="<?php echo $basePath ?>" class="tab"><?php echo $this->translate->_("homepage") ?></a>
+						<a href="<?php echo $this->urlHelper() ?>" class="tab"><?php echo $this->translate->_("homepage") ?></a>
 					</li>
 					<li class="item updates<?php echo $router->getController() == 'index' && $router->getAction() == 'history' ? ' active' : '' ?>">
 						<a href="<?php echo $this->urlHelper('index', 'history') ?>" class="tab"><?php echo $this->translate->_("recentChanges") ?></a>

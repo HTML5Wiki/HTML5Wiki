@@ -9,7 +9,7 @@
 						\'text\' : \''. $this->translate->_('create'). '\'
 						,\'button\' : true
 						,\'callback\' : function() {
-							window.location = \''. $this->basePath. '/wiki/new/'. $this->term. '\';
+							window.location = \''. $this->urlHelper('wiki','new',$this->term). '\';
 						}
 					},{
 						\'text\' : \''. $this->translate->_('noDontCreate'). '\'

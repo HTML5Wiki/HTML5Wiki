@@ -122,6 +122,21 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	public function getAction() {
 		return $this->action;
 	}
+	
+	/**
+	 * Pass as many url parts as you want (without any slashes or anything!) and
+	 * this method will create you a valid URL with basepath and everything.
+	 *
+	 * @param 0-n url parts
+	 * @return valid URL with basepath plus all url parts from the parameterlist.
+	 */
+	public function buildUrl(array $parts) {
+		$basePath = $this->getRequest()->getBasePath();
+		$target = implode('/', $parts);
+		$url = $basePath. '/'. $target;
+		
+		return $url;
+	}
 
 }
 

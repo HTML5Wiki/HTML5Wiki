@@ -57,7 +57,7 @@
 			
 			
 			<input id="rollback" name="rollback" type="submit" value="<?php echo $this->translate->_('yesRollback') ?>" class="caption large-button"/>
-			<a href="<?php echo $this->urlHelper('wiki/history', $this->permalink) ?>" class="link-button"><?php echo $this->translate->_('noDontRollback') ?></a>
+			<a href="<?php echo $this->urlHelper('wiki','history', $this->permalink) ?>" class="link-button"><?php echo $this->translate->_('noDontRollback') ?></a>
 		</form>
 	</div>
 	<div class="clear"></div>

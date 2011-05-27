@@ -119,9 +119,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $permalink
 	 */
 	private function redirectToArticleNotFoundSearch($permalink) {
-		$searchUrl = $this->router->getRequest()->getBasePath()
-				. '/index/search?term=' . $permalink
-				. '&newarticle=1';
+		$searchUrl = $this->router->buildURL('index','search?term='. $permalink. '&newarticle=1');
 		$this->redirect($searchUrl);
 	}
 
@@ -759,7 +757,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$newMediaVersion->save();
 			$newArticleVersion->save();
 
-			$this->redirect($request->getBasePath() . '/wiki/' . $permalink);
+			$this->redirect($this->router->buildURL('wiki',$permalink));
 		} else {
 			$this->template->assign('permalink', $permalink);
 			$this->template->assign('toTimestamp', $toTimestamp);
