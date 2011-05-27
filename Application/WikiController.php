@@ -724,37 +724,42 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$request = $this->router->getRequest();
 
 		$toTimestamp = $request->getGet('to');
+
 		if (!$toTimestamp) {
+			var_dump($request->getGetParameters());die;
 			throw new Html5Wiki_Exception("Timestamp must be supplied. TODO: Redirect to history.");
 		}
 
 		$mediaVersion = new Html5Wiki_Model_MediaVersion();
 		$mediaVersion->loadByPermalinkAndTimestamp($permalink, $toTimestamp);
-
 		$articleVersion = new Html5Wiki_Model_ArticleVersion();
 		$articleVersion->loadByIdAndTimestamp($mediaVersion->id, $toTimestamp);
 
 		if ($request->getPost('rollback')) {
 			$userData = array(
-				'authorName' => $request->getPost('authorName'),
-				'authorEmail' => $request->getPost('authorEmail')
+				'authorName' => $request->getPost('txtAuthor'),
+				'authorEmail' => $request->getPost('txtAuthorEmail')
 			);
+			
+			$versionComment = $request->getPost('txtVersionComment');
+			if($versionComment === null || strlen($versionComment) === 0) {
+				$versionComment = $mediaVersion->versionComment. ' ('. $this->template->translate->_('restored'). ')';
+			}
 
 			$newMediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
 			$newMediaVersion = $newMediaVersionTable->createRow($mediaVersion->toArray());
-
 			$newArticleVersionTable = new Html5Wiki_Model_ArticleVersion_Table();
 			$newArticleVersion = $newArticleVersionTable->createRow($articleVersion->toArray());
 
 			$newMediaVersion->timestamp = time();
 			$newMediaVersion->userId = $this->getUser($userData)->id;
-
+			$newMediaVersion->versionComment = $versionComment;
 			$newArticleVersion->mediaVersionTimestamp = $newMediaVersion->timestamp;
 
 			$newMediaVersion->save();
 			$newArticleVersion->save();
 
-			$this->redirect('/wiki/' . $permalink);
+			$this->redirect($request->getBasePath() . '/wiki/' . $permalink);
 		} else {
 			$this->template->assign('permalink', $permalink);
 			$this->template->assign('toTimestamp', $toTimestamp);
