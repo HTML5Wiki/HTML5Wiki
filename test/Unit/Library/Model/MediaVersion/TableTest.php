@@ -51,5 +51,10 @@ class Test_Unit_Library_Model_MediaVersion_TableTest extends Test_Unit_Library_M
 
 		$this->assertEquals(1, $mediaVersion->id);
 		$this->assertEquals('test/testarticle', $mediaVersion->permalink);
+
+		$mediaVersion	= $this->table->fetchMediaVersion(1, 0);
+
+		$this->assertEquals(1, $mediaVersion->id);
+		$this->assertEquals('test/testarticle', $mediaVersion->permalink);
 	}
 }
