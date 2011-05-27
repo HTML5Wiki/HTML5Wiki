@@ -673,13 +673,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 
-		$lastArticle = max($leftVersion->mediaVersionTimestamp, $rightVersion->mediaVersionTimestamp) == $leftVersion->mediaVersionTimestamp ? $leftVersion : $rightVersion;
-		$this->setCachingHeader($lastArticle);
+		$latestTimestamp = max($leftVersion->mediaVersionTimestamp, $rightVersion->mediaVersionTimestamp);
+		if($latestTimestamp == $leftVersion->mediaVersionTimestamp) {
+			$latestArticle = $leftVersion;
+		} else {
+			$latestArticle = $rightVersion;
+		}
+		$this->setCachingHeader($latestArticle);
 
 		$diff = $this->createLeftRightDiffContent($leftVersion, $rightVersion);
 
 		$this->template->assign('diff', $diff);
-		$this->template->assign('title', $lastArticle->getCommonName());
+		$this->template->assign('title', $latestArticle->getCommonName());
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
 
