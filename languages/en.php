@@ -41,6 +41,10 @@ return array(
 	,'yes' => 'Yes'
 	,'no'  => 'No'
 
-	,'hasIntermediateVersionText' => '<blink>What happens</blink>'
+	,'hasIntermediateVersionText' => '%s has already created a new version of the current article.<br/>Would you like to overwrite this version with your changes?'
+	,'overwrite' => 'Overwrite with my changes'
+	,'rejectChanges' => 'Discard my changes'
+	,'newVersion' => 'Newer version'
+	,'myVersion' => 'My version'
 );
 ?>

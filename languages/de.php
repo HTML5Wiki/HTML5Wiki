@@ -55,10 +55,12 @@ return array(
 	,'versionCommentLegend' => 'Versionskommentar'
 	,'versionCommentText' => 'Kommentar zur Version <em>(optional)</em>:'
 
-	,'hasIntermediateVersionText' => 'Da war jemand schneller als Sie.<br/>Sie haben nun zwei M&ouml;glichkeiten:<br/> - Speichern Sie Ihren Artikel nochmals und die Version wird &uuml;berschrieben.<br/> - L&ouml;schen Sie Ihre Version, um die \'andere Version\' beizubehalten.'
-	,'overwrite' => '&Uuml;berschreiben'
-	,'rejectChanges' => '&Auml;nderungen verwerfen',
-
+	,'hasIntermediateVersionText' => '%s hat bereits eine neue Version zum aktuellen Artikel verfasst.<br/>M&ouml;chten Sie diese neue Version mit Ihren &Auml;nderungen ersetzen?'
+	,'overwrite' => 'Mit meinen &Auml;nderungen ersetzen'
+	,'rejectChanges' => 'Meine &Auml;nderungen verwerfen'
+	,'newVersion' => 'Neuere Version'
+	,'myVersion' => 'Meine Version',
+	
 	// Zend_Validate_StringLength
     "Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet",
     "'%value%' is less than %min% characters long" => "'%value%' ist weniger als %min% Zeichen lang",
