@@ -32,6 +32,14 @@
 			,'active' => false
 		);
 	}
+	if($this->activePage == 'rollback') {
+		$items['rollback'] = array(
+			'url' => '#'
+			,'name' => $this->translate->_('rollback')
+			,'cssClass' => 'rollback'
+			,'active' => false
+		);
+	}
 	
 	/* Look for the current item: */
 	foreach($items as $key => $item) {
