@@ -69,19 +69,14 @@ var Article = (function() {
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
+				complete: function(response) {
+					Article.replaceContent(response);
+				},
 				success: function(data, textStatus, response) {
 					var url = window.location.href.replace(/(edit|new)/, 'read');
 					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
 					if (url.indexOf('index') !== -1) {
 						Menu.addOrReplaceArticleTab(url, title);
-					}
-					Article.replaceContent(response);
-				},
-				statusCode: {
-					400: function(response) {
-						Article.replaceContent(response);
-						Article.handleEditArticleTitle();
-						$('#txtTitle').addClass('error');
 					}
 				}
 			});

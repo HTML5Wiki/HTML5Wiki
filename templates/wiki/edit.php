@@ -143,6 +143,11 @@
 			}]
 		};
 		MessageController.addMessage('question','<?php echo $msg; ?>', options);
+		
+		<?php if (isset($this->errors['fields']['title']) && $this->errors['fields']['title']): ?>
+			Article.handleEditArticleTitle();
+			$('#txtTitle').addClass('error');
+		<?php endif;?>
     </script>
     <?php endif; ?>
 </article>
