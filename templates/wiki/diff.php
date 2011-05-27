@@ -4,15 +4,22 @@
 ?>
 
 <article id="content" class="content compareversions">
-	<header>
-		<header class="grid_12 title clearfix">
-			<h1 class="heading"><?php echo $this->translate->_('compareVersions') ?></h1>
-		</header>
+	<header class="grid_12 title clearfix">
+		<h1 class="heading"><?php echo $this->title ?></h1>
+		<?php echo $this->capsulebarHelper('history'); ?>
 	</header>
+	<div class="clear"></div>
+	
 	<div class="grid_12">
 		<?php echo $this->diffRendererHelper($this->diff, $leftTimestamp, $rightTimestamp) ?>
-		<a href="<?php echo $this->urlHelper('wiki', 'rollback', $this->permalink, '?to=' . $this->leftTimestamp); ?>" class="rollback">
+	</div>
+	<div class="clear"></div>
+	
+	<div class="grid_12 bottom-button-bar">
+		<a href="<?php echo $this->urlHelper('wiki', 'rollback', $this->permalink, '?to=' . $this->leftTimestamp); ?>" class="large-button caption">
 			<?php printf($this->translate->_('rollbackTo'), date($this->translate->_('timestampFormat'), $this->leftTimestamp)); ?>
 		</a>
 	</div>
+	<div class="clear"></div>
+			
 </article>

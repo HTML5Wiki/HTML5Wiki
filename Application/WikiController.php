@@ -680,6 +680,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$diff = $this->createLeftRightDiffContent($leftVersion, $rightVersion);
 
 		$this->template->assign('diff', $diff);
+		$this->template->assign('title', $lastArticle->title);
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
 
