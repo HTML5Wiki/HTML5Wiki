@@ -112,4 +112,12 @@ class Test_Unit_Library_Model_ArticleVersionTest extends Test_Unit_Library_Model
 		$this->assertEquals($this->articleData1['title'], $article->getCommonName());
 	}
 
+
+	public function testGetMediaVersionTimestmap() {
+		$article	= new Html5Wiki_Model_ArticleVersion();
+		$article->loadLatestById(1);
+
+		$this->assertEquals($this->articleData1['mediaVersionTimestamp'], $article->getMediaVersionTimestamp());
+	}
+
 }

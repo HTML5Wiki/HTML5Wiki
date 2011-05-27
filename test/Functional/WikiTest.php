@@ -23,6 +23,11 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 	const TEST_TAG_INSERT = 'selenium test,seleniumtestuser,selenium';
 	const TEST_VERSION_COMMENT = 'selenium test';
 	
+	const TEST_TITLE_EDIT = 'Edit selenium test';
+	const TEST_CONTENT_EDIT = 'Edit lorem ipsum dolor.';
+	const TEST_TAG_EDIT = 'edit selenium test';
+	const TEST_VERSION_COMMENT_EDIT = 'selenium edit test';
+	
 	private $wikiTestUrl = '';
 	private $wikiTestPage = 'seleniumtest';
 	
@@ -44,83 +49,137 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 	public function setUp() {
 		parent::setUp();
 		
-		$this->setBrowserLogLevel("debug");
 		$this->setBrowserUrl(TEST_HOST);
 		$this->wikiTestPage .= self::$time;
 		$this->wikiTestUrl = TEST_HOST . '/wiki/' . $this->wikiTestPage;
 	}
 
-	public function testShowCreateForm() {
+	public function testShowSearchWhenNoPagePresent() {
 		$this->open($this->wikiTestUrl);
-		$this->assertElementContainsText('css=.heading', 'Artikel ' . $this->wikiTestPage . ' existiert noch nicht!');
-		$this->assertElementPresent('css=#create-article');
-		$this->assertElementPresent('css=#txtAuthor');
-		$this->assertElementPresent('css=#txtAuthorEmail');
-		$this->assertElementPresent('css=.save-button');
-	}
-	
-	public function testCreatePage() {
-		$this->open($this->wikiTestUrl);
-		$this->type('css=#txtAuthor', self::AUTHOR);
-		$this->type('css=#txtAuthorEmail', self::AUTHOR_EMAIL);
-		$this->assertElementPresent('css=#article-create');
-		$this->click('css=#article-create');
-		$this->waitForPageToLoad('50000');
+		$this->assertElementContainsText('css=header.title', 'Suchergebnisse für "' . $this->wikiTestPage . '"');
+		$this->assertElementContainsText('css=section h2', 'Nichts passendes');
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-create-page.png');
+		$this->assertMessageBoxPresent();
+	}
+
+	public function testOpenCreatePage() {
+		$this->openCreatePage();
 		
 		$this->assertEditorPresent();
+		$this->assertEditTitleBoxPresent();
 
-		$this->assertElementContainsText('css=.heading', $this->wikiTestPage);
+		$this->assertElementValueEquals('css=#txtTitle', $this->wikiTestPage);
+	}
+	
+	public function testCreatePageDoNotEnterAnythingFails() {
+		$this->openCreatePage();
 		
-		$this->assertElementValueEquals('css=#txtAuthor', self::AUTHOR);
-		$this->assertElementValueEquals('css=#txtAuthorEmail', self::AUTHOR_EMAIL);
+		$this->type('css=#txtTitle', '');
+		$this->type('css=#contentEditor', '');
+		$this->type('css=#txtAuthor', '');
+		$this->type('css=#txtAuthorEmail', '');
+		$this->type('css=#txtTags__ptags', '');
+		$this->type('css=#versionComment', '');
+		
+		$this->click('css=#article-save');
+		//$this->waitForPageToLoad('50000');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testCreatePageDoNotEnterAnythingFails.png');
+		
+		$this->assertElementPresent('css=#txtTitle.error');
+		$this->assertElementPresent('css=#contentEditor.error');
+		$this->assertElementPresent('css=#txtAuthor.error');
+		$this->assertElementPresent('css=#txtAuthorEmail.error');
+		$this->assertElementPresent('css=#txtTags__ptags.error');
+	}
+	
+	public function testSuccessCreatePage() {
+		$this->openCreatePage();
+		
+		$this->type('css=#txtTitle', self::TEST_TITLE);
+		$this->type('css=#contentEditor', self::TEST_CONTENT);
+		$this->type('css=#txtAuthor', self::AUTHOR);
+		$this->type('css=#txtAuthorEmail', self::AUTHOR_EMAIL);
+		$this->insertTagsIntoPtagsField();
+		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
+		
+		$this->click('css=#article-save');
+		$this->waitForPageToLoad('50000');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testSuccessCreatePage.png');
+		
+		$this->assertReadArticlePresent();
+		$this->assertReadArticleValues();
 	}
 	
 	public function testEditPage() {
 		$this->open($this->wikiTestUrl);
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page1.png');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-edit');
 		$this->click('css=#capsulebar-edit');
 		$this->waitForPageToLoad('50000');
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page2.png');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage2.png');
 		
 		$this->assertEditorPresent();
 		
 		$this->clickAt('css=.editor h1.heading');
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page3.png');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage3.png');
 		
-		$this->assertElementPresent('css=.editor-wrapper #txtTitle');
-		$this->assertElementPresent('css=.editor-wrapper .cancel');
-		$this->assertElementPresent('css=.editor-wrapper .button');
+		$this->assertEditTitleBoxPresent();
 		
-		$this->type('css=.editor-wrapper #txtTitle', self::TEST_TITLE);
+		$this->type('css=.editor-wrapper #txtTitle', self::TEST_TITLE_EDIT);
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page4.png');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage4.png');
 		
-		$this->type('css=#contentEditor', self::TEST_CONTENT);
+		$this->type('css=#contentEditor', self::TEST_CONTENT_EDIT);
 		
-		$this->type('css=#txtTags', self::TEST_TAG_INSERT);
+		$this->type('css=#txtTags', self::TEST_TAG_EDIT);
 		
-		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
+		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT_EDIT);
 		
 		// fill in author & email again, as selenium creates a new FF profile without cookies on every start.
 		$this->type('css=#txtAuthor', self::AUTHOR);
 		$this->type('css=#txtAuthorEmail', self::AUTHOR_EMAIL);
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page5.png');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage5.png');
 		
-		$this->click('css=.save-button');
+		$this->click('css=#article-save');
 		$this->waitForPageToLoad('50000');
 		
-		$this->captureEntirePageScreenshot('/tmp/selenium-test-edit-page6.png');
+		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage6.png');
 		
 		$this->assertReadArticlePresent();		
-		$this->assertReadArticleValues();
+		$this->assertElementContainsText('css=.heading h1', self::TEST_TITLE_EDIT);
+		$this->assertElementPresent('link=' . self::TEST_TAG_EDIT);
+		$this->assertTextPresent(self::TEST_CONTENT_EDIT);
+	}
+	
+	private function insertTagsIntoPtagsField() {
+		$this->fireEvent('css=#txtTags__ptags', 'focus');
+		$this->type('css=#txtTags__ptags', self::TEST_TAG_INSERT);
+		$this->fireEvent('css=#txtTags__ptags', 'blur');
+	}
+	
+	private function openCreatePage() {
+		$this->open($this->wikiTestUrl);
+		
+		$this->click('css=.messagebox .options .button');
+		$this->waitForPageToLoad('50000');
+		
+		$this->captureEntirePageScreenshot('/tmp/selenium-open-create-page.png');
+	}
+	
+	private function assertEditTitleBoxPresent() {
+		$this->assertElementPresent('css=.editor-wrapper #txtTitle');
+		$this->assertElementPresent('css=.editor-wrapper .cancel');
+		$this->assertElementPresent('css=.editor-wrapper .button');
+	}
+	
+	private function assertMessageboxPresent() {
+		$this->assertElementPresent('css=.messagebox');
+		$this->assertElementPresent('css=.options .button');
 	}
 	
 	private function assertReadArticlePresent() {
@@ -141,7 +200,6 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 	}
 	
 	private function assertEditorPresent() {
-		$this->assertElementPresent('css=.heading');
 		$this->assertElementPresent('css=#edit-article');
 		$this->assertElementPresent('css=#contentEditor');
 		$this->assertElementPresent('css=#txtTags');
