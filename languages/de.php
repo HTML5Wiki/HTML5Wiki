@@ -31,6 +31,7 @@ return array(
 	,'noSearchResultsText' => 'Leider konnte in der gesamten Wiki nichts passendes zum Begriff "%s" gefunden werden.<br/>Haben Sie einen &auml;hnlichen Begriff bereits versucht?'
 	
 	,'compareVersions' => 'Versionen vergleichen'
+	,'bothVersionsAreEqual' => 'Die beiden Versionen sind identisch.'
 	
 	,'preview' => 'Vorschau'
 	,'rollback' => 'Version wiederherstellen'
@@ -38,7 +39,7 @@ return array(
 	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version vom %s wirklich wiederherstellen?<br/>Die momentan aktuelle Version wird als alte Version abgelegt und geht somit nicht verloren.'
 	,'yesRollback' => 'Ja, Version wiederherstellen'
 	,'noDontRollback' => 'Nein, nichts unternehmen'
-	,'restored' => 'wiederhergestellt'
+	,'restoredFrom' => 'wiederhergestellt von %s'
 	
 	,'yes' => 'Ja'
 	,'no'  => 'Nein'

@@ -27,7 +27,8 @@ return array(
 	,'noSearchResultsTitle' => 'No matches'
 	,'noSearchResultsText' => 'Unfortunatly, there where no matches with "%s" in the wiki.<br/>Have you already tried to refine you search term?'
 	
-	,'compareVersions' => 'Compare Versions'
+	,'compareVersions' => 'Compare versions'
+	,'bothVersionsAreEqual' => 'Both versions are equal.'
 	
 	,'preview' => 'Preview'
 	,'rollback' => 'Restore version'
@@ -35,7 +36,7 @@ return array(
 	,'rollbackToQuestion' => 'Would you really restore the version "%s" with title "%s"?<br/><em>Hint: You\'ll not loose your current version.</em>'
 	,'yesRollback' => 'Yes, restore this version'
 	,'noDontRollback' => 'No, don\'t do anything'
-	,'restored' => 'restored'
+	,'restoredFrom' => 'restored from'
 	
 	,'yes' => 'Yes'
 	,'no'  => 'No'
