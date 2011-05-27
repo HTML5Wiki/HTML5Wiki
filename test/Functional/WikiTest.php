@@ -56,6 +56,9 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 
 	public function testShowSearchWhenNoPagePresent() {
 		$this->open($this->wikiTestUrl);
+		
+		$this->captureEntirePageScreenshot('/tmp/selenium-testShowSearchWhenNoPagePresent.png');
+		
 		$this->assertElementContainsText('css=header.title', sprintf($this->getLanguageKey('searchResultsFor'), $this->wikiTestPage));
 		$this->assertElementContainsText('css=section h2', $this->getLanguageKey('noSearchResultsTitle'));
 		
@@ -64,6 +67,8 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 
 	public function testOpenCreatePage() {
 		$this->openCreatePage();
+		
+		$this->captureEntirePageScreenshot('/tmp/selenium-testOpenCreatePage.png');
 		
 		$this->assertEditorPresent();
 		$this->assertEditTitleBoxPresent();
