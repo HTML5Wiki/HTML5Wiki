@@ -56,8 +56,8 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 
 	public function testShowSearchWhenNoPagePresent() {
 		$this->open($this->wikiTestUrl);
-		$this->assertElementContainsText('css=header.title', 'Suchergebnisse für "' . $this->wikiTestPage . '"');
-		$this->assertElementContainsText('css=section h2', 'Nichts passendes');
+		$this->assertElementContainsText('css=header.title', sprintf($this->getLanguageKey('searchResultsFor'), $this->wikiTestPage));
+		$this->assertElementContainsText('css=section h2', $this->getLanguageKey('noSearchResultsTitle'));
 		
 		$this->assertMessageBoxPresent();
 	}
