@@ -73,7 +73,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 				'title' => $result['model']->getCommonName()
 				,'mediaType' => strtolower($result['model']->mediaVersionType)
 				,'matchOrigins' => $result['matchOrigins']
-				,'url'  => $this->router->buildURL('wiki',$result['model']->permalink)
+				,'url'  => $this->router->buildURL(array('wiki',$result['model']->permalink))
 			);
 		}
 		
