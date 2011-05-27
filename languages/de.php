@@ -30,7 +30,7 @@ return array(
 	,'compareVersions' => 'Versionen vergleichen'
 	
 	,'preview' => 'Vorschau'
-	,'rollbackTo' => 'Version "%s" wiederherstellen'
+	,'rollbackTo' => 'Version vom %s wiederherstellen'
 	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version "%s" mit dem Titel "%s" wirklich wiederherstellen?<br/><em>Hinweis: Die aktuelle Version wird damit nicht verloren</em>'
 	,'yesRollback' => 'Ja, Version wiederherstellen'
 	,'noDontRollback' => 'Nein, nichts unternehmen'
