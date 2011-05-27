@@ -145,7 +145,7 @@
 				,'button': true
 			}]
 		};
-		MessageController.addMessage('question','<?php echo $msg; ?>', options);
+		MessageController.addMessage('error','<?php echo $msg; ?>', options);
 		
 		<?php if (isset($this->errors['fields']['title']) && $this->errors['fields']['title']): ?>
 			Article.handleEditArticleTitle();
