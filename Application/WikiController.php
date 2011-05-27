@@ -716,7 +716,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		$rightContent .= "\n\n" . $rightVersion->content;
 
-		return new PhpDiff_Diff(explode("\n", $rightContent), explode("\n", $leftContent));
+		return new PhpDiff_Diff(explode("\n", $leftContent), explode("\n", $rightContent));
 	}
 
 	public function rollbackAction() {
