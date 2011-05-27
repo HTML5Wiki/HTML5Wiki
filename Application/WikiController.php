@@ -76,7 +76,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$article->loadLatestByPermalink($permalink);
 		}
 
-		$this->setPageTitle($article->getCommonName());
 		if (isset($article->id)) {
 			$this->showArticle($article);
 		} else {
@@ -103,6 +102,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$this->setTemplate('read.php');
 
 		$this->setCachingHeader($article);
+		
+		$this->setPageTitle($article->getCommonName());
 
 		$this->template->assign('article', $article);
 		$this->template->assign('request', $this->router->getRequest());
