@@ -85,4 +85,24 @@ body { 	background: @img_headerbackground repeat-x; }
 		}
 	}
 	
+	.box {
+		font-size: @font_normalsize;
+		padding: 6px 5px 10px 29px;
+		background: no-repeat 7px 10px;
+		border: 1px solid;
+		.border-radius(5px);
+		margin-bottom: 10px;
+		
+		&.info { background-image: @icon_16_information; background-color: @color_infomessage; border-color: darken(@color_infomessage,20%); }
+		&.error { background-image: @icon_16_exclamation; background-color: @color_errormessage; border-color: darken(@color_errormessage,20%); }
+		&.question { color: black; background-image: @icon_16_question; background-color: @color_questionmessage; border-color: darken(@color_questionmessage,20%); }
+		
+		.white-paper {
+			background-color: #fff;
+			padding: 2px;
+			margin: 10px 0;
+			border: 1px solid lighten(#000,80%);
+		}
+	}
+	
 }

@@ -241,7 +241,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 					$params['mediaVersionTimestamp']);
 		}
 
-		$errors = array();
+		$errors = $this->createEmptyErrorArray();
 		$user = $this->getUser($params);
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
 			$user->saveCookie();
@@ -253,8 +253,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$userMediaVersion = $this->createMediaVersion($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 				$userArticleVersion = $this->createArticleVersion($userMediaVersion, $this->prepareData($oldArticleVersion, $params));
 
-				$diff = $this->createLeftRightDiffContent($intermediateArticle, $userArticleVersion);
+				$diff = $this->createLeftRightDiffContent($userArticleVersion, $intermediateArticle);
 				$this->template->assign('diff', $diff);
+				$this->template->assign('leftVersionTitle', $this->template->translate->_('myVersion'));
+				$this->template->assign('rightVersionTitle', $this->template->translate->_('newVersion'));
+				$this->template->assign('otherAuthor', $intermediateArticle->getUser()->name);
 			} else {
 				$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 
@@ -558,6 +561,15 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		return $success;
 	}
 
+	/**
+	 * Prepares an array for adding error messages which are generated from the
+	 * validatior-functions in this class.
+	 *
+	 * @return array
+	 */
+	private function createEmptyErrorArray() {
+		return array('messages'=>array(),'fields'=>array());
+	}
 
     /**
      * Check if the article was save from an other user while editing
@@ -673,13 +685,18 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			}
 		}
 
-		$lastArticle = max($leftVersion->mediaVersionTimestamp, $rightVersion->mediaVersionTimestamp) == $leftVersion->mediaVersionTimestamp ? $leftVersion : $rightVersion;
-		$this->setCachingHeader($lastArticle);
+		$latestTimestamp = max($leftVersion->mediaVersionTimestamp, $rightVersion->mediaVersionTimestamp);
+		if($latestTimestamp == $leftVersion->mediaVersionTimestamp) {
+			$latestArticle = $leftVersion;
+		} else {
+			$latestArticle = $rightVersion;
+		}
+		$this->setCachingHeader($latestArticle);
 
 		$diff = $this->createLeftRightDiffContent($leftVersion, $rightVersion);
 
 		$this->template->assign('diff', $diff);
-		$this->template->assign('title', $lastArticle->getCommonName());
+		$this->template->assign('title', $latestArticle->getCommonName());
 		$this->template->assign('leftTimestamp', $left);
 		$this->template->assign('rightTimestamp', $right);
 
@@ -740,38 +757,57 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				'authorName' => $request->getPost('txtAuthor'),
 				'authorEmail' => $request->getPost('txtAuthorEmail')
 			);
-			
 			$versionComment = $request->getPost('txtVersionComment');
-			if($versionComment === null || strlen($versionComment) === 0) {
-				$versionComment =
-					$mediaVersion->versionComment
-					. ' ('
-					. sprintf($this->template->translate->_('restoredFrom'), date($this->template->translate->_('timestampFormat')))
-					. ')';
+			
+			$errors = $this->createEmptyErrorArray();
+			if($this->validateAuthor(true, $userData, $errors)) {
+				if($versionComment === null || strlen($versionComment) === 0) {
+					$versionComment =
+						$mediaVersion->versionComment
+						. ' ('
+						. sprintf($this->template->translate->_('restoredFrom'), date($this->template->translate->_('timestampFormat')))
+						. ')';
+				}
+
+				$newMediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
+				$newMediaVersion = $newMediaVersionTable->createRow($mediaVersion->toArray());
+				$newArticleVersionTable = new Html5Wiki_Model_ArticleVersion_Table();
+				$newArticleVersion = $newArticleVersionTable->createRow($articleVersion->toArray());
+
+				$newMediaVersion->timestamp = time();
+				$newMediaVersion->userId = $this->getUser($userData)->id;
+				$newMediaVersion->versionComment = $versionComment;
+				$newArticleVersion->mediaVersionTimestamp = $newMediaVersion->timestamp;
+
+				$newMediaVersion->save();
+				$newArticleVersion->save();
+
+				$this->redirect($this->router->buildURL(array('wiki',$permalink)));
 			}
-
-			$newMediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
-			$newMediaVersion = $newMediaVersionTable->createRow($mediaVersion->toArray());
-			$newArticleVersionTable = new Html5Wiki_Model_ArticleVersion_Table();
-			$newArticleVersion = $newArticleVersionTable->createRow($articleVersion->toArray());
-
-			$newMediaVersion->timestamp = time();
-			$newMediaVersion->userId = $this->getUser($userData)->id;
-			$newMediaVersion->versionComment = $versionComment;
-			$newArticleVersion->mediaVersionTimestamp = $newMediaVersion->timestamp;
-
-			$newMediaVersion->save();
-			$newArticleVersion->save();
-
-			$this->redirect($this->router->buildURL(array('wiki',$permalink)));
+			
+			$this->template->assign('errors', $errors);
+			$this->showRollbackForm($permalink, $toTimestamp, $this->getUser(), $articleVersion->getCommonName());			
 		} else {
-			$this->template->assign('permalink', $permalink);
-			$this->template->assign('toTimestamp', $toTimestamp);
-			$this->template->assign('author', $this->getUser());
-			$this->template->assign('title', $articleVersion->getCommonName());
-			$this->setPageTitle($articleVersion->getCommonName());
+			$this->showRollbackForm($permalink, $toTimestamp, $this->getUser(), $articleVersion->getCommonName());
 		}
 	}
+	
+	/**
+	 * Prepares the template to display the rollback form.
+	 *
+	 * @param $permalink
+	 * @param $toTimestamp
+	 * @param $author
+	 * @param $title
+	 */
+	private function showRollbackForm($permalink, $toTimestamp, $author, $title) {
+		$this->template->assign('permalink', $permalink);
+		$this->template->assign('toTimestamp', $toTimestamp);
+		$this->template->assign('author', $author);
+		$this->template->assign('title', $title);
+		$this->setPageTitle($title);
+	}
+
 
 	public function previewAction() {
 		$content = $this->router->getRequest()->getPost('data');
