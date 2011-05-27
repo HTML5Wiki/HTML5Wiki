@@ -56,6 +56,50 @@ return array(
 
 	,'hasIntermediateVersionText' => 'Da war jemand schneller als Sie.<br/>Sie haben nun zwei M&ouml;glichkeiten:<br/> - Speichern Sie Ihren Artikel nochmals und die Version wird &uuml;berschrieben.<br/> - L&ouml;schen Sie Ihre Version, um die \'andere Version\' beizubehalten.'
 	,'overwrite' => '&Uuml;berschreiben'
-	,'rejectChanges' => '&Auml;nderungen verwerfen'
+	,'rejectChanges' => '&Auml;nderungen verwerfen',
+
+	// Zend_Validate_StringLength
+    "Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet",
+    "'%value%' is less than %min% characters long" => "'%value%' ist weniger als %min% Zeichen lang",
+    "'%value%' is more than %max% characters long" => "'%value%' ist mehr als %max% Zeichen lang",
+
+	// Zend_Validate_Regex
+    "Invalid type given. String, integer or float expected" => "Ungültiger Typ angegeben. String, Integer oder Float erwartet",
+    "'%value%' does not match against pattern '%pattern%'" => "'%value%' scheint nicht auf das Pattern '%pattern%' zu passen",
+    "There was an internal error while using the pattern '%pattern%'" => "Es gab einen internen Fehler bei der Verwendung des Patterns '%pattern%'",
+
+	// Zend_Validate_NotEmpty
+    "Invalid type given. String, integer, float, boolean or array expected" => "Ungültiger Typ angegeben. String, Integer, Float, Boolean oder Array erwartet",
+    "Value is required and can't be empty" => "Es wird ein Wert benötigt. Dieser darf nicht leer sein",
+
+	// Zend_Validate_Alpha
+    "Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet",
+    "'%value%' contains non alphabetic characters" => "'%value%' enthält Zeichen welche keine Buchstaben sind",
+    "'%value%' is an empty string" => "'%value%' ist ein leerer String",
+
+	// Zend_Validate_EmailAddress
+    "Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet",
+    "'%value%' is no valid email address in the basic format local-part@hostname" => "'%value%' ist keine gültige Emailadresse im Basisformat local-part@hostname",
+    "'%hostname%' is no valid hostname for email address '%value%'" => "'%hostname%' ist kein gültiger Hostname für die Emailadresse '%value%'",
+    "'%hostname%' does not appear to have a valid MX record for the email address '%value%'" => "'%hostname%' scheint keinen gültigen MX Eintrag für die Emailadresse '%value%' zu haben",
+    "'%hostname%' is not in a routable network segment. The email address '%value%' should not be resolved from public network" => "'%hostname%' ist in keinem routebaren Netzwerksegment. Die Emailadresse '%value%' sollte nicht vom öffentlichen Netz aus aufgelöst werden",
+    "'%localPart%' can not be matched against dot-atom format" => "'%localPart%' passt nicht auf das dot-atom Format",
+    "'%localPart%' can not be matched against quoted-string format" => "'%localPart%' passt nicht auf das quoted-string Format",
+    "'%localPart%' is no valid local part for email address '%value%'" => "'%localPart%' ist kein gültiger lokaler Teil für die Emailadresse '%value%'",
+    "'%value%' exceeds the allowed length" => "'%value%' ist länger als erlaubt",
+
+ 	// Zend_Validate_Hostname
+    "Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet",
+    "'%value%' appears to be an IP address, but IP addresses are not allowed" => "'%value%' scheint eine IP Adresse zu sein, aber IP Adressen sind nicht erlaubt",
+    "'%value%' appears to be a DNS hostname but cannot match TLD against known list" => "'%value%' scheint ein DNS Hostname zu sein, aber die TLD wurde in der bekannten Liste nicht gefunden",
+    "'%value%' appears to be a DNS hostname but contains a dash in an invalid position" => "'%value%' scheint ein DNS Hostname zu sein, enthält aber einen Bindestrich an einer ungültigen Position",
+    "'%value%' appears to be a DNS hostname but cannot match against hostname schema for TLD '%tld%'" => "'%value%' scheint ein DNS Hostname zu sein, passt aber nicht in das Hostname Schema für die TLD '%tld%'",
+    "'%value%' appears to be a DNS hostname but cannot extract TLD part" => "'%value%' scheint ein DNS Hostname zu sein, aber der TLD Teil konnte nicht extrahiert werden",
+    "'%value%' does not match the expected structure for a DNS hostname" => "'%value%' passt nicht in die erwartete Struktur für einen DNS Hostname",
+    "'%value%' does not appear to be a valid local network name" => "'%value%' scheint kein gültiger lokaler Netzerkname zu sein",
+    "'%value%' appears to be a local network name but local network names are not allowed" => "'%value%' scheint ein lokaler Netzwerkname zu sein, aber lokale Netzwerknamen sind nicht erlaubt",
+    "'%value%' appears to be a DNS hostname but the given punycode notation cannot be decoded" => "'%value%' scheint ein DNS Hostname zu sein, aber die angegebene Punycode Schreibweise konnte nicht dekodiert werden",
+
+	
 );
 ?>

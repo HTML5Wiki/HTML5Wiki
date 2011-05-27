@@ -551,7 +551,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$success = false;
 
 			foreach ($validatorChain->getMessages() as $message) {
-				array_push($errorMsg, $key . ' ' . $message);
+				array_push($errorMsg, $this->template->getTranslate()->_($key) . ' ' . $message);
 				$errorFields[$key] = true;
 			}
 		}
