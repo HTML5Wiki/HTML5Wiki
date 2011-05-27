@@ -51,6 +51,10 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .content .bottom-button-bar .large-button .caption{padding-left:19px;padding-top:1px;background-repeat:no-repeat;}
 .content .bottom-button-bar .large-button .caption{background-position:0 center;padding-left:22px;}
 .content .bottom-button-bar .link-button{color:#a9a9a9;font-size:85%;}.content .bottom-button-bar .link-button:hover{color:#9c9c9c;background-color:#f0f0f0;}
+.content .box{font-size:85%;padding:6px 5px 10px 29px;background:no-repeat 7px 10px;border:1px solid;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;margin-bottom:10px;}.content .box.info{background-image:url('../images/icons16/information.png');background-color:#7ab7e6;border-color:#2888d2;}
+.content .box.error{background-image:url('../images/icons16/exclamation.png');background-color:#e63d1f;border-color:#8f2310;}
+.content .box.question{color:black;background-image:url('../images/icons16/question.png');background-color:#ffe292;border-color:#ffc72c;}
+.content .box .white-paper{background-color:#fff;padding:2px;margin:10px 0;border:1px solid #cccccc;}
 .article a{color:#e44d26;text-decoration:none;}.article a:hover{background-color:#fdf4f2;}
 .article p{font-family:Palatino,"Palatino Linotype",Georgia,Times,"Times New Roman",serif;line-height:140%;}
 .article em{font-style:italic;}
