@@ -11,7 +11,7 @@
 class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase {
 
 	private $config = array();
-	private $basePath = '';
+	private $systemBasePath = '';
 	private $applicationPath = '';
 	private $libraryPath = '';
 
@@ -23,9 +23,9 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 			),
 		);
 
-		$this->basePath = realpath(dirname(__CLASS__) . '/../');
-		$this->applicationPath = $this->basePath . DIRECTORY_SEPARATOR . 'test/Unit/Library/Controller/FactoryTest/CorrectControllers' . DIRECTORY_SEPARATOR;
-		$this->libraryPath     = $this->basePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
+		$this->systemBasePath = realpath(dirname(__CLASS__) . '/../');
+		$this->applicationPath = $this->systemBasePath . DIRECTORY_SEPARATOR . 'test/Unit/Library/Controller/FactoryTest/CorrectControllers' . DIRECTORY_SEPARATOR;
+		$this->libraryPath     = $this->systemBasePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
 	}
 
 	/**
@@ -43,7 +43,7 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 		$router = new Html5Wiki_Routing_Router($config, $request);
 
 		$frontController = $this->getMock('Html5Wiki_Controller_Front', array('getController', 'dispatch', 'render'), 
-								array($config, $this->basePath, $this->libraryPath, $this->applicationPath, $router));
+								array($config, $this->systemBasePath, $this->libraryPath, $this->applicationPath, $router));
 		$frontController->expects($this->once())
 						->method('getController')
 						->will($this->returnValue(new Application_WikiController()));

@@ -31,7 +31,7 @@ class Html5Wiki_Controller_Front {
 	 * Base path of the whole application
 	 * @var string
 	 */
-	private $basePath = '';
+	private $systemBasePath = '';
 
 	/**
 	 * Path to the library
@@ -56,16 +56,16 @@ class Html5Wiki_Controller_Front {
 	 * Setup front controller
 	 *
 	 * @param Zend_Config $config Application configuration
-	 * @param string $basePath        Base path of the wiki
+	 * @param string $systemBasePath        Base path of the wiki
 	 * @param string $libraryPath     Library path
 	 * @param string $applicationPath Application path
 	 * @param Html5Wiki_Routing_Router_Interface $router Router, optional. If null given, a new
 	 *                                                   Html5Wiki_Routing_Router will be instantiated
 	 */
-	public function __construct(Zend_Config $config, $basePath, $libraryPath, $applicationPath, $router = null) {
+	public function __construct(Zend_Config $config, $systemBasePath, $libraryPath, $applicationPath, $router = null) {
 		$this->config = $config;
 
-		if (!is_string($basePath) || !is_string($libraryPath) || !is_string($applicationPath)) {
+		if (!is_string($systemBasePath) || !is_string($libraryPath) || !is_string($applicationPath)) {
 			throw new Html5Wiki_Exception_InvalidArgument("All paths given to " . __CLASS__ . " should be strings.");
 		}
 
@@ -76,7 +76,7 @@ class Html5Wiki_Controller_Front {
 		}
 		$this->router->route();
 
-		$this->basePath = $basePath;
+		$this->systemBasePath = $systemBasePath;
 		$this->libraryPath = $libraryPath;
 		$this->applicationPath = $applicationPath;
 
@@ -105,7 +105,7 @@ class Html5Wiki_Controller_Front {
 		$this->controller = $this->getController();
 		
 		$this->controller->setConfig($this->config);
-		$this->controller->setBasePath($this->basePath);
+		$this->controller->setSystemBasePath($this->systemBasePath);
 		
 		$this->dispatch();
 		$this->render();

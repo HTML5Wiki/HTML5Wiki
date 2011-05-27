@@ -62,7 +62,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * Installation's base path
 	 * @var string
 	 */
-	protected $basePath = '';
+	protected $systemBasePath = '';
 	
 	/**
 	 * Configuration
@@ -71,8 +71,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	protected $config = null;
 
 	/**
-	 *
-	 * @param string $basePath 
+	 * Setup object: setup templates
 	 */
 	public function __construct() {
 		$this->layoutFile = self::DEFAULT_LAYOUT_FILE;
@@ -83,8 +82,8 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->template = new Html5Wiki_Template_Php($this->layoutTemplate);
 	}
 	
-	public function setBasePath($basePath) {
-		$this->basePath = $basePath;
+	public function setSystemBasePath($systemBasePath) {
+		$this->systemBasePath = $systemBasePath;
 	}
 	
 	public function setConfig(Zend_Config $config) {
@@ -97,9 +96,6 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->setTranslation();
 
 		$this->setTemplate(strtolower($this->router->getAction()) . ".php");
-		
-		$this->layoutTemplate->assign('basePath', $this->router->getRequest()->getBasePath());
-		$this->template->assign('basePath', $this->router->getRequest()->getBasePath());
 
 		$actionMethod = $this->router->getAction() . 'Action';
 		
@@ -117,7 +113,7 @@ abstract class Html5Wiki_Controller_Abstract {
 		$translate = new Zend_Translate(
 				array(
 					'adapter' => 'array',
-					'content' => $this->basePath . '/languages/' . $language . '.php',
+					'content' => $this->systemBasePath . '/languages/' . $language . '.php',
 					'locale'  => $language
 				)
 		);

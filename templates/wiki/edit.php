@@ -1,8 +1,7 @@
 <?php
-	$basePath = $this->basePath . '/';
-	$this->javascriptHelper()->appendFile($basePath . 'js/classes/capsulebar.js');
-	$this->javascriptHelper()->appendFile($basePath . 'js/classes/article.js');
-	$this->javascriptHelper()->appendFile($basePath . 'js/classes/history.js');
+	$this->javascriptHelper()->appendFile($this->urlHelper('js','classes','capsulebar.js'));
+	$this->javascriptHelper()->appendFile($this->urlHelper('js','classes','article.js'));
+	$this->javascriptHelper()->appendFile($this->urlHelper('js','classes','history.js'));
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->mediaVersionId . '"]);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorEvents);');
@@ -12,7 +11,7 @@
 	$deleteText = $this->translate->_('deleteArticle');
 ?>
 <article id="content" class="content editor">
-	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
+	<form id="edit-article" name="editArticleForm" action="<?php echo $this->urlHelper('wiki','save',$this->permalink) ?>" method="post">
 		<input type="hidden" value="<?php echo $this->mediaVersionId; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
 		<input type="hidden" value="<?php echo $this->mediaVersionTimestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
 		<header class="grid_12 title clearfix">
@@ -143,6 +142,11 @@
 			}]
 		};
 		MessageController.addMessage('question','<?php echo $msg; ?>', options);
+		
+		<?php if (isset($this->errors['fields']['title']) && $this->errors['fields']['title']): ?>
+			Article.handleEditArticleTitle();
+			$('#txtTitle').addClass('error');
+		<?php endif;?>
     </script>
     <?php endif; ?>
 </article>
