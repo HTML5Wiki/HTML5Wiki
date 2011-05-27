@@ -133,9 +133,9 @@
     <script type="text/javascript">
         <?php
             $msg = "<ul>";
-            foreach ($this->errors['messages'] as $errorMessage):
+            foreach ($this->errors['messages'] as $errorMessage) {
                 $msg .= "<li>" . addslashes($errorMessage) . "</li>";
-            endforeach;
+			}
             $msg .= "</ul>";
         ?>
         var options = {
