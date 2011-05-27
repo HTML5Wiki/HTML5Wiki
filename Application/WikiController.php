@@ -253,8 +253,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$userMediaVersion = $this->createMediaVersion($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 				$userArticleVersion = $this->createArticleVersion($userMediaVersion, $this->prepareData($oldArticleVersion, $params));
 
-				$diff = $this->createLeftRightDiffContent($intermediateArticle, $userArticleVersion);
+				$diff = $this->createLeftRightDiffContent($userArticleVersion, $intermediateArticle);
 				$this->template->assign('diff', $diff);
+				$this->template->assign('leftVersionTitle', $this->template->translate->_('myVersion'));
+				$this->template->assign('rightVersionTitle', $this->template->translate->_('newVersion'));
+				$this->template->assign('otherAuthor', $intermediateArticle->getUser()->name);
 			} else {
 				$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 

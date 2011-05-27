@@ -29,17 +29,21 @@
 			$saveText = $this->translate->_('overwrite');
 			$deleteText = $this->translate->_('rejectChanges');
 		?>
-		<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
-		<div class="grid_12 compareversions">
-			<fieldset name="author" class="group">
-				<legend class="groupname"><?php echo $this->translate->_('compareVersions') ?></legend>
-				<p class="hint">
-					<?php echo $this->translate->_('hasIntermediateVersionText'); ?>
+		<div class="grid_12">
+			<div class="box question">
+				<h2><?php echo $this->translate->_('compareVersions') ?></h2>
+				<p>
+					<?php printf($this->translate->_('hasIntermediateVersionText'), $this->otherAuthor); ?>
 				</p>
-				<?php echo $this->diffRendererHelper($this->diff, $this->leftTimestamp, $this->rightTimestamp) ?>
-				<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
-				<a href="#" class="link-button delete-button"><?php echo $deleteText ?></a>
-			</fieldset>
+				<div class="compareversions white-paper">
+					<?php echo $this->diffRendererHelper($this->diff, $this->leftVersionTitle, $this->rightVersionTitle) ?>
+				</div>
+				<div class="bottom-button-bar">
+					<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
+					<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
+					<a href="#" class="link-button delete-button"><?php echo $deleteText ?></a>
+				</div>
+			</div>
 		</div>
 		<div class="clear"></div>
 		<?php endif; ?>
