@@ -119,7 +119,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @param $permalink
 	 */
 	private function redirectToArticleNotFoundSearch($permalink) {
-		$searchUrl = $this->router->buildURL('index','search?term='. $permalink. '&newarticle=1');
+		$searchUrl = $this->router->buildURL(array('index','search?term='. $permalink. '&newarticle=1'));
 		$this->redirect($searchUrl);
 	}
 
@@ -743,7 +743,11 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			
 			$versionComment = $request->getPost('txtVersionComment');
 			if($versionComment === null || strlen($versionComment) === 0) {
-				$versionComment = $mediaVersion->versionComment. ' ('. $this->template->translate->_('restored'). ')';
+				$versionComment =
+					$mediaVersion->versionComment
+					. ' ('
+					. sprintf($this->template->translate->_('restoredFrom'), date($this->template->translate->_('timestampFormat')))
+					. ')';
 			}
 
 			$newMediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
@@ -759,7 +763,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$newMediaVersion->save();
 			$newArticleVersion->save();
 
-			$this->redirect($this->router->buildURL('wiki',$permalink));
+			$this->redirect($this->router->buildURL(array('wiki',$permalink)));
 		} else {
 			$this->template->assign('permalink', $permalink);
 			$this->template->assign('toTimestamp', $toTimestamp);
