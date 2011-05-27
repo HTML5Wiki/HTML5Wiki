@@ -6,7 +6,7 @@
 <article id="content" class="content compareversions">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading"><?php echo $this->title ?></h1>
-		<?php echo $this->capsulebarHelper('history'); ?>
+		<?php echo $this->capsulebarHelper($this->permalink); ?>
 	</header>
 	<div class="clear"></div>
 	
