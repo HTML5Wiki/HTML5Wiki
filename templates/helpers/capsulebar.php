@@ -22,6 +22,17 @@
 		)
 	);
 	
+	/* Add additonal items of needed: */
+	// TODO could this been solved with a  pritier class or something?
+	if($this->activePage == 'diff') {
+		$items['diff'] = array(
+			'url' => $this->urlHelper('wiki/diff/' . $this->permalink)
+			,'name' => $this->translate->_('compareVersions')
+			,'cssClass' => 'diff'
+			,'active' => false
+		);
+	}
+	
 	/* Look for the current item: */
 	foreach($items as $key => $item) {
 		if($key === $this->activePage) {
