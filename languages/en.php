@@ -35,6 +35,7 @@ return array(
 	,'rollbackToQuestion' => 'Would you really restore the version "%s" with title "%s"?<br/><em>Hint: You\'ll not loose your current version.</em>'
 	,'yesRollback' => 'Yes, restore this version'
 	,'noDontRollback' => 'No, don\'t do anything'
+	,'restored' => 'restored'
 	
 	,'yes' => 'Yes'
 	,'no'  => 'No'
