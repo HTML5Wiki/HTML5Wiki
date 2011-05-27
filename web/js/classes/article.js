@@ -69,7 +69,7 @@ var Article = (function() {
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				success: function(response) {
+				success: function(data, textStatus, response) {
 					var url = window.location.href.replace(/(edit|new)/, 'read');
 					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
 					if (url.indexOf('index') !== -1) {
@@ -81,6 +81,7 @@ var Article = (function() {
 					400: function(response) {
 						Article.replaceContent(response);
 						Article.handleEditArticleTitle();
+						$('#txtTitle').addClass('error');
 					}
 				}
 			});
