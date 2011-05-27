@@ -73,14 +73,10 @@ var Article = (function() {
 					Article.replaceContent(response);
 				},
 				success: function(response) {
-					console.log('f');
 					var url = window.location.href.replace(/(edit|new)/, 'read');
 					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
-					try {
-						console.log('b');
+					if (url.indexOf('index') !== -1) {
 						Menu.addOrReplaceArticleTab(url, title);
-					} catch(e) {
-						console.log(e);
 					}
 				}
 			});
