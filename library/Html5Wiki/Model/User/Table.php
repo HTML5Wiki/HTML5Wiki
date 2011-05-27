@@ -51,7 +51,7 @@ class Html5Wiki_Model_User_Table extends Zend_Db_Table_Abstract {
 	 * @param	Array		$data
 	 */
 	public function updateUser($idUser, $data) {
-		$where	= $this->getAdapter()->quoteInto($this->_primary . ' = ', $idUser);
+		$where	= $this->getAdapter()->quoteInto($this->_primary[0] . ' = ?', $idUser);
 		
 		$updateData = array(
 			'email'	=> $data['email'],

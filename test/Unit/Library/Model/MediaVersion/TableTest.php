@@ -9,6 +9,16 @@
  
 class Test_Unit_Library_Model_MediaVersion_TableTest extends Test_Unit_Library_Model_AbstractTest {
 
+	/**
+	 * @var Html5Wiki_Model_MediaVersion_Table
+	 */
+	protected	$table;
+
+	/**
+	 * @var Integer
+	 */
+	protected	$timestamp;
+
 	public function setUp() {
 		parent::setUp();
 
@@ -34,5 +44,17 @@ class Test_Unit_Library_Model_MediaVersion_TableTest extends Test_Unit_Library_M
 		$article	= $this->table->fetchMediaByPermaLink('test/testarticle');
 
 		$this->assertEquals(1, $article['id']);
+	}
+
+	public function testFetchMediaVersion() {
+		$mediaVersion	= $this->table->fetchMediaVersion(1, $this->timestamp);
+
+		$this->assertEquals(1, $mediaVersion->id);
+		$this->assertEquals('test/testarticle', $mediaVersion->permalink);
+
+		$mediaVersion	= $this->table->fetchMediaVersion(1, 0);
+
+		$this->assertEquals(1, $mediaVersion->id);
+		$this->assertEquals('test/testarticle', $mediaVersion->permalink);
 	}
 }
