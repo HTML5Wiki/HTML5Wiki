@@ -20,7 +20,7 @@ class Html5Wiki_Controller_Factory {
 	public static function factory($applicationPath, Html5Wiki_Routing_Interface_Router $router) {
 		if (!is_string($applicationPath)) {
 			throw new Html5Wiki_Exception_InvalidArgument(
-						'Invalid argument supplied for ' . __CLASS__ . '::' . __FUNCTION__ . ' (Argument basePath).'
+						'Invalid argument supplied for ' . __CLASS__ . '::' . __FUNCTION__ . ' (Argument applicationPath).'
 						. ' String required but ' . gettype($applicationPath) . ' supplied.');
 		}
 

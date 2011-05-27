@@ -11,16 +11,16 @@ ob_start();
 ini_set('display_errors', true);
 error_reporting(E_ALL | E_STRICT);
 
-$basePath = realpath(dirname(__FILE__) . '/../');
-$libraryPath = $basePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
-$applicationPath = $basePath . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR;
-$configPath	= $basePath . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
+$systemBasePath = realpath(dirname(__FILE__) . '/../');
+$libraryPath = $systemBasePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
+$applicationPath = $systemBasePath . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR;
+$configPath	= $systemBasePath . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
 
 // include library
-$includePath = get_include_path() . PATH_SEPARATOR . $basePath . PATH_SEPARATOR . $libraryPath;
+$includePath = get_include_path() . PATH_SEPARATOR . $systemBasePath . PATH_SEPARATOR . $libraryPath;
 ini_set('include_path', $includePath);
 // include config
-$includePath = get_include_path() . PATH_SEPARATOR . $basePath . PATH_SEPARATOR . $configPath;
+$includePath = get_include_path() . PATH_SEPARATOR . $systemBasePath . PATH_SEPARATOR . $configPath;
 ini_set('include_path', $includePath);
 
 require $libraryPath . 'Zend/Loader/Autoloader.php';
@@ -36,7 +36,7 @@ Zend_Db_Table::setDefaultAdapter($adapter);
 
 date_default_timezone_set($config->defaultTimezone);
 
-$frontController = new Html5Wiki_Controller_Front($config, $basePath, $libraryPath, $applicationPath);
+$frontController = new Html5Wiki_Controller_Front($config, $systemBasePath, $libraryPath, $applicationPath);
 $frontController->run();
 
 ob_end_flush();
