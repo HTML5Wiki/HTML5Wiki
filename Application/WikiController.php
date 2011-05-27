@@ -269,6 +269,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				return;
 			}
 		}
+		
+		$this->setHttpResponseStatus(400);
 
         $this->template->assign('errors', $errors);
         $this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
