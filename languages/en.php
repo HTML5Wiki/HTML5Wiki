@@ -11,7 +11,7 @@ return array(
 	,'homepage' => 'Homepage'
 	,'recentChanges' => 'Recent Changes'
 	,'search' => 'Search'
-	,'searchResultsFor' => 'Search results for "%1"'
+	,'searchResultsFor' => 'Search results for "%s"'
 	,'articleContentLegend' => 'Article content'
 	,'content' => 'Content'
 		
