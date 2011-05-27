@@ -30,9 +30,10 @@ return array(
 	,'compareVersions' => 'Compare Versions'
 	
 	,'preview' => 'Preview'
-	,'rollbackTo' => 'Rollback to version "%s"'
-	,'rollbackToQuestion' => 'Would you really rollback to the version "%s" with title "%s"?<br/><em>Hint: You\'ll not loose your current version.</em>'
-	,'yesRollback' => 'Yes, rollback to this version'
+	,'rollback' => 'Restore version'
+	,'rollbackTo' => 'Restore version "%s"'
+	,'rollbackToQuestion' => 'Would you really restore the version "%s" with title "%s"?<br/><em>Hint: You\'ll not loose your current version.</em>'
+	,'yesRollback' => 'Yes, restore this version'
 	,'noDontRollback' => 'No, don\'t do anything'
 	
 	,'yes' => 'Yes'
