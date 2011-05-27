@@ -35,6 +35,7 @@ return array(
 	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version vom %s wirklich wiederherstellen?<br/>Die momentan aktuelle Version wird als alte Version abgelegt und geht somit nicht verloren.'
 	,'yesRollback' => 'Ja, Version wiederherstellen'
 	,'noDontRollback' => 'Nein, nichts unternehmen'
+	,'restored' => 'wiederhergestellt'
 	
 	,'yes' => 'Ja'
 	,'no'  => 'Nein'
