@@ -7,6 +7,9 @@
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorEvents);');
 	if(strlen($this->title) == 0) $this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.handleEditArticleTitle);');
+
+	$saveText = $this->translate->_('save');
+	$deleteText = $this->translate->_('deleteArticle');
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->request->getBasePath()?>/wiki/save/<?php echo $this->permalink ?>" method="post">
@@ -23,6 +26,10 @@
 		<div class="clear"></div>
 
 		<?php if (isset($this->diff)) : ?>
+		<?php
+			$saveText = $this->translate->_('overwrite');
+			$deleteText = $this->translate->_('rejectChanges');
+		?>
 		<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
 		<div class="grid_12 compareversions">
 			<fieldset name="author" class="group">
@@ -31,6 +38,8 @@
 					<?php echo $this->translate->_('hasIntermediateVersionText'); ?>
 				</p>
 				<?php echo $this->diffRendererHelper($this->diff, $this->leftTimestamp, $this->rightTimestamp) ?>
+				<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
+				<a href="#" class="link-button delete-button"><?php echo $deleteText ?></a>
 			</fieldset>
 		</div>
 		<div class="clear"></div>
@@ -50,14 +59,14 @@
 		
 		<div class="grid_4">
 			<fieldset name="author" class="group">
-				<legend class="groupname">Autoreninformation</legend>
+				<legend class="groupname"><?php echo $this->translate->_('authorInformationLegend') ?></legend>
                 <input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : 0; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
                     <?php
                         $fieldToSet = isset($this->errors['fields']['authorName']) ? $this->errors['fields']['authorName'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>">Ihr Name</label>
+					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('authorName') ?></label>
 					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
 				</p>
 				<p>
@@ -65,35 +74,27 @@
                         $fieldToSet = isset($this->errors['fields']['authorEmail']) ? $this->errors['fields']['authorEmail'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>">Ihre E-Mailadresse</label>
+					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('authorEmail') ?></label>
 					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
 				</p>
 				<p class="hint">
-					Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
-					nur zur internen Identifikation resp. Versionskontrolle
-					abgelegt.<br/>
-					Ihre Daten werden weder weitergegeben noch anderweitig ausgewertet.
+					<?php echo $this->translate->_('authorInformationText') ?>
 				</p>
 			</fieldset>
 		</div>
 		<div class="grid_8">
 			<fieldset name="tags" class="group">
-				<legend class="groupname">Tagging</legend>
+				<legend class="groupname"><?php echo $this->translate->_('taggingLegend') ?></legend>
                     <p class="clearfix">
                     <?php
                         $fieldToSet = isset($this->errors['fields']['tags']) ? $this->errors['fields']['tags'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtTags" class="label<?php echo $setErrorClass; ?>">Tag</label>
+					<label for="txtTags" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('tag') ?></label>
 					<input type="text" name="txtTags" id="txtTags" value="<?php echo $this->tags ?>" class="textfield<?php echo $setErrorClass; ?>" />
 				</p>
 				<p class="hint">
-					Ein Artikel kann mit verschiedenen Tags versehen werden,
-					welche sp&auml;ter das Auffinden &uuml;ber die Suche
-					erleichtern k&ouml;nnen.<br/>
-					<em>Tipp:</em> Geben Sie mehrere Tags auf einmal getrennt
-					durch ein Komma ein und bestätigen Sie mit der
-					<em>Eingabetaste</em>.
+					<?php echo $this->translate->_('taggingText') ?>
 				</p>
 			</fieldset>	
 			<fieldset name="versionComment" class="group">
@@ -101,9 +102,9 @@
                         $fieldToSet = isset($this->errors['fields']['versionComment']) ? $this->errors['fields']['versionComment'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-				<legend class="groupname">Versionskommentar</legend>
+				<legend class="groupname"><?php echo $this->translate->_('versionCommentLegend') ?></legend>
 				<p class="clearfix">
-					<label for="versionComment" class="label<?php echo $setErrorClass; ?>">Kommentar zur Version <em>(optional)</em>:</label>
+					<label for="versionComment" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('versionCommentText') ?></label>
 					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo count($this->errors) ? $this->versionComment : ''; ?>" />
 				</p>
 			</fieldset>
@@ -111,8 +112,8 @@
 		<div class="clear"></div>
 		
 		<div class="grid_12 bottom-button-bar">
-			<input id="article-save" type="submit" value="Speichern" class="caption large-button"/>
-			<a href="#" class="link-button delete-button">Diesen Artikel komplett l&ouml;schen</a>
+			<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
+			<a href="#" class="link-button delete-button"><?php echo $deleteText ?></a>
 		</div>
 		<div class="clear"></div>
 	</form>
