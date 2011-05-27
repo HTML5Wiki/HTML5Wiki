@@ -109,31 +109,7 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 		$localSaveData['timestamp'] = time();
 		
 		return $this->insert($localSaveData);
-	} 
-	
-	public function search($term) {
-		$select = $this->select()->setIntegrityCheck(false);
-		$select->from($this);
-		if (is_int($term)) {
-			$select->where('id = ?', $term);
-		} else {
-			$term = '%' . $term . '%';
-			$select->orWhere('ArticleVersion.title LIKE ?', $term);
-			$select->orWhere('ArticleVersion.content LIKE ?', $term);
-			$select->orWhere('MediaVersionTag.tagTag LIKE ?', $term);
-		}
-		$select->where('state = ?', self::$STATE['PUBLISHED']);
-		
-		$select->joinLeft('ArticleVersion', 'MediaVersion.id = ArticleVersion.mediaVersionId AND MediaVersion.timestamp = ArticleVersion.mediaVersionTimestamp');
-		$select->joinLeft('MediaVersionTag', 'MediaVersion.id = MediaVersionTag.mediaVersionId AND MediaVersion.timestamp = MediaVersionTag.mediaVersionTimestamp');
-		
-		$select->group('id');
-		$select->order('timestamp DESC');
-		
-		return $this->fetchAll($select);
 	}
-	
-	
 }
 
 
