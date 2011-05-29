@@ -52,6 +52,12 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->setBrowserUrl(TEST_HOST);
 		$this->wikiTestPage .= self::$time;
 		$this->wikiTestUrl = TEST_HOST . '/wiki/' . $this->wikiTestPage;
+		
+		$this->getEval('try { this.doBeginJsErrorChecker() } catch(e) { LOG.error("no js error checker present"); }');
+	}
+	
+	public function tearDown() {
+		$this->getEval('try { this.doEndJsErrorChecker() } catch(e) { LOG.error("no js error checker present"); }');
 	}
 
 	public function testShowSearchWhenNoPagePresent() {
