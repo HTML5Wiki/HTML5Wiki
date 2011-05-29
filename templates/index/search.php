@@ -12,7 +12,7 @@
 							window.location = \''. $this->urlHelper('wiki','new',$this->term). '\';
 						}
 					},{
-						\'text\' : \''. $this->translate->_('noDontCreate'). '\'
+						\'text\' : \''. addslashes($this->translate->_('noDontCreate')). '\'
 					}]
 				}
 			);
