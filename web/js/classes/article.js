@@ -147,7 +147,7 @@ var Article = (function() {
 	}
 	
 	self.setupArticleEditorEvents = function() {
-		$("#edit-article").submit(Article.save.bind());
+		$("#edit-article").submit(Article.save);
 		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 	}
 

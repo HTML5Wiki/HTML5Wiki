@@ -11,14 +11,21 @@ var Capsulebar = (function() {
 		self.articleId = articleId;
 		self.initializeClickEvents();
 
-		$(window).bind('popstate', self.onPopState.bind(this));
-	}
+		$(window).bind('popstate', self.onPopState);
+	};
 	
 	self.initializeClickEvents = function() {
-		$("#capsulebar-read").bind('click', self.onClick.bind(this, 'read'));
-		$("#capsulebar-edit").bind('click', self.onClick.bind(this, 'edit'));
-		$("#capsulebar-history").bind('click', self.onClick.bind(this, 'history'));
-	}
+		console.log(self);
+		$("#capsulebar-read").bind('click', function(e) {
+			self.onClick('read', e);
+		});
+		$("#capsulebar-edit").bind('click', function(e) {
+			self.onClick.bind('edit', e);
+		});
+		$("#capsulebar-history").bind('click', function(e) {
+			self.onClick.bind('history', e);
+		});
+	};
 	
 	self.onClick = function(page, e) {
 		var url = e.currentTarget.href;
@@ -26,7 +33,7 @@ var Capsulebar = (function() {
 		self.updateHistory(page, url);
 		
 		e.preventDefault();
-	}
+	};
 	
 	self.updateHistory = function(toPageTitle, toPageUrl) {
 		history.pushState({
@@ -36,7 +43,7 @@ var Capsulebar = (function() {
 			,toPageTitle
 			,toPageUrl
 		);
-	}
+	};
 	
 	self.onPopState = function(e) {
 		var url, articleId, href;
@@ -51,7 +58,7 @@ var Capsulebar = (function() {
 		}
 		self.setContent(self.getPage(url), articleId, href);
 		e.preventDefault();
-	}
+	};
 	
 	self.setContent = function(page, articleId, url) {
 		var url;
@@ -66,7 +73,7 @@ var Capsulebar = (function() {
 				url = Article.loadArticle(url, articleId);
 		}
 		return url;
-	}
+	};
 	
 	self.getPage = function(url) {
 		var page;
@@ -78,12 +85,12 @@ var Capsulebar = (function() {
 			page = 'read';
 		}
 		return page;
-	},
+	};
 	
 	self.setActive = function(active) {
 		var url = window.location.href.replace(/(edit|read|history|save|new)/, active);
 		self.updateHistory(active, url);
-	}
+	};
 	
 	return self;
 	
