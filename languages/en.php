@@ -14,7 +14,8 @@ return array(
 	,'searchResultsFor' => 'Search results for "%s"'
 	,'articleContentLegend' => 'Article content'
 	,'content' => 'Content'
-		
+	,'deleteArticle' => 'Delete all versions of this article'
+	
 	,'title' => 'Title'
 	,'lastChanged' => 'Last change'
 	
@@ -46,5 +47,10 @@ return array(
 	,'rejectChanges' => 'Discard my changes'
 	,'newVersion' => 'Newer version'
 	,'myVersion' => 'My version'
+	
+	,'delete' => 'Delete all versions'
+	,'deleteQuestion' => 'Do you really want to delete all versions of "%s"? You\'ll not be able to access the article afterwards.'
+	,'yesDelete' => 'Yes, delete all versions'
+	
 );
 ?>

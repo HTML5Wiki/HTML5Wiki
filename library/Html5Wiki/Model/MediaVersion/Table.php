@@ -30,8 +30,7 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 	
 	
 	private static $MEDIA_VERSION_TYPE = array(
-		'ARTICLE' => 'ARTICLE',
-		'FILE' => 'FILE'
+		'ARTICLE' => 'ARTICLE'
 	);
 
 	private static $STATE = array(
@@ -93,7 +92,9 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 	}
 	
 	/**
-	 * 
+	 * Creates a new MediaVersion and returns its data.
+	 *
+	 * @param $saveData Array with MediaVersion information
 	 * @return Array
 	 */
 	public function saveMediaVersion($saveData) {
@@ -110,6 +111,26 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 		
 		return $this->insert($localSaveData);
 	}
+	
+	/**
+	 * Updates the state for a MediaVersion.<br/>
+	 * If the parameter $timestamp is not passed, ALL versions of a MediaVersions
+	 * get updated with the state $newState.
+	 *
+	 * @param $newstate
+	 * @param $id
+	 * @param $timestamp (optional)
+	 */
+	public function updateState($newState, $id, $timestamp=false) {
+		$data = array('state'=>$newState);
+		$where = array('id'=>$id);
+		if($timestamp !== false && intval($timestamp) > 0) {
+			$where['timestamp'] = $timestamp;
+		}
+		
+		$this->update($data, $where);
+	}
+	
 }
 
 
