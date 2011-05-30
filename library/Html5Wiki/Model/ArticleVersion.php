@@ -8,11 +8,6 @@
  * @subpackage	Library
  */
 
-/**
- * 
- * @author	Nicolas Karrer <nkarrer@hsr.ch>
- *
- */
 class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 	
 	protected $_tableClass = 'Html5Wiki_Model_ArticleVersion_Table';
@@ -30,6 +25,7 @@ class Html5Wiki_Model_ArticleVersion extends Html5Wiki_Model_MediaVersion {
 		$mediaVersionTable = new Html5Wiki_Model_MediaVersion_Table();
 		$select = $mediaVersionTable->select();
 		$select->where('permalink = ?', $permalink);
+		$select->where('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
 		$select->order('timestamp DESC');
 		$mediaVersion = $mediaVersionTable->fetchRow($select);
 		
