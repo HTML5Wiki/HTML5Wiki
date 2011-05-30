@@ -12,8 +12,28 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	const HELPER_CLASS_PREFIX = 'Html5Wiki_View_';
 	const TEMPLATE_PATH = 'templates/';
 	
+	/**
+	 * Response object
+	 * @var Html5Wiki_Routing_Response 
+	 */
+	protected $response = null;
+	
+	/**
+	 * Registered helpers
+	 * @var array
+	 */
 	private $helpers = array();
+	
+	/**
+	 * Translate object
+	 * @var Zend_Translate
+	 */
 	private $translate = null;
+	
+	/**
+	 * Decorated content
+	 * @var string
+	 */
 	protected $decoratedContent = '';
 
 	/**
@@ -22,20 +42,45 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	 */
 	protected $data = array();
 	
+	/**
+	 * Decorated template
+	 * @var string
+	 */
 	protected $decoratedTemplate = null;
 
-	public function __construct(Html5Wiki_Template_Interface $decoratedTemplate = null) {
+	/**
+	 * Setup decorator. 
+	 * 
+	 * @param Html5Wiki_Routing_Response $response
+	 * @param Html5Wiki_Template_Interface $decoratedTemplate If not null, render the template around the mentioned one.
+	 */
+	public function __construct(Html5Wiki_Routing_Response $response = null, Html5Wiki_Template_Interface $decoratedTemplate = null) {
+		$this->response = $response;
 		$this->decoratedTemplate = $decoratedTemplate;
 	}
 	
+	/**
+	 * Set translator
+	 * @param Zend_Translate $translate 
+	 */
 	public function setTranslate(Zend_Translate $translate) {
 		$this->translate = $translate;
 	}
 	
+	/**
+	 * Get translator
+	 * @return Zend_Translate
+	 */
 	public function getTranslate() {
 		return $this->translate;
 	}
 	
+	/**
+	 * Magic function for calling a view helper
+	 * @param string $name
+	 * @param string $args
+	 * @return Html5Wiki_View_Helper 
+	 */
 	public function __call($name, $args) {
 		if (!in_array($name, $this->helpers)) {
 			$helper = $this->getHelper($name);
@@ -46,16 +91,24 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		return call_user_func(array($helper, $name), $args);
 	}
 	
+	/**
+	 * Get a helper instance
+	 * @param string $name
+	 * @return Html5Wiki_View_Helper 
+	 */
 	private function getHelper($name) {
 		$name = ucfirst($name);
 		$className = self::HELPER_CLASS_PREFIX . $name;
 		return new $className($this);
 	}
 	
+	/**
+	 * Set the decorated content
+	 * @param string $decoratedContent 
+	 */
 	public function setDecoratedContent($decoratedContent) {
 		$this->decoratedContent = $decoratedContent;
 	}
-
 
 	/**
 	 * Assigned Variables
@@ -73,6 +126,11 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		return $this;
 	}
 	
+	/**
+	 * Get an assigned variable or the translator (if name is translate)
+	 * @param string $name
+	 * @return mixed
+	 */
 	public function __get($name) {
 		if ($name === 'translate') {
 			return $this->translate;
@@ -92,6 +150,9 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		return false;
 	}
 
+	/**
+	 * Render the template
+	 */
 	public function render() {
 		// can be null
 		if ($this->decoratedTemplate instanceof Html5Wiki_Template_Interface) {

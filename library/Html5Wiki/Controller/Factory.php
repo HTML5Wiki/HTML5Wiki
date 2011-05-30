@@ -17,7 +17,7 @@ class Html5Wiki_Controller_Factory {
 	 * @param Html5Wiki_Routing_Interface_Router $router
 	 * @return AbstractController
 	 */
-	public static function factory($applicationPath, Html5Wiki_Routing_Interface_Router $router) {
+	public static function factory($applicationPath, Html5Wiki_Routing_Interface_Router $router, Html5Wiki_Routing_Response $response) {
 		if (!is_string($applicationPath)) {
 			throw new Html5Wiki_Exception_InvalidArgument(
 						'Invalid argument supplied for ' . __CLASS__ . '::' . __FUNCTION__ . ' (Argument applicationPath).'
@@ -30,7 +30,7 @@ class Html5Wiki_Controller_Factory {
 			if ($fileName != "." && $fileName != ".." && strpos($fileName, ".php") !== false) {
 				if (stripos($fileName, $router->getController()) === 0) {
 					$controller = self::APPLICATION_NAMESPACE . substr($fileName, 0, -4);
-					return new $controller();
+					return new $controller($response);
 				}
 			}
 		}

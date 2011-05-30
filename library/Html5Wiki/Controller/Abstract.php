@@ -33,6 +33,12 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @var Html5Wiki_Routing_Interface_Router
 	 */
 	protected $router = null;
+	
+	/**
+	 * Response object
+	 * @var Html5Wiki_Routing_Response 
+	 */
+	protected $response = null;
 
 	/**
 	 * Template object
@@ -73,13 +79,15 @@ abstract class Html5Wiki_Controller_Abstract {
 	/**
 	 * Setup object: setup templates
 	 */
-	public function __construct() {
+	public function __construct(Html5Wiki_Routing_Response $response) {
+		$this->response = $response;
+		
 		$this->layoutFile = self::DEFAULT_LAYOUT_FILE;
 		
-		$this->layoutTemplate = new Html5Wiki_Template_Php();
+		$this->layoutTemplate = new Html5Wiki_Template_Php($response);
 		$this->layoutTemplate->setTemplateFile($this->layoutFile);
 
-		$this->template = new Html5Wiki_Template_Php($this->layoutTemplate);
+		$this->template = new Html5Wiki_Template_Php($response, $this->layoutTemplate);
 	}
 	
 	public function setSystemBasePath($systemBasePath) {
@@ -92,7 +100,7 @@ abstract class Html5Wiki_Controller_Abstract {
 
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
 		$this->router = $router;
-				
+
 		$this->setTranslation();
 
 		$this->setTemplate(strtolower($this->router->getAction()) . ".php");
@@ -140,7 +148,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @param string $eTag 
 	 */
 	protected function setETag($eTag) {
-		header("Etag: " . $eTag, true);
+		$this->response->pushHeader("Etag: " . $eTag, true);
 	}
 	
 	/**
@@ -148,14 +156,14 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @param int $unixTimestamp 
 	 */
 	protected function setLastModified($unixTimestamp) {
-		header("Last-Modified:" . gmdate("D, d M Y H:i:s", $unixTimestamp) . " GMT", true);
+		$this->response->pushHeader("Last-Modified:" . gmdate("D, d M Y H:i:s", $unixTimestamp) . " GMT", true);
 	}
 	
 	/**
 	 * Set cache-control to no-cache, no-store
 	 */
 	protected function setNoCache() {
-		header("Cache-Control: no-cache, no-store", true);
+		$this->response->pushHeader("Cache-Control: no-cache, no-store", true);
 	}
 	
 	/**
@@ -166,9 +174,9 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * @param int $status
 	 */
 	protected function setHttpResponseStatus($status) {
-		header("Status: " . intval($status));
+		$this->response->pushHeader("Status: " . intval($status));
 		if (isset(self::$RESPONSE_STATUS[$status])) {
-			header("HTTP/1.1 " . intval($status) . " " . self::$RESPONSE_STATUS[$status]);
+			$this->response->pushHeader("HTTP/1.1 " . intval($status) . " " . self::$RESPONSE_STATUS[$status]);
 		}
 	}
 	

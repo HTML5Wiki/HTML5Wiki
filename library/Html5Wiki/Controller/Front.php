@@ -20,6 +20,12 @@ class Html5Wiki_Controller_Front {
 	 * @var Html5Wiki_Routing_Router
 	 */
 	private $router = null;
+	
+	/**
+	 * Response object
+	 * @var Html5Wiki_Routing_Response 
+	 */
+	private $response = null;
 
 	/**
 	 * Controller
@@ -62,15 +68,21 @@ class Html5Wiki_Controller_Front {
 	 * @param Html5Wiki_Routing_Router_Interface $router Router, optional. If null given, a new
 	 *                                                   Html5Wiki_Routing_Router will be instantiated
 	 */
-	public function __construct(Zend_Config $config, $systemBasePath, $libraryPath, $applicationPath, $router = null) {
+	public function __construct(Zend_Config $config, $systemBasePath, $libraryPath, $applicationPath, $router = null, $response = null) {
 		$this->config = $config;
 
 		if (!is_string($systemBasePath) || !is_string($libraryPath) || !is_string($applicationPath)) {
 			throw new Html5Wiki_Exception_InvalidArgument("All paths given to " . __CLASS__ . " should be strings.");
 		}
+		
+		if (!$response) {
+			$this->response = new Html5Wiki_Routing_Response();
+		} else {
+			$this->response = $response;
+		}
 
 		if (!$router) {
-			$this->router = new Html5Wiki_Routing_Router($this->config);
+			$this->router = new Html5Wiki_Routing_Router($this->config, $this->response);
 		} else {
 			$this->router = $router;
 		}
@@ -83,6 +95,10 @@ class Html5Wiki_Controller_Front {
 		self::setInstance($this);
 	}
 	
+	/**
+	 * Set static instance
+	 * @param Html5Wiki_Controller_Front $instance 
+	 */
 	public static function setInstance(Html5Wiki_Controller_Front $instance) {
 		self::$instance = $instance;
 	}
@@ -115,7 +131,7 @@ class Html5Wiki_Controller_Front {
 	 * Dispatch request to controller
 	 */
 	public function dispatch() {
-		$this->controller->dispatch($this->router);
+		$this->controller->dispatch($this->router, $this->response);
 	}
 
 	/**
@@ -123,6 +139,7 @@ class Html5Wiki_Controller_Front {
 	 */
 	public function render() {
 		$this->controller->render();
+		$this->response->render();
 	}
 	
 	/**
@@ -138,7 +155,7 @@ class Html5Wiki_Controller_Front {
 	 * @return Html5Wiki_Controller_Abstract
 	 */
 	protected function getController() {
-		return Html5Wiki_Controller_Factory::factory($this->applicationPath, $this->router);
+		return Html5Wiki_Controller_Factory::factory($this->applicationPath, $this->router, $this->response);
 	}
 
 	/**
@@ -149,6 +166,13 @@ class Html5Wiki_Controller_Front {
 		return $this->router;
 	}
 
+	/**
+	 * Get response object
+	 * @return Html5Wiki_Routing_Response
+	 */
+	public function getResponse() {
+		return $this->response;
+	}
 }
 
 ?>

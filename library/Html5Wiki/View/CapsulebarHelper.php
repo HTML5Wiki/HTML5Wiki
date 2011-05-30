@@ -15,6 +15,7 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 
 	public function capsulebarHelper($args) {
 		$router = Html5Wiki_Controller_Front::getInstance()->getRouter();
+		
 		$urlHelper = new Html5Wiki_View_UrlHelper($this->template);
 		$activePage = $router->getAction();
 		
