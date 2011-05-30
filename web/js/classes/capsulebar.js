@@ -19,10 +19,10 @@ var Capsulebar = (function() {
 			self.onClick('read', e);
 		});
 		$("#capsulebar-edit").bind('click', function(e) {
-			self.onClick.bind('edit', e);
+			self.onClick('edit', e);
 		});
 		$("#capsulebar-history").bind('click', function(e) {
-			self.onClick.bind('history', e);
+			self.onClick('history', e);
 		});
 	};
 	
