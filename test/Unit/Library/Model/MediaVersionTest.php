@@ -12,19 +12,23 @@ class Test_Unit_Library_Model_MediaVersionTest extends Test_Unit_Library_Model_A
 	protected	$tabelMediaVersion;
 	protected	$mediaVersionData	= array();
 	protected	$userData			= array();
+	protected static $timestamp;
 
+	public static function setUpBeforeClass() {
+		parent::setUpBeforeClass();
+
+		self::$timestamp = time();
+	}
 
 	public function setUp() {
 		parent::setUp();
 
 		$this->tableMediaVersion    = new Html5Wiki_Model_MediaVersion_Table();
 
-		$timestamp      = time();
-
 		$this->mediaVersionData = array(
 			'permalink'		=> 'test/testarticle',
 			'userId'		=> 1,
-			'timestamp'		=> $timestamp,
+			'timestamp'		=> self::$timestamp,
 			'versionComment'=> 'New Version'
 		);
 
