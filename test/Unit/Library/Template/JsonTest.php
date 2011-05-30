@@ -17,8 +17,8 @@ class Test_Unit_Library_Template_JsonTest extends PHPUnit_Framework_TestCase {
 		$jsonTemplate->render();
 		$response->render();
 		
-		$this->assertEquals($response->renderedData, '{"test":"ok"}');
-		$this->assertEquals($response->renderedHeader, "Content-type: text/json\n");
+		$this->assertEquals('{"test":"ok"}', $response->renderedData);
+		$this->assertEquals("Content-type: text/json\n", $response->renderedHeader);
 	}
 }
 ?>

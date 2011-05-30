@@ -79,5 +79,16 @@ class Test_Unit_Library_Template_PhpTest extends PHPUnit_Framework_TestCase {
 				. "\n" . '<script type="text/javascript">document.write("test");' . "\n</script>", 
 				$this->response->renderedData);
 	}
+	
+	public function testIsset() {
+		$tpl = new Html5Wiki_Template_Php($this->response);
+		$tpl->setTemplatePath($this->templatePath);
+		$tpl->setTemplateFile('testIsset.php');
+		
+		$tpl->render();
+		$this->response->render();
+		
+		$this->assertEquals('correct', $this->response->renderedData);
+	}
 }
 ?>
