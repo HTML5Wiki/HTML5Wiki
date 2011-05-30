@@ -6,7 +6,7 @@
 	</target>
 	<target name="php-documentor">
 		<exec dir="${basedir}/source" executable="phpdoc">
-			<arg line="-ct type -ue on -t ${basedir}/build/api -tb /usr/share/php/data/phpUnderControl/data/phpdoc -o HTML:Phpuc:phpuc -d ."></arg>
+			<arg line="--ignore library/Zend/ -ct type -ue on -t ${basedir}/build/api -tb /usr/share/php/data/phpUnderControl/data/phpdoc -o HTML:Phpuc:phpuc -d ."></arg>
 		</exec>
 	</target>
 	<target name="phpunit">
