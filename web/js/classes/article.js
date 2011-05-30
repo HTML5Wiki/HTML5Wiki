@@ -10,7 +10,9 @@ var Article = (function() {
 		$.ajax({
 			type: 'get',
 			'url':  url,
-			complete: this.replaceContent.bind(this),
+			complete: function(response, textStatus) {
+				Article.replaceContent(response, textStatus);
+			},
 			data: 'idArticle=' + idArticle
 		});
 		return url;
@@ -33,7 +35,9 @@ var Article = (function() {
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				complete: Article.onEditFormLoaded.bind(this)
+				complete: function(response, textStatus) {
+					Article.onEditFormLoaded(response, textStatus)
+				}
 			});
 		}
 	}
@@ -96,7 +100,9 @@ var Article = (function() {
             type:   'get',
             url:    url,
             data:   'idArticle=' + idArticle,
-			complete: Article.onEditFormLoaded.bind(this)
+			complete: function(response, textStatus) {
+				Article.onEditFormLoaded(response, textStatus);
+			}
         });
 		return url;
     }
@@ -110,7 +116,9 @@ var Article = (function() {
 			type:   'get',
             url:    url,
             data:   'idArticle=' + idArticle,
-			complete: Article.replaceContent.bind(this)
+			complete: function(response, textStatus) {
+				Article.replaceContent(response, textStatus);
+			}
         });
 		
 		return url;
