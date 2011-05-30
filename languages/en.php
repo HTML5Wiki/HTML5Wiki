@@ -69,5 +69,11 @@ return array(
 	,'deleteQuestion' => 'Do you really want to delete all versions of "%s"? You\'ll not be able to access the article afterwards.'
 	,'yesDelete' => 'Yes, delete all versions'
 	
+	,'systemError' => 'Systemfailure'
+	,'systemErrorText' => 'An unexpected error occured. Hope you don\'t mind.<br/>Please continue to the <a href="%s">homepage</a>.'
+	,'internalError' => 'Internal problem'
+	,'internalErrorText' => 'An unexpected error occured. Hope you don\'t mind.<br/>Please continue to the <a href="%s">homepage</a>.'
+	,'additionalErrorInfo' => 'Additional information'
+	
 );
 ?>

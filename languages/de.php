@@ -68,6 +68,12 @@ return array(
 	,'deleteQuestion' => 'M&ouml;chten Sie wirklich alle Versionen von "%s" l&ouml;schen? Der Artikel wird anschliessend nicht mehr zug&auml;nglich sein.'
 	,'yesDelete' => 'Ja, alle Versionen l&ouml;schen'
 	
+	,'systemError' => 'Systemfehler'
+	,'systemErrorText' => 'Leider kam es zu unerwarteten Problemen. Das ist aber nicht weiter schlimm: Auf der <a href="%s">Startseite</a> geht es sofort wieder weiter.'
+	,'internalError' => 'Interner Fehler'
+	,'internalErrorText' => 'Leider kam es zu unerwarteten Problemen. Das ist aber nicht weiter schlimm: Auf der <a href="%s">Startseite</a> geht es sofort wieder weiter.'
+	,'additionalErrorInfo' => 'N&auml;here Fehlerinformationen'
+	
 	
 	// Zend_Validate_StringLength
     ,"Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet"
