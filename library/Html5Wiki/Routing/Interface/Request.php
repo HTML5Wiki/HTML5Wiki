@@ -56,6 +56,12 @@ interface Html5Wiki_Routing_Interface_Request {
 	public function getHttps();
 	
 	/**
+	 * If request was a ajax request
+	 * @return bool 
+	 */
+	public function isAjax();
+	
+	/**
 	 * Gets called uri
 	 * @return string
 	 */
