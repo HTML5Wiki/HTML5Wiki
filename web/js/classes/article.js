@@ -74,7 +74,11 @@ var Article = (function() {
 				},
 				success: function(data, textStatus, response) {
 					var url = window.location.href.replace(/(edit|new)/, 'read');
-					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
+					try {
+						history.pushState({articleId: idArticle, 'url': url}, 'read', url);
+					} catch(e) {
+						// html5 history not supported
+					}
 					if (url.indexOf('index') !== -1) {
 						Menu.addOrReplaceArticleTab(url, title);
 					}
