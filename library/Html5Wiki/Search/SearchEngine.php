@@ -135,9 +135,9 @@ class Html5Wiki_Search_SearchEngine {
 		
 		
 		$select->join($joinSelect, 't.latestId = id AND timestamp = t.latestTimestamp');
-		$select->where('state = ?', 'PUBLISHED');
-		$select->group('id');
-		$select->order('timestamp DESC');
+		$select->group('MediaVersion.id');
+		$select->having('state = ?', Html5Wiki_Model_MediaVersion_Table::getState('PUBLISHED'));
+		$select->order('MediaVersion.timestamp DESC');
 		
 		return $select;
 	}
