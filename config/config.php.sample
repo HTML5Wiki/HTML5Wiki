@@ -8,6 +8,7 @@
  */
 
 $config = array(
+	'wikiName' => 'HTML5Wiki',
 	'databaseAdapter' => 'PDO_MYSQL',				// Database System
 	'database' => array(
 		'host'     => 'localhost',					// Database Host

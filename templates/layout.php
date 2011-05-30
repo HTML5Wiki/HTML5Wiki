@@ -44,7 +44,7 @@
 <body>
 	<div class="container_12">
 		<header class="grid_12 header-overall">
-			<a href="<?php echo $this->urlHelper() ?>" class="logo"><span class="hide">HTML5Wiki</span></a>
+			<a href="<?php echo $this->urlHelper() ?>" class="logo"><span class="hide"><?php echo $config->wikiName ?></span></a>
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
 					<li class="item home<?php echo $router->getController() == $config->routing->defaultController && $router->getAction() == $config->routing->defaultAction ? ' active' : '' ?>">
