@@ -25,7 +25,7 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 	
 	public function searchAction() {
 		if ($this->router->getRequest()->isAjax()) {
-			$this->template = new Html5Wiki_Template_Json();
+			$this->template = new Html5Wiki_Template_Json($this->response);
 		}
 		
 		$this->setNoCache();

@@ -21,15 +21,16 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 		
 		$permalink = $args[0];
 		
-		$template = new Html5Wiki_Template_Php();
+		$response = new Html5Wiki_Routing_Response();
+		
+		$template = new Html5Wiki_Template_Php($response);
 		$template->setTemplateFile('helpers/capsulebar.php');
 		$template->assign('activePage', $activePage);
 		$template->assign('permalink', $permalink);
 		$template->setTranslate($this->template->getTranslate());
 		
-		ob_start();
 		$template->render();
-		return ob_get_clean();
+		return $response->getData();
 	}
 	
 }

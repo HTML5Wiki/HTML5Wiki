@@ -54,7 +54,7 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	 * @param Html5Wiki_Routing_Response $response
 	 * @param Html5Wiki_Template_Interface $decoratedTemplate If not null, render the template around the mentioned one.
 	 */
-	public function __construct(Html5Wiki_Routing_Response $response = null, Html5Wiki_Template_Interface $decoratedTemplate = null) {
+	public function __construct(Html5Wiki_Routing_Response $response, Html5Wiki_Template_Interface $decoratedTemplate = null) {
 		$this->response = $response;
 		$this->decoratedTemplate = $decoratedTemplate;
 	}

@@ -66,5 +66,13 @@ class Html5Wiki_Routing_Response {
 		
 		$this->renderData($this->data);
 	}
+	
+	/**
+	 * Get data
+	 * @return string
+	 */
+	public function getData() {
+		return $this->data;
+	}
 }
 ?>
