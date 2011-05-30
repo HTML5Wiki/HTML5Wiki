@@ -87,7 +87,6 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->type('css=#versionComment', '');
 		
 		$this->click('css=#article-save');
-		//$this->waitForPageToLoad('50000');
 		$this->captureEntirePageScreenshot('/tmp/selenium-testCreatePageDoNotEnterAnythingFails.png');
 		
 		$this->assertElementPresent('css=#txtTitle.error');
@@ -108,7 +107,6 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
 		
 		$this->click('css=#article-save');
-		$this->waitForPageToLoad('50000');
 		$this->captureEntirePageScreenshot('/tmp/selenium-testSuccessCreatePage.png');
 		
 		$this->assertReadArticlePresent();
@@ -122,7 +120,6 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		
 		$this->assertElementPresent('css=#capsulebar-edit');
 		$this->click('css=#capsulebar-edit');
-		$this->waitForPageToLoad('50000');
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage2.png');
 		
@@ -151,7 +148,6 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage5.png');
 		
 		$this->click('css=#article-save');
-		$this->waitForPageToLoad('50000');
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage6.png');
 		
