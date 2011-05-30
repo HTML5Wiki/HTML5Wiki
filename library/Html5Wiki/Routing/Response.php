@@ -43,6 +43,10 @@ class Html5Wiki_Routing_Response {
 	
 	/**
 	 * Calls the php function "header" to render a specific header
+	 * 
+	 * @param string $header
+	 * @param bool $replace
+	 * @param int $httpResponseCode 
 	 */
 	protected function renderHeader($header, $replace, $httpResponseCode) {
 		header($header, $replace, $httpResponseCode);
@@ -73,6 +77,14 @@ class Html5Wiki_Routing_Response {
 	 */
 	public function getData() {
 		return $this->data;
+	}
+	
+	/**
+	 * Get headers
+	 * @return array
+	 */
+	public function getHeaders() {
+		return $this->headers;
 	}
 }
 ?>

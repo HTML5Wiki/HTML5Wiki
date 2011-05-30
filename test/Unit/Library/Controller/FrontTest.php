@@ -38,8 +38,9 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 	
 	public function testGetInstance() {
 		$config = new Zend_Config($this->config);
-		$request = new Test_Unit_Routing_RequestStub();
-		$router = new Html5Wiki_Routing_Router($config, $request);
+		$request = new Test_Unit_Library_Routing_RequestStub();
+		$response = new Test_Unit_Library_Routing_ReponseFake();
+		$router = new Html5Wiki_Routing_Router($config, $response, $request);
 		
 		$frontController = new Html5Wiki_Controller_Front($config, $this->systemBasePath, $this->libraryPath, $this->applicationPath, $router);
 		
@@ -49,14 +50,15 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 	public function testDispatchAgainstMock() {
 		$config = new Zend_Config($this->config);
 		
-		$request = new Test_Unit_Routing_RequestStub();
-		$router = new Html5Wiki_Routing_Router($config, $request);
+		$request = new Test_Unit_Library_Routing_RequestStub();
+		$response = new Test_Unit_Library_Routing_ReponseFake();
+		$router = new Html5Wiki_Routing_Router($config, $response, $request);
 
 		$frontController = $this->getMock('Html5Wiki_Controller_Front', array('getController', 'dispatch', 'render'), 
 								array($config, $this->systemBasePath, $this->libraryPath, $this->applicationPath, $router));
 		$frontController->expects($this->once())
 						->method('getController')
-						->will($this->returnValue(new Application_WikiController()));
+						->will($this->returnValue(new Application_WikiController($response)));
 		$frontController->expects($this->once())
 						->method('dispatch');
 		$frontController->expects($this->once())
@@ -65,9 +67,6 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 		$frontController->run();
 	}
 
-	public function tearDown() {
-		
-	}
 }
 
 ?>

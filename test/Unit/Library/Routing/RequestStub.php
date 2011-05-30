@@ -8,7 +8,7 @@
  * @package Test
  * @subpackage Routing
  */
-class Test_Unit_Routing_RequestStub extends Html5Wiki_Routing_Request {
+class Test_Unit_Library_Routing_RequestStub extends Html5Wiki_Routing_Request {
 
 	/**
 	 * Override construct so serverVariables don't get set to $_SERVER

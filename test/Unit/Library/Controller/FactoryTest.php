@@ -12,6 +12,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 
 	private $testingBasePath = '';
 	private $router;
+	private $response;
 	
 	private $config = array(
 		'routing' => array(
@@ -23,8 +24,9 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	public function setUp() {
 		$this->testingBasePath = dirname(__FILE__) . DIRECTORY_SEPARATOR . 'FactoryTest' . DIRECTORY_SEPARATOR;
 
-		$request = new Test_Unit_Routing_RequestStub();
-		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $request);
+		$request = new Test_Unit_Library_Routing_RequestStub();
+		$this->response = new Test_Unit_Library_Routing_ReponseFake();
+		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $this->response, $request);
 		$this->router->route();
 	}
 
@@ -33,7 +35,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	 * @expectedException Html5Wiki_Exception_InvalidArgument
 	 */
 	public function testInvalidApplicationPath() {
-		Html5Wiki_Controller_Factory::factory(null, $this->router);
+		Html5Wiki_Controller_Factory::factory(null, $this->router, $this->response);
 	}
 
 	/**
@@ -41,7 +43,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	 * @expectedException Html5Wiki_Exception_404
 	 */
 	public function testWrongApplicationPath() {
-		Html5Wiki_Controller_Factory::factory('.', $this->router);
+		Html5Wiki_Controller_Factory::factory('.', $this->router, $this->response);
 	}
 
 	/**
@@ -49,7 +51,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	 * @expectedException Html5Wiki_Exception_404
 	 */
 	public function testDirectoryWithNoPhpFiles() {
-		Html5Wiki_Controller_Factory::factory($this->testingBasePath . 'NoPhpFiles' , $this->router);
+		Html5Wiki_Controller_Factory::factory($this->testingBasePath . 'NoPhpFiles' , $this->router, $this->response);
 	}
 
 	/**
@@ -57,7 +59,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	 * @expectedException Html5Wiki_Exception_404
 	 */
 	public function testDirectoryWithWrongControllers() {
-		Html5Wiki_Controller_Factory::factory($this->testingBasePath . 'WrongControllers' , $this->router);
+		Html5Wiki_Controller_Factory::factory($this->testingBasePath . 'WrongControllers' , $this->router, $this->response);
 	}
 
 	public function testLoadCorrectController() {
@@ -66,13 +68,14 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 		$path = $this->testingBasePath . 'CorrectControllers';
 		include_once $path . DIRECTORY_SEPARATOR . 'WikiController.php';
 
-		$controller = Html5Wiki_Controller_Factory::factory($path, $this->router);
+		$controller = Html5Wiki_Controller_Factory::factory($path, $this->router, $this->response);
 		$this->assertTrue($controller instanceof Html5Wiki_Controller_Abstract);
 	}
 
 	public function tearDown() {
 		$this->applicationPath = null;
 		$this->router = null;
+		$this->response = null;
 	}
 }
 

@@ -1,6 +1,7 @@
 <?php
 
 require_once 'RequestStub.php';
+require_once 'ResponseFake.php';
 
 /**
  * Router test
@@ -17,6 +18,7 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 
 	private $request;
 	private $router;
+	private $response;
 	private $config = array(
 		'routing' => array(
 			'defaultController' => self::DEFAULT_CONTROLLER,
@@ -25,8 +27,9 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 	);
 
     public function setUp() {
-		$this->request = new Test_Unit_Routing_RequestStub();
-		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $this->request);
+		$this->request = new Test_Unit_Library_Routing_RequestStub();
+		$this->response = new Test_Unit_Library_Routing_ReponseFake();
+		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $this->response, $this->request);
 	}
 
 	public function testDefaultControllerAndAction() {
