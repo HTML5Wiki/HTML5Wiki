@@ -75,6 +75,22 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	}
 	
 	/**
+	 * Set response
+	 * @param Html5Wiki_Routing_Response $response
+	 */
+	public function setResponse(Html5Wiki_Routing_Response $response) {
+		$this->response = $response;
+	}
+	
+	/**
+	 * Get response
+	 * @return Html5Wiki_Routing_Response
+	 */
+	public function getResponse() {
+		return $this->response;
+	}
+	
+	/**
 	 * Magic function for calling a view helper
 	 * @param string $name
 	 * @param string $args
@@ -133,7 +149,10 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	public function __get($name) {
 		if ($name === 'translate') {
 			return $this->translate;
+		} else if($name === 'response') {
+			return $this->response;
 		}
+		
 		return isset($this->data[$name]) ? $this->data[$name] : null;
 	}
 	
@@ -143,7 +162,7 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	 * @return boolean 
 	 */
 	public function __isset($name) {
-		if ($name === 'translate' || (isset($this->data[$name]) && !empty($this->data[$name]))) {
+		if ($name === 'translate' || $name === 'response' || (isset($this->data[$name]) && !empty($this->data[$name]))) {
 			return true;
 		}
 		return false;
