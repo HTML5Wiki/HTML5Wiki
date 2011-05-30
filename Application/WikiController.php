@@ -148,7 +148,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * Create a new article page
 	 */
 	public function newAction() {
-		$permalink = $this->getPermalink();
+		$permalink = $this->checkAndGetPermalink();
 
 		$this->showArticleEditor($this->prepareData(null, array('permalink' => $permalink)));
 	}
@@ -230,7 +230,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function saveAction() {
 		$params = $this->matchPostParamsWithColumns();
-		$permalink = $this->getPermalink();
+		$permalink = $this->checkAndGetPermalink();
 
 		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
@@ -662,7 +662,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$left = $request->getGet('left');
 		$right = $request->getGet('right');
 
-		$permalink = $this->getPermalink();
+		$permalink = $this->checkAndGetPermalink();
 
 		if (!$left || !$right) {
 			throw new Html5Wiki_Exception("Left or right must be supplied. TODO: Redirect to history.");
@@ -737,7 +737,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 
 	public function rollbackAction() {
-		$permalink = $this->getPermalink();
+		$permalink = $this->checkAndGetPermalink();
 		$request = $this->router->getRequest();
 
 		$toTimestamp = $request->getGet('to');
@@ -838,7 +838,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * If yes, all entries on the MediaVersion table get the state "TRASH".
 	 */
 	public function deleteAction() {
-		$permalink = $this->getPermalink();
+		$permalink = $this->checkAndGetPermalink();
 		$request = $this->router->getRequest();
 		
 		$mediaVersion = new Html5Wiki_Model_MediaVersion();
