@@ -123,9 +123,9 @@ class Html5Wiki_Model_MediaVersion_Table extends Zend_Db_Table_Abstract {
 	 */
 	public function updateState($newState, $id, $timestamp=false) {
 		$data = array('state'=>$newState);
-		$where = array('id'=>$id);
+		$where = $this->getAdapter()->quoteInto('id = ?', $id);
 		if($timestamp !== false && intval($timestamp) > 0) {
-			$where['timestamp'] = $timestamp;
+			$where .= $this->getAdapter()->quoteInto(' AND timestamp = ?', $timestamp);
 		}
 		
 		$this->update($data, $where);
