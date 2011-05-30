@@ -22,7 +22,6 @@
 	}
 	if (isset($this->errors) && count($this->errors)) {
 		$msg = "<ul>";
-		var_dump($this->errors);
 		foreach ($this->errors as $key => $errorMessage) {
 			$msg .= "<li>" . addslashes($errorMessage) . "</li>";
 		}
