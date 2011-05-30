@@ -15,7 +15,6 @@ var Capsulebar = (function() {
 	};
 	
 	self.initializeClickEvents = function() {
-		console.log(self);
 		$("#capsulebar-read").bind('click', function(e) {
 			self.onClick('read', e);
 		});
