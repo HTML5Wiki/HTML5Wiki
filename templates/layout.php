@@ -55,7 +55,7 @@
 					</li>
 					<?php if ($router->getController() === 'wiki' && $router->getAction() !== $config->routing->defaultAction && $router->getAction() !== 'new'): ?>
 					<li class="item article active">
-						<a href="<?php echo $this->urlHelper($router->getRequest()->getUri()) ?>" class="tab"><?php echo $this->title ?></a>
+						<a href="<?php echo $router->getRequest()->getUri() ?>" class="tab"><?php echo $this->title ?></a>
 					</li>
 					<?php endif; ?>
 					<li class="item search"><input id="searchBox" placeholder="<?php echo $this->translate->_("search") ?>" class="searchterm" accesskey="s" /></li>
