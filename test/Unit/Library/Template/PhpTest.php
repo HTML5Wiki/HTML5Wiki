@@ -18,6 +18,14 @@ class Test_Unit_Library_Template_PhpTest extends PHPUnit_Framework_TestCase {
 		$this->templatePath = dirname(__FILE__) . '/templates/';
 	}
 	
+	/**
+	 * @expectedException Html5Wiki_Exception_Template
+	 */
+	public function testNoRendering() {
+		$phpTemplate = new Html5Wiki_Template_Php($this->response);
+		$phpTemplate->render();
+	}
+	
 	public function testSimpleRendering() {
 		$phpTemplate = new Html5Wiki_Template_Php($this->response);
 		$phpTemplate->setTemplatePath($this->templatePath);
