@@ -49,7 +49,7 @@ class Html5Wiki_Search_SearchEngine {
 		if ($validatorChain->isValid($term)) {
 			return true;
 		}
-		return $validatorChain->getErrors();
+		return $validatorChain->getMessages();
 	}
 	
 	

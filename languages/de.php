@@ -39,7 +39,10 @@ return array(
 	,'rollbackToQuestion' => 'M&ouml;chten Sie die Version vom %s wirklich wiederherstellen?<br/>Die momentan aktuelle Version wird als alte Version abgelegt und geht somit nicht verloren.'
 	,'yesRollback' => 'Ja, Version wiederherstellen'
 	,'noDontRollback' => 'Nein, nichts unternehmen'
-	,'restoredFrom' => 'wiederhergestellt von %s'
+	,'restoredFrom' => 'wiederhergestellt von %s',
+	
+	'restore' => 'Wiederherstellen',
+	'restoreQuestion' => 'M&ouml;chten Sie den urspr&uuml;nglichen Titel wiederherstellen?'
 	
 	,'yes' => 'Ja'
 	,'no'  => 'Nein'
@@ -108,6 +111,7 @@ return array(
     ,"'%value%' appears to be a local network name but local network names are not allowed" => "'%value%' scheint ein lokaler Netzwerkname zu sein, aber lokale Netzwerknamen sind nicht erlaubt"
     ,"'%value%' appears to be a DNS hostname but the given punycode notation cannot be decoded" => "'%value%' scheint ein DNS Hostname zu sein, aber die angegebene Punycode Schreibweise konnte nicht dekodiert werden"
 
-	
+	// Zend_Validate_Alnum
+    ,"'%value%' contains characters which are non alphabetic and no digits" => "'%value%' enthält Zeichen welche keine Buchstaben und keine Ziffern sind"
 );
 ?>
