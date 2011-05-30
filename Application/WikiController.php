@@ -486,12 +486,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$success = $this->validatorIsValid($success, $validatorChainContent, 'content',
 						$params['content'], $errorMsg, $errorFields);
 
-		// Test Tag
-		$validatorChainTags = new Zend_Validate();
-		$validatorChainTags->addValidator(new Zend_Validate_NotEmpty());
-		$success = $this->validatorIsValid($success, $validatorChainTags, 'tags', $params['tags'],
-						$errorMsg, $errorFields);
-
 		if (!empty($params['versionComment'])) {
 			$validatorChainVersionComment = new Zend_Validate();
 			$validatorChainVersionComment->addValidator(new Zend_Validate_Alpha(true));
