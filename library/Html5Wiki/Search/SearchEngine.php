@@ -43,7 +43,7 @@ class Html5Wiki_Search_SearchEngine {
 	 */
 	public function validateTerm($term) {
 		$validatorChain = new Zend_Validate();
-		$validatorChain->addValidator(new Zend_Validate_Alnum(true));
+		$validatorChain->addValidator(new Zend_Validate_Regex('#[a-z0-9\./,-\\\]#i'));
 		$validatorChain->addValidator(new Zend_Validate_StringLength(array('min' => 1, 'encoding' => 'UTF-8')));
 		
 		if ($validatorChain->isValid($term)) {

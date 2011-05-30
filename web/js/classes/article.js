@@ -83,7 +83,7 @@ var Article = (function() {
 					} catch(e) {
 						// html5 history not supported
 					}
-					if (url.indexOf('index') !== -1) {
+					if (url.indexOf('index') === -1) {
 						Menu.addOrReplaceArticleTab(url, title);
 					}
 				}
