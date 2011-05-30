@@ -15,7 +15,7 @@ return array(
 	,'articleContentLegend' => 'Artikelinhalt'
 	,'content' => 'Inhalt'
 	,'save' => 'Speichern'
-	,'deleteArticle' => 'Diesen Artikel komplett l&ouml;schen'
+	,'deleteArticle' => 'Alle Versionen dieses Artikels l&ouml;schen'
 	
 	,'title' => 'Titel'
 	,'lastChanged' => 'Zuletzt ge&auml;ndert'

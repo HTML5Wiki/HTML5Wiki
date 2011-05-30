@@ -70,12 +70,13 @@
 	</div>
 	<div class="clear"></div>
 
-	<?php if($numberOfVersions > 1) : ?>
 	<div class="grid_12 bottom-button-bar">
+		<?php if($numberOfVersions > 1) : ?>
 		<input id="article-history" type="submit" value="<?php echo $this->translate->_('compareVersions') ?>" class="caption large-button diff-button"/>
+		<?php endif; ?>
+		<a href="#" class="link-button delete-button"><?php echo $this->translate->_('deleteArticle') ?></a>
 	</div>
 	</form>
-	<?php endif; ?>
 	
 	<div class="clear"></div>
 	<?php if ($this->ajax === true): ?>

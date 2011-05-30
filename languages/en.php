@@ -14,7 +14,8 @@ return array(
 	,'searchResultsFor' => 'Search results for "%s"'
 	,'articleContentLegend' => 'Article content'
 	,'content' => 'Content'
-		
+	,'deleteArticle' => 'Delete all versions of this article'
+	
 	,'title' => 'Title'
 	,'lastChanged' => 'Last change'
 	

@@ -8,7 +8,6 @@
 	if(strlen($this->title) == 0) $this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.handleEditArticleTitle);');
 
 	$saveText = $this->translate->_('save');
-	$deleteText = $this->translate->_('deleteArticle');
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->urlHelper('wiki','save',$this->permalink) ?>" method="post">
@@ -27,7 +26,6 @@
 		<?php if (isset($this->diff)) : ?>
 		<?php
 			$saveText = $this->translate->_('overwrite');
-			$deleteText = $this->translate->_('rejectChanges');
 		?>
 		<div class="grid_12">
 			<div class="box question">
@@ -41,7 +39,6 @@
 				<div class="bottom-button-bar">
 					<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
 					<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
-					<a href="#" class="link-button delete-button"><?php echo $deleteText ?></a>
 				</div>
 			</div>
 		</div>
@@ -116,7 +113,6 @@
 		
 		<div class="grid_12 bottom-button-bar">
 			<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
-			<a href="#" class="link-button delete-button"><?php echo $deleteText ?></a>
 		</div>
 		<div class="clear"></div>
 	</form>
