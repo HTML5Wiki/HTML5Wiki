@@ -87,13 +87,13 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->type('css=#versionComment', '');
 		
 		$this->click('css=#article-save');
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".message.error") !== null', 10000);
 		$this->captureEntirePageScreenshot('/tmp/selenium-testCreatePageDoNotEnterAnythingFails.png');
 		
 		$this->assertElementPresent('css=#txtTitle.error');
 		$this->assertElementPresent('css=#contentEditor.error');
 		$this->assertElementPresent('css=#txtAuthor.error');
 		$this->assertElementPresent('css=#txtAuthorEmail.error');
-		$this->assertElementPresent('css=#txtTags__ptags.error');
 	}
 	
 	public function testSuccessCreatePage() {
