@@ -141,9 +141,9 @@ var MessageController = (function() {
 			var callback = buttonsData[i]['callback'];
 			
 			// The option:
-    		var class = ' class="option"';
-			if(showAsButton) class = ' class="button"';
-    		var option = $('<a href="#"' + class + '>' + text + '</a>');
+    		var klass = ' class="option"';
+			if(showAsButton) klass = ' class="button"';
+    		var option = $('<a href="#"' + klass + '>' + text + '</a>');
     		
 			// Eventbinding:
 			// A click on an option makes the messagebox disappear in a first step.

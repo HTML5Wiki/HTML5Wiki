@@ -10,7 +10,9 @@ var Article = (function() {
 		$.ajax({
 			type: 'get',
 			'url':  url,
-			complete: this.replaceContent.bind(this),
+			complete: function(response, textStatus) {
+				Article.replaceContent(response, textStatus);
+			},
 			data: 'idArticle=' + idArticle
 		});
 		return url;
@@ -33,7 +35,9 @@ var Article = (function() {
 				type: 'POST',
 				url: form.attr('action'), 
 				data: mediaData,
-				complete: Article.onEditFormLoaded.bind(this)
+				complete: function(response, textStatus) {
+					Article.onEditFormLoaded(response, textStatus)
+				}
 			});
 		}
 	}
@@ -74,7 +78,11 @@ var Article = (function() {
 				},
 				success: function(data, textStatus, response) {
 					var url = window.location.href.replace(/(edit|new)/, 'read');
-					history.pushState({articleId: idArticle, 'url': url}, 'read', url);
+					try {
+						history.pushState({articleId: idArticle, 'url': url}, 'read', url);
+					} catch(e) {
+						// html5 history not supported
+					}
 					if (url.indexOf('index') !== -1) {
 						Menu.addOrReplaceArticleTab(url, title);
 					}
@@ -92,7 +100,9 @@ var Article = (function() {
             type:   'get',
             url:    url,
             data:   'idArticle=' + idArticle,
-			complete: Article.onEditFormLoaded.bind(this)
+			complete: function(response, textStatus) {
+				Article.onEditFormLoaded(response, textStatus);
+			}
         });
 		return url;
     }
@@ -106,7 +116,9 @@ var Article = (function() {
 			type:   'get',
             url:    url,
             data:   'idArticle=' + idArticle,
-			complete: Article.replaceContent.bind(this)
+			complete: function(response, textStatus) {
+				Article.replaceContent(response, textStatus);
+			}
         });
 		
 		return url;
@@ -147,7 +159,7 @@ var Article = (function() {
 	}
 	
 	self.setupArticleEditorEvents = function() {
-		$("#edit-article").submit(Article.save.bind());
+		$("#edit-article").submit(Article.save);
 		$('.editor h1.heading').bind('mouseup', Article.handleEditArticleTitle);
 	}
 
