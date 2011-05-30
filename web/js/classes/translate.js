@@ -11,13 +11,13 @@ var Translate = (function() {
 	var self = {},
 		translations = {};
 	
-	self.init = function(translations) {
-		self.translations = translations;
+	self.init = function(phpTranslations) {
+		translations = phpTranslations;
 	};
 	
 	self._ = function() {
 		var key = arguments[0],
-			value = self.translations[key];
+			value = translations[key];
 		for (var i = 1, l = arguments.length; i < l; i++) {
 			value = value.replace(/\%s/, arguments[i]);
 		}

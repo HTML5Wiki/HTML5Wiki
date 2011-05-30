@@ -1,5 +1,6 @@
 <?php
-	if($this->showCreateNewArticle === TRUE) {
+
+	if($this->showCreateNewArticle === true) {
 		$this->javascriptHelper()->appendScript('
 		appendPageReadyCallback(function() {
 			MessageController.addMessage(
@@ -19,6 +20,20 @@
 		});
 		');
 	}
+	if (isset($this->errors) && count($this->errors)) {
+		$msg = "<ul>";
+		var_dump($this->errors);
+		foreach ($this->errors as $key => $errorMessage) {
+			$msg .= "<li>" . addslashes($errorMessage) . "</li>";
+		}
+		$msg .= "</ul>";
+		$this->javascriptHelper()->appendScript("appendPageReadyCallback(function() { MessageController.addMessage('error','{$msg}', 
+			{'modal':true, 'buttons': [{
+				'text': 'OK'
+				,'button': true
+			}]}); });");
+		
+    }
 	
 	function translateMatchOrigins($matchOrigins, $translate) {
 		$translated = array();

@@ -42,11 +42,10 @@ class Application_IndexController extends Html5Wiki_Controller_Abstract {
 			return;
 		}
 		
-		if($showCreateNewArticle === '1') $showCreateNewArticle = TRUE;
-		else $showCreateNewArticle = FALSE;
+		$showCreateNewArticle = $showCreateNewArticle === '1';
 		
 		$results = $searchEngine->search($term);
-		
+	
 		if ($this->router->getRequest()->isAjax()) {
 			$this->template->assign('results', $this->prepareAjaxSearchResults($results));
 		} else {

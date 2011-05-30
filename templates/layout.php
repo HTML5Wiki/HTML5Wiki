@@ -9,19 +9,12 @@
 	$jsHelper->appendFile($this->urlHelper('js','classes','messagecontroller.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','searchboxcontroller.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','html5wiki.js'));
-	$jsHelper->appendFile($this->urlHelper('js','classes','translate.js'));
 
 	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $this->urlHelper() .'"]);');
-	$jsHelper->appendScript('appendPageReadyCallback(function() { Translate.init('. json_encode($this->translate->getAdapter()->getMessages()) .') });');
 	$jsHelper->appendScript('appendPageReadyCallback(function() {
 		SearchBoxController.initWithSearchBox(
 			$("#searchBox")
-			,"' . $this->urlHelper('index', 'search') . '"		
-			,{
-				"content": "' . $this->translate->_("content") . '"
-				,"tags": "' . $this->translate->_("tags") . '"
-				,"title": "' . $this->translate->_("title") . '"
-			}
+			,"' . $this->urlHelper('index', 'search') . '"
 		);
 	});');
 	
@@ -66,6 +59,10 @@
 		
 		<?php echo $this->decoratedContent ?>
 	</div>
+	<script type="text/javascript" src="<?php echo $this->urlHelper('js', 'classes', 'translate.js') ?>"></script>
+	<script type="text/javascript">
+		Translate.init(<?php echo json_encode($this->translate->getAdapter()->getMessages()) // init this before the other js gets inited as its needed by other js files ?>);
+	</script>
 	<?php echo $this->javascriptHelper() ?>
 </body>
 </html>

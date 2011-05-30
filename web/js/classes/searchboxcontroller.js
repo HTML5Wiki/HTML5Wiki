@@ -15,8 +15,7 @@ var SearchBoxController = (function() {
 		,totalResultItems = 0
 		,resultItems = ''
 		,resultContainer = ''
-		,url = 'index/search'
-		,matchOriginTranslations = new Array()
+		,url = 'index/search';
 	
 	/**
 	 * Initializes the Event-Handling for a Searchbox
@@ -24,12 +23,10 @@ var SearchBoxController = (function() {
 	 *
 	 * @param DOMElement searchBox jQuery-DOM-Object
 	 * @param string     url       Url to call for doing search
-	 * @param matchOriginTranslations	An array with translations for the matchorigins
 	 * @access public
 	 */
-	self.initWithSearchBox = function(searchBox, url, matchOriginTranslations) {
+	self.initWithSearchBox = function(searchBox, url) {
 		self.url = url;
-		self.matchOriginTranslations = matchOriginTranslations;
 
 		/* Eventbindings: */
 		// Bind search-functionalities:
@@ -303,7 +300,7 @@ var SearchBoxController = (function() {
 	 * @access private
 	 */
 	function translateMatchOrigin(matchOrigin) {
-		var translated = self.matchOriginTranslations[matchOrigin];
+		var translated = Translate._(matchOrigin);
 		if(translated == undefined) translated = matchOrigin;
 		
 		return translated;
