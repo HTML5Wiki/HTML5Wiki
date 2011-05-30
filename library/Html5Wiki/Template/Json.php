@@ -10,7 +10,7 @@
 class Html5Wiki_Template_Json extends Html5Wiki_Template_Decorator {
     public function render() {
 		$this->response->pushHeader("Content-type: text/json");
-		echo json_encode($this->data);
+		$this->response->pushData(json_encode($this->data));
 	}
 }
 ?>
