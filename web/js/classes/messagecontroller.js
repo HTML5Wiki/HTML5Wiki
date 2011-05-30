@@ -75,6 +75,8 @@ var MessageController = (function() {
 			}
 			
 			if(modal) {
+				$('html, body').animate({scrollTop: 0}, '300');
+				
 				// Show modal with overlay:
 				var overlay = createOverlay();
 				$('body').append(overlay);

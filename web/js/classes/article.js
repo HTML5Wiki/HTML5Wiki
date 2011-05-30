@@ -57,6 +57,10 @@ var Article = (function() {
 			var tags      = $('#txtTags').val();
 			var overwrite = $('#hiddenOverwrite').val();
 
+			if (typeof title  == "undefined") {
+				title = $('article h1.heading').text();
+			}
+
 			var mediaData = {
                 hiddenIdArticle: idArticle,
                 hiddenTimestampArticle: timestampArticle,
