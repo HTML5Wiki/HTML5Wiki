@@ -494,7 +494,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if (!empty($params['versionComment'])) {
 			$validatorChainVersionComment = new Zend_Validate();
-			$validatorChainVersionComment->addValidator(new Zend_Validate_Alpha(true));
+			$validatorChainVersionComment->addValidator(new Zend_Validate_Alnum(true));
 			$success = $this->validatorIsValid($success, $validatorChainVersionComment, 'versionComment',
 							$params['versionComment'], $errorMsg, $errorFields);
 		}
