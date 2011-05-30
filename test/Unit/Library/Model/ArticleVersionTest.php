@@ -26,6 +26,20 @@ class Test_Unit_Library_Model_ArticleVersionTest extends Test_Unit_Library_Model
 	protected $tableMediaVersion;
 
 	/**
+	 * @var Integer
+	 */
+	protected static $timestamp;
+
+	/**
+	 * @return void
+	 */
+	public static function setUpBeforeClass() {
+		parent::setUpBeforeClass();
+
+		self::$timestamp = time();
+	}
+
+	/**
 	 * @return void
 	 */
 	public function setUp() {
@@ -33,11 +47,9 @@ class Test_Unit_Library_Model_ArticleVersionTest extends Test_Unit_Library_Model
 		//create test article
 		$this->tableArticle    = new Html5Wiki_Model_ArticleVersion_Table();
 		$this->tableMediaVersion    = new Html5Wiki_Model_MediaVersion_Table();
-		
-		$timestamp      = time();
 
 		$this->articleData1 = array(
-			'mediaVersionTimestamp' => $timestamp,
+			'mediaVersionTimestamp' => self::$timestamp,
 			'title'                 => 'Test Article',
 			'content'               => 'Test Content with <bold>Bold Text</bold>',
 		);
@@ -45,7 +57,7 @@ class Test_Unit_Library_Model_ArticleVersionTest extends Test_Unit_Library_Model
 		$this->mediaVersionData1 = array(
 			'permalink'     => 'test/testarticle',
 			'userId'        => 1,
-			'timestamp'     => $timestamp
+			'timestamp'     => self::$timestamp
 		);
 	}
 
