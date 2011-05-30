@@ -35,6 +35,16 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 	public function testInvalidArguments() {
 		$frontController = new Html5Wiki_Controller_Front(new Zend_Config(array()), null, null, null);
 	}
+	
+	public function testGetInstance() {
+		$config = new Zend_Config($this->config);
+		$request = new Test_Unit_Routing_RequestStub();
+		$router = new Html5Wiki_Routing_Router($config, $request);
+		
+		$frontController = new Html5Wiki_Controller_Front($config, $this->systemBasePath, $this->libraryPath, $this->applicationPath, $router);
+		
+		$this->assertEquals(Html5Wiki_Controller_Front::getInstance(), $frontController);
+	}
 
 	public function testDispatchAgainstMock() {
 		$config = new Zend_Config($this->config);
