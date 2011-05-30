@@ -10,7 +10,6 @@
 abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interface {
 	
 	const HELPER_CLASS_PREFIX = 'Html5Wiki_View_';
-	const TEMPLATE_PATH = 'templates/';
 	
 	/**
 	 * Response object
