@@ -35,28 +35,36 @@ var Capsulebar = (function() {
 	};
 	
 	self.updateHistory = function(toPageTitle, toPageUrl) {
-		history.pushState({
-				'articleId' : self.articleId, 
-				'url': toPageUrl
-			}
-			,toPageTitle
-			,toPageUrl
-		);
+		try {
+			history.pushState({
+					'articleId' : self.articleId, 
+					'url': toPageUrl
+				}
+				,toPageTitle
+				,toPageUrl
+			);
+		} catch(e) {
+			//html5 history not supported
+		}
 	};
 	
 	self.onPopState = function(e) {
-		var url, articleId, href;
-		if (history.state) {
-			url = history.state.url;
-			articleId = history.state.articleId;
-			href = e.currentTarget.location.href;
-		} else {
-			url = e.currentTarget.location.href;
-			articleId = self.articleId;
-			href = url;
+		try {
+			var url, articleId, href;
+			if (history.state) {
+				url = history.state.url;
+				articleId = history.state.articleId;
+				href = e.currentTarget.location.href;
+			} else {
+				url = e.currentTarget.location.href;
+				articleId = self.articleId;
+				href = url;
+			}
+			self.setContent(self.getPage(url), articleId, href);
+			e.preventDefault();
+		} catch(e) {
+			//html5 history not supported
 		}
-		self.setContent(self.getPage(url), articleId, href);
-		e.preventDefault();
 	};
 	
 	self.setContent = function(page, articleId, url) {
