@@ -136,7 +136,7 @@ var Article = (function() {
 		var title = heading.text();
 		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" name="txtTitle" />');
 
-		var cancelButton = $('<a href="#" class="button">Wiederherstellen</a>');
+		var cancelButton = $('<a href="#" class="button">' + Translate._('restore') + '</a>');
 		cancelButton.bind('mouseup',{title:title}, function(event) {
 			var heading = $('<h1 class="heading">'+event.data.title+'</h1>');
 			$(heading).bind('mouseup', Article.handleEditArticleTitle);
@@ -146,7 +146,7 @@ var Article = (function() {
 
 		var container = $('<div class="editor-wrapper" />');
 		container.append(titleEditor);
-		container.append('<br/><span class="cancel">M&ouml;chten Sie den urspr&uuml;nglichen Titel wiederherstellen?</span>');
+		container.append('<br/><span class="cancel">' + Translate._('restoreQuestion') + '</span>');
 		container.append(cancelButton);
 		heading.replaceWith(container);
 
