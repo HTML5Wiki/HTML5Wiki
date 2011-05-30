@@ -20,7 +20,7 @@
 
 	$toTimestampDate = date($this->translate->_('timestampFormat'), $this->toTimestamp)
 ?>
-<article id="content" class="content compareversions">
+<article id="content" class="content rollback">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading"><?php echo $this->title ?></h1>
 		<?php echo $this->capsulebarHelper($this->permalink); ?>

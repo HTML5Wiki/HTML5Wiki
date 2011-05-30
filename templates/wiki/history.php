@@ -74,7 +74,7 @@
 		<?php if($numberOfVersions > 1) : ?>
 		<input id="article-history" type="submit" value="<?php echo $this->translate->_('compareVersions') ?>" class="caption large-button diff-button"/>
 		<?php endif; ?>
-		<a href="#" class="link-button delete-button"><?php echo $this->translate->_('deleteArticle') ?></a>
+		<a href="<? echo $this->urlHelper('wiki','delete',$this->article->permalink) ?>" class="link-button delete-button"><?php echo $this->translate->_('deleteArticle') ?></a>
 	</div>
 	</form>
 	

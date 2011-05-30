@@ -40,6 +40,14 @@
 			,'active' => false
 		);
 	}
+	if($this->activePage == 'delete') {
+		$items['delete'] = array(
+			'url' => '#'
+			,'name' => $this->translate->_('delete')
+			,'cssClass' => 'delete'
+			,'active' => false
+		);
+	}
 	
 	/* Look for the current item: */
 	foreach($items as $key => $item) {

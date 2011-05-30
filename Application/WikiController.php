@@ -743,7 +743,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$toTimestamp = $request->getGet('to');
 
 		if (!$toTimestamp) {
-			var_dump($request->getGetParameters());die;
 			throw new Html5Wiki_Exception("Timestamp must be supplied. TODO: Redirect to history.");
 		}
 
@@ -832,6 +831,34 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 
 		return implode(",", $tags);
+	}
+	
+	/**
+	 * Asks the user if he really wants to delete a MediaVersion.<br/>
+	 * If yes, all entries on the MediaVersion table get the state "TRASH".
+	 */
+	public function deleteAction() {
+		$permalink = $this->getPermalink();
+		$request = $this->router->getRequest();
+		
+		$mediaVersion = new Html5Wiki_Model_MediaVersion();
+		$mediaVersion->loadLatestByPermalink($permalink);
+		$articleVersion = new Html5Wiki_Model_ArticleVersion();
+		$articleVersion->loadByIdAndTimestamp($mediaVersion->id, $mediaVersion->timestamp);
+		
+		$title = $articleVersion->getCommonName();
+		
+		if($request->getPost('delete')) {
+			$table = new Html5Wiki_Model_MediaVersion_Table();
+			$table->updateState('TRASH', $mediaVersion->id);
+			
+			$this->redirect($this->router->buildURL(array('wiki',$permalink)));
+		} else {
+			$this->template->assign('permalink', $permalink);
+			$this->template->assign('title', $title);
+			$this->setPageTitle($title);
+		}
+		
 	}
 
 }
