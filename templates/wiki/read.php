@@ -18,7 +18,7 @@
 			</p>
 		</div>
 		
-		<?php echo $this->capsulebarHelper($this->article->permalink); ?>
+		<?php echo $this->capsulebarHelper()->render($this->article->permalink); ?>
 	</header>
 	<div class="clear messagemarker"></div>
 	

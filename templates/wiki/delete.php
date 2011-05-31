@@ -1,7 +1,15 @@
+<?php
+	$this->capsulebarHelper()->addItem(
+		'delete'
+		,$this->translate->_('delete')
+		,'delete'
+		,$this->urlHelper('wiki', 'delete', $this->permalink)
+	);
+?>
 <article id="content" class="content delete">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading"><?php echo $this->title ?></h1>
-		<?php echo $this->capsulebarHelper($this->permalink); ?>
+		<?php echo $this->capsulebarHelper()->render($this->permalink); ?>
 	</header>
 	<div class="clear messagemarker"></div>
 

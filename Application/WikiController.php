@@ -70,6 +70,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * If no article could be found for the current URL, redirect to /index/search.
 	 */
 	public function readAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$permalink = $this->checkAndGetPermalink();
 
 		if ($this->router->getRequest()->isAjax()) {
@@ -156,6 +157,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function newAction() {
 		$permalink = $this->checkAndGetPermalink();
 
+		$this->template->assign('creatingNew', true);
 		$this->showArticleEditor($this->prepareData(null, array('permalink' => $permalink)));
 	}
 
@@ -619,6 +621,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * entered.
 	 */
 	public function editAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$parameters = $this->router->getRequest()->getGetParameters();
 		$permalink = $this->getPermalink();
 
@@ -645,6 +648,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @author Manuel Alabor <malabor@hsr.ch>
 	 */
 	public function historyAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$parameters = $this->router->getRequest()->getGetParameters();
 		$mediaManager = new Html5Wiki_Model_MediaVersionManager();
 
@@ -678,6 +682,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @uses PhpDiff_Diff
 	 */
 	public function diffAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$request = $this->router->getRequest();
 		$left = $request->getGet('left');
 		$right = $request->getGet('right');
@@ -757,6 +762,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	}
 
 	public function rollbackAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$permalink = $this->checkAndGetPermalink();
 		$request = $this->router->getRequest();
 
@@ -858,6 +864,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * If yes, all entries on the MediaVersion table get the state "TRASH".
 	 */
 	public function deleteAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$permalink = $this->checkAndGetPermalink();
 		$request = $this->router->getRequest();
 		
@@ -879,6 +886,37 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			$this->setPageTitle($title);
 		}
 		
+	}
+	
+	
+	/**
+	 * Adds the wikis default items (read, edit & history) to the capsulebar
+	 * helper.
+	 *
+	 * @see Html5Wiki_View_CapsulebarHelper
+	 */
+	private function addDefaultWikiCapsuleBarItems() {
+		$this->template->capsulebarHelper()->addItem(
+			'read'
+			,$this->template->translate->_('read')
+			,'read'
+			,$this->router->buildUrl(array('wiki', $this->permalink))
+			,true
+		);
+		$this->template->capsulebarHelper()->addItem(
+			'edit'
+			,$this->template->translate->_('edit')
+			,'edit'
+			,$this->router->buildUrl(array('wiki', 'edit', $this->permalink))
+			,true
+		);
+		$this->template->capsulebarHelper()->addItem(
+			'history'
+			,$this->template->translate->_('history')
+			,'history'
+			,$this->router->buildUrl(array('wiki', 'history', $this->permalink))
+			,true
+		);
 	}
 
 }

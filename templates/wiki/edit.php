@@ -32,6 +32,7 @@
 
 		$this->messageHelper()->appendErrorMessage($this->translate->_('wrongInput'), $msg);
 	}
+
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->urlHelper('wiki','save',$this->permalink) ?>" method="post">
@@ -45,7 +46,7 @@
 				$setErrorClass = $fieldToSet ? ' error' : '';
 			?>
 			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
-			<?php echo isset($this->permalink) ? $this->capsulebarHelper($this->permalink) : ''; ?>
+			<?php echo isset($this->permalink) && !isset($this->creatingNew) ? $this->capsulebarHelper()->render($this->permalink) : ''; ?>
 		</header>
 		<div class="clear messagemarker"></div>
 

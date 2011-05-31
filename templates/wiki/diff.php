@@ -1,4 +1,11 @@
 <?php
+	$this->capsulebarHelper()->addItem(
+		'diff'
+		,$this->translate->_('compareVersions')
+		,'diff'
+		,$this->urlHelper('wiki', 'diff', $this->permalink, '?right='. $this->rightTimestamp. '&left='. $this->leftTimestamp)
+	);
+
 	$leftTimestamp = date($this->translate->_('timestampFormat'), $this->leftTimestamp);
 	$rightTimestamp = date($this->translate->_('timestampFormat'), $this->rightTimestamp);
 	
@@ -15,7 +22,7 @@
 <article id="content" class="content compareversions">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading"><?php echo $this->title ?></h1>
-		<?php echo $this->capsulebarHelper($this->permalink); ?>
+		<?php echo $this->capsulebarHelper()->render($this->permalink); ?>
 	</header>
 	<div class="clear messagemarker"></div>
 	

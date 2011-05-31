@@ -1,4 +1,11 @@
 <?php
+	$this->capsulebarHelper()->addItem(
+		'rollback'
+		,$this->translate->_('rollback')
+		,'rollback'
+		,$this->urlHelper('wiki', 'rollback', $this->permalink, '?to='. $this->toTimestamp)
+	);
+
 	/* Errors present? */
 	if (isset($this->errors['messages']) && count($this->errors['messages'])) {
 	    $msg = "<ul>";
@@ -15,7 +22,7 @@
 <article id="content" class="content rollback">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading"><?php echo $this->title ?></h1>
-		<?php echo $this->capsulebarHelper($this->permalink); ?>
+		<?php echo $this->capsulebarHelper()->render($this->permalink); ?>
 	</header>
 	<div class="clear messagemarker"></div>
 

@@ -34,7 +34,7 @@
 <article id="content" class="content history">
 	<header class="grid_12 title clearfix">
 		<h1 class="heading"><?php echo $this->article->title ?></h1>
-		<?php echo $this->capsulebarHelper($this->article->permalink); ?>
+		<?php echo $this->capsulebarHelper()->render($this->article->permalink); ?>
 	</header>
 	<div class="clear messagemarker"></div>
 
