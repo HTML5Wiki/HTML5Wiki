@@ -6,7 +6,7 @@
 	$jsHelper->appendFile($this->urlHelper('js','html5wiki.js'), false, true);
 	
 	/* Development Javascripts: */
-	$jsHelper->appendFile($this->urlHelper('js','jquery.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.min.js'));
 	$jsHelper->appendFile($this->urlHelper('js','core.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','menu.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','messagecontroller.js'));
@@ -21,6 +21,12 @@
 			,"' . $this->urlHelper('index', 'search') . '"
 		);
 	});');
+	
+	if($this->messageHelper()->hasMessages()) {
+		$jsHelper->appendScript('appendPageReadyCallback(function() {
+			MessageController.addMessages('. json_encode($this->messageHelper()->getMessages()). ');
+		});');
+	}
 ?>
 <!DOCTYPE html>
 <html lang="de">
