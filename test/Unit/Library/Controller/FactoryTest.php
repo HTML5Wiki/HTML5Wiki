@@ -16,7 +16,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	
 	private $config = array(
 		'routing' => array(
-			'defaultController' => 'wiki',
+			'defaultController' => 'unittest',
 			'defaultAction' => 'index'
 		)
 	);
@@ -65,8 +65,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	public function testLoadCorrectController() {
 		$this->router->route();
 
-		$path = $this->testingBasePath . 'CorrectControllers';
-		include_once $path . DIRECTORY_SEPARATOR . 'WikiController.php';
+		$path = $this->testingBasePath . 'CorrectControllers/';
 
 		$controller = Html5Wiki_Controller_Factory::factory($path, $this->router, $this->response);
 		$this->assertTrue($controller instanceof Html5Wiki_Controller_Abstract);
