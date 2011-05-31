@@ -27,6 +27,16 @@
 		);
 	});');
 	
+	$this->messageHelper()->appendInfoMessage('Information','<p>Ein Informationstext</p>');
+	$this->messageHelper()->appendErrorMessage('Fehler','<p>Ein Fehlertext</p>');
+	$this->messageHelper()->appendQuestionMessage('Frage','<p>Ein Fragetext</p>');
+	
+	if($this->messageHelper()->hasMessages()) {
+		$jsHelper->appendScript('appendPageReadyCallback(function() {
+			MessageController.addMessages('. json_encode($this->messageHelper()->getMessages()). ');
+		});');
+	}
+	
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();
 	$router = $frontController->getRouter();

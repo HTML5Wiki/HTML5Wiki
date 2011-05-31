@@ -36,7 +36,7 @@
 		<h1 class="heading"><?php echo $this->article->title ?></h1>
 		<?php echo $this->capsulebarHelper($this->article->permalink); ?>
 	</header>
-	<div class="clear"></div>
+	<div class="clear messagemarker"></div>
 
 	<?php if($numberOfVersions > 1) : ?>
 	<form action="<?php echo $this->urlHelper('wiki', 'diff', $this->article->permalink) ?>" method="get">
@@ -78,13 +78,14 @@
 		<?php endif; ?>
 		<a href="<? echo $this->urlHelper('wiki','delete',$this->article->permalink) ?>" class="link-button delete-button"><?php echo $this->translate->_('deleteArticle') ?></a>
 	</div>
-	</form>
-	
 	<div class="clear"></div>
-	<?php if ($this->ajax === true): ?>
-	<script type="text/javascript">
-		History.init();
-		Capsulebar.initializeClickEvents();
-	</script>
-	<?php endif; ?>
+	
+	</form>
 </article>
+
+<?php if ($this->ajax === true): ?>
+<script type="text/javascript">
+	History.init();
+	Capsulebar.initializeClickEvents();
+</script>
+<?php endif; ?>

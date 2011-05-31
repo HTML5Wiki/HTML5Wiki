@@ -17,7 +17,7 @@
 		<h1 class="heading"><?php echo $this->title ?></h1>
 		<?php echo $this->capsulebarHelper($this->permalink); ?>
 	</header>
-	<div class="clear"></div>
+	<div class="clear messagemarker"></div>
 	
 	<div class="grid_12">
 		<h2><?php echo $this->translate->_('compareVersions') ?></h2>

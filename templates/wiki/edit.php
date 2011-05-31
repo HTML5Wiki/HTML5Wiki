@@ -21,7 +21,7 @@
 			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
 			<?php echo isset($this->permalink) ? $this->capsulebarHelper($this->permalink) : ''; ?>
 		</header>
-		<div class="clear"></div>
+		<div class="clear messagemarker"></div>
 
 		<?php if (isset($this->diff)) : ?>
 		<?php
