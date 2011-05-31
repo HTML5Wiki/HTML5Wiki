@@ -20,6 +20,7 @@
 	<div class="clear"></div>
 	
 	<div class="grid_12">
+		<h2><?php echo $this->translate->_('compareVersions') ?></h2>
 		<?php echo $diffResult ?>
 	</div>
 	<div class="clear"></div>
