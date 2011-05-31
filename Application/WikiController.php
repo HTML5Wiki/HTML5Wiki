@@ -263,10 +263,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$this->template->assign('rightVersionTitle', $this->template->translate->_('newVersion'));
 				$this->template->assign('otherAuthor', $intermediateArticle->getUser()->name);
 			} else {
-				if ($params['overwrite']) {
-					$oldArticleVersion->loadLatestByPermalink($permalink);
-				}
-
 				$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 
 				// reload the article because it needs also the MediaVersion informations.
