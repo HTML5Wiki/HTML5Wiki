@@ -162,7 +162,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-history');
-		$this->clickAndWait('css=#capsulebar-history', 10000);
+		$this->clickAndWait('css=#capsulebar-history', 5000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage2.png');
 		
@@ -175,7 +175,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-history');
-		$this->clickAndWait('css=#capsulebar-history', 10000);
+		$this->clickAndWait('css=#capsulebar-history', 5000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage2.png');
 		
