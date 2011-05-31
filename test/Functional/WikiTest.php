@@ -162,7 +162,8 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-history');
-		$this->clickAndWait('css=#capsulebar-history', 10000);
+		$this->click('css=#capsulebar-history');
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .history.active") !== null', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage2.png');
 		
@@ -175,11 +176,13 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-history');
-		$this->clickAndWait('css=#capsulebar-history', 10000);
+		$this->click('css=#capsulebar-history');
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .history.active") !== null', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage2.png');
 		
 		$this->click('css=#article-history');
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .diff.active") !== null', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage3.png');
 		

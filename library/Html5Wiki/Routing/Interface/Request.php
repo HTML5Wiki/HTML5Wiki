@@ -28,7 +28,7 @@ interface Html5Wiki_Routing_Interface_Request {
 	 * @param array  $systemLanguages
 	 * @param string|null
 	 */
-	public static function parseHttpAcceptLanguage($languageString, array $systemLanguages);
+	public static function parseHttpAcceptLanguage(array $systemLanguages);
 	
 	
 	/**
