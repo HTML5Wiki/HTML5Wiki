@@ -75,7 +75,8 @@ class Test_Unit_Library_Template_PhpTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('decorated', $this->response->renderedData);
 	}
 	
-	public function testJavascriptHelper() {
+	public function testAHelper() {
+		$this->setUpFrontController();
 		$tpl = new Html5Wiki_Template_Php($this->response);
 		$tpl->setTemplatePath($this->templatePath);
 		$tpl->setTemplateFile('testJavascriptHelper.php');
@@ -86,6 +87,27 @@ class Test_Unit_Library_Template_PhpTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('<script type="text/javascript" src="foo.js"></script>' 
 				. "\n" . '<script type="text/javascript">document.write("test");' . "\n</script>", 
 				$this->response->renderedData);
+	}
+	
+	private function setUpFrontController() {
+		$config = new Zend_Config(array(
+			'routing' => array(
+				'defaultController' => 'index',
+				'defaultAction'     => 'index'
+			),
+			'development' => true
+		));
+		
+		$systemBasePath = realpath(dirname(__CLASS__) . '/../');
+		$applicationPath = $systemBasePath . DIRECTORY_SEPARATOR . 'test/Unit/Library/Controller/FactoryTest/CorrectControllers' . DIRECTORY_SEPARATOR;
+		$libraryPath     = $systemBasePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
+		
+		$request = new Test_Unit_Library_Routing_RequestStub();
+		$response = new Test_Unit_Library_Routing_ReponseFake();
+		$router = new Html5Wiki_Routing_Router($config, $response, $request);
+
+		new Html5Wiki_Controller_Front($config, $systemBasePath, $libraryPath, $applicationPath, $router, $request);
+		
 	}
 	
 	public function testIsset() {
