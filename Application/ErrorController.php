@@ -13,6 +13,8 @@
  */
 class Application_ErrorController {
 	
+	private static $config = null;
+	
 	/**
 	 * Handles an exception.
 	 *
@@ -121,7 +123,11 @@ class Application_ErrorController {
 	 */
 	private static function getConfig() {
 		require 'config/config.php';
-		return $config;
+		if(self::$config == null) {
+			self::$config = $config;
+		}
+		
+		return self::$config;
 	}
 	
 	/**
@@ -159,15 +165,18 @@ class Application_ErrorController {
 	}
 	
 	/**
-	 * Looks into the GET parameters for a parameter with the name debug.<br/>
-	 * If present and the value is 1, the function returns true.
+	 * Checks if debug information should be displayed
 	 *
-	 * @return true/false regarding the GET-parameter
+	 * @return true/false
 	 */
 	private static function isDebugActive() {
 		$debug = false;
-		if(isset($_GET['debug'])) {
+		$config = self::getConfig();
+		
+		 if(isset($_GET['debug'])) {
 			if($_GET['debug'] === '1') $debug = true;
+		} else if(isset($config['development'])) {
+			if($config['development'] === true) $debug = true;
 		}
 		
 		return $debug;
