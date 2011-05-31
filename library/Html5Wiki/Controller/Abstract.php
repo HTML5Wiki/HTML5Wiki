@@ -9,9 +9,7 @@
  */
 
 /**
- * Description of AbstractController
- *
- * @todo Refactor header-Status settings into an own "Response" class containing also the rendered-response.
+ * Basic abstract controller
  */
 abstract class Html5Wiki_Controller_Abstract {
 
