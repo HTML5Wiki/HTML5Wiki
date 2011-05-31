@@ -1,12 +1,19 @@
 <?php
 	$jsHelper = $this->javascriptHelper();
+	
+	/* Productive Javascripts: */
+	$jsHelper->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js', false, true);
+	$jsHelper->appendFile($this->urlHelper('js','html5wiki.js'), false, true);
+	
+	/* Development Javascripts: */
 	$jsHelper->appendFile($this->urlHelper('js','jquery.min.js'));
 	$jsHelper->appendFile($this->urlHelper('js','core.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','menu.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','messagecontroller.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','searchboxcontroller.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','html5wiki.js'));
-
+	
+	/* "Plain" Scripts: */
 	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $this->urlHelper() .'"]);');
 	$jsHelper->appendScript('appendPageReadyCallback(function() {
 		SearchBoxController.initWithSearchBox(
