@@ -40,7 +40,6 @@
 				<include name="templates/**" />
 				<include name="web/**" />
 				<exclude name="**/README" />
-				<exclude name="web/prototype/**" />
 				<exclude name="web/css/less/**" />
 				<exclude name="web/js/**/*.js" />
 			</fileset>
