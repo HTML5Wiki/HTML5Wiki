@@ -9,7 +9,7 @@ var MessageController = (function() {
 	var self = {}
 		,messages = new Array()
 		,message_slidedown_time = 'fast'
-		,message_slideup_time = 'fast'
+		,message_slideup_time = 'slow'
 		,message_show_time = 2000;
 	
 	/**
@@ -51,10 +51,24 @@ var MessageController = (function() {
 		messages = messages.reverse();
 		var message = null;
 		while((message = messages.pop()) != null) {
-			var box = createBox(message).hide();
+			var box = createBox(message);
 			if(box != null) {
+				box.hide();
 				container.append(box);
-				box.slideDown(message_slidedown_time);
+				
+				// Autohide?
+				var hideCallback = undefined;
+				if(message.autohide != undefined && message.autohide == true) {
+					hideCallback = function() {
+						$(this).delay(message_show_time).queue(function() {
+							hideBox(this);
+							$(this).dequeue();
+						});
+					};
+				}
+				
+				// Show:
+				box.slideDown(message_slidedown_time, hideCallback);
 			}
 		}
 		
@@ -75,82 +89,89 @@ var MessageController = (function() {
 	        box = $('<div class="box ' + message.type + '" />');
 			box.append('<h2>' + message.title + '</h2>');
 			box.append(message.text);
-			box.append(createButtons(message))
+			
+			var buttons = createButtons(message);
+			if(buttons != null) box.append(buttons);
 		}
 		
 		return box;
 	}
 	
 	/**
+	 * Creates buttons for a message.<br/>
+	 * If no buttons are present and the messages autohide-poperty is false, null
+	 * is returned. Otherwise a default close button is added.
 	 *
-	 * @return DOM element
+	 * @return DOM element or null
 	 * @access private
 	 */
 	function createButtons(message) {
-		var container = $('<div class="options" />');
+		var container = null;
 		
 		// If no buttons present, add at least a close-button
-		if(!message.buttons) {
+		if(!message.buttons && message.autohide == false) {
 			message.buttons = [{
 				text: 'Schliessen'
-				,action: function() { console.log('ok'); }
+				,showAsButton: true
 			}];
+		} else {
+			message.buttons = [];
 		}
 		
-		for(i = 0, l = message.buttons.length; i<l; i++) {
-			var data = message.buttons[i];
-			var button = $('<a href="#" class="button">' + data.text + '</a>');
-			button.bind('click', { action: data.action }, function(event) {
-				$(this).parents('.box').slideUp(message_slideup_time, function() {
-					$(this).remove();
-					if($('.box').length == 0) $('.messages-container').remove();
-					
-					if(event.data.action != undefined) event.data.action();
-				});
-			});
-			
-			container.append(button);
+		if(message.buttons.length > 0) {
+			container = $('<div class="options" />');
+			for(i = 0, l = message.buttons.length; i<l; i++) {
+				var data = message.buttons[i];
+				var button = createButton(data);
+				if(button != null) container.append(button);
+			}
 		}
 		
 		return container;
+	}
+	
+	/**
+	 * Creates a button from the information stored in data, a property list.
+	 *
+	 * @param data
+	 * @see MessageController#createButtons
+	 * @access private
+	 */
+	function createButton(data) {
+		var button = null;
 		
-		/*
-    	for(var i = 0, l = buttonsData.length; i < l; i++) {
-			var text = buttonsData[i]['text'];
-    		var showAsButton = buttonsData[i]['button'];
-			var callback = buttonsData[i]['callback'];
+		if(data.text != undefined) {
+			button = $('<a href="#">' + data.text + '</a>');
+
+			if(data.showAsButton != undefined && data.showAsButton == true) {
+				button.addClass('button');
+			} else {
+				button.addClass('option');
+			}
 			
-			// The option:
-    		var klass = ' class="option"';
-			if(showAsButton) klass = ' class="button"';
-    		var option = $('<a href="#"' + klass + '>' + text + '</a>');
-    		
-			// Eventbinding:
-			// A click on an option makes the messagebox disappear in a first step.
-			// After that, the callback of the option is called.
-    		$(option).bind('click', { callback : callback }, function(event) {
-    			$(this).parents('.messagebox').slideUp(message_slideup_time, function() {
-					$(this).remove();
-					
-					var overlay = $('.overlay');
-					if(overlay.length > 0) {
-						overlay.fadeOut(overlay_fadeout_time, function() {
-	        				$(this).remove();
-	        				if(event.data.callback != undefined) event.data.callback();
-	        				self.displayQueuedMessage();
-						});						
-					} else {
-        				if(event.data.callback != undefined) event.data.callback();
-        				self.displayQueuedMessage();
-					}
-    			});
-    		});
-    		
-    		container.append(option);
-    	}
+			button.bind('click', { action: data.action }, function(event) {
+				hideBox($(this).parents('.box'), event.data.action);
+			});
+		}
 		
-		return container;*/
+		return button;
+	}
+	
+	/**
+	 * Hides a Box and calls, if present, a callback afterwards.
+	 *
+	 * @param box DOM Element
+	 * @param Callback or undefined
+	 * @access private
+	 */
+	function hideBox(box, callback) {
+		$(box).slideUp(message_slideup_time, function() {
+			$(this).remove();
+			if($('.box').length == 0) $('.messages-container').remove();
+			if(callback != undefined) callback();
+		});
 	}
 	
 	return self;
+	
 }());  // end MessageController
