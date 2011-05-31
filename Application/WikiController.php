@@ -906,7 +906,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			,true
 		);
 		$this->template->capsulebarHelper()->addItem(
-			'edit,save'
+			'edit,save'  // bind edit and save action to this item
 			,$this->template->translate->_('edit')
 			,'edit'
 			,$this->router->buildUrl(array('wiki', 'edit', $permalink))
