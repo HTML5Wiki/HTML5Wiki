@@ -18,6 +18,11 @@ define('SKIP_FUNCTIONAL_TESTS', false);
 define('SELENIUM_HOST', 'http://vs01.openflex.net');
 
 /**
+ * Default timezone
+ */
+define('DEFAULT_TIMEZONE', 'Europe/Zurich');
+
+/**
  * Database Configuration
  */
 define('DATABASE_HOST', '127.0.0.1');

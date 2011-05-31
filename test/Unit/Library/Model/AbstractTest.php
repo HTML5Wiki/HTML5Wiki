@@ -47,7 +47,7 @@ abstract class Test_Unit_Library_Model_AbstractTest extends PHPUnit_Framework_Te
 	 * @return void
 	 */
 	public function tearDown() {
-		$this->db = null;
+		unset($this->db);
 	}
 
 	/**

@@ -103,15 +103,19 @@ class Test_Unit_Library_Template_PhpTest extends PHPUnit_Framework_TestCase {
 		$tpl = new Html5Wiki_Template_Php($this->response);
 		$tpl->setTemplatePath($this->templatePath);
 		$tpl->setTemplateFile('testTranslate.php');
-		$tpl->setTranslate(new Zend_Translate(array(
+		
+		$translate = new Zend_Translate(array(
 			'adapter' => 'array',
 			'content' => array('thisShouldBeReplaced' => 'test translation succeeded!'),
 			'locale'  => 'en'
-		)));
+		));
+		
+		$tpl->setTranslate($translate);
 		
 		$tpl->render();
 		$this->response->render();
 		
+		$this->assertEquals($tpl->getTranslate(), $translate);
 		$this->assertEquals('test translation succeeded!', $this->response->renderedData);
 	}
 }

@@ -64,6 +64,8 @@ require $libraryDir . '/Zend/Loader/Autoloader.php';
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->registerNamespace(array('Html5Wiki_', 'Application_', 'Markdown_', 'PhpDiff_'));
 
+date_default_timezone_set(DEFAULT_TIMEZONE);
+
 /*
  * Unset global variables that are no longer needed.
  */

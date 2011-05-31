@@ -104,13 +104,10 @@ class Html5Wiki_Controller_Front {
 	}
 	
 	/**
-	 *
+	 * Get front controller instance
 	 * @return Html5Wiki_Controller_Front
 	 */
 	public static function getInstance() {
-		if (!self::$instance) {
-			throw new Html5Wiki_Exception("Front controller must be instantiated before usage of getInstance");
-		}
 		return self::$instance;
 	}
 

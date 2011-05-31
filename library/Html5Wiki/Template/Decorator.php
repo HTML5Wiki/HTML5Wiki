@@ -75,29 +75,13 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	}
 	
 	/**
-	 * Set response
-	 * @param Html5Wiki_Routing_Response $response
-	 */
-	public function setResponse(Html5Wiki_Routing_Response $response) {
-		$this->response = $response;
-	}
-	
-	/**
-	 * Get response
-	 * @return Html5Wiki_Routing_Response
-	 */
-	public function getResponse() {
-		return $this->response;
-	}
-	
-	/**
 	 * Magic function for calling a view helper
 	 * @param string $name
 	 * @param string $args
 	 * @return Html5Wiki_View_Helper 
 	 */
 	public function __call($name, $args) {
-		if (!in_array($name, $this->helpers)) {
+		if (!isset($this->helpers[$name])) {
 			$helper = $this->getHelper($name);
 			$this->helpers[$name] = $helper;
 		} else {

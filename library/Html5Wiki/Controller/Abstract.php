@@ -9,9 +9,7 @@
  */
 
 /**
- * Description of AbstractController
- *
- * @todo Refactor header-Status settings into an own "Response" class containing also the rendered-response.
+ * Basic abstract controller
  */
 abstract class Html5Wiki_Controller_Abstract {
 
@@ -200,6 +198,19 @@ abstract class Html5Wiki_Controller_Abstract {
 	
 	public function redirect($url, $httpStatusCode = 302) {
 		$this->router->redirect($url, $httpStatusCode);
+		$this->doRenderAndExit();
+	}
+	
+	/**
+	 * After redirect, call this method to immediately render the redirect header and
+	 * exit.
+	 * 
+	 * For unit testing, this needs to be an own method, as otherwise the unit tests exit.
+	 */
+	public function doRenderAndExit() {
+		$this->response->render();
+		ob_get_clean();
+		exit();
 	}
 
 	/**

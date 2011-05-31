@@ -157,6 +157,35 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->assertTextPresent(self::TEST_CONTENT_EDIT);
 	}
 	
+	public function testHistoryPage() {
+		$this->open($this->wikiTestUrl);
+		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage1.png');
+		
+		$this->assertElementPresent('css=#capsulebar-history');
+		$this->clickAndWait('css=#capsulebar-history', 10000);
+		
+		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage2.png');
+		
+		$this->assertElementPresent('css=.versionhistory .version');
+		$this->assertElementPresent('css=#article-history');
+	}
+	
+	public function testDiffPage() {
+		$this->open($this->wikiTestUrl);
+		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage1.png');
+		
+		$this->assertElementPresent('css=#capsulebar-history');
+		$this->clickAndWait('css=#capsulebar-history', 10000);
+		
+		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage2.png');
+		
+		$this->click('css=#article-history');
+		
+		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage3.png');
+		
+		$this->assertElementPresent('css=.differences');
+	}
+	
 	private function insertTagsIntoPtagsField() {
 		$this->fireEvent('css=#txtTags__ptags', 'focus');
 		$this->type('css=#txtTags__ptags', self::TEST_TAG_INSERT);
