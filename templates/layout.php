@@ -27,7 +27,7 @@
 		);
 	});');
 	
-	$this->messageHelper()->appendInfoMessage('Information','<p>Ein Informationstext</p>');
+	$this->messageHelper()->appendInfoMessage('Information','<p>Ein Informationstext</p>',true);
 	$this->messageHelper()->appendErrorMessage('Fehler','<p>Ein Fehlertext</p>');
 	$this->messageHelper()->appendQuestionMessage('Frage','<p>Ein Fragetext</p>');
 	

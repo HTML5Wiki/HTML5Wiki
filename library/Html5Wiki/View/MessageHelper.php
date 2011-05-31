@@ -12,9 +12,10 @@
  * Maintains a central point where messages can be added during processing of a
  * request.<br/>
  * The main template (template/layout.php) will gather and show them afterwards
- * in the UI.
+ * in the UI using the MessageController.js.
  *
  * @see templates/layout.php
+ * @see web/js/classes/messagecontroller.js
  */
 class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	private static $messages = array();
@@ -24,10 +25,11 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	 *
 	 * @param $title
 	 * @param $text
+	 * @param $autohide should the message dissappear automaticaly in the UI?
 	 * @see Html5Wiki_View_MessageBoxHelper#appendMessageBox
 	 */
-	public function appendInfoMessage($title, $text) {
-		$this->appendMessage('info', $title, $text);
+	public function appendInfoMessage($title, $text, $autohide=false) {
+		$this->appendMessage('info', $title, $text, $autohide);
 	}
 	
 	/**
@@ -35,10 +37,11 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	 *
 	 * @param $title
 	 * @param $text
+	 * @param $autohide should the message dissappear automaticaly in the UI?
 	 * @see Html5Wiki_View_MessageBoxHelper#appendMessageBox
 	 */
-	public function appendErrorMessage($title, $text) {
-		$this->appendMessage('error', $title, $text);
+	public function appendErrorMessage($title, $text, $autohide=false) {
+		$this->appendMessage('error', $title, $text, $autohide);
 	}
 	
 	/**
@@ -46,10 +49,11 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	 *
 	 * @param $title
 	 * @param $text
+	 * @param $autohide should the message dissappear automaticaly in the UI?
 	 * @see Html5Wiki_View_MessageBoxHelper#appendMessageBox
 	 */
-	public function appendQuestionMessage($title, $text) {
-		$this->appendMessage('question', $title, $text);
+	public function appendQuestionMessage($title, $text, $autohide=false) {
+		$this->appendMessage('question', $title, $text, $autohide);
 	}
 	
 	/**
@@ -70,11 +74,20 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 		return self::$messages;
 	}
 	
-	private function appendMessage($type, $title, $text) {
+	/**
+	 * Appends a new message.
+	 *
+	 * @param $type [info|error|question]
+	 * @param $title
+	 * @param $text
+	 * @param $autohide should the message dissappear automaticaly in the UI?
+	 */
+	private function appendMessage($type, $title, $text, $autohide) {
 		self::$messages[] = array(
 			'type' => $type
 			,'title' => $title
 			,'text' => $text
+			,'autohide' => $autohide
 		);
 	}
 	
