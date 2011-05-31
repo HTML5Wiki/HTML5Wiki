@@ -19,7 +19,7 @@
 			  . '</div>';
 		
 		$this->messageHelper()->appendQuestionMessage($this->translate->_('compareVersions'), $text);
-		$this->messageHelper()->addButton($saveText);
+		$this->messageHelper()->addButton($saveText, true, '$(\'#edit-article\').submit();');
 	}
 	
 	/* Errors present? */
@@ -32,16 +32,13 @@
 
 		$this->messageHelper()->appendErrorMessage($this->translate->_('wrongInput'), $msg);
 	}
-	
-	/*
-				<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
-				<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
-	*/
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->urlHelper('wiki','save',$this->permalink) ?>" method="post">
 		<input type="hidden" value="<?php echo $this->mediaVersionId; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
 		<input type="hidden" value="<?php echo $this->mediaVersionTimestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
+		<?php if(isset($this->diff)) : ?><input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" /><?php endif; ?>
+		
 		<header class="grid_12 title clearfix">
 			<?php
 				$fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
