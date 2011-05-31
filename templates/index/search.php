@@ -57,7 +57,7 @@
 			<li class="result title mediatype-<?php echo strtolower($result['model']->mediaVersionType) ?>">
 				<h2>
 					<a href="<?php echo $this->urlHelper('wiki', $result['model']->permalink) ?>">
-						<?php echo $result['model']->getCommonName() ?>
+						<?php echo $this->escape($result['model']->getCommonName()) ?>
 					</a>
 				</h2>
 				<p class="meta">
