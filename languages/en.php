@@ -75,5 +75,7 @@ return array(
 	,'internalErrorText' => 'An unexpected error occured. Hope you don\'t mind.<br/>Please continue to the <a href="%s">homepage</a>.'
 	,'additionalErrorInfo' => 'Additional information'
 	
+	,'wrongInput' => 'Invalid input'
+	
 );
 ?>

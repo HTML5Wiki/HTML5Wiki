@@ -27,6 +27,12 @@
 		);
 	});');
 	
+	if($this->messageHelper()->hasMessages()) {
+		$jsHelper->appendScript('appendPageReadyCallback(function() {
+			MessageController.addMessages('. json_encode($this->messageHelper()->getMessages()). ');
+		});');
+	}
+	
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();
 	$router = $frontController->getRouter();

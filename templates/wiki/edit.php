@@ -8,11 +8,37 @@
 	if(strlen($this->title) == 0) $this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.handleEditArticleTitle);');
 
 	$saveText = $this->translate->_('save');
+	
+	/* Intermediate version present? */
+	if(isset($this->diff)) {
+		$saveText = $this->translate->_('overwrite');
+		$text = '<p>'
+			  . sprintf($this->translate->_('hasIntermediateVersionText'), $this->otherAuthor)
+			  . '<div class="compareversions white-paper">'
+			  . $this->diffRendererHelper($this->diff, $this->leftVersionTitle, $this->rightVersionTitle)
+			  . '</div>';
+		
+		$this->messageHelper()->appendQuestionMessage($this->translate->_('compareVersions'), $text);
+		$this->messageHelper()->addButton($saveText, true, '$(\'#edit-article\').submit();');
+	}
+	
+	/* Errors present? */
+	if (isset($this->errors['messages']) && count($this->errors['messages'])) {
+        $msg = "<ul>";
+        foreach ($this->errors['messages'] as $errorMessage) {
+            $msg .= "<li>" . stripslashes($errorMessage) . "</li>";
+		}
+        $msg .= "</ul>";
+
+		$this->messageHelper()->appendErrorMessage($this->translate->_('wrongInput'), $msg);
+	}
 ?>
 <article id="content" class="content editor">
 	<form id="edit-article" name="editArticleForm" action="<?php echo $this->urlHelper('wiki','save',$this->permalink) ?>" method="post">
 		<input type="hidden" value="<?php echo $this->mediaVersionId; ?>" id="hiddenIdArticle" name="hiddenIdArticle" />
 		<input type="hidden" value="<?php echo $this->mediaVersionTimestamp; ?>" id="hiddenTimestampArticle" name="hiddenTimestampArticle" />
+		<?php if(isset($this->diff)) : ?><input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" /><?php endif; ?>
+		
 		<header class="grid_12 title clearfix">
 			<?php
 				$fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
@@ -21,29 +47,7 @@
 			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
 			<?php echo isset($this->permalink) ? $this->capsulebarHelper($this->permalink) : ''; ?>
 		</header>
-		<div class="clear"></div>
-
-		<?php if (isset($this->diff)) : ?>
-		<?php
-			$saveText = $this->translate->_('overwrite');
-		?>
-		<div class="grid_12">
-			<div class="box question">
-				<h2><?php echo $this->translate->_('compareVersions') ?></h2>
-				<p>
-					<?php printf($this->translate->_('hasIntermediateVersionText'), $this->otherAuthor); ?>
-				</p>
-				<div class="compareversions white-paper">
-					<?php echo $this->diffRendererHelper($this->diff, $this->leftVersionTitle, $this->rightVersionTitle) ?>
-				</div>
-				<div class="bottom-button-bar">
-					<input type="hidden" value="true" id="hiddenOverwrite" name="hiddenOverwrite" />
-					<input id="article-save" type="submit" value="<?php echo $saveText ?>" class="caption large-button"/>
-				</div>
-			</div>
-		</div>
-		<div class="clear"></div>
-		<?php endif; ?>
+		<div class="clear messagemarker"></div>
 
 		<div class="grid_12">
 			<fieldset name="content" class="group">
@@ -122,27 +126,15 @@
 		Capsulebar.initializeClickEvents();
 		Article.setupArticleEditorGui();
 		Article.setupArticleEditorEvents();
+		
+		<?php if($this->messageHelper()->hasMessages()) : ?>
+		MessageController.addMessages(<?php echo json_encode($this->messageHelper()->getMessages()) ?>);
+		<?php endif; ?>
 	</script>
 	<?php endif; ?>
 
     <?php if (isset($this->errors['messages']) && count($this->errors['messages'])) : ?>
-    <script type="text/javascript">
-        <?php
-            $msg = "<ul>";
-            foreach ($this->errors['messages'] as $errorMessage) {
-                $msg .= "<li>" . addslashes($errorMessage) . "</li>";
-			}
-            $msg .= "</ul>";
-        ?>
-        var options = {
-			'modal': true,
-			'buttons' : [{
-				'text': 'OK'
-				,'button': true
-			}]
-		};
-		MessageController.addMessage('error','<?php echo $msg; ?>', options);
-		
+    <script type="text/javascript">		
 		<?php if (isset($this->errors['fields']['title']) && $this->errors['fields']['title']): ?>
 			Article.handleEditArticleTitle();
 			$('#txtTitle').addClass('error');

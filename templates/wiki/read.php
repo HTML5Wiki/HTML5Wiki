@@ -5,8 +5,8 @@
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->article->id . '"]);');
 	$tagSlug = $this->tagSlugHelper($this->tags);
 ?>
-<article id="content" class="grid_12 content article">
-	<header class="title clearfix">		
+<article id="content" class="content article">
+	<header class="grid_12 title clearfix">
 		<div class="heading">
 			<h1><?php echo $this->escape($this->article->title) ?></h1>
 			<p class="meta">
@@ -20,14 +20,20 @@
 		
 		<?php echo $this->capsulebarHelper($this->article->permalink); ?>
 	</header>
-	<section>
+	<div class="clear messagemarker"></div>
+	
+	<section class="grid_12">
 		<?php echo $this->markDownParser->transform($this->escape($this->article->content)) ?>
 	</section>
 	<div class="clear"></div>
-	
-	<?php if ($this->ajax === true): ?>
-	<script type="text/javascript">
-		Capsulebar.init("<?php echo $this->article->id ?>");
-	</script>
-	<?php endif; ?>
 </article>
+
+<?php if ($this->ajax === true): ?>
+<script type="text/javascript">
+	Capsulebar.init("<?php echo $this->article->id ?>");
+	
+	<?php if($this->messageHelper()->hasMessages()) : ?>
+	MessageController.addMessages(<?php echo json_encode($this->messageHelper()->getMessages()) ?>);
+	<?php endif; ?>
+</script>
+<?php endif; ?>

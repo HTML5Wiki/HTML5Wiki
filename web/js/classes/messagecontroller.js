@@ -7,185 +7,175 @@
  */
 var MessageController = (function() {
 	var self = {}
-		,messageQueue = new Array()
+		,messages = new Array()
 		,message_slidedown_time = 'fast'
-		,message_slideup_time = 'fast'
-		,overlay_fadein_time = 300
-		,overlay_fadeout_time = 200
-		,message_show_time = 2000;
+		,message_slideup_time = 'slow'
+		,message_show_time = 6000;
 	
 	/**
-	 * Adds a Message with given parameters to the queue and ensures
-	 * that the oldest queued message gets displayed.<br/>
-	 * <br/>
-	 * The parameter <code>options</code> enables you to display buttons
-	 * together with your message.<br/>
-	 * The following snippet shows how you can populate an array with
-	 * the necessary information:
-	 * <pre>
-	 *     var options = [
-	 *         {
-	 *             text: 'OK'
-	 *             ,button: true
-	 *             ,callback: function() { console.log('OK clicked'); }
-	 *         },{
-	 *             text: 'Cancel'
-	 *             ,callback: function() { console.log('Cancel clicked'); }
-	 *         }
-	 *     ];
-	 * </pre>
+	 * Adds an array if messages to the internal messages-array
 	 *
-	 * Along with the passed message type and text, the user will see a button
-	 * labled "OK" and a link "Cancel".<br/>
-	 * As soon as the user clicks on one of them, the specific callback method
-	 * will be called.
-	 *
-	 * @param type		[info, error, question]
-	 * @param message	Messagetext
-	 * @param options	An optional array with dictionary-items for each available option
+	 * @param messages
 	 * @access public
 	 */
-	self.addMessage = function(type, message, options) {
-		var messageData = {
-			type: type,
-			message: message,
-			options: options
-		};
-		messageQueue = new Array(messageData).concat(messageQueue);
-		if($('.messagebox').size() == 0) self.displayQueuedMessage();
+	self.addMessages = function(newMessages) {
+		messages = messages.concat(newMessages);
+		self.displayMessages();
 	}
-
+	
 	/**
-	 * Checks the message queue for enqueued messages.<br/>
-	 * If a message is available, it will be displayed.<br/>
-	 * If more than one message is available, the oldest one gets displayed.
+	 * Adds a new message.
 	 *
+	 * @param newMessage
 	 * @access public
 	 */
-	self.displayQueuedMessage = function() {
-		var messageData = messageQueue.pop();
+	self.addMessage = function(newMessage) {
+		messages = messages.concat([newMessage]);
+	}
 	
-		if(messageData != undefined) {
-			var messageBox = createMessageBox(messageData);
-			var modal = false;
-			$('.header-overall').after(messageBox);
-			
-			if(messageData.options != undefined) {
-				if(messageData.options.modal != undefined) modal = messageData.options.modal;
-			}
-			
-			if(modal) {
-				$('html, body').animate({scrollTop: 0}, '300');
-				
-				// Show modal with overlay:
-				var overlay = createOverlay();
-				$('body').append(overlay);
-				overlay.fadeIn(overlay_fadein_time, function() {
-					$(messageBox).slideDown(message_slidedown_time);
-				});
-			} else {
-				if(messageData.options != undefined && messageData.options.buttons != undefined && messageData.options.buttons.length > 0) {
-					// If buttons are available, only slide down the message:
-					$(messageBox).slideDown(message_slidedown_time);
-				} else {
-					// If no buttons are there, slide down, wait and slide up after:
-					$(messageBox).slideDown(message_slidedown_time)
-					.delay(message_show_time)
-					.slideUp(message_slideup_time,function() {
-						$(this).remove();
-						self.displayQueuedMessage();
-					});
-				}
-			}
-			
+	/**
+	 * Displays queued messages.
+	 *
+	 * @see MessageController#addMessage
+	 * @see MessageController#addMessages
+	 * @access public
+	 */
+	self.displayMessages = function() {
+		var container = $('.messages-container-main');
+		if(container.length == 0) {
+			container = $('<div class="grid_12 messages-container messages-container-main" />');
+			$('.messagemarker').after(container);
+			container.after($('<div class="clearfix messages-container" />'));
 		}
+		
+		messages = messages.reverse();
+		var message = null;
+		while((message = messages.pop()) != null) {
+			var box = createBox(message);
+			if(box != null) {
+				box.hide();
+				container.append(box);
+				
+				// Autohide?
+				var hideCallback = undefined;
+				if(message.autohide != undefined && message.autohide == true) {
+					hideCallback = function() {
+						$(this).delay(message_show_time).queue(function() {
+							hideBox(this);
+							$(this).dequeue();
+						});
+					};
+				}
+				
+				// Show:
+				box.slideDown(message_slidedown_time, hideCallback);
+			}
+		}
+		
 	}
-
+	
 	/**
      * Creates a messagebox DOM element with given parameters.
      *
      * @param messageData Dictionary with message data
-	 * @see MessageController#addMessage(type,message,options)
+	 * @see MessageController#addMessage(type,text,options)
+	 * @return null or DOM element
 	 * @access private
      */
-	function createMessageBox(messageData) {
-        var messagebox = $('<div class="messagebox" />');
-        var content = $('<div class="message ' + messageData.type + '">' + messageData.message + '</div>');
-        messagebox.append('<div class="barshadow">&nbsp;</div>');
-
-        if(messageData.options != undefined
-			&& messageData.options.buttons != undefined
-			&& messageData.options.buttons.length > 0) {
-			content.append(createButtons(messageData.options.buttons));
+	function createBox(message) {
+		var box = null;
+		
+		if(message.type != undefined && message.text != undefined) {
+	        box = $('<div class="box ' + message.type + '" />');
+			box.append('<h2>' + message.title + '</h2>');
+			box.append(message.text);
+			
+			var buttons = createButtons(message);
+			if(buttons != null) box.append(buttons);
 		}
-
-        messagebox.append(content);
-        messagebox.hide();
-        
-        return messagebox;
+		
+		return box;
 	}
 	
 	/**
-	 * Creates clickable buttons and links from a buttons Information
-	 * Array.
+	 * Creates buttons for a message.<br/>
+	 * If no buttons are present and the messages autohide-poperty is false, null
+	 * is returned. Otherwise a default close button is added.
 	 *
-	 * @param buttonsData Array with information about the options
-	 * @see MessageController#addMessage
-	 * @see MessageController#createMessageBox
+	 * @return DOM element or null
 	 * @access private
 	 */
-	function createButtons(buttonsData) {
-		var container = $('<div class="options" />');
+	function createButtons(message) {
+		var container = null;
 		
-    	for(var i = 0, l = buttonsData.length; i < l; i++) {
-			var text = buttonsData[i]['text'];
-    		var showAsButton = buttonsData[i]['button'];
-			var callback = buttonsData[i]['callback'];
-			
-			// The option:
-    		var klass = ' class="option"';
-			if(showAsButton) klass = ' class="button"';
-    		var option = $('<a href="#"' + klass + '>' + text + '</a>');
-    		
-			// Eventbinding:
-			// A click on an option makes the messagebox disappear in a first step.
-			// After that, the callback of the option is called.
-    		$(option).bind('click', { callback : callback }, function(event) {
-    			$(this).parents('.messagebox').slideUp(message_slideup_time, function() {
-					$(this).remove();
-					
-					var overlay = $('.overlay');
-					if(overlay.length > 0) {
-						overlay.fadeOut(overlay_fadeout_time, function() {
-	        				$(this).remove();
-	        				if(event.data.callback != undefined) event.data.callback();
-	        				self.displayQueuedMessage();
-						});						
-					} else {
-        				if(event.data.callback != undefined) event.data.callback();
-        				self.displayQueuedMessage();
-					}
-    			});
-    		});
-    		
-    		container.append(option);
-    	}
+		// If no buttons present, add at least a close-button
+		if(message.buttons == undefined) message.buttons = [];
+		if(message.buttons.length == 0 && message.autohide == false) {
+			message.buttons = [{
+				text: 'Schliessen'
+				,showAsButton: true
+			}];
+		}
+		
+		if(message.buttons.length > 0) {
+			container = $('<div class="options" />');
+			for(i = 0, l = message.buttons.length; i<l; i++) {
+				var data = message.buttons[i];
+				var button = createButton(data);
+				if(button != null) container.append(button);
+			}
+		}
 		
 		return container;
 	}
 	
 	/**
-	 * Creates an overlay and returns it as jQuery DOM-Element.<br/>
-	 * The overlay is used to mask the rest of the UI if a message has
-	 * options to select (= modal dialog actually).
+	 * Creates a button from the information stored in data, a property list.
 	 *
+	 * @param data
+	 * @see MessageController#createButtons
 	 * @access private
 	 */
-	function createOverlay() {
-		var overlay = $('<div class="overlay" />');
-		overlay.hide();
-		return overlay;
+	function createButton(data) {
+		var button = null;
+		
+		if(data.text != undefined) {
+			button = $('<a href="#">' + data.text + '</a>');
+
+			if(data.showAsButton != undefined && data.showAsButton == true) {
+				button.addClass('button');
+			} else {
+				button.addClass('option');
+			}
+			
+			var callback = undefined;
+			if(data.action != undefined) {
+				callback = function() { eval(data.action); };
+			}
+			
+			button.bind('click', { action: callback }, function(event) {
+				hideBox($(this).parents('.box'), event.data.action);
+			});
+		}
+		
+		return button;
+	}
+	
+	/**
+	 * Hides a Box and calls, if present, a callback afterwards.
+	 *
+	 * @param box DOM Element
+	 * @param Callback or undefined
+	 * @access private
+	 */
+	function hideBox(box, callback) {
+		$(box).slideUp(message_slideup_time, function() {
+			$(this).remove();
+			if($('.box').length == 0) $('.messages-container').remove();
+			if(callback != undefined) callback();
+		});
 	}
 	
 	return self;
+	
 }());  // end MessageController
