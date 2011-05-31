@@ -109,13 +109,12 @@ var MessageController = (function() {
 		var container = null;
 		
 		// If no buttons present, add at least a close-button
-		if(!message.buttons && message.autohide == false) {
+		if(message.buttons == undefined) message.buttons = [];
+		if(message.buttons.length == 0 && message.autohide == false) {
 			message.buttons = [{
 				text: 'Schliessen'
 				,showAsButton: true
 			}];
-		} else {
-			message.buttons = [];
 		}
 		
 		if(message.buttons.length > 0) {
@@ -149,7 +148,12 @@ var MessageController = (function() {
 				button.addClass('option');
 			}
 			
-			button.bind('click', { action: data.action }, function(event) {
+			var callback = undefined;
+			if(data.action != undefined) {
+				callback = function() { eval(data.action); };
+			}
+			
+			button.bind('click', { action: callback }, function(event) {
 				hideBox($(this).parents('.box'), event.data.action);
 			});
 		}
