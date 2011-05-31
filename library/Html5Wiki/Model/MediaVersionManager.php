@@ -31,7 +31,7 @@ class Html5Wiki_Model_MediaVersionManager {
 		$versions = null;
 		$permalinksModel = $this->getLatestMediaVersionByPermaLink($permalink);
 		
-		if($permalinksModel->id > 0) {
+		if(isset($permalinksModel->id) && $permalinksModel->id > 0) {
 			$versions = $this->getMediaVersionsById($permalinksModel->id);
 		}
 		
