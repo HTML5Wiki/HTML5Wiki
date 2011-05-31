@@ -108,7 +108,7 @@ class Application_ErrorController {
 		$request->parse();
 		$config = self::getConfig();
 		
-		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($request->getLanguage(), $config['languages']);
+		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($config['languages']);
 		$language = ($language !== null) ? $language : $config['defaultLanguage'];
 		
 		return $language;
