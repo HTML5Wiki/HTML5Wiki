@@ -16,6 +16,7 @@ return array(
 	,'content' => 'Content'
 	,'save' => 'Save'
 	,'deleteArticle' => 'Delete all versions of this article'
+	,'close' => 'Close'
 	
 	,'title' => 'Title'
 	,'lastChanged' => 'Last change'
@@ -74,6 +75,8 @@ return array(
 	,'internalError' => 'Internal problem'
 	,'internalErrorText' => 'An unexpected error occured. Hope you don\'t mind.<br/>Please continue to the <a href="%s">homepage</a>.'
 	,'additionalErrorInfo' => 'Additional information'
+	
+	,'wrongInput' => 'Invalid input'
 	
 );
 ?>

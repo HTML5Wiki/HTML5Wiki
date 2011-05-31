@@ -16,6 +16,7 @@ return array(
 	,'content' => 'Inhalt'
 	,'save' => 'Speichern'
 	,'deleteArticle' => 'Alle Versionen dieses Artikels l&ouml;schen'
+	,'close' => 'Schliessen'
 	
 	,'title' => 'Titel'
 	,'lastChanged' => 'Zuletzt ge&auml;ndert'
@@ -74,6 +75,7 @@ return array(
 	,'internalErrorText' => 'Leider kam es zu unerwarteten Problemen. Das ist aber nicht weiter schlimm: Auf der <a href="%s">Startseite</a> geht es sofort wieder weiter.'
 	,'additionalErrorInfo' => 'N&auml;here Fehlerinformationen'
 	
+	,'wrongInput' => 'Falsche Eingaben'
 	
 	// Zend_Validate_StringLength
     ,"Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet"

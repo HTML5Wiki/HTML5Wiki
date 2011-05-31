@@ -36,7 +36,7 @@
 		<h1 class="heading"><?php echo $this->article->title ?></h1>
 		<?php echo $this->capsulebarHelper($this->article->permalink); ?>
 	</header>
-	<div class="clear"></div>
+	<div class="clear messagemarker"></div>
 
 	<?php if($numberOfVersions > 1) : ?>
 	<form action="<?php echo $this->urlHelper('wiki', 'diff', $this->article->permalink) ?>" method="get">
@@ -61,7 +61,9 @@
 					</span>
 					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
 					<span class="author"><?php echo $user->name; ?></span>
+					<?php if(strlen($version->versionComment) > 0) :?>
 					<span class="comment">&quot;<?php echo $version->versionComment; ?>&quot;</span>
+					<?php endif; ?>
 				</li>
 				<?php endforeach; ?>
 			</ol>
@@ -76,13 +78,18 @@
 		<?php endif; ?>
 		<a href="<? echo $this->urlHelper('wiki','delete',$this->article->permalink) ?>" class="link-button delete-button"><?php echo $this->translate->_('deleteArticle') ?></a>
 	</div>
-	</form>
-	
 	<div class="clear"></div>
-	<?php if ($this->ajax === true): ?>
-	<script type="text/javascript">
-		History.init();
-		Capsulebar.initializeClickEvents();
-	</script>
-	<?php endif; ?>
+	
+	</form>
 </article>
+
+<?php if ($this->ajax === true): ?>
+<script type="text/javascript">
+	History.init();
+	Capsulebar.initializeClickEvents();
+	
+	<?php if($this->messageHelper()->hasMessages()) : ?>
+	MessageController.addMessages(<?php echo json_encode($this->messageHelper()->getMessages()) ?>);
+	<?php endif; ?>
+</script>
+<?php endif; ?>

@@ -6,7 +6,7 @@
 	$jsHelper->appendFile($this->urlHelper('js','html5wiki.js'), false, true);
 	
 	/* Development Javascripts: */
-	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.min.js'), true, false, 0);
 	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.markitup.js'));
 	$jsHelper->appendFile($this->urlHelper('js','libs','markitup','html5wiki-set.js'));
 	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.ptags.min.js'));
@@ -26,6 +26,12 @@
 			,"' . $this->urlHelper('index', 'search') . '"
 		);
 	});');
+	
+	if($this->messageHelper()->hasMessages()) {
+		$jsHelper->appendScript('appendPageReadyCallback(function() {
+			MessageController.addMessages('. json_encode($this->messageHelper()->getMessages()). ');
+		});');
+	}
 	
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();

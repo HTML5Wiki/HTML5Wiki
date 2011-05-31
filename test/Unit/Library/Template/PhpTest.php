@@ -84,7 +84,8 @@ class Test_Unit_Library_Template_PhpTest extends PHPUnit_Framework_TestCase {
 		$tpl->render();
 		$this->response->render();
 		
-		$this->assertEquals('<script type="text/javascript" src="foo.js"></script>' 
+		$this->assertEquals('<script type="text/javascript" src="foo2.js"></script>'
+				. "\n" . '<script type="text/javascript" src="foo.js"></script>'
 				. "\n" . '<script type="text/javascript">document.write("test");' . "\n</script>", 
 				$this->response->renderedData);
 	}

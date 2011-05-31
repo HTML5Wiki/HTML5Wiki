@@ -198,8 +198,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 	private function openCreatePage() {
 		$this->open($this->wikiTestUrl);
 		
-		$this->click('css=.messagebox .options .button');
-		$this->waitForPageToLoad('50000');
+		$this->clickAndWait('css=.messagebox .options .button', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-open-create-page.png');
 	}
