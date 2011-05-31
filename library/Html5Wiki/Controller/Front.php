@@ -170,6 +170,23 @@ class Html5Wiki_Controller_Front {
 	public function getResponse() {
 		return $this->response;
 	}
+	
+	/**
+	 * If the development-property in the config is set to true, this method
+	 * returns false to indicate, that the current environment is not a
+	 * productive one.
+	 *
+	 * @return true/false
+	 */
+	public function isProductive() {
+		$productive = true;
+		
+		if(isset($this->config->development)) {
+			$productive = !$this->config->development;
+		}
+		
+		return $productive;
+	}
 }
 
 ?>
