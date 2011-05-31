@@ -107,6 +107,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
 		
 		$this->click('css=#article-save');
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery("article.content.article") !== null', 10000);
 		$this->captureEntirePageScreenshot('/tmp/selenium-testSuccessCreatePage.png');
 		
 		$this->assertReadArticlePresent();
