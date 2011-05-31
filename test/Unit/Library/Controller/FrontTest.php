@@ -18,7 +18,7 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 	public function setUp() {
 		$this->config = array(
 			'routing' => array(
-				'defaultController' => 'wiki',
+				'defaultController' => 'unittest',
 				'defaultAction'     => 'index'
 			),
 		);
@@ -54,6 +54,7 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 		$config = new Zend_Config($this->config);
 		
 		$request = new Test_Unit_Library_Routing_RequestStub();
+		$request->setArguments(array(null, 'unittest'));
 		$response = new Test_Unit_Library_Routing_ReponseFake();
 		$router = new Html5Wiki_Routing_Router($config, $response, $request);
 		
