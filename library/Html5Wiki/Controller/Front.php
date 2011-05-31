@@ -115,7 +115,7 @@ class Html5Wiki_Controller_Front {
 	 * Runs the request
 	 */
 	public function run() {
-		$this->controller = $this->getController();
+		$this->controller = $this->createController();
 		
 		$this->controller->setConfig($this->config);
 		$this->controller->setSystemBasePath($this->systemBasePath);
@@ -150,7 +150,7 @@ class Html5Wiki_Controller_Front {
 	 * Get the controller from the factory
 	 * @return Html5Wiki_Controller_Abstract
 	 */
-	protected function getController() {
+	protected function createController() {
 		return Html5Wiki_Controller_Factory::factory($this->applicationPath, $this->router, $this->response);
 	}
 
