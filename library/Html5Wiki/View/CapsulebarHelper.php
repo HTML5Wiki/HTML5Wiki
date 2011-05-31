@@ -18,7 +18,7 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Adds an item to the capsulebar.
 	 *
-	 * @param key
+	 * @param key (single action name, or more than one, comma-separated)
 	 * @param text
 	 * @param cssClass
 	 * @param url (optional)

@@ -157,7 +157,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function newAction() {
 		$permalink = $this->checkAndGetPermalink();
 
-		$this->template->assign('creatingNew', true);
 		$this->showArticleEditor($this->prepareData(null, array('permalink' => $permalink)));
 	}
 
@@ -237,6 +236,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * or if the validation failed, to the edit page
 	 */
 	public function saveAction() {
+		$this->addDefaultWikiCapsuleBarItems();
 		$params = $this->matchPostParamsWithColumns();
 		$permalink = $this->checkAndGetPermalink();
 
@@ -278,7 +278,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 		
 		$this->setHttpResponseStatus(400);
-
+		$this->template->assign('permalink', $permalink);
         $this->template->assign('errors', $errors);
         $this->showArticleEditor($this->prepareData($oldArticleVersion, $params));
 	}
@@ -906,7 +906,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			,true
 		);
 		$this->template->capsulebarHelper()->addItem(
-			'edit'
+			'edit,save'
 			,$this->template->translate->_('edit')
 			,'edit'
 			,$this->router->buildUrl(array('wiki', 'edit', $permalink))

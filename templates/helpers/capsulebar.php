@@ -3,7 +3,8 @@
 	
 	$activeKey = 'read';
 	foreach($this->items as $key => $item) {
-		if($key === $this->activePage) {
+		$keys = explode(',',$key);
+		if(in_array($this->activePage, $keys)) {
 			$activeKey = $key;
 			break;
 		}
