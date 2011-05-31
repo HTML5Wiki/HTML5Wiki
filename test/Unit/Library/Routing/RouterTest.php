@@ -16,9 +16,28 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 	const DEFAULT_CONTROLLER = 'wiki';
 	const DEFAULT_ACTION = 'index';
 
+	/**
+	 *
+	 * @var Test_Unit_Library_Routing_RequestStub
+	 */
 	private $request;
+	
+	/**
+	 *
+	 * @var Html5Wiki_Routing_Router 
+	 */
 	private $router;
+	
+	/**
+	 *
+	 * @var Test_Unit_Library_Routing_ReponseFake 
+	 */
 	private $response;
+	
+	/**
+	 *
+	 * @var array
+	 */
 	private $config = array(
 		'routing' => array(
 			'defaultController' => self::DEFAULT_CONTROLLER,
@@ -31,6 +50,20 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 		$this->response = new Test_Unit_Library_Routing_ReponseFake();
 		$this->router  = new Html5Wiki_Routing_Router(new Zend_Config($this->config), $this->response, $this->request);
 	}
+	
+	public function testGetRequest() {
+		$this->assertEquals($this->request, $this->router->getRequest());
+	}
+	
+	public function testSetRequest() {
+		$request = new Test_Unit_Library_Routing_RequestStub();
+		$request->setArguments(array(null, 'test', 'bar'));
+		
+		$this->router->setRequest($request);
+		
+		$this->assertEquals($request, $this->router->getRequest());
+		$this->assertNotEquals($request, $this->request);
+	}
 
 	public function testDefaultControllerAndAction() {
 		$this->router->route();
@@ -40,10 +73,7 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testControllerAndAction() {
-		$this->request->setArguments(array (
-			1 => 'wiki',
-			2 => 'test'
-		));
+		$this->request->setArguments(array(null, 'wiki', 'test'));
 
 		$this->router->route();
 
@@ -55,9 +85,7 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Html5Wiki_Exception
 	 */
 	public function testSanitizeController() {
-		$this->request->setArguments(array(
-			1 => '../wiki'
-		));
+		$this->request->setArguments(array(null, '../wiki'));
 
 		$this->router->route();
 	}
@@ -66,11 +94,20 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Html5Wiki_Exception
 	 */
 	public function testSanitizeAction() {
-		$this->request->setArguments(array(
-			2 => '../wiki'
-		));
+		$this->request->setArguments(array(null, 'test', '../wiki'));
 
 		$this->router->route();
+	}
+	
+	public function testRedirect() {
+		$this->router->redirect('/wiki/testredirect');
+		$this->response->render();
+		
+		$this->assertEquals("Location: /wiki/testredirect\n", $this->response->renderedHeader);
+	}
+	
+	public function testBuildUrl() {
+		$this->assertEquals('/wiki/testurl', $this->router->buildUrl(array('wiki', 'testurl')));
 	}
 
 	public function tearDown() {

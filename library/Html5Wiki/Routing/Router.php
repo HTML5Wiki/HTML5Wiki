@@ -96,9 +96,6 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 */
 	public function redirect($url, $httpStatusCode = 302) {
 		$this->response->pushHeader("Location: " . $url, true, $httpStatusCode);
-		$this->response->render();
-		ob_get_clean();
-		exit();
 	}
 
 	/**
