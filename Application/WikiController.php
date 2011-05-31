@@ -268,13 +268,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$this->template->assign('otherAuthor', $intermediateArticle->getUser()->name);
 			} else {
 				$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
-
-				// reload the article because it needs also the MediaVersion informations.
-				$article = new Html5Wiki_Model_ArticleVersion();
-				$article->loadByIdAndTimestamp($articleVersion->mediaVersionId, $articleVersion->mediaVersionTimestamp);
-
-				$this->showArticle($article);
-
 				return;
 			}
 		}
