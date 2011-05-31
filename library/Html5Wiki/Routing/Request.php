@@ -171,16 +171,25 @@ class Html5Wiki_Routing_Request implements Html5Wiki_Routing_Interface_Request {
 	 * @param array  $systemLanguages
 	 * @param string|null
 	 */
-	public static function parseHttpAcceptLanguage($languageString, array $systemLanguages) {
-		$locale = new Zend_Locale();
-		$validLanguages = $locale->getBrowser();
-		foreach ($validLanguages as $language => $quantity) {
+	public static function parseHttpAcceptLanguage(array $systemLanguages) {
+		foreach (self::getValidLanguages() as $language => $quality) {
 			if (in_array($language, $systemLanguages)) {
 				return $language;
 			}
 		}
 		
 		return null;
+	}
+	
+	/**
+	 * Get valid languages from browser
+	 * 
+	 * @uses Zend_Locale#getBrowser
+	 * @return array
+	 */
+	private static function getValidLanguages() {
+		$locale = new Zend_Locale();
+		return $locale->getBrowser();
 	}
 
 

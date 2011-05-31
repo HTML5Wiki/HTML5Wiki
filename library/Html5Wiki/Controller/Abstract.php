@@ -112,8 +112,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	}
 	
 	public function setTranslation() {;
-		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($this->router->getRequest()->getLanguage(), 
-						$this->config->languages->toArray());
+		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($this->config->languages->toArray());
 		$language = ($language !== null) ? $language : $this->config->defaultLanguage;
 		
 		$translate = new Zend_Translate(
