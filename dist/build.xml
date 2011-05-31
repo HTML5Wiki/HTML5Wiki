@@ -1,23 +1,35 @@
-<project name="HTML5Wiki" default="main" basedir=".">
+<!--
+/**
+ * build.xml - Distribution ANT Build Script<br/>
+ * Creates a distributable version of HTML5Wiki.</br>
+ * It uses Googles Closure Compiler to minify and optimize all our javascripts.<br/>
+ * <br/>
+ * Main-target is "zip"
+ *
+ * @copyright (C) Copyright by HTML5Wiki Team
+ * @author Manuel Alabor <malabor@hsr.ch>
+ */
+-->
+<project name="HTML5Wiki" default="zip" basedir=".">
 	<description>Creates a distribution of HTML5Wiki</description>
 	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="tools/closure-compiler.jar"/>
 
 	<property name="itsme" value="HTML5 Wiki Team" />
 	<property name="outputdir" location="output" />
 	<property name="output-filesdir" location="${outputdir}/files" />
-	<property name="output-zipdir" location="${outputdir}/html5wiki.zip" />
+	<property name="output-zipfile" location="${outputdir}/html5wiki.zip" />
 	<property name="sourcedir" location="../" />
 
 	<target name="clean" description="Cleans earlier distributions">
 		<delete dir="${outputdir}" />
 	</target>
 
-	<target name="init" depends="clean" description="Init distribution">
+	<target name="init" depends="clean" description="Prepares for the">
 		<mkdir dir="${outputdir}" />
 		<mkdir dir="${output-filesdir}" />
 	</target>
 
-	<target name="copy" depends="init" description="Creates the distribution">
+	<target name="copy" depends="init" description="Copies all necessary files into the output folder.">
 		<copy todir="${output-filesdir}" includeEmptyDirs="no">
 			<fileset dir="${sourcedir}">
 				<include name="Application/**" />
@@ -30,12 +42,12 @@
 				<exclude name="**/README" />
 				<exclude name="web/prototype/**" />
 				<exclude name="web/css/less/**" />
-				<exclude name="web/js/**/*.js" /> <!-- see compress.js -->
+				<exclude name="web/js/**/*.js" />
 			</fileset>
 		</copy>
 	</target>
 	
-	<target name="compress.js">
+	<target name="compress.js" depends="copy" description="Concatinates and minifies all javascript sourcefiles into one file.">
 		<jscomp compilationLevel="simple"
 			    debug="no" output="${output-filesdir}/web/js/html5wiki.js">
 			<externs dir="${sourcedir}/web/js/libs">
@@ -62,6 +74,10 @@
 	    </jscomp>
 	</target>
 	
-	<target name="main" depends="clean,copy,compress.js" />
+	<target name="zip" depends="compress.js" description="Creates a ZIP file with the files in the outputfolder.">
+		<zip destfile="${output-zipfile}">
+			<fileset dir="${output-filesdir}"/>
+		</zip>
+	</target>
 
 </project>
