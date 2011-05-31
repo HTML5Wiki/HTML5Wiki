@@ -112,7 +112,7 @@ var SearchBoxController = (function() {
 			type: 'GET',
 			url: self.url, 
 			data: { 'term' : term },
-			success: displaySearchResults.bind(this, term)
+			success: displaySearchResults
 		});		
 	}
 	
@@ -135,7 +135,7 @@ var SearchBoxController = (function() {
 		}
 	};
 	
-	function displaySearchResults(term, json) {
+	function displaySearchResults(json) {
 		var results = json.results;
 		
 		// Save response data:
