@@ -106,8 +106,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->insertTagsIntoPtagsField();
 		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
 		
-		$this->clickAndWait('css=#article-save', 1000);
-		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery("article.content.article").length > 0', 10000);
+		$this->click('css=#article-save');
 		$this->captureEntirePageScreenshot('/tmp/selenium-testSuccessCreatePage.png');
 		
 		$this->assertReadArticlePresent();
