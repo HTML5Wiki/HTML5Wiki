@@ -23,6 +23,7 @@ return array(
 	,'tags' => 'Tags',
 	'tag' => 'Tag'
 	,'searchForOtherObjectsWithTag' => 'Search for other objects containing the tag \'%s\''
+	,'noArticleWithPermalink' => 'No article with this address'
 	,'desiredArticleWithPermalinkNotFound' => 'The desired article with the address \'%s\' has not been found.<br/>Would you like to create a new article with this title?'
 	,'create' => 'Create'
 	,'noDontCreate' => 'No, don\'t do anything'

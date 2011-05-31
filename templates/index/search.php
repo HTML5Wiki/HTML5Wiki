@@ -1,37 +1,12 @@
 <?php
 	if($this->showCreateNewArticle === true) {
-		$this->javascriptHelper()->appendScript('
-		appendPageReadyCallback(function() {
-			MessageController.addMessage(
-				"question"
-				,"'. sprintf($this->translate->_('desiredArticleWithPermalinkNotFound'), $this->term). '"
-				,{\'buttons\': [{
-						\'text\' : \''. $this->translate->_('create'). '\'
-						,\'button\' : true
-						,\'callback\' : function() {
-							window.location = \''. $this->urlHelper('wiki','new',$this->term). '\';
-						}
-					},{
-						\'text\' : \''. addslashes($this->translate->_('noDontCreate')). '\'
-					}]
-				}
-			);
-		});
-		');
+		$title = $this->translate->_('noArticleWithPermalink');
+		$text = sprintf($this->translate->_('desiredArticleWithPermalinkNotFound'), $this->term);
+		$action = 'window.location = \''. $this->urlHelper('wiki','new',$this->term). '\';';
+		$this->messageHelper()->appendQuestionMessage($title, $text);
+		$this->messageHelper()->addButton($this->translate->_('create'), true, $action);
+		$this->messageHelper()->addButton($this->translate->_('noDontCreate'), false);
 	}
-	if (isset($this->errors) && count($this->errors)) {
-		$msg = "<ul>";
-		foreach ($this->errors as $key => $errorMessage) {
-			$msg .= "<li>" . addslashes($errorMessage) . "</li>";
-		}
-		$msg .= "</ul>";
-		$this->javascriptHelper()->appendScript("appendPageReadyCallback(function() { MessageController.addMessage('error','{$msg}', 
-			{'modal':true, 'buttons': [{
-				'text': 'OK'
-				,'button': true
-			}]}); });");
-		
-    }
 	
 	function translateMatchOrigins($matchOrigins, $translate) {
 		$translated = array();
