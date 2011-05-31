@@ -1,15 +1,24 @@
 <?php
 	$jsHelper = $this->javascriptHelper();
+	
+	/* Productive Javascripts: */
+	$jsHelper->appendFile('https://ajax.googleapis.com/ajax/libs/jquery/1.6.1/jquery.min.js', false, true);
+	$jsHelper->appendFile($this->urlHelper('js','html5wiki.js'), false, true);
+	
+	/* Development Javascripts: */
 	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.min.js'));
 	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.markitup.js'));
 	$jsHelper->appendFile($this->urlHelper('js','libs','markitup','html5wiki-set.js'));
 	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.ptags.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','classes','translate.js'));	
 	$jsHelper->appendFile($this->urlHelper('js','core.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','menu.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','messagecontroller.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','searchboxcontroller.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','html5wiki.js'));
 
+	/* "Plain" Javascripts: */
+	$jsHelper->appendScript('Translate.init('. json_encode($this->translate->getAdapter()->getMessages()). ');');
 	$jsHelper->appendScript('appendPageReadyCallback("Html5Wiki.init", ["'. $this->urlHelper() .'"]);');
 	$jsHelper->appendScript('appendPageReadyCallback(function() {
 		SearchBoxController.initWithSearchBox(
@@ -59,10 +68,6 @@
 		
 		<?php echo $this->decoratedContent ?>
 	</div>
-	<script type="text/javascript" src="<?php echo $this->urlHelper('js', 'classes', 'translate.js') ?>"></script>
-	<script type="text/javascript">
-		Translate.init(<?php echo json_encode($this->translate->getAdapter()->getMessages()) // init this before the other js gets inited as its needed by other js files ?>);
-	</script>
 	<?php echo $this->javascriptHelper() ?>
 </body>
 </html>
