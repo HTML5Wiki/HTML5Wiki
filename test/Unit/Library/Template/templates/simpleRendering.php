@@ -1,3 +1,3 @@
 <?php
-echo $this->test;
+echo isset($this->test) ? $this->test : 'error';
 ?>
