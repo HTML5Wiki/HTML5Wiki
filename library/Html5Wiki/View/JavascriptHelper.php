@@ -26,15 +26,21 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 	 * @param $useInDevelopment
 	 * @param $useInProduction
 	 */
-	public function appendFile($file, $useInDevelopment=true, $useInProduction=false) {
+	public function appendFile($file, $useInDevelopment = true, $useInProduction = false, $priority = 99) {
 		if($useInDevelopment === true) {
-			if (!in_array($file, self::$developmentJSFiles)) {
-				self::$developmentJSFiles[] = $file;
+			if (!isset(self::$developmentJSFiles[$priority])) {
+				self::$developmentJSFiles[$priority] = array();
+			}
+			if (!in_array($file, self::$developmentJSFiles[$priority])) {
+				self::$developmentJSFiles[$priority][] = $file;
 			}
 		}
 		if($useInProduction === true) {
-			if (!in_array($file, self::$productiveJSFiles)) {
-				self::$productiveJSFiles[] = $file;
+			if (!isset(self::$productiveJSFiles[$priority])) {
+				self::$productiveJSFiles[$priority] = array();
+			}
+			if (!in_array($file, self::$productiveJSFiles[$priority])) {
+				self::$productiveJSFiles[$priority][] = $file;
 			}
 		}
 	}
@@ -76,9 +82,13 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 		if($isProductive === false) {
 			$files = self::$developmentJSFiles;
 		}
+
+		ksort($files); // sort by priority
 		
-		foreach ($files as $file) {
-			$string .= $this->fileString($file);
+		foreach ($files as $priority => $filesWithSamePriority) {
+			foreach ($filesWithSamePriority as $file) {
+				$string .= $this->fileString($file);
+			}
 		}
 		
 		return $string;
