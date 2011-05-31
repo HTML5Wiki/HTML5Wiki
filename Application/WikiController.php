@@ -177,7 +177,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			'content' => $this->getArticleColumn('content', $article, $data),
 			'userId' => $this->getArticleColumn('userId', $article, $data),
 			'tags' => $this->getArticleColumn('tags', $article, $data),
-			'versionComment' => $this->getArticleColumn('versionComment', $article, $data),
+			'versionComment' => $this->getArticleColumn('versionComment', null, $data),
 			'permalink' => $this->getArticleColumn('permalink', $article, $data)
 		);
 	}

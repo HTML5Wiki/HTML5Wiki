@@ -7,9 +7,6 @@
  * To change this template use File | Settings | File Templates.
  */
 
-include 'Unit/Library/Model/FakeUser.php';
-include 'Unit/Library/Model/User/FakeTable.php';
-
 class Test_Unit_Library_Model_UserTest extends Test_Unit_Library_Model_AbstractTest {
 
 	/**
@@ -30,9 +27,9 @@ class Test_Unit_Library_Model_UserTest extends Test_Unit_Library_Model_AbstractT
 	public function setUp() {
 		parent::setUp();
 
-		$this->table	= new Test_Unit_Library_Model_User_FakeTable();
+		$this->table	= new Html5Wiki_Model_User_Table();
 		// all tests with fake class. Because of error in the saveCookie Method. User class needs to be refactored to the next release
-		$this->user		= new Unit_Test_Library_Model_FakeUser();
+		$this->user		= new Html5Wiki_Model_User();
 
 
 		$this->userData = array(

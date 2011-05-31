@@ -75,6 +75,18 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	}
 	
 	/**
+	 * Escapes a string value and prepares it to display in a template.
+	 *
+	 * @param unescaped database value
+	 * @return escaped value
+	 */
+	public function escape($string) {
+		$result = stripslashes($string);
+		
+		return $result;
+	}
+	
+	/**
 	 * Magic function for calling a view helper
 	 * @param string $name
 	 * @param string $args
@@ -131,13 +143,19 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	 * @return mixed
 	 */
 	public function __get($name) {
+		$value = null;
+		
 		if ($name === 'translate') {
-			return $this->translate;
+			$value = $this->translate;
 		} else if($name === 'response') {
-			return $this->response;
+			$value = $this->response;
 		}
 		
-		return isset($this->data[$name]) ? $this->data[$name] : null;
+		if(isset($this->data[$name])) {
+			$value = $this->data[$name];
+		}
+		
+		return $value;
 	}
 	
 	/**
@@ -151,5 +169,6 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 		}
 		return false;
 	}
+	
 }
 ?>
