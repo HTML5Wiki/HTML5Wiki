@@ -73,9 +73,7 @@ class Test_Unit_Library_Controller_FactoryTest extends PHPUnit_Framework_TestCas
 	}
 
 	public function tearDown() {
-		$this->applicationPath = null;
-		$this->router = null;
-		$this->response = null;
+		unset($this->applicationPath, $this->router, $this->response);
 	}
 }
 
