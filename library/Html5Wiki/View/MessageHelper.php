@@ -57,6 +57,40 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	}
 	
 	/**
+	 * After calling an #append*Message-method, use this method to an action to
+	 * the last appended message.<br/>
+	 * Actions will usually be displayed as a button or link in the frontend.<br/>
+	 * You don't have to add an action if you dont want to do anything special.
+	 * The UI's library will add a default-close-button to messages, which have
+	 * no actions assigned (except if autohide was passed as true).<br/>
+	 * Use $javascriptCallback to inject frontend javascript code for the click-event
+	 * of your action.
+	 *
+	 * @param $text
+	 * @param $showAsButton (optional) Show action as link or as button?
+	 * @param $javascriptCallback (optional), if not passed, action closes message
+	 */
+	public function addButton($text, $showAsButton=true, $javascriptCallback=null) {
+		if($this->hasMessages() === false) {
+			throw new Html5Wiki_Exception_Template('append first a message before trying to add an action!');
+		}
+		
+		$newButton = array(
+			'text' => $text
+			,'showAsButton' => $showAsButton
+		);
+		if($javascriptCallback !== null && strlen($javascriptCallback) > 0) {
+			$newButton['action'] = $javascriptCallback;
+		}
+		
+		$latestIndex = sizeof(self::$messages)-1;
+		$latestMessage = self::$messages[$latestIndex];
+		if(!isset($latestMessage['buttons'])) $latestMessage['buttons'] = array();
+		$latestMessage['buttons'][] = $newButton;
+		self::$messages[$latestIndex] = $latestMessage;
+	}
+	
+	/**
 	 * Checks if messageboxes are present.
 	 *
 	 * @return true/false
