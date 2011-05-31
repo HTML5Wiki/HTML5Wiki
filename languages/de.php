@@ -47,6 +47,7 @@ return array(
 	
 	,'yes' => 'Ja'
 	,'no'  => 'Nein'
+	,'close' => 'Schliessen'
 
 	,'taggingLegend' => 'Tagging'
 	,'taggingText' => 'Ein Artikel kann mit verschiedenen Tags versehen werden, welche sp&auml;ter das Auffinden &uuml;ber die Suche erleichtern k&ouml;nnen.<br/> <em>Tipp:</em> Geben Sie mehrere Tags auf einmal getrennt durch ein Komma ein und bestätigen Sie mit der <em>Eingabetaste</em>.'

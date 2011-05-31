@@ -47,6 +47,7 @@ return array(
 	
 	,'yes' => 'Yes'
 	,'no'  => 'No'
+	,'close' => 'Close'
 	
 	,'taggingLegend' => 'Tagging'
 	,'taggingText' => 'Multiple tags can be assigned to an article. This helps later for searching the article.<br/> <em>Tip:</em> Enter multiple Tags comma-separated and press <em>return</em> to validate them.'

@@ -112,7 +112,7 @@ var MessageController = (function() {
 		if(message.buttons == undefined) message.buttons = [];
 		if(message.buttons.length == 0 && message.autohide == false) {
 			message.buttons = [{
-				text: 'Schliessen'
+				text: Translate._('close')
 				,showAsButton: true
 			}];
 		}
