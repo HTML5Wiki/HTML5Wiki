@@ -87,7 +87,7 @@ body { 	background: @img_headerbackground repeat-x; }
 	}
 	
 	.box {
-		font-size: @font_normalsize;
+		font: @font_normalsize @font_ui !important;
 		padding: 6px 5px 10px 29px;
 		background: no-repeat 7px 10px;
 		border: 1px solid;
@@ -97,6 +97,8 @@ body { 	background: @img_headerbackground repeat-x; }
 		&.info { background-image: @icon_16_information; background-color: @color_infomessage; border-color: darken(@color_infomessage,20%); }
 		&.error { background-image: @icon_16_exclamation; background-color: @color_errormessage; border-color: darken(@color_errormessage,20%); }
 		&.question { color: black; background-image: @icon_16_question; background-color: @color_questionmessage; border-color: darken(@color_questionmessage,20%); }
+		
+		p { font-family: @font_ui !important; }
 		
 		.white-paper {
 			background-color: #fff;
