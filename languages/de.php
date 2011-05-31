@@ -16,6 +16,7 @@ return array(
 	,'content' => 'Inhalt'
 	,'save' => 'Speichern'
 	,'deleteArticle' => 'Alle Versionen dieses Artikels l&ouml;schen'
+	,'close' => 'Schliessen'
 	
 	,'title' => 'Titel'
 	,'lastChanged' => 'Zuletzt ge&auml;ndert'

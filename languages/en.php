@@ -16,6 +16,7 @@ return array(
 	,'content' => 'Content'
 	,'save' => 'Save'
 	,'deleteArticle' => 'Delete all versions of this article'
+	,'close' => 'Close'
 	
 	,'title' => 'Title'
 	,'lastChanged' => 'Last change'
