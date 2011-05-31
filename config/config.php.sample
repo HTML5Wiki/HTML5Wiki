@@ -21,7 +21,7 @@ $config = array(
 		'defaultAction'     => 'index'				// If Default Controller = Wiki,
 													// this defines the default
 													// wikipage to show
-	),
+	)
 	,'languages' => array('en', 'de')				// Available languages
 	,'defaultLanguage' => 'en'						// Default language
 	,'defaultTimezone' => 'Europe/Zurich'			// Timezone of the server
