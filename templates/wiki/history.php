@@ -87,5 +87,9 @@
 <script type="text/javascript">
 	History.init();
 	Capsulebar.initializeClickEvents();
+	
+	<?php if($this->messageHelper()->hasMessages()) : ?>
+	MessageController.addMessages(<?php echo json_encode($this->messageHelper()->getMessages()) ?>);
+	<?php endif; ?>
 </script>
 <?php endif; ?>

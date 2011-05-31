@@ -31,5 +31,9 @@
 <?php if ($this->ajax === true): ?>
 <script type="text/javascript">
 	Capsulebar.init("<?php echo $this->article->id ?>");
+	
+	<?php if($this->messageHelper()->hasMessages()) : ?>
+	MessageController.addMessages(<?php echo json_encode($this->messageHelper()->getMessages()) ?>);
+	<?php endif; ?>
 </script>
 <?php endif; ?>
