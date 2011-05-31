@@ -8,22 +8,14 @@
  * @subpackage	Library
  */
 
-/**
- * 
- * @author Nicolas Karrer <nkarrer@hsr.ch>
- *
- */
 class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
-	/** 
- 	 * Expire Time for Cookies 
- 	 * @var int 
- 	 */ 
- 	const USER_COOKIE_EXPIRE = 31536000; // 1 Year 
 	
 	protected $_tableClass = 'Html5Wiki_Model_User_Table';
 	
 	/**
 	 * Loads User by its id
+	 * 
+	 * @param int $userId
 	 */
 	public function loadById($userId) {
 		$where = $this->select()->where('id = ?', $userId);
@@ -38,6 +30,13 @@ class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 		return false;
 	}
 	
+	/**
+	 * Loads user by id, name and email
+	 * @param int $id
+	 * @param string $name
+	 * @param string $email
+	 * @return bool 
+	 */
 	public function loadByIdNameAndEmail($id, $name, $email) {
 		$where = $this->select()->where('id = ?', $id)
 					->where('name = ?', $name)
@@ -61,33 +60,9 @@ class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
 			$this->loadById($request->getCookie('currentUserId'));
 		 }
 	}
-	
-	/**
-	 * Save user cookie (currentUserId)
-	 * @return bool return of setcookie.
-	 */
-	public function saveCookie() {
-		return setcookie('currentUserId', $this->id, time() + self::USER_COOKIE_EXPIRE, '/', null, false, true);
-	}
-	
-	/**
-	 * Save user
-	 *
-	 * If id given update the user with given data
-	 * If users email & name are already in the database load the user (cookie not set & user exists)
-	 *
-	 *
-	 * @param	Array	$saveData
-	 */
-	public function save() {
-		parent::save();
-		
-		$this->saveCookie($this->id);
-	}
-
 
 	/**
-	 * @return 
+	 * @return string
 	 */
 	public function __toString() {
 		return $this->name;

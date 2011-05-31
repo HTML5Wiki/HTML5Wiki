@@ -103,7 +103,7 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 		$this->router->redirect('/wiki/testredirect');
 		$this->response->render();
 		
-		$this->assertEquals("Location: /wiki/testredirect\n", $this->response->renderedHeader);
+		$this->assertEquals("Location: /wiki/testredirect,1,302\n", $this->response->renderedHeader);
 	}
 	
 	public function testBuildUrl() {

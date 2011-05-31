@@ -36,6 +36,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @var int
 	 */
 	const USERNAME_MAX_LENGTH = 255;
+	
+	/**
+	 * Expire Time for Cookies
+	 * @var int
+	 */
+	const USER_COOKIE_EXPIRE = 31536000; // 1 Year
 
 	/**
 	 * Current user
@@ -244,8 +250,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$errors = $this->createEmptyErrorArray();
 		$user = $this->getUser($params);
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
-			$user->saveCookie();
-
 			if ($this->hasIntermediateVersion($oldArticleVersion) && !$params['overwrite']) {
 				$intermediateArticle = new Html5Wiki_Model_ArticleVersion();
 				$intermediateArticle->loadLatestByPermalink($permalink);
@@ -381,9 +385,30 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function getUser(array $params = array()) {
 		if ($this->user === null) {
-			$this->user = $this->handleUserRequest($params);
+			$this->setUser($this->handleUserRequest($params));
 		}
 		return $this->user;
+	}
+	
+	/**
+	 * Set user and save user cookie
+	 * 
+	 * @param Html5Wiki_Model_User $user 
+	 * @return Html5Wiki_Model_User
+	 */
+	private function setUser(Html5Wiki_Model_User $user) {
+		$this->user = $user;
+		$this->saveUserCookie($user);
+		return $user;
+	}
+	
+	/**
+	 * Push user cookie to response.
+	 * 
+	 * @param Html5Wiki_Model_User $user 
+	 */
+	private function saveUserCookie(Html5Wiki_Model_User $user) {
+		$this->response->pushCookie('currentUserId', $user->id, time() + self::USER_COOKIE_EXPIRE, '/', null, false, true);
 	}
 
 	/**
