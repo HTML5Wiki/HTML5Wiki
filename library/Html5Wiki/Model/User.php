@@ -14,6 +14,11 @@
  *
  */
 class Html5Wiki_Model_User extends Html5Wiki_Model_Abstract {
+	/** 
+ 	 * Expire Time for Cookies 
+ 	 * @var int 
+ 	 */ 
+ 	const USER_COOKIE_EXPIRE = 31536000; // 1 Year 
 	
 	protected $_tableClass = 'Html5Wiki_Model_User_Table';
 	
