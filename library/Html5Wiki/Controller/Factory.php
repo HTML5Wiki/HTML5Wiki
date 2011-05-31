@@ -30,6 +30,8 @@ class Html5Wiki_Controller_Factory {
 			if ($fileName != "." && $fileName != ".." && strpos($fileName, ".php") !== false) {
 				if (stripos($fileName, $router->getController()) === 0) {
 					$controller = self::APPLICATION_NAMESPACE . substr($fileName, 0, -4);
+					include_once $applicationPath . $fileName;
+					
 					return new $controller($response);
 				}
 			}
