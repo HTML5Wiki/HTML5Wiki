@@ -10,7 +10,7 @@ var MessageController = (function() {
 		,messages = new Array()
 		,message_slidedown_time = 'fast'
 		,message_slideup_time = 'slow'
-		,message_show_time = 2000;
+		,message_show_time = 6000;
 	
 	/**
 	 * Adds an array if messages to the internal messages-array
