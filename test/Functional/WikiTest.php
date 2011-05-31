@@ -106,8 +106,8 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->insertTagsIntoPtagsField();
 		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
 		
-		$this->click('css=#article-save');
-		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery("article.content.article") !== null', 10000);
+		$this->clickAndWait('css=#article-save', 1000);
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery("article.content.article").length > 0', 10000);
 		$this->captureEntirePageScreenshot('/tmp/selenium-testSuccessCreatePage.png');
 		
 		$this->assertReadArticlePresent();
@@ -164,7 +164,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		
 		$this->assertElementPresent('css=#capsulebar-history');
 		$this->click('css=#capsulebar-history');
-		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .history.active") !== null', 10000);
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .history.active").length > 0', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testHistoryPage2.png');
 		
@@ -178,12 +178,12 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		
 		$this->assertElementPresent('css=#capsulebar-history');
 		$this->click('css=#capsulebar-history');
-		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .history.active") !== null', 10000);
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().$(".capsulebar .history.active").length > 0', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage2.png');
 		
-		$this->click('css=#article-history');
-		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .diff.active") !== null', 10000);
+		$this->clickAndWait('css=#article-history', 1000);
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".capsulebar .diff.active").length > 0', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testDiffPage3.png');
 		
