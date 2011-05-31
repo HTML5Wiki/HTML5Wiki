@@ -254,6 +254,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$intermediateArticle = new Html5Wiki_Model_ArticleVersion();
 				$intermediateArticle->loadLatestByPermalink($permalink);
 
+				$oldArticleVersion = $intermediateArticle;
+
 				$userMediaVersion = $this->createMediaVersion($permalink, $user, $this->prepareData($oldArticleVersion, $params));
 				$userArticleVersion = $this->createArticleVersion($userMediaVersion, $this->prepareData($oldArticleVersion, $params));
 
