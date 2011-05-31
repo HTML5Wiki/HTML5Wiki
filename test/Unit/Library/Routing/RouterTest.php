@@ -111,7 +111,8 @@ class Test_Unit_Library_Routing_RouterTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function tearDown() {
-		unset($this->request, $this->response, $this->router);
+		$this->request = null;
+		$this->router  = null;
 	}
 }
 ?>
