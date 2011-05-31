@@ -41,5 +41,6 @@ date_default_timezone_set($config->defaultTimezone);
 
 $frontController = new Html5Wiki_Controller_Front($config, $systemBasePath, $libraryPath, $applicationPath);
 $frontController->run();
+echo $frontController->render();
 
 ob_end_flush();

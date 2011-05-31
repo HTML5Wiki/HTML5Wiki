@@ -65,6 +65,7 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 						->method('render');
 
 		$frontController->run();
+		$frontController->render();
 	}
 
 }
