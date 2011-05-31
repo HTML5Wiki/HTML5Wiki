@@ -603,11 +603,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		$latestArticle = new Html5Wiki_Model_ArticleVersion();
 		$latestArticle->loadLatestByPermalink($permalink);
 
-		if (!isset($latestArticle->id) || !isset($oldArticleVersion->id)) {
+		if (!isset($latestArticle->id) && !isset($oldArticleVersion->id)) {
 			return false;
 		}
 
-        return !($latestArticle->id === $oldArticleVersion->id &&
+        return 	(!isset($oldArticleVersion->id) && isset($latestArticle->id)) ||
+				!($latestArticle->id === $oldArticleVersion->id &&
                  $latestArticle->timestamp === $oldArticleVersion->timestamp);
     }
 

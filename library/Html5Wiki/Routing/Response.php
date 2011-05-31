@@ -75,7 +75,7 @@ class Html5Wiki_Routing_Response {
 	 * @param string $data 
 	 */
 	protected function renderData($data) {
-		echo $data;
+		return $data;
 	}
 	
 	/**
@@ -107,7 +107,7 @@ class Html5Wiki_Routing_Response {
 			$this->renderCookie($cookie);
 		}
 		
-		$this->renderData($this->data);
+		return $this->renderData($this->data);
 	}
 	
 	/**
