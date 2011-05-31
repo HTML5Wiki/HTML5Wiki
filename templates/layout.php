@@ -1,9 +1,9 @@
 <?php
 	$jsHelper = $this->javascriptHelper();
-	$jsHelper->appendFile($this->urlHelper('js','jquery.min.js'));
-	$jsHelper->appendFile($this->urlHelper('js','jquery.markitup.js'));
-	$jsHelper->appendFile($this->urlHelper('js','markitup','html5wiki-set.js'));
-	$jsHelper->appendFile($this->urlHelper('js','jquery.ptags.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.min.js'));
+	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.markitup.js'));
+	$jsHelper->appendFile($this->urlHelper('js','libs','markitup','html5wiki-set.js'));
+	$jsHelper->appendFile($this->urlHelper('js','libs','jquery.ptags.min.js'));
 	$jsHelper->appendFile($this->urlHelper('js','core.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','menu.js'));
 	$jsHelper->appendFile($this->urlHelper('js','classes','messagecontroller.js'));
