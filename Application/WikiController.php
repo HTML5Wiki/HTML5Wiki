@@ -896,25 +896,27 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * @see Html5Wiki_View_CapsulebarHelper
 	 */
 	private function addDefaultWikiCapsuleBarItems() {
+		$permalink = $this->checkAndGetPermalink();
+		
 		$this->template->capsulebarHelper()->addItem(
 			'read'
 			,$this->template->translate->_('read')
 			,'read'
-			,$this->router->buildUrl(array('wiki', $this->permalink))
+			,$this->router->buildUrl(array('wiki', $permalink))
 			,true
 		);
 		$this->template->capsulebarHelper()->addItem(
 			'edit'
 			,$this->template->translate->_('edit')
 			,'edit'
-			,$this->router->buildUrl(array('wiki', 'edit', $this->permalink))
+			,$this->router->buildUrl(array('wiki', 'edit', $permalink))
 			,true
 		);
 		$this->template->capsulebarHelper()->addItem(
 			'history'
 			,$this->template->translate->_('history')
 			,'history'
-			,$this->router->buildUrl(array('wiki', 'history', $this->permalink))
+			,$this->router->buildUrl(array('wiki', 'history', $permalink))
 			,true
 		);
 	}
