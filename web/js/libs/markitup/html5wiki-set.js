@@ -31,11 +31,11 @@ html5WikiMarkItUpSettings = {
 
 // mIu nameSpace to avoid conflict.
 miu = {
-	markdownTitle: function(markItUp, char) {
-		heading = '';
-		n = $.trim(markItUp.selection||markItUp.placeHolder).length;
+	markdownTitle: function(markItUp, character) {
+		var heading = '';
+		var n = $.trim(markItUp.selection||markItUp.placeHolder).length;
 		for(i = 0; i < n; i++) {
-			heading += char;
+			heading += character;
 		}
 		return '\n'+heading;
 	}

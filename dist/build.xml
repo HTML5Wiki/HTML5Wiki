@@ -1,0 +1,67 @@
+<project name="HTML5Wiki" default="main" basedir=".">
+	<description>Creates a distribution of HTML5Wiki</description>
+	<taskdef name="jscomp" classname="com.google.javascript.jscomp.ant.CompileTask" classpath="tools/closure-compiler.jar"/>
+
+	<property name="itsme" value="HTML5 Wiki Team" />
+	<property name="outputdir" location="output" />
+	<property name="output-filesdir" location="${outputdir}/files" />
+	<property name="output-zipdir" location="${outputdir}/html5wiki.zip" />
+	<property name="sourcedir" location="../" />
+
+	<target name="clean" description="Cleans earlier distributions">
+		<delete dir="${outputdir}" />
+	</target>
+
+	<target name="init" depends="clean" description="Init distribution">
+		<mkdir dir="${outputdir}" />
+		<mkdir dir="${output-filesdir}" />
+	</target>
+
+	<target name="copy" depends="init" description="Creates the distribution">
+		<copy todir="${output-filesdir}" includeEmptyDirs="no">
+			<fileset dir="${sourcedir}">
+				<include name="Application/**" />
+				<include name="config/config.php.sample" />
+				<include name="data/**" />
+				<include name="languages/**" />
+				<include name="library/**" />
+				<include name="templates/**" />
+				<include name="web/**" />
+				<exclude name="**/README" />
+				<exclude name="web/prototype/**" />
+				<exclude name="web/css/less/**" />
+				<exclude name="web/js/**/*.js" /> <!-- see compress.js -->
+			</fileset>
+		</copy>
+	</target>
+	
+	<target name="compress.js">
+		<jscomp compilationLevel="simple"
+			    debug="no" output="${output-filesdir}/web/js/html5wiki.js">
+			<externs dir="${sourcedir}/web/js/libs">
+				<file name="jquery.min.js" />
+			</externs>
+			<sources dir="${sourcedir}/web/js/libs">
+				<file name="jquery.ptags.min.js" />
+				<file name="jquery.markitup.js" />
+				<file name="markitup/html5wiki-set.js" />
+			</sources>
+			<sources dir="${sourcedir}/web/js">
+				<file name="core.js" />
+			</sources>
+			<sources dir="${sourcedir}/web/js/classes">
+				<file name="article.js" />
+				<file name="capsulebar.js" />
+				<file name="history.js" />
+				<file name="html5wiki.js" />
+				<file name="menu.js" />
+				<file name="messagecontroller.js" />
+				<file name="searchboxcontroller.js" />
+				<file name="translate.js" />
+			</sources>
+	    </jscomp>
+	</target>
+	
+	<target name="main" depends="clean,copy,compress.js" />
+
+</project>
