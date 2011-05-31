@@ -1,21 +1,13 @@
 <?php
+	/* Errors present? */
 	if (isset($this->errors['messages']) && count($this->errors['messages'])) {
-        $msg = '<ul>';
-        foreach ($this->errors['messages'] as $errorMessage) {
-            $msg .= '<li>' . addslashes($errorMessage) . '</li>';
+	    $msg = "<ul>";
+	    foreach ($this->errors['messages'] as $errorMessage) {
+	        $msg .= "<li>" . stripslashes($errorMessage) . "</li>";
 		}
-        $msg .= '</ul>';
+	    $msg .= "</ul>";
 
-		$this->javascriptHelper()->appendScript('appendPageReadyCallback(function() {
-		    var options = {
-				\'modal\': true,
-				\'buttons\' : [{
-					\'text\': \'OK\'
-					,\'button\': true
-				}]
-			};
-			MessageController.addMessage(\'error\',\''.$msg.'\', options);
-		});');
+		$this->messageHelper()->appendErrorMessage($this->translate->_('wrongInput'), $msg);
 	}
 
 	$toTimestampDate = date($this->translate->_('timestampFormat'), $this->toTimestamp)
@@ -40,7 +32,7 @@
                 <input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : 0; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
                     <?php
-                        $fieldToSet = isset($this->errors['fields']['txtAuthor']) ? $this->errors['fields']['txtAuthor'] : false;
+                        $fieldToSet = isset($this->errors['fields']['authorName']) ? $this->errors['fields']['authorName'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>">Ihr Name</label>
@@ -48,7 +40,7 @@
 				</p>
 				<p>
                     <?php
-                        $fieldToSet = isset($this->errors['fields']['txtAuthorEmail']) ? $this->errors['fields']['txtAuthorEmail'] : false;
+                        $fieldToSet = isset($this->errors['fields']['authorEmail']) ? $this->errors['fields']['authorEmail'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>">Ihre E-Mailadresse</label>
