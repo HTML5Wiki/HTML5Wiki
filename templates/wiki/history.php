@@ -61,7 +61,9 @@
 					</span>
 					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
 					<span class="author"><?php echo $user->name; ?></span>
+					<?php if(strlen($version->versionComment) > 0) :?>
 					<span class="comment">&quot;<?php echo $version->versionComment; ?>&quot;</span>
+					<?php endif; ?>
 				</li>
 				<?php endforeach; ?>
 			</ol>

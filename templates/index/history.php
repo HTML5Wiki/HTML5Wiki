@@ -20,7 +20,9 @@
 					</span>
 					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
 					<span class="author"><?php echo $user->name; ?></span>
+					<?php if(strlen($change->versionComment) > 0) :?>
 					<span class="comment">&quot;<?php echo $this->escape($change->versionComment); ?>&quot;</span>
+					<?php endif; ?>
 				</p>
 			</li>
 			<?php endforeach; ?>
