@@ -36,7 +36,7 @@
 <head>
 	<meta charset="utf-8" />
 	<title><?php echo $this->title ?> | HTML5Wiki</title>
-	<meta name="description" content=""/>
+	<meta name="description" content="HTML5Wiki"/>
  	<meta name="author" content="HTML5Wiki"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 	<link rel="shortcut icon" href="<?php echo $this->urlHelper('images','favicon.ico') ?>" type="image/x-icon" />

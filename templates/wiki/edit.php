@@ -52,7 +52,7 @@
 					$setErrorClass = $fieldToSet ? ' error' : '';
 				?>
 				<legend class="groupname<?php echo $setErrorClass; ?>"><?php echo $this->translate->_("articleContentLegend") ?></legend>
-				<textarea class="<?php echo $setErrorClass; ?>" id="contentEditor" name="contentEditor"><?php echo $this->content; ?></textarea>
+				<textarea class="<?php echo $setErrorClass; ?>" id="contentEditor" name="contentEditor"><?php echo $this->escape($this->content); ?></textarea>
 			</fieldset>
 		</div>
 		<div class="clear"></div>
@@ -67,7 +67,7 @@
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('authorName') ?></label>
-					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
+					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->name) ? $this->escape($this->author->name) : ''; ?>" />
 				</p>
 				<p>
                     <?php
@@ -75,7 +75,7 @@
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
 					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('authorEmail') ?></label>
-					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
+					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->email) ? $this->escape($this->author->email) : ''; ?>" />
 				</p>
 				<p class="hint">
 					<?php echo $this->translate->_('authorInformationText') ?>
@@ -105,7 +105,7 @@
 				<legend class="groupname"><?php echo $this->translate->_('versionCommentLegend') ?></legend>
 				<p class="clearfix">
 					<label for="versionComment" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('versionCommentText') ?></label>
-					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo count($this->errors) ? $this->versionComment : ''; ?>" />
+					<input type="text" name="versionComment" id="versionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo count($this->errors) ? $this->escape($this->versionComment) : ''; ?>" />
 				</p>
 			</fieldset>
 		</div>

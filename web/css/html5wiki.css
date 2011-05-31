@@ -62,6 +62,8 @@ body{background:url('../images/headerBackground.png') repeat-x;}
 .article ul:not(.capsulebar),.article ol:not(.capsulebar){margin:5px 0;}
 .article ul:not(.capsulebar){list-style-type:disc;margin-left:18px;}
 .article ol:not(.capsulebar){list-style-type:decimal;margin-left:24px;}
+.article blockquote{font-size:85%;background-color:#fbfbfb;border:1px solid #cfcfcf;margin:10px 3px;padding:6px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
+.article pre{font-family:"Courier New",Courier,monospace;background-color:#fbfbfb;border:1px solid #cfcfcf;margin:10px 3px;padding:6px;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;}
 .editor .title .heading{cursor:pointer;}.editor .title .heading:hover{background-color:#fdf4f2;}
 .editor .title .editor-wrapper{float:left;width:50%;}.editor .title .editor-wrapper .textfield{font:200% "Trebuchet MS",Tahoma,Arial,sans-serif;font-weight:bold;width:100%;margin-bottom:6px;}
 .editor .title .editor-wrapper .cancel{font:75% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;margin-right:3px;}

@@ -22,6 +22,12 @@ class Html5Wiki_Routing_Response {
 	private $headers = array();
 	
 	/**
+	 * Cookies list
+	 * @var array
+	 */
+	private $cookies = array();
+	
+	/**
 	 * Push new data to the end of the existing data.
 	 * @param string $data 
 	 */
@@ -42,14 +48,26 @@ class Html5Wiki_Routing_Response {
 	}
 	
 	/**
-	 * Calls the php function "header" to render a specific header
+	 * Push cookie to the cookie list.
 	 * 
-	 * @param string $header
-	 * @param bool $replace
-	 * @param int $httpResponseCode 
+	 * @param string $name
+	 * @param string $value
+	 * @param int $expire
+	 * @param string $path
+	 * @param string $domain
+	 * @param bool $secure
+	 * @param bool $httponly 
 	 */
-	protected function renderHeader($header, $replace, $httpResponseCode) {
-		header($header, $replace, $httpResponseCode);
+	public function pushCookie($name, $value, $expire = 0, $path = '', $domain = '', $secure = false, $httponly = false) {
+		$this->cookies[] = array(
+			'name' => $name,
+			'value' => $value,
+			'expire' => intval($expire),
+			'path' => $path,
+			'domain' => $domain,
+			'secure' => (bool)$secure,
+			'httponly' => (bool)$httponly
+		);
 	}
 	
 	/**
@@ -57,7 +75,25 @@ class Html5Wiki_Routing_Response {
 	 * @param string $data 
 	 */
 	protected function renderData($data) {
-		echo $data;
+		return $data;
+	}
+	
+	/**
+	 * Calls the php function "header" to render a specific header.
+	 * 
+	 * @param array $header
+	 */
+	protected function renderHeader($header) {
+		header($header['string'], $header['replace'], $header['httpResponseCode']);
+	}
+	
+	/**
+	 * Calls the php function "setcookie" to render a specific cookie.
+	 * @param array $cookie 
+	 */
+	protected function renderCookie($cookie) {
+		setcookie($cookie['name'], $cookie['value'], $cookie['expire'], $cookie['path'], 
+				$cookie['domain'], $cookie['secure'], $cookie['httponly']);
 	}
 	
 	/**
@@ -65,10 +101,13 @@ class Html5Wiki_Routing_Response {
 	 */
 	public function render() {
 		foreach ($this->headers as $header) {
-			$this->renderHeader($header['string'], $header['replace'], $header['httpResponseCode']);
+			$this->renderHeader($header);
+		}
+		foreach ($this->cookies as $cookie) {
+			$this->renderCookie($cookie);
 		}
 		
-		$this->renderData($this->data);
+		return $this->renderData($this->data);
 	}
 	
 	/**

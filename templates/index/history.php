@@ -10,7 +10,7 @@
 			<li class="change mediatype-<?php echo strtolower($change->mediaVersionType) ?>">
 				<h2 class="name">
 					<a href="<?php echo $this->urlHelper('wiki', $change->permalink) ?>">
-						<?php echo $change->getCommonName() ?>
+						<?php echo $this->escape($change->getCommonName()) ?>
 					</a>
 				</h2>
 				<p class="meta">
@@ -20,7 +20,7 @@
 					</span>
 					<img src="http://www.gravatar.com/avatar/<?php echo md5($user->email); ?>?s=16&d=mm" class="avatar" />
 					<span class="author"><?php echo $user->name; ?></span>
-					<span class="comment">&quot;<?php echo $change->versionComment; ?>&quot;</span>
+					<span class="comment">&quot;<?php echo $this->escape($change->versionComment); ?>&quot;</span>
 				</p>
 			</li>
 			<?php endforeach; ?>

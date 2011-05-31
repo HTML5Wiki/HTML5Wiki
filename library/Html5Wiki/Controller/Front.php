@@ -121,7 +121,6 @@ class Html5Wiki_Controller_Front {
 		$this->controller->setSystemBasePath($this->systemBasePath);
 		
 		$this->dispatch();
-		$this->render();
 	}
 
 	/**
@@ -136,7 +135,7 @@ class Html5Wiki_Controller_Front {
 	 */
 	public function render() {
 		$this->controller->render();
-		$this->response->render();
+		return $this->response->render();
 	}
 	
 	/**
