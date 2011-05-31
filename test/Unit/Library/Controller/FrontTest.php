@@ -45,6 +45,9 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 		$frontController = new Html5Wiki_Controller_Front($config, $this->systemBasePath, $this->libraryPath, $this->applicationPath, $router);
 		
 		$this->assertEquals(Html5Wiki_Controller_Front::getInstance(), $frontController);
+		$this->assertInstanceOf('Html5Wiki_Routing_Router', $frontController->getRouter());
+		$this->assertInstanceOf('Html5Wiki_Routing_Response', $frontController->getResponse());
+		$this->assertInstanceOf('Zend_Config', $frontController->getConfig());
 	}
 
 	public function testDispatchAgainstMock() {

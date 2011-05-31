@@ -167,18 +167,24 @@ class Test_Unit_Routing_RequestTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testHost() {
+		$this->request->setHost('testhost');
+		$this->assertEquals('testhost', $this->request->getHost());
 		$this->setUpRequestVariablesAndParseRequest();
 		$this->assertEquals('localhost', $this->request->getHost());
 	}
 
 	public function testPort() {
+		$this->request->setPort(8080);
+		$this->assertEquals(8080, $this->request->getPort());
 		$this->setUpRequestVariablesAndParseRequest();
 		$this->assertEquals(80, $this->request->getPort());
 	}
 
 	public function testHttps() {
+		$this->request->setHttps(true);
+		$this->assertTrue($this->request->getHttps());
 		$this->setUpRequestVariablesAndParseRequest();
-		$this->assertEquals(false, $this->request->getHttps());
+		$this->assertFalse($this->request->getHttps());
 	}
 
 	public function testQueryString() {
@@ -187,14 +193,14 @@ class Test_Unit_Routing_RequestTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testUri() {
-		$this->setUpRequestVariablesAndParseRequest(array(
-			'REQUEST_URI' => self::SCRIPT_NAME . '/wiki/test'
-		));
+		$this->request->setUri(self::SCRIPT_NAME . '/wiki/test');
 
 		$this->assertEquals(self::SCRIPT_NAME . '/wiki/test', $this->request->getUri());
 	}
 	
 	public function testPath() {
+		$this->request->setPath('/test/');
+		$this->assertEquals('/test/', $this->request->getPath());
 		$this->setUpRequestVariablesAndParseRequest(array(
 			'PATH_INFO' => '/tmp/',
 		));
@@ -203,11 +209,9 @@ class Test_Unit_Routing_RequestTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testRequestMethod() {
-		$this->setUpRequestVariablesAndParseRequest(array(
-			'REQUEST_METHOD' => 'POST',
-		));
+		$this->request->setRequestMethod('POST');
 		
-		$this->assertEquals('post', $this->request->getRequestMethod());
+		$this->assertEquals('POST', $this->request->getRequestMethod());
 	}
 	
 	public function testGetGet() {
