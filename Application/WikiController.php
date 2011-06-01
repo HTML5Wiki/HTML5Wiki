@@ -142,6 +142,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function checkAndGetPermalink() {
 		$permalink = $this->getPermalink();
+		
 		if ($permalink === '' && $this->config->routing->defaultController !== 'wiki') {
 			throw new Html5Wiki_Exception_404("Empty permalink is not allowed");
 		} else if ($permalink === '' && $this->config->routing->defaultController === 'wiki') {
@@ -155,8 +156,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 * Create a new article page
 	 */
 	public function newAction() {
-		$permalink = $this->checkAndGetPermalink();
-
+		$permalink = $this->getPermalink();
 		$this->showArticleEditor($this->prepareData(null, array('permalink' => $permalink)));
 	}
 
@@ -213,6 +213,8 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		if (!empty($preparedData['title'])) {
 			$this->setPageTitle($preparedData['title']);
+		} else if(empty($preparedData['permalink'])) {
+			$this->setPageTitle($this->template->translate->_('newArticle'));
 		} else {
 			$this->setPageTitle($preparedData['permalink']);
 		}
