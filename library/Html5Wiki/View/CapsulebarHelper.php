@@ -56,7 +56,7 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 		$response = new Html5Wiki_Routing_Response();
 		
 		$items = self::$items;
-		if($this->useDefaultItems === false) {
+		if($this->useDetaultItems === false) {
 			foreach(self::$items as $key => $item) {
 				if($item['default'] === false) $items[$key] = $item;
 			}
