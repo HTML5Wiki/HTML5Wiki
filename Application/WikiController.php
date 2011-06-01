@@ -227,7 +227,6 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 
 		$this->template->assign('request', $this->router->getRequest());
-
 		$this->template->assign('author', $this->getUser());
 	}
 

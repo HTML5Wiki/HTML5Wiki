@@ -128,25 +128,29 @@ var Article = (function() {
      *
      * @access public
      */
-	self.handleEditArticleTitle = function() {
+	self.handleEditArticleTitle = function(displayCancelButton) {
 		var heading = $('.heading');
 		var title = heading.text();
 		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" name="txtTitle" />');
-
-		var cancelButton = $('<a href="#" class="button">' + Translate._('restore') + '</a>');
-		cancelButton.bind('mouseup',{title:title}, function(event) {
-			var heading = $('<h1 class="heading">'+event.data.title+'</h1>');
-			$(heading).bind('mouseup', Article.handleEditArticleTitle);
-			$('.editor-wrapper').replaceWith(heading);
-			return false;
-		});
+		if(displayCancelButton == undefined) displayCancelButton = true;
 
 		var container = $('<div class="editor-wrapper" />');
 		container.append(titleEditor);
-		container.append('<br/><span class="cancel">' + Translate._('restoreQuestion') + '</span>');
-		container.append(cancelButton);
+		
+		if(displayCancelButton) {
+			var cancelButton = $('<a href="#" class="button">' + Translate._('restore') + '</a>');
+			cancelButton.bind('mouseup',{title:title}, function(event) {
+				var heading = $('<h1 class="heading">'+event.data.title+'</h1>');
+				$(heading).bind('mouseup', Article.handleEditArticleTitle);
+				$('.editor-wrapper').replaceWith(heading);
+				return false;
+			});
+			container.append('<br/><span class="cancel">' + Translate._('restoreQuestion') + '</span>');
+			container.append(cancelButton);
+		}
+		
 		heading.replaceWith(container);
-
+		
 		return false;
 	}
 	

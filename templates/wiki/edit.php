@@ -5,7 +5,7 @@
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback("Capsulebar.init", ["' . $this->mediaVersionId . '"]);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorGui);');
 	$this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.setupArticleEditorEvents);');
-	if(strlen($this->title) == 0) $this->javascriptHelper()->appendScript('appendPageReadyCallback(Article.handleEditArticleTitle);');
+	if(strlen($this->title) == 0) $this->javascriptHelper()->appendScript('appendPageReadyCallback(function() { Article.handleEditArticleTitle(false); });');
 
 	$saveText = $this->translate->_('save');
 	
@@ -137,7 +137,7 @@
     <?php if (isset($this->errors['messages']) && count($this->errors['messages'])) : ?>
     <script type="text/javascript">		
 		<?php if (isset($this->errors['fields']['title']) && $this->errors['fields']['title']): ?>
-			Article.handleEditArticleTitle();
+			Article.handleEditArticleTitle(false);
 			$('#txtTitle').addClass('error');
 		<?php endif;?>
     </script>
