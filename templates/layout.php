@@ -61,6 +61,9 @@
 					<li class="item updates<?php echo $router->getController() == 'index' && $router->getAction() == 'history' ? ' active' : '' ?>">
 						<a href="<?php echo $this->urlHelper('index', 'history') ?>" class="tab"><?php echo $this->translate->_("recentChanges") ?></a>
 					</li>
+					<li class="item new-article<?php echo $router->getController() == 'wiki' && $router->getAction() == 'new' ? ' active' : '' ?>">
+						<a href="<?php echo $this->urlHelper('wiki', 'new') ?>" class="tab"><?php echo $this->translate->_('newArticle') ?></a>
+					</li>
 					<?php if ($router->getController() === 'wiki' && $router->getAction() !== $config->routing->defaultAction && $router->getAction() !== 'new'): ?>
 					<li class="item article active">
 						<a href="<?php echo $router->getRequest()->getUri() ?>" class="tab"><?php echo $this->title ?></a>

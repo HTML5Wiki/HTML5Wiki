@@ -79,6 +79,7 @@ return array(
 	,'additionalErrorInfo' => 'Additional information'
 	
 	,'wrongInput' => 'Invalid input'
+	,'newArticle' => 'New Article'
 	
 );
 ?>

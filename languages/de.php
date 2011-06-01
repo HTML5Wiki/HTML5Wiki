@@ -79,6 +79,8 @@ return array(
 	
 	,'wrongInput' => 'Falsche Eingaben'
 	
+	,'newArticle' => 'Neuer Artikel'
+	
 	// Zend_Validate_StringLength
     ,"Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet"
     ,"'%value%' is less than %min% characters long" => "'%value%' ist weniger als %min% Zeichen lang"
