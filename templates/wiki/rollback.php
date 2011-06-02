@@ -35,14 +35,14 @@
 	<div class="grid_12 bottom-button-bar">
 		<form action="<?php echo $this->urlHelper('wiki', 'rollback', $this->permalink, '?to=' . $this->toTimestamp); ?>" method="post">
 			<fieldset name="author" class="group">
-				<legend class="groupname">Autoreninformation</legend>
+				<legend class="groupname"><?php echo $this->translate->_('authorInformationLegend') ?></legend>
                 <input type="hidden" value="<?php echo isset($this->author->id) ? $this->author->id : 0; ?>" id="hiddenAuthorId" name="hiddenAuthorId" />
 				<p>
                     <?php
                         $fieldToSet = isset($this->errors['fields']['authorName']) ? $this->errors['fields']['authorName'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>">Ihr Name</label>
+					<label for="txtAuthor" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('authorName') ?></label>
 					<input type="text" name="txtAuthor" id="txtAuthor" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->name) ? $this->author->name : ''; ?>" />
 				</p>
 				<p>
@@ -50,14 +50,11 @@
                         $fieldToSet = isset($this->errors['fields']['authorEmail']) ? $this->errors['fields']['authorEmail'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>">Ihre E-Mailadresse</label>
+					<label for="txtAuthorEmail" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('authorEmail') ?></label>
 					<input type="text" name="txtAuthorEmail" id="txtAuthorEmail" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo isset($this->author->email) ? $this->author->email : ''; ?>" />
 				</p>
 				<p class="hint">
-					Ihr <em>Name</em> sowie Ihre <em>E-Mailadresse</em> werden
-					nur zur internen Identifikation resp. Versionskontrolle
-					abgelegt.<br/>
-					Ihre Daten werden weder weitergegeben noch anderweitig ausgewertet.
+					<?php echo $this->translate->_('authorInformationText') ?>
 				</p>
 			</fieldset>
 
@@ -66,9 +63,9 @@
                         $fieldToSet = isset($this->errors['fields']['txtVersionComment']) ? $this->errors['fields']['txtVersionComment'] : false;
                         $setErrorClass = $fieldToSet ? ' error' : '';
                     ?>
-				<legend class="groupname">Versionskommentar</legend>
+				<legend class="groupname"><?php echo $this->translate->_('versionCommentLegend') ?></legend>
 				<p class="clearfix">
-					<label for="txtVersionComment" class="label<?php echo $setErrorClass; ?>">Kommentar zur Version <em>(optional)</em>:</label>
+					<label for="txtVersionComment" class="label<?php echo $setErrorClass; ?>"><?php echo $this->translate->_('versionCommentText') ?></label>
 					<input type="text" name="txtVersionComment" id="txtVersionComment" class="textfield<?php echo $setErrorClass; ?>" value="<?php echo count($this->errors) ? $this->versionComment : ''; ?>" />
 				</p>
 			</fieldset>
