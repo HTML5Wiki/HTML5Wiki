@@ -208,7 +208,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 */
 	public function doRenderAndExit() {
 		$this->response->render();
-		ob_get_clean();
+		echo ob_get_clean();
 		exit();
 	}
 

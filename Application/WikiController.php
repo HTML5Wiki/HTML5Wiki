@@ -286,7 +286,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				// Redirect:
 				$url = $this->router->buildURL(array('wiki',$permalink));
 				if($this->router->getRequest()->isAjax() === true) {
+					$this->setNoLayout();
 					echo $url;
+					$this->doRenderAndExit();
 				} else {
 					$this->redirect($url);
 				}
