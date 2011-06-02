@@ -5,7 +5,8 @@
  */
 var Capsulebar = (function() {
 	var self = {}
-		,articleId = '';
+		,articleId = '',
+		loaded = false;
 
 	self.init = function(articleId) {
 		self.articleId = articleId;
@@ -48,7 +49,22 @@ var Capsulebar = (function() {
 		}
 	};
 	
+	/**
+	 * onPopState is called when navigation traversal is done. 
+	 * This happens on following events:
+	 *   - page load
+	 *   - back button
+	 *   - forward button
+	 * 
+	 * To prevent a not wanted reload on page load, the first loaded check is done.
+	 * 
+	 * @link http://stackoverflow.com/questions/5257819/onpopstate-handler-ajax-back-button
+	 */
 	self.onPopState = function(e) {
+		if (!loaded) {
+			loaded = true;
+			return;
+		}
 		try {
 			var url, articleId, href;
 			if (history.state) {
