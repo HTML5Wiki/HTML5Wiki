@@ -86,13 +86,14 @@ class Html5Wiki_Controller_Front {
 		} else {
 			$this->router = $router;
 		}
-		$this->router->route();
 
 		$this->systemBasePath = $systemBasePath;
 		$this->libraryPath = $libraryPath;
 		$this->applicationPath = $applicationPath;
-
+		
 		self::setInstance($this);
+		
+		$this->router->route();
 	}
 	
 	/**
