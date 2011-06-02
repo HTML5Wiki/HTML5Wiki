@@ -96,7 +96,7 @@ class Application_ErrorController {
 		$template->assign('errorInfo', $data);
 		
 		$template->render();
-		$response->render();
+		echo $response->render();
 	}
 	
 	/**

@@ -286,7 +286,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				// Redirect:
 				$url = $this->router->buildURL(array('wiki',$permalink));
 				if($this->router->getRequest()->isAjax() === true) {
+					$this->setNoLayout();
 					echo $url;
+					$this->doRenderAndExit();
 				} else {
 					$this->redirect($url);
 				}
@@ -408,7 +410,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function getUser(array $params = array()) {
 		if ($this->user === null) {
-			$this->setUser($this->handleUserRequest($params));
+			$user = $this->handleUserRequest($params);
+			if ($user) {
+				$this->setUser($user);
+			}
 		}
 		return $this->user;
 	}

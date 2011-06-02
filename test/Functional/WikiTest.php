@@ -62,7 +62,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->assertElementContainsText('css=header.title', sprintf($this->getLanguageKey('searchResultsFor'), $this->wikiTestPage));
 		$this->assertElementContainsText('css=section h2', $this->getLanguageKey('noSearchResultsTitle'));
 		
-		$this->assertMessageBoxPresent();
+		$this->assertMessageContainerPresent();
 	}
 
 	public function testOpenCreatePage() {
@@ -75,7 +75,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 
 		$this->assertElementValueEquals('css=#txtTitle', $this->wikiTestPage);
 	}
-	
+
 	public function testCreatePageDoNotEnterAnythingFails() {
 		$this->openCreatePage();
 		
@@ -106,7 +106,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->insertTagsIntoPtagsField();
 		$this->type('css=#versionComment', self::TEST_VERSION_COMMENT);
 		
-		$this->click('css=#article-save');
+		$this->clickAndWait('css=#article-save', 5000);
 		$this->captureEntirePageScreenshot('/tmp/selenium-testSuccessCreatePage.png');
 		
 		$this->assertReadArticlePresent();
@@ -119,7 +119,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-edit');
-		$this->click('css=#capsulebar-edit');
+		$this->clickAndWait('css=#capsulebar-edit', 5000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage2.png');
 		
@@ -147,7 +147,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage5.png');
 		
-		$this->click('css=#article-save');
+		$this->clickAndWait('css=#article-save', 5000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage6.png');
 		
@@ -198,19 +198,18 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 	private function openCreatePage() {
 		$this->open($this->wikiTestUrl);
 		
-		$this->clickAndWait('css=.messagebox .options .button', 10000);
+		$this->assertMessageContainerPresent();
+		$this->clickAndWait('css=.messages-container .options .button', 10000);
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-open-create-page.png');
 	}
 	
 	private function assertEditTitleBoxPresent() {
 		$this->assertElementPresent('css=.editor-wrapper #txtTitle');
-		$this->assertElementPresent('css=.editor-wrapper .cancel');
-		$this->assertElementPresent('css=.editor-wrapper .button');
 	}
 	
-	private function assertMessageboxPresent() {
-		$this->assertElementPresent('css=.messagebox');
+	private function assertMessageContainerPresent() {
+		$this->assertElementPresent('css=.messages-container');
 		$this->assertElementPresent('css=.options .button');
 	}
 	
