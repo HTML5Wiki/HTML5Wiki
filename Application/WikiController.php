@@ -373,23 +373,26 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	private function saveTags(array $tags, $mediaVersionId, $mediaVersionTimestamp) {
 		foreach ($tags as $tag) {
 			$tag = trim($tag);
-			$tagRow = new Html5Wiki_Model_Tag();
-			$tagRow->loadByTag($tag);
-			if (!isset($tagRow->tag)) {
-				$tagRow = new Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table();
-				$tagRow = $tagRow->createRow(array(
-							'tag' => $tag
-						));
-				$tagRow->save();
-			}
+			
+			if(strlen($tag) > 0) {
+				$tagRow = new Html5Wiki_Model_Tag();
+				$tagRow->loadByTag($tag);
+				if (!isset($tagRow->tag)) {
+					$tagRow = new Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table();
+					$tagRow = $tagRow->createRow(array(
+								'tag' => $tag
+							));
+					$tagRow->save();
+				}
 
-			$mediaTag = new Html5Wiki_Model_MediaVersion_Mediatag_Table();
-			$mediaTagRow = $mediaTag->createRow(array(
-						'tagTag' => $tag,
-						'mediaVersionId' => $mediaVersionId,
-						'mediaVersionTimestamp' => $mediaVersionTimestamp
-					));
-			$mediaTagRow->save();
+				$mediaTag = new Html5Wiki_Model_MediaVersion_Mediatag_Table();
+				$mediaTagRow = $mediaTag->createRow(array(
+							'tagTag' => $tag,
+							'mediaVersionId' => $mediaVersionId,
+							'mediaVersionTimestamp' => $mediaVersionTimestamp
+						));
+				$mediaTagRow->save();
+			}
 		}
 	}
 
