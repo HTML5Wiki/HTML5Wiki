@@ -239,7 +239,7 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	public function saveAction() {
 		$this->addDefaultWikiCapsuleBarItems();
 		$params = $this->matchPostParamsWithColumns();
-		$permalink = $this->checkAndGetPermalink();
+		$permalink = $this->getPermalink();
 
 		if ($this->router->getRequest()->isAjax()) {
 			$this->setNoLayout();
@@ -252,8 +252,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 
 		$errors = $this->createEmptyErrorArray();
 		$user = $this->getUser($params);
+		
 		if ($user !== false && $this->validateArticleEditForm($oldArticleVersion, $params, $errors)) {
-			if ($this->hasIntermediateVersion($oldArticleVersion) && !$params['overwrite']) {
+			if ($this->hasIntermediateVersion($oldArticleVersion, $permalink) && !$params['overwrite']) {
+				/* Tell the user, that there is an intermediate version: */
 				$intermediateArticle = new Html5Wiki_Model_ArticleVersion();
 				$intermediateArticle->loadLatestByPermalink($permalink);
 
@@ -268,7 +270,21 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				$this->template->assign('rightVersionTitle', $this->template->translate->_('newVersion'));
 				$this->template->assign('otherAuthor', $intermediateArticle->getUser()->name);
 			} else {
+				/* Everythings fine. Create version: */
+				// If the user created an entirly fresh article without entering
+				// a permalink, create a new permalink out of the title.
+				if(strlen($permalink) === 0) {
+					$permalink = $this->createPermalinkFromString($params['title']);
+				}
+				
+				// Save:
 				$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
+				if($this->router->getRequest()->isAjax() === true) {
+					return $permalink;
+				} else {
+					$this->redirect($this->router->buildURL(array('wiki',$permalink)));
+				}
+				
 				return;
 			}
 		}
@@ -592,11 +608,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
      * Check if the article was save from an other user while editing
      *
      * @param  Html5Wiki_Model_ArticleVersion $oldArticleVersion
-     *
      * @return boolean
      */
-    private function hasIntermediateVersion(Html5Wiki_Model_ArticleVersion $oldArticleVersion) {
-        $permalink = $this->checkAndGetPermalink();
+    private function hasIntermediateVersion(Html5Wiki_Model_ArticleVersion $oldArticleVersion, $permalink = null) {
+		if($permalink === null) $permalink = $this->checkAndGetPermalink();
 
 		$latestArticle = new Html5Wiki_Model_ArticleVersion();
 		$latestArticle->loadLatestByPermalink($permalink);
@@ -915,6 +930,31 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			,$this->router->buildUrl(array('wiki', 'history', $permalink))
 			,true
 		);
+	}
+	
+	/**
+	 * Creates a permalink out of a string.<br/>
+	 * Any special characters like blanks, points, commas etc. get replaced by
+	 * a dash ("-"). Further german umlauts get replaced by their two-letter
+	 * correspondings.
+	 *
+	 * @param $string
+	 * @return formal valid permalink
+	 */
+	private function createPermalinkFromString($string) {
+		$chartable = array(
+			'raw'		=> array('ä'     ,'Ä'     ,'ö'     ,'Ö'     ,'ü'     ,'Ü'     ,'ß'     )
+			,'in'		=> array(chr(228),chr(196),chr(246),chr(214),chr(252),chr(220),chr(223))
+			,'perma'	=> array('ae'    ,'Ae'    ,'oe'    ,'oe'    ,'ue'    ,'Ue'    ,'ss'    )
+		);
+		$toReplaceWithDashes = array('.', ',' , '_', ' ');
+		
+		$result = str_replace($chartable['raw'], $chartable['perma'], $string);
+		$result = str_replace($chartable['in'], $chartable['perma'], $result);
+		$result = str_replace($toReplaceWithDashes, '-', $result);
+		$result = strtolower($result);
+		
+		return $result;
 	}
 
 }
