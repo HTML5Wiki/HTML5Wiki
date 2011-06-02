@@ -19,7 +19,6 @@ For running HTML5Wiki in your environment, it has to fullfil the following requr
 Installation
 ------------
   # Copy all relevant files delivered from the distribution ZIP archive to your target web server.
-  # Please ensure all .htaccess files get copied as well. If their are not present on your target machine, HTML5Wiki will not be able to run.
   # Once all files are in place, run the installation wizard: Open http://yourserver/yourfolder/install.php in your browser (make sure you replace ''yoursever'' and ''yourfolder'' with your own values)
   # Follow the wizards instructions which will guide you through the database and basic configuration.
   # After finishing the wizard, HTML5Wiki should be up and running.
