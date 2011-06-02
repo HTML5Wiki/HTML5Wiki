@@ -410,7 +410,10 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	private function getUser(array $params = array()) {
 		if ($this->user === null) {
-			$this->setUser($this->handleUserRequest($params));
+			$user = $this->handleUserRequest($params);
+			if ($user) {
+				$this->setUser($user);
+			}
 		}
 		return $this->user;
 	}
