@@ -9,6 +9,8 @@
 	error_reporting(E_ALL | E_STRICT);
 	$installscript = "install.php";
 	
+	/* ---------------------------------------------------------------------- */
+	
 	/* Definition of the Steps: */
 	$steps = array(
 		array(
@@ -17,25 +19,52 @@
 			,'data' => array()
 		)
 		,array(
-			'name' => 'Basic Setup'
-			,'text' => ''
+			'name' => 'Database Setup'
+			,'text' => '<p>HTML5Wiki needs a MySQL database system to store its data.</p><p>Please specify the servers hostname (mostly <em>localhost</em>), a database, a valid user and its password.</p>'
+			,'data' => array()
+			,'input' => array(
+				'database_host' => array(
+					'type' => 'text'
+					,'caption' => 'Database host'
+					,'placeholder' => 'localhost'
+					,'mandatory' => true
+				)
+				,'database_name' => array(
+					'type' => 'text'
+					,'caption' => 'Database name'
+					,'mandatory' => true
+				)
+				,'database_user' => array(
+					'type' => 'text'
+					,'caption' => 'Database user'
+					,'mandatory' => true
+				)
+				,'database_password' => array(
+					'type' => 'text'
+					,'caption' => 'Database password'
+					,'placeholder' => 'optional'
+				)
+			)
+			,'callMethodAfter' => 'testDatabaseConnection'
+		)
+		,array(
+			'name' => 'Wiki'
+			,'text' => '<p>Please enter a name for your HTML5Wiki installation.</p>'
 			,'input' => array(
 				'wikiname' => array(
 					'type' => 'text'
-					,'caption' => 'Name of your wiki'
+					,'caption' => 'Name for your wiki'
+					,'mandatory' => true
 				)
 			)
 			,'data' => array()
 		)
-		,array(
-			'name' => 'Database Setup'
-			,'text' => ''
-			,'data' => array()
-		)
 	);
 	$currentstep_index = 0;
+	$messages = array();
 	
 	/* ---------------------------------------------------------------------- */
+	
 	/* Run the wizards logic: */
 	// Get data from other steps:
 	deserializeStepData($_POST, $steps);
@@ -58,26 +87,85 @@
 		$currentstep_index = 0;
 		
 		if(isset($postData['step'])) {
-			$stepindex = $postData['step'];
+			$currentstep_index = $postData['step'];
 			
 			// Read the input-data into the step specifications
 			foreach($postData as $key => $value) {
 				if(strstr($key, 'input_') !== false) {
 					$key = substr($key, 6);
-					$steps[$stepindex]['data'][$key] = $value;
+					$steps[$currentstep_index]['data'][$key] = $value;
 				}
 			}
 			
-			// Was back or next clicked?
-			if(isset($_POST['next'])) {
-				$currentstep_index = $stepindex + 1;
-			} else if(isset($_POST['back'])) {
-				$currentstep_index = $stepindex - 1;
+			// Determine if the user clicked next or back:
+			$wizardDirection = 'next';
+			if(isset($postData['back'])) $wizardDirection = 'back';
+			
+			// Check input only if next was clicked:
+			$inputOk = true;
+			if($wizardDirection === 'next') $inputOk = isInputOk($steps, $currentstep_index);
+			
+			// Execute method if needed and update the currentstep_index regarding
+			// the button which was clicked.
+			if($inputOk === true) {
+				$ok = true;
+				if($wizardDirection === 'next') {
+					if(isset($steps[$currentstep_index]['callMethodAfter'])) {
+						$stepsData = $steps[$currentstep_index]['data'];
+						$ok = $steps[$currentstep_index]['callMethodAfter']($stepsData);
+					}
+					if($ok === true) $currentstep_index++;
+				} else if($wizardDirection === 'back') {
+					$currentstep_index--;
+				}
 			}
 		}
 		
 		return $currentstep_index;
 	}
+	
+	/**
+	 * This function checks if all mandatory inputs for the step $currentstep_index
+	 * are filled in.<br/>
+	 * If not, a message gets added with #addMessage and false is returned.
+	 * Otherwise true gets returned.
+	 * 
+	 * @param $steps
+	 * @param $currentstep_index
+	 * @return true/false
+	 */
+	function isInputOk(array $steps, $currentstep_index) {
+		$missingFields = array();
+		if(isset($steps[$currentstep_index]['input'])) {
+			foreach($steps[$currentstep_index]['input'] as $key => $input) {
+				if(isset($input['mandatory']) && $input['mandatory'] === true) {
+					$dataValid = true;
+					
+					if(isset($steps[$currentstep_index]['data'][$key])) {
+						if(strlen($steps[$currentstep_index]['data'][$key]) === 0) {
+							$dataValid = false;
+						}
+					} else {
+						$dataValid = false;
+					}
+					
+					if($dataValid === false) $missingFields[] = $input['caption'];
+				}
+			}
+		}
+		
+		// Add message if needed:
+		if(sizeof($missingFields) > 0) {
+			$message = 'Please fill in the following field(s) you missed:<br/>';
+			foreach($missingFields as $field) {
+				$message .= '&nbsp;-&nbsp;'. $field. '<br/>';
+			}
+			addMessage('error', 'Missing input', $message);
+		}
+		
+		return (sizeof($missingFields) === 0);
+	}
+	
 	
 	/**
 	 * Serializes the data of each step in the steps-array into a hidden
@@ -136,7 +224,14 @@
 			
 			foreach($inputs as $key => $input) {
 				$value = '';
+				$placeholder = '';
 				if(isset($step['data'][$key])) $value = $step['data'][$key];
+				if(isset($input['placeholder'])) $placeholder = $input['placeholder'];
+				
+				$rendered .= '<p>'
+						  .  '<label for="input_'. $key. '">'
+						  .  $input['caption']
+						  .  '</label>';
 				
 				switch($input['type']) {
 					case 'text' :
@@ -144,14 +239,63 @@
 								  .  'name="input_'. $key. '" '
 							  	  .  'id="input_'. $key. '" '
 								  .  'value="'. $value. '" '
-								  .  'placeholder="'. $input['caption']. '" '
+								  .  'placeholder="'. $placeholder. '" '
 								  .  '/>';
 						break;
 				}
+				
+				$rendered .= '</p>'."\n";
 			}
 		}
 		
 		return $rendered;
+	}
+	
+	/* ---------------------------------------------------------------------- */
+	
+	function addMessage($type, $title, $message) {
+		global $messages;  // ugly, but only a bit ;)
+		
+		$messages[] = array(
+			'type' => $type
+			,'title' => $title
+			,'text' => $message
+		);
+	}
+	
+	/* ---------------------------------------------------------------------- */
+	/**
+	 * This method tests the databaseconnection.<br/>
+	 * If everythings fine, it returns true, otherwise it adds messages to the
+	 * wizard and returns false.
+	 *
+	 * @param $stepData
+	 * @return true/false
+	 */
+	function testDatabaseConnection($stepData) {
+		$host = getDataValue($stepData,'database_host');
+		$dbname = getDataValue($stepData,'database_name');
+		$user = getDataValue($stepData,'database_user');
+		$password = getDataValue($stepData,'database_password');
+		
+		$ok = (($connection = @mysql_connect($host, $user, $password)) !== false);
+		if($ok === true) {
+			$ok = (mysql_select_db($dbname, $connection) !== false);
+			
+			if($ok === false) {
+				addMessage('error', 'Invalid database name', 'Could not access the database "'. $dbname. '". Please make sure this database exists.');
+			}
+		} else {
+			addMessage('error','Connection error', 'Could not connect to the host "'. $host. '". Please check host, username and password.');
+		}
+		
+		return $ok;
+	}
+	
+	function getDataValue($data, $key, $default='') {
+		$result = $default;
+		if(isset($data[$key])) $result = $data[$key];
+		return $result;
 	}
 	
 ?>
@@ -169,6 +313,10 @@
 	
 	<style type="text/css">
 		.header-overall .menu-items .install .tab { background-image: url('web/images/icons16/wizard.png'); }
+		input[type=text] { font-size: 110%; margin-bottom: 8px; width: 300px; }
+		label { display: block; font-size: 85%; margin-bottom: 2px; }
+		.editor p { margin-bottom: 6px; }
+		.box h3 { margin-top: 3px;}
 	</style>
 </head> 
 <body>
@@ -185,7 +333,16 @@
 		</header>
 		<div class="clear"></div>
 		
-		<section class="content article">
+		<section class="content editor grid_12">
+			<?php if(sizeof($messages) > 0) : ?>
+			<?php foreach($messages as $message) : ?>
+			<div class="box <?php echo $message['type'] ?>">
+				<h3><?php echo $message['title'] ?></h3>
+				<p><?php echo $message['text'] ?></p>
+			</div>
+			<?php endforeach; ?>
+			<?php endif; ?>
+			
 			<form action="<?php echo $installscript ?>" method="post">
 				<input type="hidden" name="step" value="<?php echo $currentstep_index ?>" />
 				<?php echo serializeStepData($steps); ?>
@@ -206,6 +363,7 @@
 				</footer>
 			</form>
 		</section>
+		<div class="clear"></div>
 	</div>
 </body>
 </html>
