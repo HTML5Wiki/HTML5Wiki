@@ -119,7 +119,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage1.png');
 		
 		$this->assertElementPresent('css=#capsulebar-edit');
-		$this->clickAndWait('css=#capsulebar-edit', 5000);
+		$this->click('css=#capsulebar-edit');
 		
 		$this->captureEntirePageScreenshot('/tmp/selenium-testEditPage2.png');
 		
