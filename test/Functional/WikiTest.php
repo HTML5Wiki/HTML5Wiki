@@ -60,7 +60,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->captureEntirePageScreenshot('/tmp/selenium-testShowSearchWhenNoPagePresent.png');
 		
 		$this->assertElementContainsText('css=header.title', sprintf($this->getLanguageKey('searchResultsFor'), $this->wikiTestPage));
-		$this->assertElementContainsText('css=section h2', $this->getLanguageKey('noSearchResultsTitle'));
+		$this->assertElementContainsText('css=section h2', $this->getLanguageKey('noArticleWithPermalink'));
 		
 		$this->assertMessageContainerPresent();
 	}

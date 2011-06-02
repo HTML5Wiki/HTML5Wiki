@@ -131,8 +131,8 @@ var Article = (function() {
      * @access public
      */
 	self.handleEditArticleTitle = function(displayCancelButton) {
-		var heading = $('.heading');
-		var title = heading.text();
+		var heading = $('#headingcontainer');
+		var title = $('.heading').text();
 		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" placeholder="' + Translate._('title') + '" name="txtTitle" />');
 		if(displayCancelButton == undefined) displayCancelButton = true;
 
@@ -142,7 +142,7 @@ var Article = (function() {
 		if(displayCancelButton) {
 			var cancelButton = $('<a href="#" class="button">' + Translate._('restore') + '</a>');
 			cancelButton.bind('mouseup',{title:title}, function(event) {
-				var heading = $('<h1 class="heading">'+event.data.title+'</h1>');
+				var heading = $('<div id="headingcontainer" style="float:left"><h1 class="heading">'+event.data.title+'</h1><div class="clear"></div><p class="meta"><span>' + Translate._('clickOnTitleToEdit') + '</span></p></div>');
 				$(heading).bind('mouseup', Article.handleEditArticleTitle);
 				$('.editor-wrapper').replaceWith(heading);
 				return false;

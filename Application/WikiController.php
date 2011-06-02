@@ -160,6 +160,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 	 */
 	public function newAction() {
 		$permalink = $this->getPermalink();
+		if ($this->router->getRequest()->isAjax()) {
+			$this->setNoLayout();
+		}
 		$this->showArticleEditor($this->prepareData(null, array('permalink' => $permalink)));
 	}
 

@@ -80,6 +80,7 @@ return array(
 	,'wrongInput' => 'Falsche Eingaben'
 	
 	,'newArticle' => 'Neuer Artikel'
+	,'clickOnTitleToEdit' => 'Auf den Titel klicken um zu ihn zu bearbeiten.'
 	
 	// Zend_Validate_StringLength
     ,"Invalid type given. String expected" => "Ungültiger Typ angegeben. String erwartet"
