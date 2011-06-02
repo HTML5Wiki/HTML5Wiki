@@ -36,6 +36,11 @@
 	$frontController = Html5Wiki_Controller_Front::getInstance();
 	$config = $frontController->getConfig();
 	$router = $frontController->getRouter();
+	
+	$displayCurrentPageInMenu = $router->getController() === 'wiki' && 
+			$router->getAction() !== $config->routing->defaultAction && 
+			$router->getAction() !== 'new' &&
+			($router->getAction() !== 'read' || $this->permalink !== $config->routing->defaultAction);
 ?>
 <!DOCTYPE html>
 <html lang="de">
@@ -64,7 +69,7 @@
 					<li class="item new-article<?php echo $router->getController() == 'wiki' && $router->getAction() == 'new' ? ' active' : '' ?>">
 						<a href="<?php echo $this->urlHelper('wiki', 'new') ?>" class="tab"><?php echo $this->translate->_('newArticle') ?></a>
 					</li>
-					<?php if ($router->getController() === 'wiki' && $router->getAction() !== $config->routing->defaultAction && $router->getAction() !== 'new'): ?>
+					<?php if ($displayCurrentPageInMenu): ?>
 					<li class="item article active">
 						<a href="<?php echo $router->getRequest()->getUri() ?>" class="tab"><?php echo $this->title ?></a>
 					</li>
