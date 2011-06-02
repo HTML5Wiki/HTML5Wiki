@@ -35,6 +35,16 @@ $installscript = "install.php";
  */
 class Html5Wiki_InstallationWizard extends InstallationWizard {
 	
+	const PROPERTY_WIKINAME = 'wikiname';
+	const PROPERTY_DATABASE_HOST = 'database_host';
+	const PROPERTY_DATABASE_NAME = 'database_name';
+	const PROPERTY_DATABASE_USER = 'database_user';
+	const PROPERTY_DATABASE_PASSWORD = 'database_password';
+	const PROPERTY_INSTALLATION_TYPE = 'installationtype';
+	const FILE_CONFIG = 'config/config.php';
+	const FILE_DATABASE_SCHEMA = 'data/sql/html5wiki_schema.sql';
+
+	
 	public function __construct() {
 		$steps = array(
 			array(
@@ -46,23 +56,23 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 				'name' => 'Database Setup'
 				,'text' => '<p>HTML5Wiki needs a MySQL database system to store its data.</p><p>Please specify the servers hostname (mostly <em>localhost</em>), a database, a valid user and its password.</p>'
 				,'input' => array(
-					'database_host' => array(
+					self::PROPERTY_DATABASE_HOST => array(
 						'type' => 'text'
 						,'caption' => 'Database host'
 						,'placeholder' => 'localhost'
 						,'mandatory' => true
 					)
-					,'database_name' => array(
+					,self::PROPERTY_DATABASE_NAME => array(
 						'type' => 'text'
 						,'caption' => 'Database name'
 						,'mandatory' => true
 					)
-					,'database_user' => array(
+					,self::PROPERTY_DATABASE_USER => array(
 						'type' => 'text'
 						,'caption' => 'Database user'
 						,'mandatory' => true
 					)
-					,'database_password' => array(
+					,self::PROPERTY_DATABASE_PASSWORD => array(
 						'type' => 'text'
 						,'caption' => 'Database password'
 						,'placeholder' => 'optional'
@@ -74,7 +84,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 				'name' => 'Branding'
 				,'text' => '<p>Please enter a name for your HTML5Wiki installation.</p>'
 				,'input' => array(
-					'wikiname' => array(
+					self::PROPERTY_WIKINAME => array(
 						'type' => 'text'
 						,'caption' => 'Name for your wiki'
 						,'mandatory' => true
@@ -85,7 +95,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 				'name' => 'Installation type'
 				,'text' => '<p>How is your webserver set up?</p><p>HTML5Wikis bootstrap is located inside the <em>web</em> directory. If you\'re able to point your webserver directly to this location, please select the first option below.</p><p>Many people are not allowed to control their hosted webservers on this level.<br/>If you\'re one of them, select the second option. All files from  <em>web</em> get moved one directory up to allow flawless interaction with HTML5Wiki.</p>'
 				,'input' => array(
-					'installationtype' => array(
+					self::PROPERTY_INSTALLATION_TYPE => array(
 						'type' => 'radio'
 						,'caption' => 'Installation type'
 						,'mandatory' => true
@@ -131,7 +141,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	}
 
 	private function testIfConfigWriteable() {
-		return is_writable('../config/');
+		return is_writable(self::FILE_CONFIG);
 	}
 
 	private function testIfParentWritable() {
@@ -183,31 +193,115 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	 * @return true if everythings fine, false if something went wrong
 	 */ 
 	protected function install($stepData) {
-		/* Config: */
-		$wikiname = 
-		$config = $this->createConfig();
-
+		$configOk = $this->setupConfig(self::FILE_CONFIG);
+		$databaseOk = $this->setupDatabase(self::FILE_DATABASE_SCHEMA);
+		$installationTypeOk = true;
+		
 	}
 	
-	private function createConfig() {
-		$config = array(
-			'wikiName' => 'HTML5Wiki',
-			'databaseAdapter' => 'PDO_MYSQL',
-			'database' => array(
-				'host'     => 'localhost',
-				'dbname'   => 'html5wiki',
-				'username' => 'html5wiki',
-				'password' => 'mySuperCoolPassword1337'
-			),
-			'routing' => array(
-				'defaultController' => 'wiki',
-				'defaultAction'     => 'welcome'
-			)
-			,'languages' => array('en', 'de')
-			,'defaultLanguage' => 'en'
-			,'defaultTimezone' => 'Europe/Zurich'
-			,'development' => false
-		);
+	/**
+	 * Builds a configuration array with the given parameters and writes it to
+	 * its target file in the config folder.
+	 *
+	 * @param $targetFile
+	 * @return true/false regarding success
+	 */
+	private function setupConfig($targetFile) {
+		$configOk = true;
+		$wikiname = $this->wizardData[self::PROPERTY_WIKINAME];
+		$database_host = $this->wizardData[self::PROPERTY_DATABASE_HOST];
+		$database_name = $this->wizardData[self::PROPERTY_DATABASE_NAME];
+		$database_user = $this->wizardData[self::PROPERTY_DATABASE_USER];
+		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
+		
+		/* Create config string: */
+		$config = '$config = array('. "\n"
+				. '\'wikiName\' => \''. $wikiname. '\','. "\n"
+				. '\'databaseAdapter\' => \'PDO_MYSQL\','. "\n"
+				. '\'database\' => array('. "\n"
+				. '	\'host\'     => \''. $database_host. '\','. "\n"
+				. '	\'dbname\'   => \''. $database_name. '\','. "\n"
+				. '	\'username\' => \''. $database_user. '\','. "\n"
+				. '	\'password\' => \''. $database_password. '\''. "\n"
+				. '),'. "\n"
+				. '\'routing\' => array('. "\n"
+				. '	\'defaultController\' => \'wiki\','. "\n"
+				. '	\'defaultAction\'     => \'welcome\''. "\n"
+				. ')'. "\n"
+				. ',\'languages\' => array(\'en\', \'de\')'. "\n"
+				. ',\'defaultLanguage\' => \'en\''. "\n"
+				. ',\'defaultTimezone\' => \'Europe/Zurich\''. "\n"
+				. ',\'development\' => false'. "\n"
+			. ');'. "\n";
+		
+		/* Try writing the file: */
+		if(is_writeable($targetFile)) {
+			$fh = fopen($targetFile, 'w');
+			if($fh) {
+				if(fwrite($fh, $config)) fclose($fh);
+				else $configOk = false;
+			} else {
+				$configOk = false;
+			}
+		} else {
+			$configOk = false;
+		}
+		
+		return $configOk;
+	}
+	
+	/**
+	 * Tries to setup the database with the give schema.
+	 *
+	 * @param $schemaFile
+	 * @return true/false regarding success
+	 */
+	private function setupDatabase($schemaFile) {
+		$databaseOk = true;
+		$sql_schema = '';
+		$database_host = $this->wizardData[self::PROPERTY_DATABASE_HOST];
+		$database_name = $this->wizardData[self::PROPERTY_DATABASE_NAME];
+		$database_user = $this->wizardData[self::PROPERTY_DATABASE_USER];
+		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
+		
+		/* Try to read schema: */
+		if(is_readable($schemaFile)) {
+			if(($sql_schema = file_get_contents($schemaFile)) === false) {
+				$databaseOk = false;
+			}
+		} else {
+			$databaseOk = false;
+		}
+		
+		/* Run the sql schema on the database: */
+		if(strlen($sql_schema) > 0) {
+			$connection = mysql_connect($database_host, $database_user, $database_password);
+			if($connection !== false) {
+				if(mysql_select_db($database_name, $connection) !== false) {
+					// The schema needs to be split up to single statements since
+					// mysql_query can only run one statement at once.
+					$statements = explode(';', $sql_schema);
+					foreach($statements as $statement) {
+						$statement = trim($statement);
+						if(strlen($statement) > 0) {
+							if(mysql_query($statement, $connection) === false) {
+								$databaseOk = false;
+								break;
+							}
+						}
+					}
+					
+					mysql_close($connection);
+				} else {
+					mysql_close($connection);
+					$databaseOk = false;
+				}
+			} else {
+				$databaseOk = false;
+			}
+		}
+		
+		return $databaseOk;
 	}
 	
 }
