@@ -66,7 +66,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 */
 	public function route() {
 		$this->request->parse();
-
+		
 		$arguments = $this->request->getArguments();
 
 		$this->controller = isset($arguments[1]) ? $arguments[1] : $this->config->routing->defaultController;
@@ -76,14 +76,23 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	}
 
 	/**
-	 * Sanitize controller and action strings
+	 * Sanitize controller and action strings<br/>
+	 * <br/>
+	 * The controller does not allow any special characters.<br/>
+	 * The action allows dashes in addition. This is only necessary since
+	 * article-permalinks can have dashes inside. "Real" actions will never
+	 * have a dash inside.
+	 *
+	 * @throws Html5Wiki_Exception
 	 */
 	private function sanitizeControllerAndAction() {
-		$pattern = '/^[a-z]+[0-9]*[a-z]*$/i';
-		if (!preg_match($pattern, $this->controller)) {
+		$controllerPattern = '/^[a-z]+[0-9]*[a-z]*$/i';
+		$actionPattern = '/^[a-z-]+[0-9-]*[a-z-]*$/i';
+		
+		if (!preg_match($controllerPattern, $this->controller)) {
 			throw new Html5Wiki_Exception('Invalid controller specified');
 		}
-		if (!empty($this->action) && !preg_match($pattern, $this->action)) {
+		if (!empty($this->action) && !preg_match($actionPattern, $this->action)) {
 			throw new Html5Wiki_Exception('Invalid action specified');
 		}
 	}
