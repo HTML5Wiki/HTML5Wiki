@@ -60,7 +60,7 @@
 			<a href="<?php echo $this->urlHelper() ?>" class="logo"><span class="hide"><?php echo $config->wikiName ?></span></a>
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
-					<li class="item home<?php echo $router->getController() == $config->routing->defaultController && $router->getAction() == $config->routing->defaultAction ? ' active' : '' ?>">
+					<li class="item home<?php echo !$displayCurrentPageInMenu && $router->getController() === 'wiki' && $router->getAction() !== 'new' ? ' active' : '' ?>">
 						<a href="<?php echo $this->urlHelper() ?>" class="tab"><?php echo $this->translate->_("homepage") ?></a>
 					</li>
 					<li class="item updates<?php echo $router->getController() == 'index' && $router->getAction() == 'history' ? ' active' : '' ?>">
