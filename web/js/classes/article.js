@@ -133,7 +133,7 @@ var Article = (function() {
 	self.handleEditArticleTitle = function(displayCancelButton) {
 		var heading = $('.heading');
 		var title = heading.text();
-		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" name="txtTitle" />');
+		var titleEditor = $('<input value="'+title+'" class="textfield" id="txtTitle" placeholder="' + Translate._('title') + '" name="txtTitle" />');
 		if(displayCancelButton == undefined) displayCancelButton = true;
 
 		var container = $('<div class="editor-wrapper" />');
