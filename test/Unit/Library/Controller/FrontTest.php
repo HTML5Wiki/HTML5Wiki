@@ -24,7 +24,7 @@ class Test_Unit_Library_Controller_FrontTest extends PHPUnit_Framework_TestCase 
 		);
 
 		$this->systemBasePath = realpath(dirname(__CLASS__));
-		$this->applicationPath = $this->systemBasePath . DIRECTORY_SEPARATOR . 'test/Unit/Library/Controller/FactoryTest/CorrectControllers' . DIRECTORY_SEPARATOR;
+		$this->applicationPath = $this->systemBasePath . DIRECTORY_SEPARATOR . 'Unit' . DIRECTORY_SEPARATOR . 'Library' . DIRECTORY_SEPARATOR . 'Controller' . DIRECTORY_SEPARATOR . 'FactoryTest' . DIRECTORY_SEPARATOR . 'CorrectControllers' . DIRECTORY_SEPARATOR;
 		$this->libraryPath     = $this->systemBasePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
 	}
 
