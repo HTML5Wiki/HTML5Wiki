@@ -16,13 +16,11 @@
 		array(
 			'name' => 'Welcome'
 			,'text' => '<p>Welcome to the HTML5Wiki installation wizard.</p><p>The wizard will guide you through a few steps to setup all necessary stuff like database and basic configuration.<br/>Please click <em>Next</em> when you\'re ready to start.</p>'
-			,'data' => array()
 			,'callMethodBefore' => 'testWritePermissions'
 		)
 		,array(
 			'name' => 'Database Setup'
 			,'text' => '<p>HTML5Wiki needs a MySQL database system to store its data.</p><p>Please specify the servers hostname (mostly <em>localhost</em>), a database, a valid user and its password.</p>'
-			,'data' => array()
 			,'input' => array(
 				'database_host' => array(
 					'type' => 'text'
@@ -58,28 +56,32 @@
 					,'mandatory' => true
 				)
 			)
-			,'data' => array()
 		)
 		,array(
-			'name' => 'Server installation type'
-			,'text' => '<p>Where have you set up the files for HTML5Wiki?</p><p>Is it placed '
+			'name' => 'Installation type'
+			,'text' => '<p>How is your webserver set up?</p><p>HTML5Wikis bootstrap is located inside the <em>web</em> directory. If you\'re able to point your webserver directly to this location, please select the first option below.</p><p>Many people are not allowed to control their hosted webservers on this level.<br/>If you\'re one of them, select the second option. All files from  <em>web</em> get moved one directory up to allow flawless interaction with HTML5Wiki.</p>'
 			,'input' => array(
 				'installationtype' => array(
 					'type' => 'radio'
 					,'caption' => 'Installation type'
 					,'mandatory' => true
 					,'items' => array(
-						'useWeb' => 'Inside /web/'
-						,'useRoot' => 'Direct in root without /web/'
+						'useWeb' => 'Use <em>web/</em>'
+						,'useRoot' => 'Don\'t use <em>web/</em>'
 					)
 				)
 			)
-			,'data' => array()
 		)
 		,array(
 			'name' => 'Ready to install'
-			,'text' => '<p>Where have you set up the files for HTML5Wiki?</p><p>Is it placed '
-			,'data' => array()
+			,'text' => '<p>The installation wizard has now all necessary information available.</p><p>Please click <em>Install</em> to finally set up your HTML5Wiki.</p>'
+			,'nextCaption' => 'Install'
+		)
+		,array(
+			'name' => 'Installation done'
+			,'text' => ''
+			,'nextCaption' => 'Finish'
+			,'callMethodBefore' => 'install'
 		)
 	);
 	$currentstep_index = 0;
@@ -115,6 +117,9 @@
 			foreach($postData as $key => $value) {
 				if(strstr($key, 'input_') !== false) {
 					$key = substr($key, 6);
+					if(!isset($steps[$currentstep_index]['data'])) {
+						$steps[$currentstep_index]['data'] = array();
+					}
 					$steps[$currentstep_index]['data'][$key] = $value;
 				}
 			}
@@ -133,7 +138,11 @@
 				$ok = true;
 				if($wizardDirection === 'next') {
 					if(isset($steps[$currentstep_index]['callMethodAfter'])) {
-						$stepsData = $steps[$currentstep_index]['data'];
+						$stepsData = array();
+						if(isset($steps[$currentstep_index]['data'])) {
+							$stepsData = $steps[$currentstep_index]['data'];
+						}
+						
 						$ok = $steps[$currentstep_index]['callMethodAfter']($stepsData);
 					}
 					if($ok === true) $currentstep_index++;
@@ -145,7 +154,11 @@
 		
 		// Execute "before" method if present:
 		if(isset($steps[$currentstep_index]['callMethodBefore'])) {
-			$stepsData = $steps[$currentstep_index]['data'];
+			$stepsData = array();
+			if(isset($steps[$currentstep_index]['data'])) {
+				$stepsData = $steps[$currentstep_index]['data'];
+			}
+			
 			$steps[$currentstep_index]['callMethodBefore']($stepsData);
 		}
 		
@@ -367,6 +380,7 @@
 				addMessage('error', 'Invalid database name', 'Could not access the database "'. $dbname. '". Please make sure this database exists.');
 			} else {
 				@mysql_close($connection);
+				addMessage('info', 'Database connection ready', 'The database connection has successfully been tested.');
 			}
 		} else {
 			addMessage('error','Connection error', 'Could not connect to the host "'. $host. '". Please check host, username and password.');
@@ -405,7 +419,7 @@
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
 					<li class="item install active">
-						<a href="#" class="tab">Install Wizard: Step <?php echo $currentstep_index+1 ?> of <?php echo sizeof($steps) ?></a>
+						<a href="#" class="tab">Installation Wizard: Step <?php echo $currentstep_index+1 ?> of <?php echo sizeof($steps) ?></a>
 					</li>
 				</ol>
 			</nav>
@@ -434,10 +448,10 @@
 			
 				<footer class="bottom-button-bar">
 					<?php if($currentstep_index < sizeof($steps)-1) : ?>
-					<input type="submit" name="next" value="Next >" class="large-button caption"/>
+					<input type="submit" name="next" value="<?php echo (isset($currentstep['nextCaption']) === true ? $currentstep['nextCaption'] : 'Next >'); ?>" class="large-button caption"/>
 					<?php endif; ?>
 					<?php if($currentstep_index > 0) : ?>
-					<input type="submit" name="back" value="Back" class="large-button caption" onClick="document.forms[0].submit();" />
+					<input type="submit" name="back" value="Back" class="large-button caption" />
 					<?php endif; ?>
 				</footer>
 			</form>
