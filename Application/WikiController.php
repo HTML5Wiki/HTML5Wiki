@@ -84,7 +84,9 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 		}
 
 		if (isset($article->id)) {
-			$this->layoutTemplate->assign('permalink', $permalink); // used in menubar
+			if($this->router->getRequest()->isAjax() === false) {
+				$this->layoutTemplate->assign('permalink', $permalink); // used in menubar
+			}
 			$this->showArticle($article);
 		} else {
 			$this->redirectToArticleNotFoundSearch($permalink);
