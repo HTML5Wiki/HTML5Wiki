@@ -78,10 +78,12 @@ var Article = (function() {
 				url: form.attr('action'), 
 				data: mediaData,
 				complete: function(response) {
-					Article.replaceContent(response);
+					if(response.status != 200){
+						Article.replaceContent(response);
+					}
 				},
 				success: function(data, textStatus, response) {
-					var url = window.location.href.replace(/(edit|new)/, 'read');
+					var url = data;
 					window.location.href = url;
 				}
 			});

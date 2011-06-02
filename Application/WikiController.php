@@ -279,10 +279,13 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 				
 				// Save:
 				$articleVersion = $this->saveArticle($permalink, $user, $this->prepareData($oldArticleVersion, $params));
+				
+				// Redirect:
+				$url = $this->router->buildURL(array('wiki',$permalink));
 				if($this->router->getRequest()->isAjax() === true) {
-					return $permalink;
+					echo $url;
 				} else {
-					$this->redirect($this->router->buildURL(array('wiki',$permalink)));
+					$this->redirect($url);
 				}
 				
 				return;
