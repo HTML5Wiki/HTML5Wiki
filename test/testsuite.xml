@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-    Document   : testsuite.xml
-    Created on : 5. April 2011, 08:41
-    Author     : Michael Weibel <mweibel@hsr.ch>
-    Description:
-        Testsuite configuration
+ This file is part of the HTML5Wiki Project.
+ 
+ LICENSE
+
+ This source file is subject to the new BSD license that is bundled
+ with this package in the file LICENSE.
+ It is also available through the world-wide-web at this URL:
+ http://www.github.com/HTML5Wiki/HTML5Wiki/blob/master/LICENSE
+ If you did not receive a copy of the license and are unable to
+ obtain it through the world-wide-web, please send an email
+ to mweibel@hsr.ch so we can send you a copy immediately.
+ 
+ @author Michael Weibel <mweibel@hsr.ch>
+ @copyright (c) HTML5Wiki Team 2011
+ @package Test
+-->
+
+<!--
+phpUnit configuration
 -->
 <phpunit bootstrap="./TestHelper.php">
 	<testsuites>
@@ -28,6 +42,6 @@
 		</blacklist>
 	</filter>
 	<selenium>
-		<browser name="Firefox on Debian" browser="*firefox" host="selenium.openflex.net" port="4444" />
+		<browser name="Firefox on Debian" browser="*firefox"  host="selenium.openflex.net" port="4444" />
 	</selenium>
 </phpunit>

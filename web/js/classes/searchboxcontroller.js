@@ -1,4 +1,24 @@
 /**
+ * This file is part of the HTML5Wiki Project.
+ * 
+ * LICENSE
+ *
+ * This source file is subject to the new BSD license that is bundled
+ * with this package in the file LICENSE.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.github.com/HTML5Wiki/HTML5Wiki/blob/master/LICENSE
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to mweibel@hsr.ch so we can send you a copy immediately.
+ *
+ * @author Manuel Alabor <malabor@hsr.ch>
+ * @copyright (c) HTML5Wiki Team 2011
+ * @category Html5Wiki
+ * @package Web
+ * @subpackage Javascript
+ */
+
+/**
  * Controller for a Searchbox-Field.<br/>
  * To use, wrap an input-element (suggest to use one with the type "text")
  * into a parent DOM element. Afterwards call SearchBoxController#initWithSearchBox
@@ -6,7 +26,6 @@
  * SearchBoxController will then create all necessary event bindings and creates a
  * DOM-object for keeping the result list in the searchbox' parent.
  *
- * @author Manuel Alabor
  * @see SearchBoxController#initWithSearchBox
  */
 var SearchBoxController = (function() {
