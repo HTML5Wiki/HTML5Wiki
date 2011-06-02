@@ -3,7 +3,7 @@ HTML5Wiki
 
 Introduction
 ------------
-HTML5Wiki is an intuitive wiki-system. Maintaining articles in different versions is a breeze using the simpel user interface.
+HTML5Wiki is an intuitive wiki-system. Maintaining articles in different versions is a breeze using the simple user interface.
 
 This application was built as part of a software engineering project at the HSR in Switzerland. The complete source code is open and interested developers can contribute their additions.
 
@@ -36,6 +36,6 @@ The HTML5Wiki core team:
   * Manuel Alabor
   * Michael Weibel
   * Nicolas Karrer
-  * Roman Brechbühl
+  * Roman BrechbÃ¼hl
 
 If you are interested into enhance and develop HTML5Wiki, please know you are welcome! Have a look at our git repository at https://github.com/HTML5Wiki/HTML5Wiki.
