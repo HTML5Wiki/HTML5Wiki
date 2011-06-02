@@ -43,6 +43,11 @@
 				<exclude name="web/css/less/**" />
 				<exclude name="web/js/**/*.js" />
 			</fileset>
+			<fileset dir="${sourcedir}">
+				<include name="install.php" />
+				<include name="README" />
+				<include name="LICENSE" />
+			</fileset>
 		</copy>
 	</target>
 	
