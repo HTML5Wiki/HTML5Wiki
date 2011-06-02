@@ -80,6 +80,6 @@ return array(
 	
 	,'wrongInput' => 'Invalid input'
 	,'newArticle' => 'New Article'
-	
+	,'clickOnTitleToEdit' => 'Click on Title to edit.'
 );
 ?>

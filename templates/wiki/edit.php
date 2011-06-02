@@ -45,7 +45,13 @@
 				$fieldToSet = isset($this->errors['fields']['title']) ? $this->errors['fields']['title'] : false;
 				$setErrorClass = $fieldToSet ? ' error' : '';
 			?>
-			<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
+			<div id="headingcontainer" style="float:left">
+				<h1 class="heading<?php echo $setErrorClass; ?>"><?php echo strlen($this->title) > 0 ? $this->title : $this->permalink; ?></h1>
+				<div class="clear"></div>
+				<p class="meta">
+					<span class="cancel"><?php echo $this->translate->_('clickOnTitleToEdit'); ?></span>
+				</p>
+			</div>
 			<?php echo isset($this->permalink) ? $this->capsulebarHelper()->render($this->permalink) : ''; ?>
 		</header>
 		<div class="clear messagemarker"></div>
