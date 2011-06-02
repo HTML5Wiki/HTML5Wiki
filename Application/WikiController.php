@@ -951,10 +951,12 @@ class Application_WikiController extends Html5Wiki_Controller_Abstract {
 			,'perma'	=> array('ae'    ,'Ae'    ,'oe'    ,'oe'    ,'ue'    ,'Ue'    ,'ss'    )
 		);
 		$toReplaceWithDashes = array('.', ',' , '_', ' ');
+		$toReplaceWithNothing = array('(', ')');
 		
 		$result = str_replace($chartable['raw'], $chartable['perma'], $string);
 		$result = str_replace($chartable['in'], $chartable['perma'], $result);
 		$result = str_replace($toReplaceWithDashes, '-', $result);
+		$result = str_replace($toReplaceWithNothing, '', $result);
 		$result = strtolower($result);
 		
 		return $result;
