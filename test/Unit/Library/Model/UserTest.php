@@ -28,9 +28,7 @@ class Test_Unit_Library_Model_UserTest extends Test_Unit_Library_Model_AbstractT
 		parent::setUp();
 
 		$this->table	= new Html5Wiki_Model_User_Table();
-		// all tests with fake class. Because of error in the saveCookie Method. User class needs to be refactored to the next release
 		$this->user		= new Html5Wiki_Model_User();
-
 
 		$this->userData = array(
 			'email'	=> 'test@example.com',
@@ -49,6 +47,9 @@ class Test_Unit_Library_Model_UserTest extends Test_Unit_Library_Model_AbstractT
 		$this->assertEquals($this->userData['name'], $this->user->__toString());
 	}
 
+	public function testLoadByWrongId() {
+		$this->assertFalse($this->user->loadById(2));
+	}
 
 	public function testLoadByIdNameAndEmail() {
 		$this->assertTrue($this->user->loadByIdNameAndEmail(1, $this->userData['name'], $this->userData['email']));
