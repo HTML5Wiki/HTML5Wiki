@@ -18,7 +18,7 @@ $config = array(
 	),
 	'routing' => array(
 		'defaultController' => 'wiki',				// Default Controller
-		'defaultAction'     => 'index'				// If Default Controller = Wiki,
+		'defaultAction'     => 'welcome'			// If Default Controller == Wiki,
 													// this defines the default
 													// wikipage to show
 	)
