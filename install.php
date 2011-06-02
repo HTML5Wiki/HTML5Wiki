@@ -35,12 +35,11 @@
 		array(
 			'name' => 'Welcome'
 			,'text' => '<p>Welcome to the HTML5Wiki installation wizard.</p><p>The wizard will guide you through a few steps to setup all necessary stuff like database and basic configuration.<br/>Please click <em>Next</em> when you\'re ready to start.</p>'
-			,'data' => array()
+			,'callMethodBefore' => 'testWritePermissions'
 		)
 		,array(
 			'name' => 'Database Setup'
 			,'text' => '<p>HTML5Wiki needs a MySQL database system to store its data.</p><p>Please specify the servers hostname (mostly <em>localhost</em>), a database, a valid user and its password.</p>'
-			,'data' => array()
 			,'input' => array(
 				'database_host' => array(
 					'type' => 'text'
@@ -67,7 +66,7 @@
 			,'callMethodAfter' => 'testDatabaseConnection'
 		)
 		,array(
-			'name' => 'Wiki'
+			'name' => 'Branding'
 			,'text' => '<p>Please enter a name for your HTML5Wiki installation.</p>'
 			,'input' => array(
 				'wikiname' => array(
@@ -76,7 +75,32 @@
 					,'mandatory' => true
 				)
 			)
-			,'data' => array()
+		)
+		,array(
+			'name' => 'Installation type'
+			,'text' => '<p>How is your webserver set up?</p><p>HTML5Wikis bootstrap is located inside the <em>web</em> directory. If you\'re able to point your webserver directly to this location, please select the first option below.</p><p>Many people are not allowed to control their hosted webservers on this level.<br/>If you\'re one of them, select the second option. All files from  <em>web</em> get moved one directory up to allow flawless interaction with HTML5Wiki.</p>'
+			,'input' => array(
+				'installationtype' => array(
+					'type' => 'radio'
+					,'caption' => 'Installation type'
+					,'mandatory' => true
+					,'items' => array(
+						'useWeb' => 'Use <em>web/</em>'
+						,'useRoot' => 'Don\'t use <em>web/</em>'
+					)
+				)
+			)
+		)
+		,array(
+			'name' => 'Ready to install'
+			,'text' => '<p>The installation wizard has now all necessary information available.</p><p>Please click <em>Install</em> to finally set up your HTML5Wiki.</p>'
+			,'nextCaption' => 'Install'
+		)
+		,array(
+			'name' => 'Installation done'
+			,'text' => ''
+			,'nextCaption' => 'Finish'
+			,'callMethodBefore' => 'install'
 		)
 	);
 	$currentstep_index = 0;
@@ -112,6 +136,9 @@
 			foreach($postData as $key => $value) {
 				if(strstr($key, 'input_') !== false) {
 					$key = substr($key, 6);
+					if(!isset($steps[$currentstep_index]['data'])) {
+						$steps[$currentstep_index]['data'] = array();
+					}
 					$steps[$currentstep_index]['data'][$key] = $value;
 				}
 			}
@@ -130,7 +157,11 @@
 				$ok = true;
 				if($wizardDirection === 'next') {
 					if(isset($steps[$currentstep_index]['callMethodAfter'])) {
-						$stepsData = $steps[$currentstep_index]['data'];
+						$stepsData = array();
+						if(isset($steps[$currentstep_index]['data'])) {
+							$stepsData = $steps[$currentstep_index]['data'];
+						}
+						
 						$ok = $steps[$currentstep_index]['callMethodAfter']($stepsData);
 					}
 					if($ok === true) $currentstep_index++;
@@ -138,6 +169,16 @@
 					$currentstep_index--;
 				}
 			}
+		}
+		
+		// Execute "before" method if present:
+		if(isset($steps[$currentstep_index]['callMethodBefore'])) {
+			$stepsData = array();
+			if(isset($steps[$currentstep_index]['data'])) {
+				$stepsData = $steps[$currentstep_index]['data'];
+			}
+			
+			$steps[$currentstep_index]['callMethodBefore']($stepsData);
 		}
 		
 		return $currentstep_index;
@@ -240,8 +281,9 @@
 		
 		if(isset($step['input'])) {
 			$inputs = $step['input'];
-			
+			$tabindex = 0;
 			foreach($inputs as $key => $input) {
+				$tabindex++;
 				$value = '';
 				$placeholder = '';
 				if(isset($step['data'][$key])) $value = $step['data'][$key];
@@ -259,8 +301,26 @@
 							  	  .  'id="input_'. $key. '" '
 								  .  'value="'. $value. '" '
 								  .  'placeholder="'. $placeholder. '" '
+								  .  'tabindex="'. $tabindex. '" '
 								  .  '/>';
 						break;
+					case 'radio' :
+						$items = $input['items'];
+						foreach($items as $itemvalue => $item) {
+							if($itemvalue === $value) $selected = ' checked="checked"';
+							else $selected = '';
+							$rendered .= '<span class="radiocontainer">'
+							          .  '<input type="radio" '
+									  .  'name="input_'. $key. '" '
+							  	  	  .  'id="input_'. $key. '" '
+									  .  'value="'. $itemvalue. '" '
+									  .  'tabindex="'. $tabindex. '" '
+									  .  $selected
+									  .  '/> '
+									  .  $item
+									  .  '</span>';
+							$tabindex++;
+						}
 				}
 				
 				$rendered .= '</p>'."\n";
@@ -268,6 +328,7 @@
 		}
 		
 		return $rendered;
+		
 	}
 	
 	/* ---------------------------------------------------------------------- */
@@ -281,8 +342,41 @@
 			,'text' => $message
 		);
 	}
+
+	function getDataValue($data, $key, $default='') {
+		$result = $default;
+		if(isset($data[$key])) $result = $data[$key];
+		return $result;
+	}
 	
 	/* ---------------------------------------------------------------------- */
+	
+	/**
+	 * Tests if the installation wizard has writepermissions for several paths.
+	 *
+	 * @param $stepData
+	 * @return true/false
+	 */
+	function testWritePermissions($stepData) {
+		$configWriteable = testIfConfigWriteable();
+		$parentWriteable = testIfParentWritable();
+		
+		if($configWriteable === false || $parentWriteable === false) {
+			addMessage('info', 'No write permissions', 'The installation wizard has recognized that he has no or partially no write permissions.</p><p>You can try to fix this by changing the permissions on your server (<em>chmod 777</em>) and restart the wizard.</p><p>If not, you\'ll have to do some configuration steps by yourself. If you choose this variant, the installation wizard will tell you exactly the steps you have to do.');
+		}
+		
+		return ($configWriteable && $parentWriteable);
+	}
+	
+	function testIfConfigWriteable() {
+		return is_writable('../config/');
+	}
+	
+	function testIfParentWritable() {
+		return is_writeable('../');
+	}
+	
+	
 	/**
 	 * This method tests the databaseconnection.<br/>
 	 * If everythings fine, it returns true, otherwise it adds messages to the
@@ -299,10 +393,13 @@
 		
 		$ok = (($connection = @mysql_connect($host, $user, $password)) !== false);
 		if($ok === true) {
-			$ok = (mysql_select_db($dbname, $connection) !== false);
+			$ok = (@mysql_select_db($dbname, $connection) !== false);
 			
 			if($ok === false) {
 				addMessage('error', 'Invalid database name', 'Could not access the database "'. $dbname. '". Please make sure this database exists.');
+			} else {
+				@mysql_close($connection);
+				addMessage('info', 'Database connection ready', 'The database connection has successfully been tested.');
 			}
 		} else {
 			addMessage('error','Connection error', 'Could not connect to the host "'. $host. '". Please check host, username and password.');
@@ -310,12 +407,7 @@
 		
 		return $ok;
 	}
-	
-	function getDataValue($data, $key, $default='') {
-		$result = $default;
-		if(isset($data[$key])) $result = $data[$key];
-		return $result;
-	}
+
 	
 ?>
 <!DOCTYPE html>
@@ -329,13 +421,14 @@
 	<link rel="shortcut icon" href="web/images/favicon.ico" type="image/x-icon" />
 	<link rel="icon" href="web/images/favicon.ico" type="image/ico" />
 	<link rel="stylesheet" href="web/css/html5wiki.css" />
-	
 	<style type="text/css">
 		.header-overall .menu-items .install .tab { background-image: url('web/images/icons16/wizard.png'); }
 		input[type=text] { font-size: 110%; margin-bottom: 8px; width: 300px; }
 		label { display: block; font-size: 85%; margin-bottom: 2px; }
 		.editor p { margin-bottom: 6px; }
 		.box h3 { margin-top: 3px;}
+		.radiocontainer { display: block; font-size: 80%; margin-bottom: 4px; }
+		.radiocontainer input { vertical-align: bottom; }
 	</style>
 </head> 
 <body>
@@ -345,7 +438,7 @@
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
 					<li class="item install active">
-						<a href="#" class="tab">Install Wizard</a>
+						<a href="#" class="tab">Installation Wizard: Step <?php echo $currentstep_index+1 ?> of <?php echo sizeof($steps) ?></a>
 					</li>
 				</ol>
 			</nav>
@@ -373,11 +466,11 @@
 				<?php echo renderInputs($currentstep); ?>
 			
 				<footer class="bottom-button-bar">
-					<?php if($currentstep_index > 0) : ?>
-					<input type="submit" name="back" value="Back" class="large-button caption"/>
-					<?php endif; ?>
 					<?php if($currentstep_index < sizeof($steps)-1) : ?>
-					<input type="submit" name="next" value="Next" class="large-button caption"/>
+					<input type="submit" name="next" value="<?php echo (isset($currentstep['nextCaption']) === true ? $currentstep['nextCaption'] : 'Next >'); ?>" class="large-button caption"/>
+					<?php endif; ?>
+					<?php if($currentstep_index > 0) : ?>
+					<input type="submit" name="back" value="Back" class="large-button caption" />
 					<?php endif; ?>
 				</footer>
 			</form>

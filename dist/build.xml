@@ -55,6 +55,7 @@
 				<include name="templates/**" />
 				<include name="web/**" />
 				<exclude name="**/README" />
+				<exclude name="**/.htaccess" />
 				<exclude name="web/css/less/**" />
 				<exclude name="web/js/**/*.js" />
 			</fileset>
