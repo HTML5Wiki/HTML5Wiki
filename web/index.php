@@ -22,11 +22,23 @@
  * HTML5Wiki bootstrap file
  */
 
+/**
+ * Catch all output
+ */
 ob_start();
 
+/**
+ * Set display errors to on
+ * 
+ * @todo Depends on the dev/production mode! Maybe remove it entirely, 
+ *		 users should set that via the php.ini
+ */
 ini_set('display_errors', true);
 error_reporting(E_ALL | E_STRICT);
 
+/**
+ * Setup paths
+ */
 $systemBasePath = realpath(dirname(__FILE__) . '/../');
 $libraryPath = $systemBasePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
 $applicationPath = $systemBasePath . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR;
@@ -39,24 +51,45 @@ ini_set('include_path', $includePath);
 $includePath = get_include_path() . PATH_SEPARATOR . $systemBasePath . PATH_SEPARATOR . $configPath;
 ini_set('include_path', $includePath);
 
+/**
+ * Zend Autoloader automatically includes required files without explicit specifying of them. 
+ */
 require $libraryPath . 'Zend/Loader/Autoloader.php';
 
 $autoloader = Zend_Loader_Autoloader::getInstance();
 $autoloader->registerNamespace(array('Html5Wiki_', 'Application_', 'Markdown_', 'PhpDiff_'));
 
+/**
+ * All errors and exceptions (except FATAL errors) are handled by the error controller.
+ */
 set_exception_handler(array('Application_ErrorController','handleException'));
 set_error_handler(array('Application_ErrorController','handleError'));
 
+/**
+ * Configuration..
+ */
 require $configPath . 'config.php';
 $config = new Zend_Config($config);
 
+/**
+ * DB Connection..
+ */
 $adapter = Zend_Db::factory($config->databaseAdapter, $config->database);
 Zend_Db_Table::setDefaultAdapter($adapter);
 
+/**
+ * Set default timezone according to the configuration
+ */
 date_default_timezone_set($config->defaultTimezone);
 
+/**
+ * Setup front controller and run it.
+ */
 $frontController = new Html5Wiki_Controller_Front($config, $systemBasePath, $libraryPath, $applicationPath);
 $frontController->run();
 echo $frontController->render();
 
+/**
+ * Echo the buffered output
+ */
 ob_end_flush();
