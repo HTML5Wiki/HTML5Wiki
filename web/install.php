@@ -228,7 +228,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
 		
 		/* Create config string: */
-		$config = '$config = array('. "\n"
+		$config = '<?php $config = array('. "\n"
 				. '\'wikiName\' => \''. $wikiname. '\','. "\n"
 				. '\'databaseAdapter\' => \'PDO_MYSQL\','. "\n"
 				. '\'database\' => array('. "\n"
@@ -245,7 +245,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 				. ',\'defaultLanguage\' => \'en\''. "\n"
 				. ',\'defaultTimezone\' => \'Europe/Zurich\''. "\n"
 				. ',\'development\' => false'. "\n"
-			. ');'. "\n";
+			. '); ?>'. "\n";
 		
 		/* Try writing the file: */
 		$configOk = $this->writeFile(self::FILE_CONFIG, $config);
