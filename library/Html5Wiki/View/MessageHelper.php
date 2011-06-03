@@ -29,14 +29,18 @@
  * @see web/js/classes/messagecontroller.js
  */
 class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
+	/**
+	 * Static messages array
+	 * @var array
+	 */
 	private static $messages = array();
 	
 	/**
 	 * Appends an info message to the queue.
 	 *
-	 * @param $title
-	 * @param $text
-	 * @param $autohide should the message dissappear automaticaly in the UI?
+	 * @param string $title
+	 * @param string $text
+	 * @param bool $autohide should the message dissappear automaticaly in the UI?
 	 * @see Html5Wiki_View_MessageBoxHelper#appendMessageBox
 	 */
 	public function appendInfoMessage($title, $text, $autohide=false) {
@@ -46,9 +50,9 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Appends an error message to the queue.
 	 *
-	 * @param $title
-	 * @param $text
-	 * @param $autohide should the message dissappear automaticaly in the UI?
+	 * @param string $title
+	 * @param string $text
+	 * @param bool $autohide should the message dissappear automaticaly in the UI?
 	 * @see Html5Wiki_View_MessageBoxHelper#appendMessageBox
 	 */
 	public function appendErrorMessage($title, $text, $autohide=false) {
@@ -58,9 +62,9 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Appends an question message to the queue.
 	 *
-	 * @param $title
-	 * @param $text
-	 * @param $autohide should the message dissappear automaticaly in the UI?
+	 * @param string $title
+	 * @param string $text
+	 * @param bool $autohide should the message dissappear automaticaly in the UI?
 	 * @see Html5Wiki_View_MessageBoxHelper#appendMessageBox
 	 */
 	public function appendQuestionMessage($title, $text, $autohide=false) {
@@ -77,9 +81,9 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	 * Use $javascriptCallback to inject frontend javascript code for the click-event
 	 * of your action.
 	 *
-	 * @param $text
-	 * @param $showAsButton (optional) Show action as link or as button?
-	 * @param $javascriptCallback (optional), if not passed, action closes message
+	 * @param string $text
+	 * @param bool $showAsButton (optional) Show action as link or as button?
+	 * @param string $javascriptCallback (optional), if not passed, action closes message
 	 */
 	public function addButton($text, $showAsButton=true, $javascriptCallback=null) {
 		if($this->hasMessages() === false) {
@@ -104,7 +108,7 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Checks if messageboxes are present.
 	 *
-	 * @return true/false
+	 * @return bool
 	 */
 	public function hasMessages() {
 		return (sizeof(self::$messages) > 0);
@@ -122,10 +126,10 @@ class Html5Wiki_View_MessageHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Appends a new message.
 	 *
-	 * @param $type [info|error|question]
-	 * @param $title
-	 * @param $text
-	 * @param $autohide should the message dissappear automaticaly in the UI?
+	 * @param string $type [info|error|question]
+	 * @param string $title
+	 * @param string $text
+	 * @param bool $autohide should the message dissappear automaticaly in the UI?
 	 */
 	private function appendMessage($type, $title, $text, $autohide) {
 		self::$messages[] = array(

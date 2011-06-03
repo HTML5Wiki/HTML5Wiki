@@ -70,6 +70,15 @@ interface Html5Wiki_Routing_Interface_Router {
 	 * @return string
 	 */
 	public function getAction();
+	
+	/**
+	 * Pass as many url parts as you want (without any slashes or anything!) and
+	 * this method will create you a valid URL with basepath and everything.
+	 *
+	 * @param array 0-n url parts
+	 * @return string valid URL with basepath plus all url parts from the parameterlist.
+	 */
+	public function buildUrl(array $parts);
 }
 
 ?>

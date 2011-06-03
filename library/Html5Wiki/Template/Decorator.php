@@ -158,7 +158,7 @@ abstract class Html5Wiki_Template_Decorator implements Html5Wiki_Template_Interf
 	}
 	
 	/**
-	 * Get an assigned variable or the translator (if name is translate)
+	 * Get an assigned variable, the translator (if name is translate) or the response (if name is response).
 	 * @param string $name
 	 * @return mixed
 	 */
