@@ -228,7 +228,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
 		
 		/* Create config string: */
-		$config = '<?php $config = array('. "\n"
+		$config = '&lt;?php $config = array('. "\n"
 				. '\'wikiName\' => \''. $wikiname. '\','. "\n"
 				. '\'databaseAdapter\' => \'PDO_MYSQL\','. "\n"
 				. '\'database\' => array('. "\n"
@@ -430,7 +430,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 		
 		
 		if($htaccessOk === false) {
-			$this->addMessage('error','Could not create .htaccess file', 'Please create the file <em>web/.htaccess</em> by yourself and copy paste the following content into it:</p><p class="white-paper">'. nl2br($htaccess));
+			$this->addMessage('error','Could not create .htaccess file', 'Please create the file <em>'. $targetFile. '</em> by yourself and copy paste the following content into it:</p><p class="white-paper">'. nl2br($htaccess));
 		}
 		
 		return $htaccessOk;
