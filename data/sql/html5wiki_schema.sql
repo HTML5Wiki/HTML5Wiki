@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `MediaVersion` (
   PRIMARY KEY (`id`,`timestamp`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
-INSERT INTO `MediaVersion` VALUES(1, 1307023153, 1, 'willkommen', 'PUBLISHED', '', 'ARTICLE');
+INSERT INTO `MediaVersion` VALUES(1, 1307023153, 1, 'welcome', 'PUBLISHED', '', 'ARTICLE');
 
 CREATE TABLE IF NOT EXISTS `MediaVersionTag` (
   `tagTag` varchar(50) NOT NULL,
