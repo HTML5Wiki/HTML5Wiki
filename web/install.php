@@ -799,8 +799,8 @@ $messages = $wizard->getMessages();
 	<meta name="description" content="HTML5Wiki"/>
  	<meta name="author" content="HTML5Wiki"/>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-	<link rel="shortcut icon" href="web/images/favicon.ico" type="image/x-icon" />
-	<link rel="icon" href="web/images/favicon.ico" type="image/ico" />
+	<link rel="shortcut icon" href="wimages/favicon.ico" type="image/x-icon" />
+	<link rel="icon" href="wimages/favicon.ico" type="image/ico" />
 	<style type="text/css">
 		html,body,div,span,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,abbr,address,cite,code,del,dfn,em,img,ins,kbd,q,samp,small,strong,sub,sup,var,b,i,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td,article,aside,canvas,details,figcaption,figure,footer,header,hgroup,menu,nav,section,summary,time,mark,audio,video{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent;}
 		body{line-height:1;}
@@ -897,21 +897,21 @@ $messages = $wizard->getMessages();
 		* html .clearfix{height:1%;}
 		.clearfix{display:block;}
 		.hide{display:none;}
-		.header-overall{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;position:relative;height:60px;padding-top:8px;}.header-overall .logo{position:absolute;background:url('../images/headerLogo.png') no-repeat;width:153px;height:60px;}
+		.header-overall{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;position:relative;height:60px;padding-top:8px;}.header-overall .logo{position:absolute;background:url('images/headerLogo.png') no-repeat;width:153px;height:60px;}
 		.header-overall .main-menu{margin-left:181px;margin-top:28px;}.header-overall .main-menu .menu-items .item{float:left;list-style:none;margin-right:3px;}
 		.header-overall .main-menu .menu-items .tab{color:black;text-decoration:none;background:5px 5px no-repeat rgba(255, 255, 255, 0.6);padding:6px 8px 4px 24px;-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0;-moz-border-radius:5px 5px 0 0;-webkit-border-radius:5px 5px 0 0;border-radius:5px 5px 0 0;}.header-overall .main-menu .menu-items .tab:hover{background-color:rgba(255, 255, 255, 0.8);}
 		.header-overall .main-menu .menu-items .active .tab{background-color:#fff;}.header-overall .main-menu .menu-items .active .tab:hover{background-color:#fff;}
-		.header-overall .main-menu .menu-items .home .tab{background-image:url('../images/icons16/house.png');}
-		.header-overall .main-menu .menu-items .updates .tab{background-image:url('../images/icons16/clockHistoryFrame.png');}
-		.header-overall .main-menu .menu-items .article .tab{background-image:url('../images/icons16/page.png');}
-		.header-overall .main-menu .menu-items .new-article .tab{background-image:url('../images/icons16/page_add.png');}
-		.header-overall .main-menu .menu-items .search{float:right;margin:-10px 0 0 0;}.header-overall .main-menu .menu-items .search .searchterm{width:150px;font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;padding:5px 3px 3px 22px;background:url('../images/icons16/magnifier.png') no-repeat 3px 2px #ffffff;border:1px solid #ea7253;}
+		.header-overall .main-menu .menu-items .home .tab{background-image:url('images/icons16/house.png');}
+		.header-overall .main-menu .menu-items .updates .tab{background-image:url('images/icons16/clockHistoryFrame.png');}
+		.header-overall .main-menu .menu-items .article .tab{background-image:url('images/icons16/page.png');}
+		.header-overall .main-menu .menu-items .new-article .tab{background-image:url('images/icons16/page_add.png');}
+		.header-overall .main-menu .menu-items .search{float:right;margin:-10px 0 0 0;}.header-overall .main-menu .menu-items .search .searchterm{width:150px;font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;font-size:85%;padding:5px 3px 3px 22px;background:url('images/icons16/magnifier.png') no-repeat 3px 2px #ffffff;border:1px solid #ea7253;}
 		.header-overall .searchbox-results{margin:-1px 0 0 0;position:absolute;width:175px;background:#fff;border:1px solid #ea7253;border-top:1px solid #fbe2db;}.header-overall .searchbox-results .result-item{list-style:none;padding:4px;font-size:85%;}.header-overall .searchbox-results .result-item a{text-decoration:none;color:#000;}
 		.header-overall .searchbox-results .result-item .title{font-weight:bold;padding:2px 0 5px 20px;background:no-repeat 0 0;}
 		.header-overall .searchbox-results .result-item .matchorigins{padding-left:20px;font-style:italic;color:#a9a9a9;}
 		.header-overall .searchbox-results .selected{background-color:#f5bdae;}
-		.header-overall .searchbox-results .mediatype-article .title{background-image:url('../images/icons16/page.png');}
-		body{background:url('../images/headerBackground.png') repeat-x;}
+		.header-overall .searchbox-results .mediatype-article .title{background-image:url('images/icons16/page.png');}
+		body{background:url('images/headerBackground.png') repeat-x;}
 		.content{margin-top:10px;margin-bottom:30px;}.content h1{font:bold 200% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#000000;}
 		.content h2,.content h3,.content h4,.content h5{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}.content h2 a,.content h3 a,.content h4 a,.content h5 a{text-decoration:none;color:#000000;}.content h2 a:hover,.content h3 a:hover,.content h4 a:hover,.content h5 a:hover{background-color:#fdf4f2;}
 		.content h2{font-size:150%;color:#000000;margin:30px 0 5px 0;}
@@ -925,9 +925,9 @@ $messages = $wizard->getMessages();
 		.content .bottom-button-bar .large-button .caption{padding-left:19px;padding-top:1px;background-repeat:no-repeat;}
 		.content .bottom-button-bar .large-button .caption{background-position:0 center;padding-left:22px;}
 		.content .bottom-button-bar .link-button{color:#a9a9a9;font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;}.content .bottom-button-bar .link-button:hover{color:#9c9c9c;background-color:#f0f0f0;}
-		.content .box{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;padding:6px 5px 6px 29px;background:no-repeat 7px 10px;border:1px solid;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;margin-bottom:10px;}.content .box.info{background-image:url('../images/icons16/information.png');background-color:#7ab7e6;border-color:#2888d2;}
-		.content .box.error{background-image:url('../images/icons16/exclamation.png');background-color:#e63d1f;border-color:#8f2310;}
-		.content .box.question{color:black;background-image:url('../images/icons16/question.png');background-color:#ffe292;border-color:#ffc72c;}
+		.content .box{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;padding:6px 5px 6px 29px;background:no-repeat 7px 10px;border:1px solid;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;margin-bottom:10px;}.content .box.info{background-image:url('images/icons16/information.png');background-color:#7ab7e6;border-color:#2888d2;}
+		.content .box.error{background-image:url('images/icons16/exclamation.png');background-color:#e63d1f;border-color:#8f2310;}
+		.content .box.question{color:black;background-image:url('images/icons16/question.png');background-color:#ffe292;border-color:#ffc72c;}
 		.content .box p{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif !important;}
 		.content .box .white-paper{background-color:#fff;padding:2px;margin:10px 0;border:1px solid #cccccc;}
 		.content .box .options{padding:7px 0 4px 0;}.content .box .options .option{color:#696969;font-size:85%;outline:none;}.content .box .options .option:hover{color:#767676;background-color:rgba(245, 245, 245, 0.7);}
@@ -938,7 +938,7 @@ $messages = $wizard->getMessages();
 		.editor .title .editor-wrapper .cancel{font:85% "Trebuchet MS",Tahoma,Arial,sans-serif;color:#a9a9a9;margin-right:3px;}
 		form{font-family:"Trebuchet MS",Tahoma,Arial,sans-serif;}form .group{-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:5px;border:1px solid #a9a9a9;padding:5px 10px;margin-bottom:10px;background-color:#f8f8f8;}
 		form .label{font-size:75%;display:block;margin-bottom:3px;}
-		.header-overall .menu-items .install .tab { background-image: url('web/images/icons16/wizard.png'); }
+		.header-overall .menu-items .install .tab { background-image: url('wimages/icons16/wizard.png'); }
 		input[type=text] { font-size: 110%; margin-bottom: 8px; width: 300px; }
 		label { display: block; font-size: 85%; margin-bottom: 2px; }
 		.editor p { margin-bottom: 6px; }
