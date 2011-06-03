@@ -24,6 +24,11 @@
  * Url Helper
  */
 class Html5Wiki_View_UrlHelper extends Html5Wiki_View_Helper {
+	/**
+	 * returns a correct url. Args get imploded with /
+	 * @param array $params
+	 * @return string
+	 */
 	public function urlHelper($params) {
 		$router = Html5Wiki_Controller_Front::getInstance()->getRouter();
 		return $router->buildURL($params);

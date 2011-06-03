@@ -25,6 +25,11 @@
  */
 class Html5Wiki_View_TagSlugHelper extends Html5Wiki_View_Helper {
 
+	/**
+	 * Render a tag slug (supplied tags in args[0] with a link surrounded to the search)
+	 * @param array $args
+	 * @return string 
+	 */
 	public function tagSlugHelper($args) {
 		$tags = $args[0];
 		
