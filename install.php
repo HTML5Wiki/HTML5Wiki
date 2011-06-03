@@ -45,6 +45,8 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	const INSTALLATION_TYPE_ROOT = 'useRoot';
 	const FILE_CONFIG = 'config/config.php';
 	const FILE_DATABASE_SCHEMA = 'data/sql/html5wiki_schema.sql';
+	const FOLDER_WEB = 'web/';
+	const FOLDER_ROOT = '';
 	
 
 	
@@ -317,15 +319,76 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	 * @return true/false regarding success
 	 */
 	private function setupInstallationtype() {
+		$installationtypeOk = true;
 		
+		if($this->wizardData[self::PROPERTY_INSTALLATION_TYPE] === self::INSTALLATION_TYPE_ROOT) {
+			$installationtypeOk = $this->copyDirectory(
+				self::FOLDER_WEB
+				,self::FOLDER_WEB
+				,self::FOLDER_ROOT. 'copytest/'
+				,array('web/install.php')
+				,true
+				,array('web/','web/install.php')
+				);
+		}
 		
+		if($installationtypeOk === false) {
+			$this->addMessage('error','Files not moved', 'You choosed the installation type which runs the HTML5Wiki boostrap outside of the <em>web/</em> directory.<p><p>The wizard was not able to move all files located in <em>web/</em>. Please move the contained files by yourself one directory up and delete <em>web/</em> afterwards.');
+		}
 		
-		// TODO TODO TODO TODO
+		return $installationtypeOk;
+	}
+	
+	/**
+	 * Copies a complete directory to the in $destinationBasePath specified
+	 * target directory.<br/>
+	 * Uses recursion to resolve all subdirectories.
+	 *
+	 * @param $directoryToCopy To current directory which should be copied
+	 * @param $sourceBasePath The source base directory
+	 * @param $destinationBasePath The target base directory
+	 * @param $excludeFromCopy Exclude these files/directory from copy
+	 * @param $move Delete source files/directory after successful copy
+	 * @param $excludeFromDelete Exclude these files/directories from delete
+	 * @return true/false regarding success
+	 */
+	private function copyDirectory($directoryToCopy, $sourceBasePath, $destinationBasePath, $excludeFromCopy = array(), $move = false, array $excludeFromDelete = array()) {
+		$success = true;
+		$files = scandir($directoryToCopy);
+		$destinationPath = str_replace($sourceBasePath, $destinationBasePath, $directoryToCopy);
+		if(mkdir($destinationPath) === false) $success = false;
 		
+		if($success === true) {
+			foreach ($files as $file) {
+				if (in_array($file, array(".",".."))) continue;
+
+				if(is_dir($directoryToCopy.$file) && !in_array($directoryToCopy, $excludeFromCopy)) {
+					// Copy subdirectory:
+					$success = $this->copyDirectory($directoryToCopy.$file.'/', $sourceBasePath, $destinationBasePath, $move, $excludeFromDelete);
+				} else {
+					// Copy file:
+					if(!in_array($directoryToCopy.$file, $excludeFromCopy)) {
+						if (!copy($directoryToCopy.$file, $destinationPath.$file)) {
+							$success = false;
+						} else {
+							if($move === true) {
+								if(!in_array($directoryToCopy.$file, $excludeFromDelete)) {
+									unlink($directoryToCopy.$file);
+								}
+							}
+						}
+					}
+				}
+			}
+		}
 		
+		if($success === true && $move === true) {
+			if(!in_array($directoryToCopy, $excludeFromDelete)) {
+				if(rmdir($directoryToCopy) === false) $success = false;
+			}
+		}
 		
-		
-		return true;
+		return $success;
 	}
 	
 	/**
