@@ -1,0 +1,696 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Docs For Class PhpDiff_Diff_SequenceMatcher</title>
+    <link rel="stylesheet" type="text/css" href="../media/style.css" />
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+  </head>
+  <body>
+  
+    <h1>Generated Documentation :: Docs For Class PhpDiff_Diff_SequenceMatcher</h1>
+
+    <table width="100%">
+      <tr valign="top">
+        <td class="menu">
+                                <div class="package">
+              <div id="todolist">
+                <p><a href="../todolist.html">Todo List</a></p>
+              </div>
+            </div>
+                    <h2>Packages:</h2>
+          <div class="package">
+            <ul>
+                              <li>
+                  <a href="../classtrees_default.html">default</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Bootstrap.html">Bootstrap</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Diff.html">Diff</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_DiffLib.html">DiffLib</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Html5Wiki.html">Html5Wiki</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Library.html">Library</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Setup.html">Setup</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Test.html">Test</a>
+                </li>
+                          </ul>
+          </div>
+                                                                    <h2>Classes:</h2>
+                <ul>
+		    		<li><a href="../Diff/PhpDiff_Diff.html">PhpDiff_Diff</a></li>    	    		<li><a href="../Diff/PhpDiff_Diff_SequenceMatcher.html">PhpDiff_Diff_SequenceMatcher</a></li>    	  </ul>
+                              </td>
+        <td>
+          <table style="width:750px;" cellpadding="10" cellspacing="10px">
+            <tr>
+              <td valign="top">
+                                                                  <h2>Diff::PhpDiff_Diff_SequenceMatcher</h2>
+                                <div class="menu">
+          
+                                                                                
+                                                                                                                                              [ <a href="../index.html">Index</a> ]
+                      [ <a href="../classtrees_Diff.html">Diff classes</a> ]
+            [ <a href="../elementindex_Diff.html">Diff elements</a> ]
+                    [ <a href="../elementindex.html">All elements</a> ]
+          [ <a href="../errors.html">Errors</a> ]
+                </div>
+<a name="sec-description"></a>
+<h2>Class PhpDiff_Diff_SequenceMatcher</h2>
+
+<p>Sequence matcher for Diff</p><div><p>PHP version 5</p><p>Copyright (c) 2009 Chris Boulton &lt;chris.boulton@interspire.com&gt;</p><p>All rights reserved.</p><p>Redistribution and use in source and binary forms, with or without  modification, are permitted provided that the following conditions are met:</p><p><ul><li>Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.</li><li>Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.</li><li>Neither the name of the Chris Boulton nor the names of its contributors
+    may be used to endorse or promote products derived from this software
+    without specific prior written permission.</li></ul>  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS &quot;AS IS&quot;  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)  ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE  POSSIBILITY OF SUCH DAMAGE.</p></div>		
+
+
+
+
+  <strong>Author(s):</strong>
+  <ul>
+                  <li>Chris Boulton &lt;<a href="mailto:chris.boulton@interspire.com">chris.boulton@interspire.com</a>&gt;</li>
+                                                    </ul>
+
+  <table>
+    	      	  		<tr>
+		  <td>
+		    <strong>Version:</strong>&nbsp;&nbsp;
+		  </td>
+		  <td>1.1</td>
+		</tr>
+	      	  		<tr>
+		  <td>
+		    <strong>Copyright:</strong>&nbsp;&nbsp;
+		  </td>
+		  <td>(c) 2009 Chris Boulton</td>
+		</tr>
+	      	  		<tr>
+		  <td>
+		    <strong>Link:</strong>&nbsp;&nbsp;
+		  </td>
+		  <td><a href="http://github.com/chrisboulton/php-diff">http://github.com/chrisboulton/php-diff</a></td>
+		</tr>
+	      	  		<tr>
+		  <td>
+		    <strong>License:</strong>&nbsp;&nbsp;
+		  </td>
+		  <td>New</td>
+		</tr>
+	        </table>
+
+
+
+
+
+
+
+  <a name="sec-method-summary"></a>
+  <h2>Method Summary</h2>
+  <table class="summary">
+                                                                                                                                    <tr>
+          <td class="right">
+            <em>public</em>                        <em>PhpDiff_Diff_SequenceMatcher</em>          </td>
+          <td>
+            <code>
+              <a href="#__construct"><b>__construct</b></a>(
+                                                                                    $a
+                                                    ,                                     $b
+                                                    ,                   [                  $junkCallback
+                   = null]                                  ,                                     $options
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">The constructor. With the sequences being passed, they'll be set for the  sequence matcher and it will perform a basic cleanup &amp; calculate junk  elements.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>array</em>          </td>
+          <td>
+            <code>
+              <a href="#findLongestMatch"><b>findLongestMatch</b></a>(
+                                                                                    $alo
+                                                    ,                                     $ahi
+                                                    ,                                     $blo
+                                                    ,                                     $bhi
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Find the longest matching block in the two sequences, as defined by the  lower and upper constraints for each sequence. (for the first sequence,  $alo - $ahi and for the second sequence, $blo - $bhi)</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>array</em>          </td>
+          <td>
+            <code>
+              <a href="#getGroupedOpcodes"><b>getGroupedOpcodes</b></a>(
+                                                                  [                  $context
+                   = 3]                               )
+            </code>
+            <br /><div style="margin-left: 20px">Return a series of nested arrays containing different groups of generated  opcodes for the differences between the strings with up to $context lines  of surrounding content.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>array</em>          </td>
+          <td>
+            <code>
+              <a href="#getMatchingBlocks"><b>getMatchingBlocks</b></a>(
+               )
+            </code>
+            <br /><div style="margin-left: 20px">Return a nested set of arrays for all of the matching sub-sequences  in the strings $a and $b.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>array</em>          </td>
+          <td>
+            <code>
+              <a href="#getOpCodes"><b>getOpCodes</b></a>(
+               )
+            </code>
+            <br /><div style="margin-left: 20px">Return a list of all of the opcodes for the differences between the  two strings.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>boolean</em>          </td>
+          <td>
+            <code>
+              <a href="#linesAreDifferent"><b>linesAreDifferent</b></a>(
+                                                                                    $aIndex
+                                                    ,                                     $bIndex
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Check if the two lines at the given indexes are different or not.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>float</em>          </td>
+          <td>
+            <code>
+              <a href="#Ratio"><b>Ratio</b></a>(
+               )
+            </code>
+            <br /><div style="margin-left: 20px">Return a measure of the similarity between the two sequences.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#setOptions"><b>setOptions</b></a>(
+                                                                                    $options
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#setSeq1"><b>setSeq1</b></a>(
+                                                                                    $a
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Set the first sequence ($a) and reset any internal caches to indicate that  when calling the calculation methods, we need to recalculate them.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#setSeq2"><b>setSeq2</b></a>(
+                                                                                    $b
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Set the second sequence ($b) and reset any internal caches to indicate that  when calling the calculation methods, we need to recalculate them.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#setSequences"><b>setSequences</b></a>(
+                                                                                    $a
+                                                    ,                                     $b
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Set the first and second sequences to use with the sequence matcher.</div>          </td>
+        </tr>
+            </table>
+
+
+  <a name="sec-methods"></a>
+  <h2>Methods</h2>
+  <a name='method_detail'></a>
+                      
+      <a name="method__construct" id="__construct"><!-- --></a>
+
+    <h3>__construct</h3>
+
+    <div class="method-signature">
+      PhpDiff_Diff_SequenceMatcher
+      __construct(
+                                  string|array
+          $a
+                            ,           string|array
+          $b
+                            ,           [string|array
+          $junkCallback
+           = null]                  ,           
+          $options
+                        )
+    </div>
+
+    <p>The constructor. With the sequences being passed, they'll be set for the  sequence matcher and it will perform a basic cleanup &amp; calculate junk  elements.</p>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$a</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  A string or array containing the lines to compare against.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$b</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  A string or array containing the lines to compare.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$junkCallback</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  Either an array or string that references a callback function (if there is one) to determine 'junk' characters.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$options</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodfindLongestMatch" id="findLongestMatch"><!-- --></a>
+
+    <h3>findLongestMatch</h3>
+
+    <div class="method-signature">
+      array
+      findLongestMatch(
+                                  int
+          $alo
+                            ,           int
+          $ahi
+                            ,           int
+          $blo
+                            ,           int
+          $bhi
+                        )
+    </div>
+
+    <p>Find the longest matching block in the two sequences, as defined by the  lower and upper constraints for each sequence. (for the first sequence,  $alo - $ahi and for the second sequence, $blo - $bhi)</p><div><p>Essentially, of all of the maximal matching blocks, return the one that  startest earliest in $a, and all of those maximal matching blocks that  start earliest in $a, return the one that starts earliest in $b.</p><p>If the junk callback is defined, do the above but with the restriction  that the junk element appears in the block. Extend it as far as possible  by matching only junk elements in both $a and $b.</p></div>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$alo</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  The lower constraint for the first sequence.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$ahi</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  The upper constraint for the first sequence.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$blo</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  The lower constraint for the second sequence.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$bhi</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  The upper constraint for the second sequence.
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodgetGroupedOpcodes" id="getGroupedOpcodes"><!-- --></a>
+
+    <h3>getGroupedOpcodes</h3>
+
+    <div class="method-signature">
+      array
+      getGroupedOpcodes(
+                                  [int
+          $context
+           = 3]              )
+    </div>
+
+    <p>Return a series of nested arrays containing different groups of generated  opcodes for the differences between the strings with up to $context lines  of surrounding content.</p><div><p>Essentially what happens here is any big equal blocks of strings are stripped  out, the smaller subsets of changes are then arranged in to their groups.  This means that the sequence matcher and diffs do not need to include the full  content of the different files but can still provide context as to where the  changes are.</p></div>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$context</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  The number of lines of context to provide around the groups.
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodgetMatchingBlocks" id="getMatchingBlocks"><!-- --></a>
+
+    <h3>getMatchingBlocks</h3>
+
+    <div class="method-signature">
+      array
+      getMatchingBlocks(
+      )
+    </div>
+
+    <p>Return a nested set of arrays for all of the matching sub-sequences  in the strings $a and $b.</p><div><p>Each block contains the lower constraint of the block in $a, the lower  constraint of the block in $b and finally the number of lines that the  block continues for.</p></div>
+    
+        
+
+    
+    
+    
+        <a name="methodgetOpCodes" id="getOpCodes"><!-- --></a>
+
+    <h3>getOpCodes</h3>
+
+    <div class="method-signature">
+      array
+      getOpCodes(
+      )
+    </div>
+
+    <p>Return a list of all of the opcodes for the differences between the  two strings.</p><div><p>The nested array returned contains an array describing the opcode  which includes: <ol><li>- The type of tag (as described below) for the opcode.</li><li>- The beginning line in the first sequence.</li><li>- The end line in the first sequence.</li><li>- The beginning line in the second sequence.</li><li>- The end line in the second sequence.</li></ol>  The different types of tags include:  replace - The string from $i1 to $i2 in $a should be replaced by            the string in $b from $j1 to $j2.  delete -  The string in $a from $i1 to $j2 should be deleted.  insert -  The string in $b from $j1 to $j2 should be inserted at            $i1 in $a.  equal  -  The two strings with the specified ranges are equal.</p></div>
+    
+        
+
+    
+    
+    
+        <a name="methodlinesAreDifferent" id="linesAreDifferent"><!-- --></a>
+
+    <h3>linesAreDifferent</h3>
+
+    <div class="method-signature">
+      boolean
+      linesAreDifferent(
+                                  int
+          $aIndex
+                            ,           int
+          $bIndex
+                        )
+    </div>
+
+    <p>Check if the two lines at the given indexes are different or not.</p>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$aIndex</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  Line number to check against in a.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$bIndex</code></td>
+              <td><em>int</em></td>
+              <td>
+                                  Line number to check against in b.
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodRatio" id="Ratio"><!-- --></a>
+
+    <h3>Ratio</h3>
+
+    <div class="method-signature">
+      float
+      Ratio(
+      )
+    </div>
+
+    <p>Return a measure of the similarity between the two sequences.</p><div><p>This will be a float value between 0 and 1.</p><p>Out of all of the ratio calculation functions, this is the most  expensive to call if getMatchingBlocks or getOpCodes is yet to be  called. The other calculation methods (quickRatio and realquickRatio)  can be used to perform quicker calculations but may be less accurate.</p><p>The ratio is calculated as (2 * number of matches) / total number of  elements in both sequences.</p></div>
+    
+        
+
+    
+    
+    
+        <a name="methodsetOptions" id="setOptions"><!-- --></a>
+
+    <h3>setOptions</h3>
+
+    <div class="method-signature">
+      void
+      setOptions(
+                                  
+          $options
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$options</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodsetSeq1" id="setSeq1"><!-- --></a>
+
+    <h3>setSeq1</h3>
+
+    <div class="method-signature">
+      void
+      setSeq1(
+                                  string|array
+          $a
+                        )
+    </div>
+
+    <p>Set the first sequence ($a) and reset any internal caches to indicate that  when calling the calculation methods, we need to recalculate them.</p>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$a</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  The sequence to set as the first sequence.
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodsetSeq2" id="setSeq2"><!-- --></a>
+
+    <h3>setSeq2</h3>
+
+    <div class="method-signature">
+      void
+      setSeq2(
+                                  string|array
+          $b
+                        )
+    </div>
+
+    <p>Set the second sequence ($b) and reset any internal caches to indicate that  when calling the calculation methods, we need to recalculate them.</p>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$b</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  The sequence to set as the second sequence.
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodsetSequences" id="setSequences"><!-- --></a>
+
+    <h3>setSequences</h3>
+
+    <div class="method-signature">
+      void
+      setSequences(
+                                  string|array
+          $a
+                            ,           string|array
+          $b
+                        )
+    </div>
+
+    <p>Set the first and second sequences to use with the sequence matcher.</p>
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$a</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  A string or array containing the lines to compare against.
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$b</code></td>
+              <td><em>string|array</em></td>
+              <td>
+                                  A string or array containing the lines to compare.
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+  
+<p class="notes">
+  Located in <a class="field" href="_library---PhpDiff---Diff---SequenceMatcher.php.html">/library/PhpDiff/Diff/SequenceMatcher.php</a> 
+  [<span class="field">line 43</span>]
+</p>
+
+                <div class="credit">
+                  Documentation generated on Fri, 03 Jun 2011 10:08:12 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
