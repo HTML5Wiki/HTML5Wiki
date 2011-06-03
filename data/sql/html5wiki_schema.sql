@@ -49,11 +49,6 @@ CREATE TABLE IF NOT EXISTS `MediaVersionTag` (
   PRIMARY KEY (`tagTag`,`mediaVersionId`,`mediaVersionTimestamp`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
-VALUES
-	('help',1,1307023153),
-	('html5wiki',1,1307023153),
-	('introduction',1,1307023153);
-
 INSERT INTO `MediaVersionTag` VALUES('help', 1, 1307023153);
 INSERT INTO `MediaVersionTag` VALUES('html5wiki', 1, 1307023153);
 INSERT INTO `MediaVersionTag` VALUES('introduction', 1, 1307023153);
