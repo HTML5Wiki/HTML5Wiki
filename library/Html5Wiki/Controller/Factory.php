@@ -24,13 +24,23 @@
  */
 class Html5Wiki_Controller_Factory {
 
+	/**
+	 * Application class namespace prefix.
+	 * 
+	 * @todo Is there any more elegant way to do this?
+	 * @var string
+	 */
 	const APPLICATION_NAMESPACE = 'Application_';
 
 	/**
-	 *
+	 * Factory method. Returns the controller created or throws a 404 exception.
+	 * 
+	 * @throws Html5Wiki_Exception_404
+	 * 
 	 * @param string $applicationPath
 	 * @param Html5Wiki_Routing_Interface_Router $router
-	 * @return AbstractController
+	 * @param Html5Wiki_Routing_Response $response
+	 * @return Html5Wiki_Controller_Abstract
 	 */
 	public static function factory($applicationPath, Html5Wiki_Routing_Interface_Router $router, Html5Wiki_Routing_Response $response) {
 		if (!is_string($applicationPath)) {

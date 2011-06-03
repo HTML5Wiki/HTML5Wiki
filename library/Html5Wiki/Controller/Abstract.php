@@ -25,7 +25,7 @@
 abstract class Html5Wiki_Controller_Abstract {
 
 	/**
-	 * default layout file
+	 * Default layout file
 	 */
 	const DEFAULT_LAYOUT_FILE = 'layout.php';
 	
@@ -99,14 +99,35 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->template = new Html5Wiki_Template_Php($response, $this->layoutTemplate);
 	}
 	
+	/**
+	 * System base path is where all files rely in
+	 * @param string $systemBasePath 
+	 */
 	public function setSystemBasePath($systemBasePath) {
 		$this->systemBasePath = $systemBasePath;
 	}
 	
+	/**
+	 * Configuration object
+	 * @param Zend_Config $config 
+	 */
 	public function setConfig(Zend_Config $config) {
 		$this->config = $config;
 	}
 
+	/**
+	 * The front controller calls this method for dispatching a request to the specific action
+	 * in a controller. 
+	 * 
+	 * Sets up the translation, the template and calls the actionMethod. If the actionMethod does not exist,
+	 * a Html5Wiki_Exception_404 gets thrown.
+	 * 
+	 * @throws Html5Wiki_Exception_404
+	 * @see Html5Wiki_Controller_Front
+	 * 
+	 * @param Html5Wiki_Routing_Interface_Router $router
+	 * @return mixed
+	 */
     public function dispatch(Html5Wiki_Routing_Interface_Router $router) {
 		$this->router = $router;
 
@@ -122,6 +143,11 @@ abstract class Html5Wiki_Controller_Abstract {
 		throw new Html5Wiki_Exception_404('Invalid action "' . $actionMethod . '" in class "' . get_class($this) .'"');
 	}
 	
+	/**
+	 * Calls the http accept language parsing in the request class and sets up the translation.
+	 * 
+	 * @see Html5Wiki_Routing_Request#parseHttpAcceptLanguage
+	 */
 	public function setTranslation() {
 		$language = Html5Wiki_Routing_Request::parseHttpAcceptLanguage($this->config->languages->toArray());
 		$language = ($language !== null) ? $language : $this->config->defaultLanguage;
@@ -142,7 +168,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	
 
 	/**
-	 * Set Page title
+	 * Set Page title in layout.
 	 * @param string $title
 	 */
 	protected function setPageTitle($title) {
@@ -189,7 +215,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	}
 	
 	/**
-	 * Disable layout
+	 * Disables layout if needed.
 	 */
 	protected function setNoLayout() {
 		$this->layoutTemplate = null;
@@ -206,16 +232,27 @@ abstract class Html5Wiki_Controller_Abstract {
 		$this->template->setTemplateFile($this->templateFile);
 	}
 	
+	/**
+	 * Redirects to the specified url.
+	 * 
+	 * @see Html5Wiki_Routing_Router#redirect
+	 * @see Html5Wiki_Controller_Abstract#doRenderAndExit
+	 * 
+	 * @param string $url
+	 * @param int $httpStatusCode 
+	 */
 	public function redirect($url, $httpStatusCode = 302) {
 		$this->router->redirect($url, $httpStatusCode);
 		$this->doRenderAndExit();
 	}
 	
 	/**
-	 * After redirect, call this method to immediately render the redirect header and
+	 * Call this method to immediately render the response and
 	 * exit.
 	 * 
 	 * For unit testing, this needs to be an own method, as otherwise the unit tests exit.
+	 * 
+	 * @see Html5Wiki_Routing_Response#render
 	 */
 	public function doRenderAndExit() {
 		$this->response->render();
@@ -224,6 +261,9 @@ abstract class Html5Wiki_Controller_Abstract {
 	}
 
 	/**
+	 * Renders the template
+	 * 
+	 * @see Html5Wiki_Template_Decorator#render
 	 * @return string
 	 */
 	public function render() {
@@ -237,8 +277,7 @@ abstract class Html5Wiki_Controller_Abstract {
 	 * User requests /wiki/foobar
 	 * -> Method returns foobar, because the Action foobar doesn't exist.
 	 * User requests /wiki/edit/foobar
-	 * -> Method returns also foobar -> it knows that the action edit exists, so it adds this to the
-	 *    needle of the substring replacement.
+	 * -> Method returns also foobar -> it knows that the action edit exists and returns the correct value.
 	 *
 	 * @return string
 	 */
