@@ -29,10 +29,11 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Adds an item to the capsulebar.
 	 *
-	 * @param key (single action name, or more than one, comma-separated)
-	 * @param text
-	 * @param cssClass
-	 * @param url (optional)
+	 * @param string $key (single action name, or more than one, comma-separated)
+	 * @param string $text
+	 * @param string $cssClass
+	 * @param string $url (optional)
+	 * @param bool   $default (optional)
 	 */
 	public function addItem($key, $text, $cssClass, $url='#', $default=false) {
 		self::$items[$key] = array(
@@ -46,7 +47,7 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Should the default capsulebar items be displayed?
 	 * 
-	 * @param $use
+	 * @param bool $use
 	 */
 	public function useDefaultItems($use) {
 		$this->useDefaultItems = $use;
@@ -55,8 +56,8 @@ class Html5Wiki_View_CapsulebarHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Returns the capsulebar template.
 	 *
-	 * @param args
-	 * @return rendered template
+	 * @param array $args
+	 * @return string rendered template
 	 */
 	public function render($args) {
 		$router = Html5Wiki_Controller_Front::getInstance()->getRouter();

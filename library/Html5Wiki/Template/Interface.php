@@ -23,6 +23,17 @@
  * Template interface
  */
 interface Html5Wiki_Template_Interface {
+	/**
+	 * Contructor. 
+	 * 
+	 * @param Html5Wiki_Routing_Response $response
+	 * @param Html5Wiki_Template_Interface $decoratedTemplate
+	 */
+	public function __construct(Html5Wiki_Routing_Response $response, Html5Wiki_Template_Interface $decoratedTemplate = null);
+	
+	/**
+	 * Render this template
+	 */
     public function render();
 }
 ?>

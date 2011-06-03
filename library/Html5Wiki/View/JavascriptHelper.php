@@ -24,18 +24,35 @@
  */
 class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 	
+	/**
+	 * Js files used in production mode
+	 * @var array
+	 */
 	private static $productiveJSFiles = array();
-	private static $developmentJSFiles = array();	
+	
+	/**
+	 * Js files used in development mode
+	 * @var array
+	 */
+	private static $developmentJSFiles = array();
+	
+	/**
+	 * Plain javascript files for initializing etc.
+	 * @var array
+	 */
 	private static $plainScripts = array();
 	
 	/**
 	 * Adds a javascript file to be appended to the output.<br/>
 	 * Use the $useIn*-parameters to control, in which environments the script
 	 * should be or should not be appended.
+	 * 
+	 * Use priority for sorting the javascript files. Needed for e.g. jQuery to be loaded first.
 	 *
-	 * @param $file
-	 * @param $useInDevelopment
-	 * @param $useInProduction
+	 * @param string $file
+	 * @param bool $useInDevelopment optional, default true
+	 * @param bool $useInProduction optional, default false
+	 * @param int  $priority optional, default 99
 	 */
 	public function appendFile($file, $useInDevelopment = true, $useInProduction = false, $priority = 99) {
 		if($useInDevelopment === true) {
@@ -59,7 +76,7 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 	/**
 	 * Add a javascript (really the script, not a file) to the output.
 	 *
-	 * @param $script
+	 * @param string $script
 	 */
 	public function appendScript($script) {
 		self::$plainScripts[] = $script;
@@ -124,10 +141,20 @@ class Html5Wiki_View_JavascriptHelper extends Html5Wiki_View_Helper {
 		return $string;
 	}
 
+	/**
+	 * Returns a correct html script tag with the script src set to the file param.
+	 * @param string $file
+	 * @return string 
+	 */
 	private function fileString($file) {
 		return '<script type="text/javascript" src="' . $file .'"></script>' . "\n";
 	}
 
+	/**
+	 * Returns script string with a newline (\n) appended.
+	 * @param string $script
+	 * @return string 
+	 */
 	private function scriptString($script) {
 		return $script . "\n";
 	}

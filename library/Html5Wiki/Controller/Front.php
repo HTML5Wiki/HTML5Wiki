@@ -82,6 +82,8 @@ class Html5Wiki_Controller_Front {
 	 * @param string $applicationPath Application path
 	 * @param Html5Wiki_Routing_Router_Interface $router Router, optional. If null given, a new
 	 *                                                   Html5Wiki_Routing_Router will be instantiated
+	 * @param Html5Wiki_Routing_Response $response Response, optional. If null given, a new Html5Wiki_Routing_Response
+	 *												will be instantiated.
 	 */
 	public function __construct(Zend_Config $config, $systemBasePath, $libraryPath, $applicationPath, $router = null, $response = null) {
 		$this->config = $config;
@@ -155,7 +157,7 @@ class Html5Wiki_Controller_Front {
 	}
 	
 	/**
-	 *
+	 * Gets configuration.
 	 * @return Zend_Config
 	 */
 	public function getConfig() {

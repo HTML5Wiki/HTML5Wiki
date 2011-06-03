@@ -23,12 +23,26 @@
  * Helper abstract class for view helpers
  */
 abstract class Html5Wiki_View_Helper {
+	/**
+	 * Template object in which the helper gets called.
+	 * @var string
+	 */
 	protected $template;
 	
+	/**
+	 * Constructor
+	 * @param Html5Wiki_Template_Interface $template 
+	 */
     public function __construct(Html5Wiki_Template_Interface $template) {
 		$this->template = $template;
 	}
 
+	/**
+	 * Every call to an object inheriting this helper
+	 * @param string $name
+	 * @param string $arguments
+	 * @return mixed
+	 */
 	public function __call($name, $arguments) {
 		if (!method_exists($this, $name)) {
 			return $this;
@@ -36,10 +50,18 @@ abstract class Html5Wiki_View_Helper {
 		return $this->$name($arguments);
 	}
 
+	/**
+	 * Return string on echo. 
+	 * @return string
+	 */
 	public function toString() {
 		return '';
 	}
 	
+	/**
+	 * Magic method calls this#toString
+	 * @return string
+	 */
 	public function __toString() {
 		return $this->toString();
 	}

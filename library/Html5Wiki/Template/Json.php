@@ -23,6 +23,9 @@
  * JSON Templating decorator
  */
 class Html5Wiki_Template_Json extends Html5Wiki_Template_Decorator {
+	/**
+	 * Render with json_encode & content-type header set to text/json.
+	 */
     public function render() {
 		$this->response->pushHeader("Content-type: text/json");
 		$this->response->pushData(json_encode($this->data));

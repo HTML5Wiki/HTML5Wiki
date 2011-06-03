@@ -42,6 +42,10 @@ phpUnit configuration
 		</blacklist>
 	</filter>
 	<selenium>
-		<browser name="Firefox on Debian" browser="*firefox"  host="selenium.openflex.net" port="4444" />
+		<!--
+		Selenium browser setup.
+		Put the correct IP-Address for selenium.local in your hosts file.
+		-->
+		<browser name="Firefox on Debian" browser="*firefox"  host="selenium.local" port="4444" />
 	</selenium>
 </phpunit>

@@ -1,0 +1,736 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>phpDocumentor Parser Errors and Warnings</title>
+    <link rel="stylesheet" type="text/css" href="media/style.css" />
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+  </head>
+  <body>
+  
+    <h1>Generated Documentation :: phpDocumentor Parser Errors and Warnings</h1>
+
+    <table width="100%">
+      <tr valign="top">
+        <td class="menu">
+                                <div class="package">
+              <div id="todolist">
+                <p><a href="todolist.html">Todo List</a></p>
+              </div>
+            </div>
+                    <h2>Packages:</h2>
+          <div class="package">
+            <ul>
+                              <li>
+                  <a href="classtrees_default.html">default</a>
+                </li>
+                              <li>
+                  <a href="classtrees_Bootstrap.html">Bootstrap</a>
+                </li>
+                              <li>
+                  <a href="classtrees_Diff.html">Diff</a>
+                </li>
+                              <li>
+                  <a href="classtrees_DiffLib.html">DiffLib</a>
+                </li>
+                              <li>
+                  <a href="classtrees_Html5Wiki.html">Html5Wiki</a>
+                </li>
+                              <li>
+                  <a href="classtrees_Library.html">Library</a>
+                </li>
+                              <li>
+                  <a href="classtrees_Setup.html">Setup</a>
+                </li>
+                              <li>
+                  <a href="classtrees_Test.html">Test</a>
+                </li>
+                          </ul>
+          </div>
+                                      </td>
+        <td>
+          <table style="width:750px;" cellpadding="10" cellspacing="10px">
+            <tr>
+              <td valign="top">
+                                                                <div class="menu">
+          
+                                    
+                                                                                                                                                                                          [ <a href="index.html">Index</a> ]
+                      [ <a href="classtrees_default.html">default classes</a> ]
+            [ <a href="elementindex_default.html">default elements</a> ]
+                    [ <a href="elementindex.html">All elements</a> ]
+          [ <a href="errors.html">Errors</a> ]
+                </div><a href="#Post-parsing">Post-parsing</a><br>
+<a href="#Abstract.php">Abstract.php</a><br>
+<a href="#AbstractTest.php">AbstractTest.php</a><br>
+<a href="#Array.php">Array.php</a><br>
+<a href="#Article.php">Article.php</a><br>
+<a href="#ArticleVersion.php">ArticleVersion.php</a><br>
+<a href="#ArticleVersionTest.php">ArticleVersionTest.php</a><br>
+<a href="#capsulebar.php">capsulebar.php</a><br>
+<a href="#CapsulebarHelper.php">CapsulebarHelper.php</a><br>
+<a href="#Decorator.php">Decorator.php</a><br>
+<a href="#delete.php">delete.php</a><br>
+<a href="#diff.php">diff.php</a><br>
+<a href="#Diff.php">Diff.php</a><br>
+<a href="#DiffRendererHelper.php">DiffRendererHelper.php</a><br>
+<a href="#edit.php">edit.php</a><br>
+<a href="#en.php">en.php</a><br>
+<a href="#error-layout.php">error-layout.php</a><br>
+<a href="#error.php">error.php</a><br>
+<a href="#ErrorController.php">ErrorController.php</a><br>
+<a href="#exception.php">exception.php</a><br>
+<a href="#Exception.php">Exception.php</a><br>
+<a href="#Factory.php">Factory.php</a><br>
+<a href="#FactoryTest.php">FactoryTest.php</a><br>
+<a href="#FakeTable.php">FakeTable.php</a><br>
+<a href="#Front.php">Front.php</a><br>
+<a href="#FrontTest.php">FrontTest.php</a><br>
+<a href="#Helper.php">Helper.php</a><br>
+<a href="#history.php">history.php</a><br>
+<a href="#index.php">index.php</a><br>
+<a href="#IndexController.php">IndexController.php</a><br>
+<a href="#IndexTest.php">IndexTest.php</a><br>
+<a href="#Inline.php">Inline.php</a><br>
+<a href="#install.php">install.php</a><br>
+<a href="#Interface.php">Interface.php</a><br>
+<a href="#InvalidArgument.php">InvalidArgument.php</a><br>
+<a href="#JavascriptHelper.php">JavascriptHelper.php</a><br>
+<a href="#Json.php">Json.php</a><br>
+<a href="#JsonTest.php">JsonTest.php</a><br>
+<a href="#layout.php">layout.php</a><br>
+<a href="#MediaVersion.php">MediaVersion.php</a><br>
+<a href="#MediaVersionManager.php">MediaVersionManager.php</a><br>
+<a href="#MediaVersionManagerTest.php">MediaVersionManagerTest.php</a><br>
+<a href="#MediaVersionTest.php">MediaVersionTest.php</a><br>
+<a href="#MessageHelper.php">MessageHelper.php</a><br>
+<a href="#Parser.php">Parser.php</a><br>
+<a href="#ParserTest.php">ParserTest.php</a><br>
+<a href="#Php.php">Php.php</a><br>
+<a href="#PhpTest.php">PhpTest.php</a><br>
+<a href="#preview.php">preview.php</a><br>
+<a href="#read.php">read.php</a><br>
+<a href="#Request.php">Request.php</a><br>
+<a href="#RequestStub.php">RequestStub.php</a><br>
+<a href="#RequestTest.php">RequestTest.php</a><br>
+<a href="#Response.php">Response.php</a><br>
+<a href="#ResponseFake.php">ResponseFake.php</a><br>
+<a href="#ResponseTest.php">ResponseTest.php</a><br>
+<a href="#rollback.php">rollback.php</a><br>
+<a href="#Router.php">Router.php</a><br>
+<a href="#RouterTest.php">RouterTest.php</a><br>
+<a href="#search.php">search.php</a><br>
+<a href="#SearchEngine.php">SearchEngine.php</a><br>
+<a href="#SeleniumTestCase.php">SeleniumTestCase.php</a><br>
+<a href="#SequenceMatcher.php">SequenceMatcher.php</a><br>
+<a href="#SideBySide.php">SideBySide.php</a><br>
+<a href="#simpleRendering.php">simpleRendering.php</a><br>
+<a href="#Table.php">Table.php</a><br>
+<a href="#TableTest.php">TableTest.php</a><br>
+<a href="#Tag.php">Tag.php</a><br>
+<a href="#TagSlugHelper.php">TagSlugHelper.php</a><br>
+<a href="#Template.php">Template.php</a><br>
+<a href="#TestConfiguration.php">TestConfiguration.php</a><br>
+<a href="#testIsset.php">testIsset.php</a><br>
+<a href="#testJavascriptHelper.php">testJavascriptHelper.php</a><br>
+<a href="#testTranslate.php">testTranslate.php</a><br>
+<a href="#UnittestController.php">UnittestController.php</a><br>
+<a href="#UrlHelper.php">UrlHelper.php</a><br>
+<a href="#User.php">User.php</a><br>
+<a href="#UserTest.php">UserTest.php</a><br>
+<a href="#WikiController.php">WikiController.php</a><br>
+<a href="#WikiTest.php">WikiTest.php</a><br>
+<a href="#WrongController.php">WrongController.php</a><br>
+<a name="Post-parsing"></a>
+<h1>Post-parsing</h1>
+<h2>Warnings:</h2><br>
+<b>Warning</b> - Class Html5Wiki_Model_User_Table parent Zend_Db_Table_Abstract not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Controller_FactoryTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Routing_RouterTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Routing_RequestTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Html5Wiki_Model_MediaVersion_Table parent Zend_Db_Table_Abstract not found<br>
+<b>Warning</b> - Class Html5Wiki_Model_MediaVersion_Mediatag_Table parent Zend_Db_Table_Abstract not found<br>
+<b>Warning</b> - Class Html5Wiki_Model_ArticleVersion_Table parent Zend_Db_Table_Abstract not found<br>
+<b>Warning</b> - Class Html5Wiki_Model_Abstract parent Zend_Db_Table_Row_Abstract not found<br>
+<b>Warning</b> - Class Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table parent Zend_Db_Table_Abstract not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Routing_ResponseTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Controller_FrontTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Model_AbstractTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Markdown_ParserTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Template_JsonTest parent PHPUnit_Framework_TestCase not found<br>
+<b>Warning</b> - Class Test_Functional_SeleniumTestCase parent PHPUnit_Extensions_SeleniumTestCase not found<br>
+<b>Warning</b> - Class Test_Unit_Library_Template_PhpTest parent PHPUnit_Framework_TestCase not found<br>
+<a name="404.php"></a>
+<h1>404.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Exception_404<br>
+<a name="Abstract.php"></a>
+<h1>Abstract.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Search_EnginePlugin_Abstract<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_Abstract<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Controller_Abstract<br>
+<b>Warning on line 43</b> - DocBlock would be page-level, but precedes class "PhpDiff_Diff_Renderer_Abstract", use another DocBlock to document the file<br>
+<a name="AbstractTest.php"></a>
+<h1>AbstractTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_AbstractTest<br>
+<a name="Array.php"></a>
+<h1>Array.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 42</b> - Page-level DocBlock precedes "require_once dirname(__FILE__).'/../Abstract.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 45</b> - no @package tag was used in a DocBlock for class PhpDiff_Diff_Renderer_Html_Array<br>
+<b>Warning on line 45</b> - Class "PhpDiff_Diff_Renderer_Html_Array" has no Class-level DocBlock.<br>
+<a name="Article.php"></a>
+<h1>Article.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Search_EnginePlugin_Article<br>
+<b>Warning on line 38</b> - Method "prepareSearchStatement" has no method-level DocBlock.<br>
+<b>Warning on line 42</b> - Method "getModelClassName" has no method-level DocBlock.<br>
+<b>Warning on line 46</b> - Method "canPrepareModelForType" has no method-level DocBlock.<br>
+<b>Warning on line 57</b> - Method "getMatchOrigins" has no method-level DocBlock.<br>
+<a name="ArticleVersion.php"></a>
+<h1>ArticleVersion.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_ArticleVersion<br>
+<a name="ArticleVersionTest.php"></a>
+<h1>ArticleVersionTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "require_once 'PHPUnit/Autoload.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 26</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_ArticleVersionTest<br>
+<b>Warning on line 147</b> - Method "testGetMediaVersionTimestmap" has no method-level DocBlock.<br>
+<a name="capsulebar.php"></a>
+<h1>capsulebar.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/helpers/capsulebar.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="CapsulebarHelper.php"></a>
+<h1>CapsulebarHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_CapsulebarHelper<br>
+<a name="Decorator.php"></a>
+<h1>Decorator.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Template_Decorator<br>
+<a name="delete.php"></a>
+<h1>delete.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 27</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/delete.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="Diff.php"></a>
+<h1>Diff.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 46</b> - DocBlock would be page-level, but precedes class "PhpDiff_Diff", use another DocBlock to document the file<br>
+<a name="diff.php"></a>
+<h1>diff.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 42</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/diff.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="DiffRendererHelper.php"></a>
+<h1>DiffRendererHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 25</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_DiffRendererHelper<br>
+<a name="edit.php"></a>
+<h1>edit.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 150</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/edit.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="en.php"></a>
+<h1>en.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 22</b> - package default is already in category Html5Wiki, will now replace with category default<br>
+<a name="error-layout.php"></a>
+<h1>error-layout.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 64</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/error/error-layout.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="error.php"></a>
+<h1>error.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 13</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/error/error.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="ErrorController.php"></a>
+<h1>ErrorController.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 29</b> - no @package tag was used in a DocBlock for class Application_ErrorController<br>
+<a name="Exception.php"></a>
+<h1>Exception.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Exception<br>
+<a name="exception.php"></a>
+<h1>exception.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 9</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/error/exception.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="Factory.php"></a>
+<h1>Factory.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Controller_Factory<br>
+<a name="FactoryTest.php"></a>
+<h1>FactoryTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 23</b> - package default is already in category default, will now replace with category Html5Wiki<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Controller_FactoryTest<br>
+<b>Warning on line 44</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 50</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 58</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 66</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 74</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 85</b> - Method "testLoadCorrectController" has no method-level DocBlock.<br>
+<b>Warning on line 89</b> - Method "tearDown" has no method-level DocBlock.<br>
+<a name="FakeTable.php"></a>
+<h1>FakeTable.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_MediaVersion_FakeTable<br>
+<b>Warning on line 28</b> - Method "saveMediaVersion" has no method-level DocBlock.<br>
+<a name="Front.php"></a>
+<h1>Front.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Controller_Front<br>
+<a name="FrontTest.php"></a>
+<h1>FrontTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Controller_FrontTest<br>
+<b>Warning on line 45</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 51</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 67</b> - Method "testGetInstance" has no method-level DocBlock.<br>
+<b>Warning on line 83</b> - Method "testDispatchAgainstMock" has no method-level DocBlock.<br>
+<a name="Helper.php"></a>
+<h1>Helper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 23</b> - package default is already in category default, will now replace with category Html5Wiki<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_Helper<br>
+<a name="history.php"></a>
+<h1>history.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 36</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/index/history.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<b>Warning on line 94</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/history.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="index.php"></a>
+<h1>index.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 0</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Controller/FactoryTest/CorrectControllers/templates/unittest/index.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="IndexController.php"></a>
+<h1>IndexController.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 23</b> - package default is already in category default, will now replace with category Html5Wiki<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Application_IndexController<br>
+<b>Warning on line 39</b> - Method "historyAction" has no method-level DocBlock.<br>
+<b>Warning on line 73</b> - Method "searchAction" has no method-level DocBlock.<br>
+<a name="IndexTest.php"></a>
+<h1>IndexTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "require_once 'PHPUnit/Autoload.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 27</b> - no @package tag was used in a DocBlock for class Test_Functional_IndexTest<br>
+<b>Warning on line 31</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 36</b> - Method "testTitle" has no method-level DocBlock.<br>
+<b>Warning on line 41</b> - Method "testLogo" has no method-level DocBlock.<br>
+<b>Warning on line 48</b> - Method "testMainMenu" has no method-level DocBlock.<br>
+<b>Warning on line 54</b> - Method "testSearchField" has no method-level DocBlock.<br>
+<a name="Inline.php"></a>
+<h1>Inline.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 42</b> - Page-level DocBlock precedes "require_once dirname(__FILE__).'/Array.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 45</b> - Class "PhpDiff_Diff_Renderer_Html_Inline" has no Class-level DocBlock.<br>
+<b>Warning on line 45</b> - no @package tag was used in a DocBlock for class PhpDiff_Diff_Renderer_Html_Inline<br>
+<a name="install.php"></a>
+<h1>install.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 35</b> - no @package tag was used in a DocBlock for class Html5Wiki_InstallationWizard<br>
+<b>Warning on line 126</b> - Method "__construct" has no method-level DocBlock.<br>
+<b>Warning on line 148</b> - Method "testIfConfigWriteable" has no method-level DocBlock.<br>
+<b>Warning on line 152</b> - Method "testIfParentWritable" has no method-level DocBlock.<br>
+<b>Warning on line 397</b> - no @package tag was used in a DocBlock for class InstallationWizard<br>
+<a name="Interface.php"></a>
+<h1>Interface.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for interface Html5Wiki_Template_Interface<br>
+<a name="InvalidArgument.php"></a>
+<h1>InvalidArgument.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Exception_InvalidArgument<br>
+<a name="JavascriptHelper.php"></a>
+<h1>JavascriptHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_JavascriptHelper<br>
+<a name="Json.php"></a>
+<h1>Json.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Template_Json<br>
+<a name="JsonTest.php"></a>
+<h1>JsonTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Template_JsonTest<br>
+<b>Warning on line 35</b> - Method "testValidOutput" has no method-level DocBlock.<br>
+<a name="layout.php"></a>
+<h1>layout.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 1</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Template/templates/layout.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<b>Warning on line 86</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/layout.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="MediaVersion.php"></a>
+<h1>MediaVersion.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_MediaVersion<br>
+<b>Warning on line 126</b> - Method "getUser" has no method-level DocBlock.<br>
+<a name="MediaVersionManager.php"></a>
+<h1>MediaVersionManager.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 26</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_MediaVersionManager<br>
+<a name="MediaVersionManagerTest.php"></a>
+<h1>MediaVersionManagerTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_MediaVersionManagerTest<br>
+<b>Warning on line 36</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 50</b> - Method "testGetMediaVersionByPermalink" has no method-level DocBlock.<br>
+<b>Warning on line 55</b> - Unknown tag "@depends" used<br>
+<a name="MediaVersionTest.php"></a>
+<h1>MediaVersionTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_MediaVersionTest<br>
+<b>Warning on line 35</b> - Method "setUpBeforeClass" has no method-level DocBlock.<br>
+<b>Warning on line 53</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 120</b> - Method "testLoadByPermalinkAndTimestamp" has no method-level DocBlock.<br>
+<b>Warning on line 129</b> - Method "testMemberMethods" has no method-level DocBlock.<br>
+<b>Warning on line 140</b> - Method "testGetUser" has no method-level DocBlock.<br>
+<a name="MessageHelper.php"></a>
+<h1>MessageHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 30</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_MessageHelper<br>
+<a name="Parser.php"></a>
+<h1>Parser.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 61</b> - no @package tag was used in a DocBlock for class Markdown_Parser<br>
+<b>Warning on line 61</b> - Class "Markdown_Parser" has no Class-level DocBlock.<br>
+<b>Warning on line 107</b> - Method "Markdown_Parser" has no method-level DocBlock.<br>
+<b>Warning on line 129</b> - Method "setup" has no method-level DocBlock.<br>
+<b>Warning on line 139</b> - Method "teardown" has no method-level DocBlock.<br>
+<b>Warning on line 178</b> - Method "transform" has no method-level DocBlock.<br>
+<b>Warning on line 215</b> - Method "stripLinkDefinitions" has no method-level DocBlock.<br>
+<b>Warning on line 222</b> - Method "_stripLinkDefinitions_callback" has no method-level DocBlock.<br>
+<b>Warning on line 361</b> - Method "hashHTMLBlocks" has no method-level DocBlock.<br>
+<b>Warning on line 367</b> - Method "_hashHTMLBlocks_callback" has no method-level DocBlock.<br>
+<b>Warning on line 389</b> - Method "hashPart" has no method-level DocBlock.<br>
+<b>Warning on line 396</b> - Method "hashBlock" has no method-level DocBlock.<br>
+<b>Warning on line 422</b> - Method "runBlockGamut" has no method-level DocBlock.<br>
+<b>Warning on line 438</b> - Method "runBasicBlockGamut" has no method-level DocBlock.<br>
+<b>Warning on line 455</b> - Method "doHorizontalRules" has no method-level DocBlock.<br>
+<b>Warning on line 487</b> - Method "runSpanGamut" has no method-level DocBlock.<br>
+<b>Warning on line 493</b> - Method "doHardBreaks" has no method-level DocBlock.<br>
+<b>Warning on line 497</b> - Method "_doHardBreaks_callback" has no method-level DocBlock.<br>
+<b>Warning on line 569</b> - Method "doAnchors" has no method-level DocBlock.<br>
+<b>Warning on line 603</b> - Method "_doAnchors_reference_callback" has no method-level DocBlock.<br>
+<b>Warning on line 623</b> - Method "_doAnchors_inline_callback" has no method-level DocBlock.<br>
+<b>Warning on line 679</b> - Method "doImages" has no method-level DocBlock.<br>
+<b>Warning on line 707</b> - Method "_doImages_reference_callback" has no method-level DocBlock.<br>
+<b>Warning on line 725</b> - Method "_doImages_inline_callback" has no method-level DocBlock.<br>
+<b>Warning on line 756</b> - Method "doHeaders" has no method-level DocBlock.<br>
+<b>Warning on line 766</b> - Method "_doHeaders_callback_setext" has no method-level DocBlock.<br>
+<b>Warning on line 772</b> - Method "_doHeaders_callback_atx" has no method-level DocBlock.<br>
+<b>Warning on line 828</b> - Method "doLists" has no method-level DocBlock.<br>
+<b>Warning on line 846</b> - Method "_doLists_callback" has no method-level DocBlock.<br>
+<b>Warning on line 895</b> - Method "processListItems" has no method-level DocBlock.<br>
+<b>Warning on line 917</b> - Method "_processListItems_callback" has no method-level DocBlock.<br>
+<b>Warning on line 936</b> - Method "doCodeBlocks" has no method-level DocBlock.<br>
+<b>Warning on line 949</b> - Method "_doCodeBlocks_callback" has no method-level DocBlock.<br>
+<b>Warning on line 957</b> - Method "makeCodeSpan" has no method-level DocBlock.<br>
+<b>Warning on line 996</b> - Method "prepareItalicsAndBold" has no method-level DocBlock.<br>
+<b>Warning on line 1118</b> - Method "doItalicsAndBold" has no method-level DocBlock.<br>
+<b>Warning on line 1134</b> - Method "doBlockQuotes" has no method-level DocBlock.<br>
+<b>Warning on line 1149</b> - Method "_doBlockQuotes_callback" has no method-level DocBlock.<br>
+<b>Warning on line 1155</b> - Method "_doBlockQuotes_callback2" has no method-level DocBlock.<br>
+<b>Warning on line 1223</b> - Method "formParagraphs" has no method-level DocBlock.<br>
+<b>Warning on line 1233</b> - Method "encodeAttribute" has no method-level DocBlock.<br>
+<b>Warning on line 1254</b> - Method "encodeAmpsAndAngles" has no method-level DocBlock.<br>
+<b>Warning on line 1274</b> - Method "doAutoLinks" has no method-level DocBlock.<br>
+<b>Warning on line 1280</b> - Method "_doAutoLinks_url_callback" has no method-level DocBlock.<br>
+<b>Warning on line 1286</b> - Method "_doAutoLinks_email_callback" has no method-level DocBlock.<br>
+<b>Warning on line 1329</b> - Method "encodeEmailAddress" has no method-level DocBlock.<br>
+<b>Warning on line 1383</b> - Method "parseSpan" has no method-level DocBlock.<br>
+<b>Warning on line 1405</b> - Method "handleSpanToken" has no method-level DocBlock.<br>
+<b>Warning on line 1412</b> - Method "outdent" has no method-level DocBlock.<br>
+<b>Warning on line 1431</b> - Method "detab" has no method-level DocBlock.<br>
+<b>Warning on line 1448</b> - Method "_detab_callback" has no method-level DocBlock.<br>
+<b>Warning on line 1462</b> - Method "_initDetab" has no method-level DocBlock.<br>
+<b>Warning on line 1470</b> - Method "unhash" has no method-level DocBlock.<br>
+<b>Warning on line 1474</b> - Method "_unhash_callback" has no method-level DocBlock.<br>
+<b>Warning on line 1478</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/library/Markdown/Parser.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="ParserTest.php"></a>
+<h1>ParserTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Markdown_ParserTest<br>
+<b>Warning on line 33</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 50</b> - Method "testHeadingsSetext" has no method-level DocBlock.<br>
+<b>Warning on line 69</b> - Method "testHeadingsAtx" has no method-level DocBlock.<br>
+<b>Warning on line 82</b> - Method "testHardBreaks" has no method-level DocBlock.<br>
+<b>Warning on line 103</b> - Method "testBlockquote" has no method-level DocBlock.<br>
+<b>Warning on line 122</b> - Method "testEmphasized" has no method-level DocBlock.<br>
+<b>Warning on line 135</b> - Method "testItalicsAndBold" has no method-level DocBlock.<br>
+<b>Warning on line 159</b> - Method "testHashHtmlBlocks" has no method-level DocBlock.<br>
+<b>Warning on line 191</b> - Method "testUnorderedLists" has no method-level DocBlock.<br>
+<b>Warning on line 208</b> - Method "testOrderedList" has no method-level DocBlock.<br>
+<b>Warning on line 229</b> - Method "testMultipleParagraphsInList" has no method-level DocBlock.<br>
+<b>Warning on line 240</b> - Method "testLink" has no method-level DocBlock.<br>
+<b>Warning on line 251</b> - Method "testLinkWithTitle" has no method-level DocBlock.<br>
+<b>Warning on line 262</b> - Method "testAutoLink" has no method-level DocBlock.<br>
+<b>Warning on line 273</b> - Method "testEmailAutoLink" has no method-level DocBlock.<br>
+<b>Warning on line 286</b> - Method "testAnchorReferenceLink" has no method-level DocBlock.<br>
+<b>Warning on line 303</b> - Method "testNumberedReferenceStyleLinks" has no method-level DocBlock.<br>
+<b>Warning on line 318</b> - Method "testNamedReferenceStyleLinks" has no method-level DocBlock.<br>
+<b>Warning on line 329</b> - Method "testImages" has no method-level DocBlock.<br>
+<b>Warning on line 345</b> - Method "testReferenceStyleImages" has no method-level DocBlock.<br>
+<b>Warning on line 356</b> - Method "testEncodeAmpsAndAngles" has no method-level DocBlock.<br>
+<b>Warning on line 373</b> - Method "testCodeInSpan" has no method-level DocBlock.<br>
+<b>Warning on line 395</b> - Method "testCodeBlock" has no method-level DocBlock.<br>
+<b>Warning on line 400</b> - Method "transformAndTest" has no method-level DocBlock.<br>
+<b>Warning on line 404</b> - Method "tearDown" has no method-level DocBlock.<br>
+<a name="Php.php"></a>
+<h1>Php.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Template_Php<br>
+<a name="PhpTest.php"></a>
+<h1>PhpTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Template_PhpTest<br>
+<b>Warning on line 32</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 37</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 52</b> - Method "testSimpleRendering" has no method-level DocBlock.<br>
+<b>Warning on line 70</b> - Method "testLayoutRendering" has no method-level DocBlock.<br>
+<b>Warning on line 89</b> - Method "testSetNoLayoutRendering" has no method-level DocBlock.<br>
+<b>Warning on line 104</b> - Method "testAHelper" has no method-level DocBlock.<br>
+<b>Warning on line 125</b> - Method "setUpFrontController" has no method-level DocBlock.<br>
+<b>Warning on line 136</b> - Method "testIsset" has no method-level DocBlock.<br>
+<b>Warning on line 156</b> - Method "testTranslation" has no method-level DocBlock.<br>
+<a name="preview.php"></a>
+<h1>preview.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 10</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/preview.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="read.php"></a>
+<h1>read.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 38</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/read.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="Request.php"></a>
+<h1>Request.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for interface Html5Wiki_Routing_Interface_Request<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Routing_Request<br>
+<a name="RequestStub.php"></a>
+<h1>RequestStub.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Routing_RequestStub<br>
+<a name="RequestTest.php"></a>
+<h1>RequestTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Routing_RequestTest<br>
+<b>Warning on line 64</b> - Method "testGetServerVariables" has no method-level DocBlock.<br>
+<b>Warning on line 165</b> - Method "testIsAjax" has no method-level DocBlock.<br>
+<b>Warning on line 180</b> - Method "testParseHttpAcceptLanguage" has no method-level DocBlock.<br>
+<b>Warning on line 187</b> - Method "testHost" has no method-level DocBlock.<br>
+<b>Warning on line 194</b> - Method "testPort" has no method-level DocBlock.<br>
+<b>Warning on line 201</b> - Method "testHttps" has no method-level DocBlock.<br>
+<b>Warning on line 206</b> - Method "testQueryString" has no method-level DocBlock.<br>
+<b>Warning on line 212</b> - Method "testUri" has no method-level DocBlock.<br>
+<b>Warning on line 222</b> - Method "testPath" has no method-level DocBlock.<br>
+<b>Warning on line 228</b> - Method "testRequestMethod" has no method-level DocBlock.<br>
+<b>Warning on line 237</b> - Method "testGetGet" has no method-level DocBlock.<br>
+<b>Warning on line 246</b> - Method "testGetPost" has no method-level DocBlock.<br>
+<a name="Response.php"></a>
+<h1>Response.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Routing_Response<br>
+<a name="ResponseFake.php"></a>
+<h1>ResponseFake.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Routing_ReponseFake<br>
+<b>Warning on line 37</b> - Unknown tag "@override" used<br>
+<b>Warning on line 48</b> - Unknown tag "@override" used<br>
+<b>Warning on line 59</b> - Unknown tag "@override" used<br>
+<a name="ResponseTest.php"></a>
+<h1>ResponseTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "require_once 'ResponseFake.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 28</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Routing_ResponseTest<br>
+<b>Warning on line 36</b> - Method "testCookie" has no method-level DocBlock.<br>
+<a name="rollback.php"></a>
+<h1>rollback.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 76</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/wiki/rollback.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="Router.php"></a>
+<h1>Router.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Routing_Router<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for interface Html5Wiki_Routing_Interface_Router<br>
+<a name="RouterTest.php"></a>
+<h1>RouterTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "require_once 'RequestStub.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 27</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Routing_RouterTest<br>
+<b>Warning on line 65</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 69</b> - Method "testGetRequest" has no method-level DocBlock.<br>
+<b>Warning on line 79</b> - Method "testSetRequest" has no method-level DocBlock.<br>
+<b>Warning on line 86</b> - Method "testDefaultControllerAndAction" has no method-level DocBlock.<br>
+<b>Warning on line 95</b> - Method "testControllerAndAction" has no method-level DocBlock.<br>
+<b>Warning on line 100</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 109</b> - Unknown tag "@expectedException" used<br>
+<b>Warning on line 120</b> - Method "testRedirect" has no method-level DocBlock.<br>
+<b>Warning on line 124</b> - Method "testBuildUrl" has no method-level DocBlock.<br>
+<b>Warning on line 128</b> - Method "tearDown" has no method-level DocBlock.<br>
+<a name="search.php"></a>
+<h1>search.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 54</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/templates/index/search.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="SearchEngine.php"></a>
+<h1>SearchEngine.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 25</b> - no @package tag was used in a DocBlock for class Html5Wiki_Search_SearchEngine<br>
+<a name="SeleniumTestCase.php"></a>
+<h1>SeleniumTestCase.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "require_once 'PHPUnit/Autoload.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 26</b> - no @package tag was used in a DocBlock for class Test_Functional_SeleniumTestCase<br>
+<b>Warning on line 39</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 48</b> - Method "fetchLanguageFile" has no method-level DocBlock.<br>
+<b>Warning on line 52</b> - Method "getLanguageKey" has no method-level DocBlock.<br>
+<b>Warning on line 57</b> - Method "waitForAjax" has no method-level DocBlock.<br>
+<a name="SequenceMatcher.php"></a>
+<h1>SequenceMatcher.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 42</b> - package default is already in category Html5Wiki, will now replace with category default<br>
+<b>Warning on line 43</b> - DocBlock would be page-level, but precedes class "PhpDiff_Diff_SequenceMatcher", use another DocBlock to document the file<br>
+<b>Warning on line 98</b> - Method "setOptions" has no method-level DocBlock.<br>
+<a name="SideBySide.php"></a>
+<h1>SideBySide.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 42</b> - Page-level DocBlock precedes "require_once dirname(__FILE__).'/Array.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 45</b> - no @package tag was used in a DocBlock for class PhpDiff_Diff_Renderer_Html_SideBySide<br>
+<b>Warning on line 45</b> - Class "PhpDiff_Diff_Renderer_Html_SideBySide" has no Class-level DocBlock.<br>
+<b>Warning on line 47</b> - Page-level DocBlock precedes "require_once dirname(__FILE__).'/../Array.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 49</b> - no @package tag was used in a DocBlock for class PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide<br>
+<b>Warning on line 49</b> - Class "PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide" has no Class-level DocBlock.<br>
+<b>Warning on line 174</b> - Method "setLeftTimestamp" has no method-level DocBlock.<br>
+<b>Warning on line 178</b> - Method "setRightTimestamp" has no method-level DocBlock.<br>
+<a name="simpleRendering.php"></a>
+<h1>simpleRendering.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 2</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Template/templates/simpleRendering.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="Table.php"></a>
+<h1>Table.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_MediaVersion_Mediatag_Table<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_User_Table<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_ArticleVersion_Table<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_MediaVersion_Table<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_MediaVersion_Mediatag_Tag_Table<br>
+<a name="TableTest.php"></a>
+<h1>TableTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "include 'Unit/Library/Model/MediaVersion/FakeTable.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_User_TableTest<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_MediaVersion_TableTest<br>
+<b>Warning on line 26</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_ArticleVersion_TableTest<br>
+<b>Warning on line 35</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 38</b> - Method "setUpBeforeClass" has no method-level DocBlock.<br>
+<b>Warning on line 39</b> - Method "setUpBeforeClass" has no method-level DocBlock.<br>
+<b>Warning on line 42</b> - Method "testSaveNewUser" has no method-level DocBlock.<br>
+<b>Warning on line 46</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 46</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 51</b> - Method "testFetchUser" has no method-level DocBlock.<br>
+<b>Warning on line 57</b> - Method "testUserExists" has no method-level DocBlock.<br>
+<b>Warning on line 66</b> - Method "testUpdateUser" has no method-level DocBlock.<br>
+<b>Warning on line 77</b> - Method "testFetchMediaVersion" has no method-level DocBlock.<br>
+<a name="Tag.php"></a>
+<h1>Tag.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_Tag<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_MediaVersion_Tag<br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Search_EnginePlugin_Tag<br>
+<b>Warning on line 30</b> - Method "__toString" has no method-level DocBlock.<br>
+<b>Warning on line 34</b> - Method "prepareSearchStatement" has no method-level DocBlock.<br>
+<b>Warning on line 38</b> - Method "getModelClassName" has no method-level DocBlock.<br>
+<b>Warning on line 40</b> - Method "loadByTag" has no method-level DocBlock.<br>
+<b>Warning on line 42</b> - Method "canPrepareModelForType" has no method-level DocBlock.<br>
+<b>Warning on line 52</b> - Method "getMatchOrigins" has no method-level DocBlock.<br>
+<a name="TagSlugHelper.php"></a>
+<h1>TagSlugHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 25</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_TagSlugHelper<br>
+<a name="Template.php"></a>
+<h1>Template.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Exception_Template<br>
+<a name="TestConfiguration.php"></a>
+<h1>TestConfiguration.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 9</b> - package default is already in category Html5Wiki, will now replace with category default<br>
+<b>Warning on line 9</b> - Page-level DocBlock precedes "define SKIP_FUNCTIONAL_TESTS", use another DocBlock to document the source element<br>
+<a name="testIsset.php"></a>
+<h1>testIsset.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 6</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Template/templates/testIsset.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="testJavascriptHelper.php"></a>
+<h1>testJavascriptHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 6</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Template/templates/testJavascriptHelper.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="testTranslate.php"></a>
+<h1>testTranslate.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 2</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Template/templates/testTranslate.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="UnittestController.php"></a>
+<h1>UnittestController.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 9</b> - no @package tag was used in a DocBlock for class Application_UnittestController<br>
+<b>Warning on line 9</b> - Class "Application_UnittestController" has no Class-level DocBlock.<br>
+<b>Warning on line 14</b> - Method "__construct" has no method-level DocBlock.<br>
+<b>Warning on line 15</b> - Method "indexAction" has no method-level DocBlock.<br>
+<b>Warning on line 16</b> - Method "setTranslation" has no method-level DocBlock.<br>
+<b>Warning on line 18</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Controller/FactoryTest/CorrectControllers/UnittestController.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+<a name="UrlHelper.php"></a>
+<h1>UrlHelper.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 25</b> - no @package tag was used in a DocBlock for class Html5Wiki_View_UrlHelper<br>
+<a name="User.php"></a>
+<h1>User.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Html5Wiki_Model_User<br>
+<a name="UserTest.php"></a>
+<h1>UserTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Test_Unit_Library_Model_UserTest<br>
+<b>Warning on line 51</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 62</b> - Method "testLoadById" has no method-level DocBlock.<br>
+<b>Warning on line 66</b> - Method "testLoadByWrongId" has no method-level DocBlock.<br>
+<b>Warning on line 71</b> - Method "testLoadByIdNameAndEmail" has no method-level DocBlock.<br>
+<a name="WikiController.php"></a>
+<h1>WikiController.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 24</b> - no @package tag was used in a DocBlock for class Application_WikiController<br>
+<b>Warning on line 68</b> - Unknown tag "@override" used<br>
+<b>Warning on line 855</b> - Method "rollbackAction" has no method-level DocBlock.<br>
+<b>Warning on line 881</b> - Method "previewAction" has no method-level DocBlock.<br>
+<a name="WikiTest.php"></a>
+<h1>WikiTest.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 21</b> - Page-level DocBlock precedes "require_once 'PHPUnit/Autoload.php'", use another DocBlock to document the source element<br>
+<b>Warning on line 27</b> - no @package tag was used in a DocBlock for class Test_Functional_WikiTest<br>
+<b>Warning on line 66</b> - Method "setUp" has no method-level DocBlock.<br>
+<b>Warning on line 77</b> - Method "testShowSearchWhenNoPagePresent" has no method-level DocBlock.<br>
+<b>Warning on line 88</b> - Method "testOpenCreatePage" has no method-level DocBlock.<br>
+<b>Warning on line 108</b> - Method "testCreatePageDoNotEnterAnythingFails" has no method-level DocBlock.<br>
+<b>Warning on line 125</b> - Method "testSuccessCreatePage" has no method-level DocBlock.<br>
+<b>Warning on line 169</b> - Method "testEditPage" has no method-level DocBlock.<br>
+<b>Warning on line 183</b> - Method "testHistoryPage" has no method-level DocBlock.<br>
+<b>Warning on line 201</b> - Method "testDiffPage" has no method-level DocBlock.<br>
+<b>Warning on line 207</b> - Method "insertTagsIntoPtagsField" has no method-level DocBlock.<br>
+<b>Warning on line 216</b> - Method "openCreatePage" has no method-level DocBlock.<br>
+<b>Warning on line 220</b> - Method "assertEditTitleBoxPresent" has no method-level DocBlock.<br>
+<b>Warning on line 225</b> - Method "assertMessageContainerPresent" has no method-level DocBlock.<br>
+<b>Warning on line 234</b> - Method "assertReadArticlePresent" has no method-level DocBlock.<br>
+<b>Warning on line 242</b> - Method "assertReadArticleValues" has no method-level DocBlock.<br>
+<b>Warning on line 251</b> - Method "assertEditorPresent" has no method-level DocBlock.<br>
+<a name="WrongController.php"></a>
+<h1>WrongController.php</h1>
+<h2>Warnings:</h2><br>
+<b>Warning on line 4</b> - no @package tag was used in a DocBlock for class WrongController<br>
+<b>Warning on line 7</b> - File "/opt/cruisecontrol-bin-2.8.4/projects/html5wiki/source/test/Unit/Library/Controller/FactoryTest/WrongControllers/WrongController.php" has no page-level DocBlock, use @package in the first DocBlock to create one<br>
+                <div class="credit">
+                  Documentation generated on Fri, 03 Jun 2011 08:49:15 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

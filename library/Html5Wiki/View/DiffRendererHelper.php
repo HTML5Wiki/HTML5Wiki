@@ -25,6 +25,11 @@
  */
 class Html5Wiki_View_DiffRendererHelper extends Html5Wiki_View_Helper {
 
+	/**
+	 * Renders a diff using our own renderer.
+	 * @param array $args
+	 * @return string 
+	 */
 	public function diffRendererHelper($args) {
 		$renderer = new PhpDiff_Diff_Renderer_Html_Html5Wiki_SideBySide();
 		$renderer->setLeftTimestamp($args[1]);

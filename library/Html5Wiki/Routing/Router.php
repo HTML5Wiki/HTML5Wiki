@@ -77,6 +77,7 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 
 	/**
 	 * Routes request according to informations from the request object
+	 * and sets up the controller & action fields.
 	 */
 	public function route() {
 		$this->request->parse();
@@ -158,8 +159,8 @@ class Html5Wiki_Routing_Router implements Html5Wiki_Routing_Interface_Router {
 	 * Pass as many url parts as you want (without any slashes or anything!) and
 	 * this method will create you a valid URL with basepath and everything.
 	 *
-	 * @param 0-n url parts
-	 * @return valid URL with basepath plus all url parts from the parameterlist.
+	 * @param array 0-n url parts
+	 * @return string valid URL with basepath plus all url parts from the parameterlist.
 	 */
 	public function buildUrl(array $parts) {
 		$basePath = $this->getRequest()->getBasePath();

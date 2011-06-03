@@ -30,9 +30,25 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 	 */
 	const TEMPLATE_PATH = 'templates/';
 	
+	/**
+	 * Template path used for including template files
+	 * @var string
+	 */
 	private $templatePath = '';
+	
+	/**
+	 * Template file
+	 * @var string
+	 */
 	private $templateFile = '';
 	
+	/**
+	 * Contructor. 
+	 * Calls parent constructor & sets template path to default.
+	 * 
+	 * @param Html5Wiki_Routing_Response $response
+	 * @param Html5Wiki_Template_Interface $decoratedTemplate 
+	 */
 	public function __construct(Html5Wiki_Routing_Response $response, Html5Wiki_Template_Interface $decoratedTemplate = null) {
 		parent::__construct($response, $decoratedTemplate);
 		
@@ -62,6 +78,10 @@ class Html5Wiki_Template_Php extends Html5Wiki_Template_Decorator {
 		$this->decoratedTemplate = null;
 	}
 
+	/**
+	 * Includes the specified template file and calls, if required, the decorating template.
+	 * Otherwise pushes the rendered data to the response.
+	 */
 	public function render() {
 		if (empty($this->templateFile)) {
 			throw new Html5Wiki_Exception_Template('Unable to perform rendering without a templateFile');
