@@ -1,0 +1,436 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Docs for page install.php</title>
+    <link rel="stylesheet" type="text/css" href="../media/style.css" />
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+  </head>
+  <body>
+  
+    <h1>Generated Documentation :: Docs for page install.php</h1>
+
+    <table width="100%">
+      <tr valign="top">
+        <td class="menu">
+                      <div class="package">
+              <div id="ric">
+                                  <p><a href="../ric_README.html">README</a></p>
+                              </div>
+            </div>
+                              <h2>Packages:</h2>
+          <div class="package">
+            <ul>
+                              <li>
+                  <a href="../classtrees_default.html">default</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Application.html">Application</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Diff.html">Diff</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_DiffLib.html">DiffLib</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Html5Wiki.html">Html5Wiki</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Library.html">Library</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Test.html">Test</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Web.html">Web</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend.html">Zend</a>
+                </li>
+                          </ul>
+          </div>
+                                                                    <h2>Classes:</h2>
+                <ul>
+		    		<li><a href="../default/Markdown_Parser.html">Markdown_Parser</a></li>    	    		<li><a href="../default/WrongController.html">WrongController</a></li>    	  </ul>
+                              </td>
+        <td>
+          <table style="width:750px;" cellpadding="10" cellspacing="10px">
+            <tr>
+              <td valign="top">
+                                                                  <h2>default::install.php</h2>
+                                <div class="menu">
+          
+                                    
+                                                                                                                                                                                                                [ <a href="../index.html">Index</a> ]
+                      [ <a href="../classtrees_default.html">default classes</a> ]
+            [ <a href="../elementindex_default.html">default elements</a> ]
+                    [ <a href="../elementindex.html">All elements</a> ]
+          [ <a href="../errors.html">Errors</a> ]
+                </div>
+<a name="sec-description"></a>
+<h2>Page Details</h2>
+<div class="docblock">
+<p>HTML5Wiki Install Wizard</p></div>
+<table border="0" cellspacing="0" cellpadding="0">
+			<tr><td><strong>Author:</strong>&nbsp;&nbsp;</td><td>Manuel Alabor &lt;<a href="mailto:malabor@hsr.ch">malabor@hsr.ch</a>&gt;</td></tr>
+			<tr><td><strong>Copyright:</strong>&nbsp;&nbsp;</td><td>(c) HTML5Wiki Team 2011</td></tr>
+	</table>
+
+
+
+
+
+
+  <a name="sec-functions"></a>
+  <h2>Functions</h2>
+  <a name="functionaddMessage" id="functionaddMessage"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="method-title">addMessage</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 256]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void addMessage(
+ $type,  $title,  $message&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type"></span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$type:&nbsp;</span></td>
+				<td>
+							</td></tr>
+					<tr><td class="indent">
+				<span class="var-type"></span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$title:&nbsp;</span></td>
+				<td>
+							</td></tr>
+					<tr><td class="indent">
+				<span class="var-type"></span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$message:&nbsp;</span></td>
+				<td>
+							</td></tr>
+				</table>
+	
+<br />
+	
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functiondeserializeStepData" id="functiondeserializeStepData"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="method-title">deserializeStepData</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 203]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void deserializeStepData(
+ $postSource,  &$steps&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		<p>After a POST-Request, this method deserializes the steps-data back into  the steps-array.</p>
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type">$postSource</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$postSource:&nbsp;</span></td>
+				<td>
+				<span class="var-description"> simply the $_POST-variable</span>			</td></tr>
+					<tr><td class="indent">
+				<span class="var-type">&$steps</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">&$steps:&nbsp;</span></td>
+				<td>
+				<span class="var-description"> a reference to the $steps array</span>			</td></tr>
+				</table>
+	
+<br />
+	<strong>API Tags:</strong><br />
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="indent"><strong>See:</strong>&nbsp;&nbsp;</td><td><a href="../default/_install.php.html#functionserializeStepData">serializeStepData()</a></td>
+  </tr>
+</table>
+<br />
+
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functiongetDataValue" id="functiongetDataValue"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="method-title">getDataValue</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 295]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>void getDataValue(
+ $data,  $key, [ $default = &#039;&#039;]&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type"></span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$data:&nbsp;</span></td>
+				<td>
+							</td></tr>
+					<tr><td class="indent">
+				<span class="var-type"></span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$key:&nbsp;</span></td>
+				<td>
+							</td></tr>
+					<tr><td class="indent">
+				<span class="var-type"></span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$default:&nbsp;</span></td>
+				<td>
+							</td></tr>
+				</table>
+	
+<br />
+	
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functionisInputOk" id="functionisInputOk"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="method-title">isInputOk</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 137]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>true/false isInputOk(
+ $steps, $currentstep_index $currentstep_index&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		<p>This function checks if all mandatory inputs for the step $currentstep_index  are filled in.<br />  If not, a message gets added with #addMessage and false is returned.</p><div><p>Otherwise true gets returned.</p></div>
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type">$steps</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$steps:&nbsp;</span></td>
+				<td>
+							</td></tr>
+					<tr><td class="indent">
+				<span class="var-type">$currentstep_index</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$currentstep_index:&nbsp;</span></td>
+				<td>
+							</td></tr>
+				</table>
+	
+<br />
+	
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functionprocessPostData" id="functionprocessPostData"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="method-title">processPostData</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 86]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>the processPostData(
+ $postData,  &$steps&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		<p>Takes possible present input data from the POST-request and fills it into  the proper step-data-array.</p>
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type">$postData</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$postData:&nbsp;</span></td>
+				<td>
+				<span class="var-description"> simply the $_POST array</span>			</td></tr>
+					<tr><td class="indent">
+				<span class="var-type">&$steps</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">&$steps:&nbsp;</span></td>
+				<td>
+				<span class="var-description"> reference to the steps array</span>			</td></tr>
+				</table>
+	
+<br />
+	<strong>API Tags:</strong><br />
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="indent"><strong>Return:</strong>&nbsp;&nbsp;</td><td>index of the current step in the wizard</td>
+  </tr>
+</table>
+<br />
+
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functionrenderInputs" id="functionrenderInputs"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="method-title">renderInputs</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 219]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>input-elements renderInputs(
+$step $step&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		<p>Takes the input-specifications of a step and renders the proper input-elements  for them.</p>
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type">$step</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$step:&nbsp;</span></td>
+				<td>
+				<span class="var-description"> step-specifications</span>			</td></tr>
+				</table>
+	
+<br />
+	
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functionserializeStepData" id="functionserializeStepData"><!-- --></a>
+<div class="oddrow">
+
+	<div>
+		<span class="method-title">serializeStepData</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 178]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>input-elements serializeStepData(
+ $steps&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		<p>Serializes the data of each step in the steps-array into a hidden  input-element.</p>
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type">$steps</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$steps:&nbsp;</span></td>
+				<td>
+				<span class="var-description"> the steps array</span>			</td></tr>
+				</table>
+	
+<br />
+	<strong>API Tags:</strong><br />
+<table border="0" cellspacing="0" cellpadding="0">
+  <tr>
+    <td class="indent"><strong>Return:</strong>&nbsp;&nbsp;</td><td>with the serialized data</td>
+  </tr>
+  <tr>
+    <td class="indent"><strong>See:</strong>&nbsp;&nbsp;</td><td><a href="../default/_install.php.html#functiondeserializeStepData">deserializeStepData()</a></td>
+  </tr>
+</table>
+<br />
+
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+<a name="functiontestDatabaseConnection" id="functiontestDatabaseConnection"><!-- --></a>
+<div class="evenrow">
+
+	<div>
+		<span class="method-title">testDatabaseConnection</span>&nbsp;&nbsp;<span class="smalllinenumber">[line 275]</span>
+	</div>
+<br />
+	<div class="function">
+    <table width="90%" border="0" cellspacing="0" cellpadding="1"><tr><td class="code-border">
+    <table width="100%" border="0" cellspacing="0" cellpadding="2"><tr><td class="code">
+		<code>true/false testDatabaseConnection(
+$stepData $stepData&nbsp;
+)</code>
+    </td></tr></table>
+    </td></tr></table>
+
+		<p>This method tests the databaseconnection.<br />  If everythings fine, it returns true, otherwise it adds messages to the  wizard and returns false.</p>
+    		<strong>Parameters:</strong><br />
+			<table border="0" cellspacing="0" cellpadding="0">
+					<tr><td class="indent">
+				<span class="var-type">$stepData</span>&nbsp;&nbsp;</td>
+				<td>
+				<span class="var-name">$stepData:&nbsp;</span></td>
+				<td>
+							</td></tr>
+				</table>
+	
+<br />
+	
+
+		<br />
+	<div class="top">[ <a href="#top">Top</a> ]</div>
+	</div>
+	</div>
+
+                <div class="credit">
+                  Documentation generated on Thu, 02 Jun 2011 20:32:10 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
