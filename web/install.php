@@ -45,7 +45,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	const PROPERTY_INSTALLATION_TYPE = 'installationtype';
 	const INSTALLATION_TYPE_WEB = 'useWeb';
 	const INSTALLATION_TYPE_ROOT = 'useRoot';
-	const FILE_CONFIG = 'config/config.php';
+	const FILE_CONFIG = '../config/config.php';
 	const FILE_DATABASE_SCHEMA = 'data/sql/html5wiki_schema.sql';
 	const FOLDER_WEB = '../web/';
 	const FOLDER_ROOT = '../';
@@ -154,7 +154,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	}
 
 	private function testIfParentWritable() {
-		return is_writeable('../');
+		return is_writeable(self::FOLDER_ROOT);
 	}
 
 
