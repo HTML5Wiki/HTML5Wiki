@@ -18,257 +18,567 @@
  * @package Setup
  */
 
-	/**
-	 * HTML5Wiki Install Wizard
-	 *
-	 * @author Manuel Alabor <malabor@hsr.ch>
-	 * @copyright (c) HTML5Wiki Team 2011
-	 */
-	ini_set('display_errors', true);
-	error_reporting(E_ALL | E_STRICT);
-	$installscript = "install.php";
+/* ---------------------------------------------------------------------- */
+
+ini_set('display_errors', true);
+error_reporting(E_ALL | E_STRICT);
+$installscript = "install.php";
+
+/* ---------------------------------------------------------------------- */
+
+/**
+ * An implementation of InstallationWizard.<br/>
+ * It extends the default wizard with the step specifications and all necessary
+ * methods for the installation process.
+ *
+ * @author Manuel Alabor <malabor@hsr.ch>
+ */
+class Html5Wiki_InstallationWizard extends InstallationWizard {
 	
-	/* ---------------------------------------------------------------------- */
+	const PROPERTY_WIKINAME = 'wikiname';
+	const PROPERTY_DATABASE_HOST = 'database_host';
+	const PROPERTY_DATABASE_NAME = 'database_name';
+	const PROPERTY_DATABASE_USER = 'database_user';
+	const PROPERTY_DATABASE_PASSWORD = 'database_password';
+	const PROPERTY_INSTALLATION_TYPE = 'installationtype';
+	const INSTALLATION_TYPE_WEB = 'useWeb';
+	const INSTALLATION_TYPE_ROOT = 'useRoot';
+	const FILE_CONFIG = 'config/config.php';
+	const FILE_DATABASE_SCHEMA = 'data/sql/html5wiki_schema.sql';
 	
-	/* Definition of the Steps: */
-	$steps = array(
-		array(
-			'name' => 'Welcome'
-			,'text' => '<p>Welcome to the HTML5Wiki installation wizard.</p><p>The wizard will guide you through a few steps to setup all necessary stuff like database and basic configuration.<br/>Please click <em>Next</em> when you\'re ready to start.</p>'
-			,'callMethodBefore' => 'testWritePermissions'
-		)
-		,array(
-			'name' => 'Database Setup'
-			,'text' => '<p>HTML5Wiki needs a MySQL database system to store its data.</p><p>Please specify the servers hostname (mostly <em>localhost</em>), a database, a valid user and its password.</p>'
-			,'input' => array(
-				'database_host' => array(
-					'type' => 'text'
-					,'caption' => 'Database host'
-					,'placeholder' => 'localhost'
-					,'mandatory' => true
-				)
-				,'database_name' => array(
-					'type' => 'text'
-					,'caption' => 'Database name'
-					,'mandatory' => true
-				)
-				,'database_user' => array(
-					'type' => 'text'
-					,'caption' => 'Database user'
-					,'mandatory' => true
-				)
-				,'database_password' => array(
-					'type' => 'text'
-					,'caption' => 'Database password'
-					,'placeholder' => 'optional'
-				)
+
+	
+	public function __construct() {
+		$steps = array(
+			array(
+				'name' => 'Welcome'
+				,'text' => '<p>Welcome to the HTML5Wiki installation wizard.</p><p>The wizard will guide you through a few steps to setup all necessary stuff like database and basic configuration.<br/>Please click <em>Next</em> when you\'re ready to start.</p>'
+				,'callMethodBefore' => 'testWritePermissions'
 			)
-			,'callMethodAfter' => 'testDatabaseConnection'
-		)
-		,array(
-			'name' => 'Branding'
-			,'text' => '<p>Please enter a name for your HTML5Wiki installation.</p>'
-			,'input' => array(
-				'wikiname' => array(
-					'type' => 'text'
-					,'caption' => 'Name for your wiki'
-					,'mandatory' => true
+			,array(
+				'name' => 'Database Setup'
+				,'text' => '<p>HTML5Wiki needs a MySQL database system to store its data.</p><p>Please specify the servers hostname (mostly <em>localhost</em>), a database, a valid user and its password.</p>'
+				,'input' => array(
+					self::PROPERTY_DATABASE_HOST => array(
+						'type' => 'text'
+						,'caption' => 'Database host'
+						,'placeholder' => 'localhost'
+						,'mandatory' => true
+					)
+					,self::PROPERTY_DATABASE_NAME => array(
+						'type' => 'text'
+						,'caption' => 'Database name'
+						,'mandatory' => true
+					)
+					,self::PROPERTY_DATABASE_USER => array(
+						'type' => 'text'
+						,'caption' => 'Database user'
+						,'mandatory' => true
+					)
+					,self::PROPERTY_DATABASE_PASSWORD => array(
+						'type' => 'text'
+						,'caption' => 'Database password'
+						,'placeholder' => 'optional'
+					)
 				)
+				,'callMethodAfter' => 'testDatabaseConnection'
 			)
-		)
-		,array(
-			'name' => 'Installation type'
-			,'text' => '<p>How is your webserver set up?</p><p>HTML5Wikis bootstrap is located inside the <em>web</em> directory. If you\'re able to point your webserver directly to this location, please select the first option below.</p><p>Many people are not allowed to control their hosted webservers on this level.<br/>If you\'re one of them, select the second option. All files from  <em>web</em> get moved one directory up to allow flawless interaction with HTML5Wiki.</p>'
-			,'input' => array(
-				'installationtype' => array(
-					'type' => 'radio'
-					,'caption' => 'Installation type'
-					,'mandatory' => true
-					,'items' => array(
-						'useWeb' => 'Use <em>web/</em>'
-						,'useRoot' => 'Don\'t use <em>web/</em>'
+			,array(
+				'name' => 'Branding'
+				,'text' => '<p>Please enter a name for your HTML5Wiki installation.</p>'
+				,'input' => array(
+					self::PROPERTY_WIKINAME => array(
+						'type' => 'text'
+						,'caption' => 'Name for your wiki'
+						,'mandatory' => true
 					)
 				)
 			)
-		)
-		,array(
-			'name' => 'Ready to install'
-			,'text' => '<p>The installation wizard has now all necessary information available.</p><p>Please click <em>Install</em> to finally set up your HTML5Wiki.</p>'
-			,'nextCaption' => 'Install'
-		)
-		,array(
-			'name' => 'Installation done'
-			,'text' => ''
-			,'nextCaption' => 'Finish'
-			,'callMethodBefore' => 'install'
-		)
-	);
-	$currentstep_index = 0;
-	$messages = array();
+			,array(
+				'name' => 'Installation type'
+				,'text' => '<p>How is your webserver set up?</p><p>HTML5Wikis bootstrap is located inside the <em>web</em> directory. If you\'re able to point your webserver directly to this location, please select the first option below.</p><p>Many people are not allowed to control their hosted webservers on this level.<br/>If you\'re one of them, select the second option. All files from  <em>web</em> get moved one directory up to allow flawless interaction with HTML5Wiki.</p>'
+				,'input' => array(
+					self::PROPERTY_INSTALLATION_TYPE => array(
+						'type' => 'radio'
+						,'caption' => 'Installation type'
+						,'mandatory' => true
+						,'items' => array(
+							self::INSTALLATION_TYPE_WEB => 'Use <em>web/</em>'
+							,self::INSTALLATION_TYPE_ROOT => 'Don\'t use <em>web/</em>'
+						)
+					)
+				)
+			)
+			,array(
+				'name' => 'Ready to install'
+				,'text' => '<p>The installation wizard has now all necessary information available.</p><p>Please click <em>Install</em> to finally set up your HTML5Wiki.<br/>Feel free to use the <em>Back</em> button to review your input before finishing the installation.</p>'
+				,'nextCaption' => 'Install >'
+			)
+			,array(
+				'name' => 'Installation done'
+				,'text' => '<p>The installation steps were executed. If there was any problem, please read the displayed messages above precisely.<br/>They will include information how you can fullify the installation by yourself.</p><p>When everything is done, click <a href="wiki/">here</a> to open your fresh installed HTML5Wiki.</p>'
+				,'nextCaption' => 'Finish'
+				,'callMethodBefore' => 'install'
+				,'allowBack' => false
+			)
+		);
+		
+		parent::__construct($steps);
+	}
 	
-	/* ---------------------------------------------------------------------- */
 	
-	/* Run the wizards logic: */
-	// Get data from other steps:
-	deserializeStepData($_POST, $steps);
+	/**
+	 * Tests if the installation wizard has writepermissions for several paths.
+	 *
+	 * @param $stepData
+	 * @return true/false
+	 */
+	protected function testWritePermissions($stepData) {
+		$configWriteable = $this->testIfConfigWriteable();
+		$parentWriteable = $this->testIfParentWritable();
+
+		if($configWriteable === false || $parentWriteable === false) {
+			$this->addMessage('info', 'No write permissions', 'The installation wizard has recognized that he has no or partially no write permissions.</p><p>You can try to fix this by changing the permissions on your server (<em>chmod 777</em>) and restart the wizard.</p><p>If not, you\'ll have to do some configuration steps by yourself. If you choose this variant, the installation wizard will tell you exactly the steps you have to do.');
+		}
+
+		return ($configWriteable && $parentWriteable);
+	}
+
+	private function testIfConfigWriteable() {
+		return is_writable(self::FILE_CONFIG);
+	}
+
+	private function testIfParentWritable() {
+		return is_writeable('../');
+	}
+
+
+	/**
+	 * This method tests the databaseconnection.<br/>
+	 * If everythings fine, it returns true, otherwise it adds messages to the
+	 * wizard and returns false.
+	 *
+	 * @param $stepData
+	 * @return true/false
+	 */
+	protected function testDatabaseConnection($stepData) {
+		$host = $this->getDataValue($stepData,'database_host');
+		$dbname = $this->getDataValue($stepData,'database_name');
+		$user = $this->getDataValue($stepData,'database_user');
+		$password = $this->getDataValue($stepData,'database_password');
+
+		$ok = (($connection = @mysql_connect($host, $user, $password)) !== false);
+		if($ok === true) {
+			$ok = (@mysql_select_db($dbname, $connection) !== false);
+
+			if($ok === false) {
+				$this->addMessage('error', 'Invalid database name', 'Could not access the database "'. $dbname. '". Please make sure this database exists.');
+			} else {
+				@mysql_close($connection);
+				$this->addMessage('info', 'Database connection verified', 'The database connection has successfully been tested.');
+			}
+		} else {
+			$this->addMessage('error','Connection error', 'Could not connect to the host "'. $host. '". Please check host, username and password.');
+		}
+
+		return $ok;
+	}
+
+	/**
+	 * Does the following steps:<br/>
+	 *  - Create configuration<br/>
+	 *  - Setup the database with the schema and some default articles<br/>
+	 *  - Move the files from web/ one level up if necessary<br/>
+	 * <br/>
+	 * If  any of these steps could be executed, the user gets a report with
+	 * detailed instructions what he has to do manually.
+	 *
+	 * @param $stepData
+	 * @return true if everythings fine, false if something went wrong
+	 */ 
+	protected function install($stepData) {
+		$configOk = $this->setupConfig(self::FILE_CONFIG);
+		$databaseOk = $this->setupDatabase(self::FILE_DATABASE_SCHEMA);
+		$installationTypeOk = $this->setupInstallationtype();
+		$htaccessOk = $this->setupHtaccessFile();
+		
+		if($configOk === true && $databaseOk === true && $installationTypeOk === true && $htaccessOk === true) {
+			$this->addMessage('info','Installation successfull','Congratulations! All installation steps are successfully completed.');
+		}
+	}
 	
-	// Process POST-data from inputs of the last step:
-	$currentstep_index = processPostData($_POST, $steps);
-	$currentstep = $steps[$currentstep_index];
+	/**
+	 * Builds a configuration array with the given parameters and writes it to
+	 * its target file in the config folder.
+	 *
+	 * @param $targetFile
+	 * @return true/false regarding success
+	 */
+	private function setupConfig($targetFile) {
+		$configOk = true;
+		$wikiname = $this->wizardData[self::PROPERTY_WIKINAME];
+		$database_host = $this->wizardData[self::PROPERTY_DATABASE_HOST];
+		$database_name = $this->wizardData[self::PROPERTY_DATABASE_NAME];
+		$database_user = $this->wizardData[self::PROPERTY_DATABASE_USER];
+		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
+		
+		/* Create config string: */
+		$config = '$config = array('. "\n"
+				. '\'wikiName\' => \''. $wikiname. '\','. "\n"
+				. '\'databaseAdapter\' => \'PDO_MYSQL\','. "\n"
+				. '\'database\' => array('. "\n"
+				. '	\'host\'     => \''. $database_host. '\','. "\n"
+				. '	\'dbname\'   => \''. $database_name. '\','. "\n"
+				. '	\'username\' => \''. $database_user. '\','. "\n"
+				. '	\'password\' => \''. $database_password. '\''. "\n"
+				. '),'. "\n"
+				. '\'routing\' => array('. "\n"
+				. '	\'defaultController\' => \'wiki\','. "\n"
+				. '	\'defaultAction\'     => \'welcome\''. "\n"
+				. ')'. "\n"
+				. ',\'languages\' => array(\'en\', \'de\')'. "\n"
+				. ',\'defaultLanguage\' => \'en\''. "\n"
+				. ',\'defaultTimezone\' => \'Europe/Zurich\''. "\n"
+				. ',\'development\' => false'. "\n"
+			. ');'. "\n";
+		
+		/* Try writing the file: */
+		$configOk = $this->writeFile(self::FILE_CONFIG, $config);
+		
+		if($configOk === false) {
+			$this->addMessage('error','Could not create configuration file', 'Please create the file <em>config/config.php</em> by yourself and copy paste the following configuration data into it:</p><p class="white-paper">'. nl2br($config));
+		}
+		
+		return $configOk;
+	}
 	
-	/* ---------------------------------------------------------------------- */
+	/**
+	 * Tries to setup the database with the give schema.
+	 *
+	 * @param $schemaFile
+	 * @return true/false regarding success
+	 */
+	private function setupDatabase($schemaFile) {
+		$databaseOk = true;
+		$sql_schema = '';
+		$database_host = $this->wizardData[self::PROPERTY_DATABASE_HOST];
+		$database_name = $this->wizardData[self::PROPERTY_DATABASE_NAME];
+		$database_user = $this->wizardData[self::PROPERTY_DATABASE_USER];
+		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
+		
+		/* Try to read schema: */
+		if(is_readable($schemaFile)) {
+			if(($sql_schema = file_get_contents($schemaFile)) === false) {
+				$databaseOk = false;
+			}
+		} else {
+			$databaseOk = false;
+		}
+		
+		/* Run the sql schema on the database: */
+		if(strlen($sql_schema) > 0) {
+			$connection = mysql_connect($database_host, $database_user, $database_password);
+			if($connection !== false) {
+				if(mysql_select_db($database_name, $connection) !== false) {
+					// The schema needs to be split up to single statements since
+					// mysql_query can only run one statement at once.
+					$statements = explode(';', $sql_schema);
+					foreach($statements as $statement) {
+						$statement = trim($statement);
+						if(strlen($statement) > 0) {
+							if(mysql_query($statement, $connection) === false) {
+								$databaseOk = false;
+								break;
+							}
+						}
+					}
+					
+					mysql_close($connection);
+				} else {
+					mysql_close($connection);
+					$databaseOk = false;
+				}
+			} else {
+				$databaseOk = false;
+			}
+		}
+		
+		if($databaseOk === false) {
+			$this->addMessage('error','Database not set up', 'The database was not set up correctly.<br/>Please use the schema file <em>data/sql/html5wiki_schema.sql</em> and try setting up the database by yourself.');
+		}
+		
+		return $databaseOk;
+	}
+	
+	/**
+	 * If the user wanted to, this setup method moves all files from /web/ one
+	 * directory up (except of the install.php of course ;) )
+	 *
+	 * @return true/false regarding success
+	 */
+	private function setupInstallationtype() {
+		
+		
+		
+		// TODO TODO TODO TODO
+		
+		
+		
+		
+		return true;
+	}
+	
+	/**
+	 * This creates the htaccess-file in the correct position.
+	 *
+	 * @return true/false regarding success
+	 */
+	private function setupHtaccessFile() {
+		$htaccessOk = true;
+		$targetFile = '';
+		
+		/* Where to write? */
+		$installationtype = $this->wizardData[self::PROPERTY_INSTALLATION_TYPE];
+		if($installationtype === self::INSTALLATION_TYPE_WEB) $targetFile = 'web/.htaccess';
+		else if($installationtype === self::INSTALLATION_TYPE_ROOT) $targetFile = '.htaccess';
+		
+		/* Create contents: */
+		$htaccess = '# This file was generated by the HTML5Wiki Installation Wizard. Do not modify.'."\n\n"
+				  . 'RewriteEngine On'."\n"
+				  . 'RewriteCond %{REQUEST_FILENAME} !-f'."\n"
+				  . 'RewriteCond %{REQUEST_FILENAME} !-d'."\n"
+				  . 'RewriteCond %{REQUEST_FILENAME} !-l'."\n"
+				  . 'RewriteRule !^(css/.*|images/.*|js/.*) index.php [L]'."\n";
+
+		
+		/* Try to write the file: */
+		$htaccessOk = $this->writeFile($targetFile, $htaccess);
+		
+		
+		if($htaccessOk === false) {
+			$this->addMessage('error','Could not create .htaccess file', 'Please create the file <em>web/.htaccess</em> by yourself and copy paste the following content into it:</p><p class="white-paper">'. nl2br($htaccess));
+		}
+		
+		return $htaccessOk;
+	}
+	
+	/**
+	 * Tries to write $content into the file $targetFile.
+	 *
+	 * @param $targetFile
+	 * @param $content
+	 * @return true/false regarding success
+	 */
+	private function writeFile($targetFile, $content) {
+		$ok = true;
+		
+		if(is_writeable($targetFile)) {
+			$fh = fopen($targetFile, 'w');
+			if($fh) {
+				if(fwrite($fh, $content)) fclose($fh);
+				else $ok = false;
+			} else {
+				$ok = false;
+			}
+		} else {
+			$ok = false;
+		}
+		
+		return $ok;
+	}
+	
+}
+
+/**
+ * The abstract InstallationWizard.<br/>
+ * It encapsulates all basic processing logic for running a wizard.
+ *
+ * @author Manuel Alabor <malabor@hsr.ch>
+ */
+abstract class InstallationWizard {
+	
+	protected $steps = array();
+	protected $wizardData = array();
+	protected $currentStepIndex = 0;
+	private $messages = array();
+	
+	/**
+	 * Creates a new InstallationWizard and initializes it with the steps
+	 * from $stepSpecifications.
+	 *
+	 * @param $stepSpecifications array
+	 * */
+	public function __construct(array $stepSpecifications) {
+		$this->steps = $stepSpecifications;
+	}
+	
+	/**
+	 * Starts the installation wizard logic.
+	 * 
+	 * @param $postData simply a $_POST array
+	 */
+	public function run(array $postData) {
+		$this->deserializeWizardData($postData);
+		$this->processPostData($postData);
+	}
+
+	/**
+	 * Returns the current step index.
+	 *
+	 * @return Current steps index
+	 */		
+	public function getCurrentStepIndex() {
+		return $this->currentStepIndex;
+	}
+	
+	/**
+	 * Returns the current step.
+	 *
+	 * @return Current step specification
+	 */
+	public function getCurrentStep() {
+		return $this->steps[$this->getCurrentStepIndex()];
+	}
+	
+	/**
+	 * Returns the total count of steps.
+	 *
+	 * @return count of steps
+	 */
+	public function getTotalSteps() {
+		return sizeof($this->steps);
+	}
+	
 	
 	/**
 	 * Takes possible present input data from the POST-request and fills it into
 	 * the proper step-data-array.
 	 *
 	 * @param $postData simply the $_POST array
-	 * @param &$steps reference to the steps array
-	 * @return the index of the current step in the wizard
 	 */
-	function processPostData(array $postData, array &$steps) {
-		$currentstep_index = 0;
-		
+	private function processPostData(array $postData) {
 		if(isset($postData['step'])) {
-			$currentstep_index = $postData['step'];
-			
+			$this->currentStepIndex = $postData['step'];
+			$currentStepIndex = $this->currentStepIndex;
+
 			// Read the input-data into the step specifications
 			foreach($postData as $key => $value) {
 				if(strstr($key, 'input_') !== false) {
 					$key = substr($key, 6);
-					if(!isset($steps[$currentstep_index]['data'])) {
-						$steps[$currentstep_index]['data'] = array();
-					}
-					$steps[$currentstep_index]['data'][$key] = $value;
+					$this->wizardData[$key] = $value;
 				}
 			}
-			
+
 			// Determine if the user clicked next or back:
 			$wizardDirection = 'next';
 			if(isset($postData['back'])) $wizardDirection = 'back';
-			
+
 			// Check input only if next was clicked:
 			$inputOk = true;
-			if($wizardDirection === 'next') $inputOk = isInputOk($steps, $currentstep_index);
-			
-			// Execute method if needed and update the currentstep_index regarding
-			// the button which was clicked.
+			if($wizardDirection === 'next') $inputOk = $this->isInputOk();
+
+			// Execute "after" method if needed and update the
+			// currentstep_index regarding the button which was clicked.
 			if($inputOk === true) {
 				$ok = true;
 				if($wizardDirection === 'next') {
-					if(isset($steps[$currentstep_index]['callMethodAfter'])) {
-						$stepsData = array();
-						if(isset($steps[$currentstep_index]['data'])) {
-							$stepsData = $steps[$currentstep_index]['data'];
-						}
-						
-						$ok = $steps[$currentstep_index]['callMethodAfter']($stepsData);
+					if(isset($this->steps[$currentStepIndex]['callMethodAfter'])) {
+						$method = $this->steps[$this->currentStepIndex]['callMethodAfter'];
+						$ok = $this->$method($this->wizardData);
 					}
-					if($ok === true) $currentstep_index++;
+					if($ok === true) $this->currentStepIndex++;
 				} else if($wizardDirection === 'back') {
-					$currentstep_index--;
+					$this->currentStepIndex--;
 				}
+				
+				$currentStepIndex = $this->currentStepIndex;
 			}
 		}
-		
+
 		// Execute "before" method if present:
-		if(isset($steps[$currentstep_index]['callMethodBefore'])) {
-			$stepsData = array();
-			if(isset($steps[$currentstep_index]['data'])) {
-				$stepsData = $steps[$currentstep_index]['data'];
-			}
-			
-			$steps[$currentstep_index]['callMethodBefore']($stepsData);
+		if(isset($this->steps[$this->currentStepIndex]['callMethodBefore'])) {
+			$method = $this->steps[$this->currentStepIndex]['callMethodBefore'];
+			$this->$method($this->wizardData);
 		}
 		
-		return $currentstep_index;
 	}
-	
+
 	/**
 	 * This function checks if all mandatory inputs for the step $currentstep_index
 	 * are filled in.<br/>
 	 * If not, a message gets added with #addMessage and false is returned.
 	 * Otherwise true gets returned.
 	 * 
-	 * @param $steps
-	 * @param $currentstep_index
 	 * @return true/false
 	 */
-	function isInputOk(array $steps, $currentstep_index) {
+	private function isInputOk() {
 		$missingFields = array();
-		if(isset($steps[$currentstep_index]['input'])) {
-			foreach($steps[$currentstep_index]['input'] as $key => $input) {
+		$currentStep = $this->steps[$this->currentStepIndex];
+		
+		if(isset($currentStep['input'])) {
+			foreach($currentStep['input'] as $key => $input) {
 				if(isset($input['mandatory']) && $input['mandatory'] === true) {
 					$dataValid = true;
-					
-					if(isset($steps[$currentstep_index]['data'][$key])) {
-						if(strlen($steps[$currentstep_index]['data'][$key]) === 0) {
+
+					if(isset($this->wizardData[$key])) {
+						if(strlen($this->wizardData[$key]) === 0) {
 							$dataValid = false;
 						}
 					} else {
 						$dataValid = false;
 					}
-					
+
 					if($dataValid === false) $missingFields[] = $input['caption'];
 				}
 			}
 		}
-		
+
 		// Add message if needed:
 		if(sizeof($missingFields) > 0) {
 			$message = 'Please fill in the following field(s) you missed:<br/>';
 			foreach($missingFields as $field) {
 				$message .= '&nbsp;-&nbsp;'. $field. '<br/>';
 			}
-			addMessage('error', 'Missing input', $message);
+			$this->addMessage('error', 'Missing input', $message);
 		}
-		
+
 		return (sizeof($missingFields) === 0);
 	}
-	
-	
+
+
 	/**
 	 * Serializes the data of each step in the steps-array into a hidden
 	 * input-element.
 	 *
-	 * @param $steps the steps array
 	 * @return input-elements with the serialized data
-	 * @see deserializeStepData
+	 * @see deserializeSWizardData
 	 */
-	function serializeStepData(array $steps) {
+	public function serializeWizardData() {
 		$serialized = '';
 		
-		foreach($steps as $index => $step) {
-			$serializedStep = '';
-			if(isset($step['data'])) $serializedStep = serialize($step['data']);
-			if(strlen($serializedStep) > 0) {
-				$serialized .= '<input type="hidden" '
-				            .  'name="stepdata_'. $index. '" '
-							.  'value="'. urlencode($serializedStep). '" '
-							.  ' />'."\n";
-			}
+		if(sizeof($this->wizardData) > 0) {
+			$serialized .= '<input type="hidden" '
+			            .  'name="wizardData" '
+						.  'value="'. urlencode(serialize($this->wizardData)). '" '
+						.  ' />'."\n";
 		}
-		
+
 		return $serialized."\n";
 	}
-	
+
 	/**
 	 * After a POST-Request, this method deserializes the steps-data back into
-	 * the steps-array.
+	 * the wizardData-array
 	 *
 	 * @param $postSource simply the $_POST-variable
-	 * @param &$steps a reference to the $steps array
-	 * @see serializeStepData
+	 * @see serializeWizardData
 	 */
-	function deserializeStepData(array $postSource, array &$steps) {
-		foreach($postSource as $key => $value) {
-			if(strstr($key, 'stepdata_') !== false) {
-				$stepindex = intval(substr($key, 9));
-				$steps[$stepindex]['data'] = unserialize(urldecode($value));
-			}
+	private function deserializeWizardData(array $postSource) {
+		if(isset($postSource['wizardData'])) {
+			$this->wizardData = unserialize(urldecode($postSource['wizardData']));
 		}
 	}
-	
+
 	/**
 	 * Takes the input-specifications of a step and renders the proper input-elements
 	 * for them.
@@ -276,9 +586,9 @@
 	 * @param $step step-specifications
 	 * @return input-elements
 	 */
-	function renderInputs($step) {
+	public function renderInputs($step) {
 		$rendered = '';
-		
+
 		if(isset($step['input'])) {
 			$inputs = $step['input'];
 			$tabindex = 0;
@@ -286,14 +596,14 @@
 				$tabindex++;
 				$value = '';
 				$placeholder = '';
-				if(isset($step['data'][$key])) $value = $step['data'][$key];
+				if(isset($this->wizardData[$key])) $value = $this->wizardData[$key];
 				if(isset($input['placeholder'])) $placeholder = $input['placeholder'];
-				
+
 				$rendered .= '<p>'
 						  .  '<label for="input_'. $key. '">'
 						  .  $input['caption']
 						  .  '</label>';
-				
+
 				switch($input['type']) {
 					case 'text' :
 						$rendered .= '<input type="text" '
@@ -322,92 +632,100 @@
 							$tabindex++;
 						}
 				}
-				
+
 				$rendered .= '</p>'."\n";
 			}
 		}
-		
+
 		return $rendered;
-		
+
 	}
-	
-	/* ---------------------------------------------------------------------- */
-	
-	function addMessage($type, $title, $message) {
-		global $messages;  // ugly, but only a bit ;)
-		
-		$messages[] = array(
+
+	/**
+	 * Adds a message to the wizard.
+	 *
+	 * @param $type [error|info]
+	 * @param $title
+	 * @param $message
+	 */
+	public function addMessage($type, $title, $message) {
+		$this->messages[] = array(
 			'type' => $type
 			,'title' => $title
 			,'text' => $message
 		);
 	}
+	
+	/**
+	 * Returns the available messages.
+	 *
+	 * @return an array with messages
+	 */
+	public function getMessages() {
+		return $this->messages;
+	}
 
+	/**
+	 * Returns a value out of the array $data. If the specific key is not
+	 * present in $data, $default gets returned.
+	 * 
+	 * @param $data
+	 * @param $key
+	 * @param $default (optional, default='')
+	 * @return entrie from $data or $default
+	 */
 	function getDataValue($data, $key, $default='') {
 		$result = $default;
 		if(isset($data[$key])) $result = $data[$key];
 		return $result;
 	}
 	
-	/* ---------------------------------------------------------------------- */
-	
 	/**
-	 * Tests if the installation wizard has writepermissions for several paths.
+	 * If true, the next button is allowed to be displayed.
 	 *
-	 * @param $stepData
 	 * @return true/false
 	 */
-	function testWritePermissions($stepData) {
-		$configWriteable = testIfConfigWriteable();
-		$parentWriteable = testIfParentWritable();
-		
-		if($configWriteable === false || $parentWriteable === false) {
-			addMessage('info', 'No write permissions', 'The installation wizard has recognized that he has no or partially no write permissions.</p><p>You can try to fix this by changing the permissions on your server (<em>chmod 777</em>) and restart the wizard.</p><p>If not, you\'ll have to do some configuration steps by yourself. If you choose this variant, the installation wizard will tell you exactly the steps you have to do.');
+	public function isNextAllowed() {
+		$allowed = false;
+
+		if($this->getCurrentStepIndex() < $this->getTotalSteps()-1) {
+			$allowed = true;
 		}
 		
-		return ($configWriteable && $parentWriteable);
+		return $allowed;
 	}
-	
-	function testIfConfigWriteable() {
-		return is_writable('../config/');
-	}
-	
-	function testIfParentWritable() {
-		return is_writeable('../');
-	}
-	
 	
 	/**
-	 * This method tests the databaseconnection.<br/>
-	 * If everythings fine, it returns true, otherwise it adds messages to the
-	 * wizard and returns false.
+	 * If true, the back button is allowed to be displayed.
 	 *
-	 * @param $stepData
 	 * @return true/false
 	 */
-	function testDatabaseConnection($stepData) {
-		$host = getDataValue($stepData,'database_host');
-		$dbname = getDataValue($stepData,'database_name');
-		$user = getDataValue($stepData,'database_user');
-		$password = getDataValue($stepData,'database_password');
+	public function isBackAllowed() {
+		$allowed = true;
+		$currentStep = $this->getCurrentStep();
 		
-		$ok = (($connection = @mysql_connect($host, $user, $password)) !== false);
-		if($ok === true) {
-			$ok = (@mysql_select_db($dbname, $connection) !== false);
-			
-			if($ok === false) {
-				addMessage('error', 'Invalid database name', 'Could not access the database "'. $dbname. '". Please make sure this database exists.');
-			} else {
-				@mysql_close($connection);
-				addMessage('info', 'Database connection ready', 'The database connection has successfully been tested.');
+		if($this->getCurrentStepIndex() > 0) {
+			if(isset($currentStep['allowBack']) && $currentStep['allowBack'] === false) {
+				$allowed = false;
 			}
 		} else {
-			addMessage('error','Connection error', 'Could not connect to the host "'. $host. '". Please check host, username and password.');
+			$allowed = false;
 		}
 		
-		return $ok;
+		return $allowed;
 	}
 
+}	
+
+/* ---------------------------------------------------------------------- */
+
+/* Run the wizard: */
+$wizard = new Html5Wiki_InstallationWizard();
+$wizard->run($_POST);
+
+$currentStepIndex = $wizard->getCurrentStepIndex();
+$currentStep = $wizard->getCurrentStep();
+$messages = $wizard->getMessages();
 	
 ?>
 <!DOCTYPE html>
@@ -426,7 +744,8 @@
 		input[type=text] { font-size: 110%; margin-bottom: 8px; width: 300px; }
 		label { display: block; font-size: 85%; margin-bottom: 2px; }
 		.editor p { margin-bottom: 6px; }
-		.box h3 { margin-top: 3px;}
+		.content .box h3 { margin-top: 3px;}
+		.content .box .white-paper { font-family: "Courier New", Courier, monospace !important; }
 		.radiocontainer { display: block; font-size: 80%; margin-bottom: 4px; }
 		.radiocontainer input { vertical-align: bottom; }
 	</style>
@@ -438,7 +757,7 @@
 			<nav class="main-menu">
 				<ol class="menu-items clearfix">
 					<li class="item install active">
-						<a href="#" class="tab">Installation Wizard: Step <?php echo $currentstep_index+1 ?> of <?php echo sizeof($steps) ?></a>
+						<a href="#" class="tab">Installation Wizard: Step <?php echo $currentStepIndex+1 ?> of <?php echo $wizard->getTotalSteps() ?></a>
 					</li>
 				</ol>
 			</nav>
@@ -456,20 +775,20 @@
 			<?php endif; ?>
 			
 			<form action="<?php echo $installscript ?>" method="post">
-				<input type="hidden" name="step" value="<?php echo $currentstep_index ?>" />
-				<?php echo serializeStepData($steps); ?>
+				<input type="hidden" name="step" value="<?php echo $currentStepIndex ?>" />
+				<?php echo $wizard->serializeWizardData(); ?>
 				<header class="title">
-					<h2>Step <?php echo $currentstep_index+1; ?>: <?php echo $currentstep['name'] ?></h2>
-					<?php echo $currentstep['text'] ?>
+					<h2>Step <?php echo $currentStepIndex+1; ?>: <?php echo $currentStep['name'] ?></h2>
+					<?php echo $currentStep['text'] ?>
 				</header>
 				
-				<?php echo renderInputs($currentstep); ?>
+				<?php echo $wizard->renderInputs($currentStep); ?>
 			
 				<footer class="bottom-button-bar">
-					<?php if($currentstep_index < sizeof($steps)-1) : ?>
-					<input type="submit" name="next" value="<?php echo (isset($currentstep['nextCaption']) === true ? $currentstep['nextCaption'] : 'Next >'); ?>" class="large-button caption"/>
+					<?php if($wizard->isNextAllowed()) : ?>
+					<input type="submit" name="next" value="<?php echo (isset($currentStep['nextCaption']) === true ? $currentStep['nextCaption'] : 'Next >'); ?>" class="large-button caption"/>
 					<?php endif; ?>
-					<?php if($currentstep_index > 0) : ?>
+					<?php if($wizard->isBackAllowed()) : ?>
 					<input type="submit" name="back" value="Back" class="large-button caption" />
 					<?php endif; ?>
 				</footer>
