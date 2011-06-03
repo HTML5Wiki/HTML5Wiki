@@ -1,5 +1,5 @@
 html5WikiMarkItUpSettings = {
-	previewParserPath:	'/wiki/preview',
+	previewParserPath:	'../../wiki/preview',
 	previewInWindow: 'width=1000, height=600, resizable=yes, scrollbars=yes',
 	previewAutoRefresh: true,
 	onShiftEnter:		{keepDefault:false, openWith:'\n\n'},

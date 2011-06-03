@@ -5,7 +5,7 @@
 		</div>
 	</header>
 	<section>
-		<?php echo $this->markDownParser->transform($this->content) ?>
+		<?php echo $this->markDownParser->transform($this->escape($this->content)) ?>
 	</section>
 	<div class="clear"></div>
 </article>
