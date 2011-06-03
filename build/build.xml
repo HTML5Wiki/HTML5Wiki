@@ -41,6 +41,9 @@ Cruisecontrol build file
 			<arg line="--ignore=test/,library/Zend/,web/,templates/,library/Markdown --phpunit-xml=${basedir}/build/logs/pdepend.xml --jdepend-chart=${basedir}/build/graph/10-dependencies.svg --overview-pyramid=${basedir}/build/graph/11-software-metrics-pyramid.svg ."/>
 		</exec>
 	</target>
+	<!--
+	Disabled php-codesniffer as it just takes too long to execute.. :/
+	-->
 	<target name="php-codesniffer">
 		<exec output="${basedir}/build/logs/checkstyle.xml" dir="${basedir}/source" executable="phpcs">
 			<arg line="--report=checkstyle --standard=${basedir}/source/build/Html5WikiStandard --encoding=utf-8 ."></arg>
