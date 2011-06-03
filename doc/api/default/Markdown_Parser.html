@@ -1,0 +1,2757 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Docs For Class Markdown_Parser</title>
+    <link rel="stylesheet" type="text/css" href="../media/style.css" />
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+  </head>
+  <body>
+  
+    <h1>Generated Documentation :: Docs For Class Markdown_Parser</h1>
+
+    <table width="100%">
+      <tr valign="top">
+        <td class="menu">
+                                <div class="package">
+              <div id="todolist">
+                <p><a href="../todolist.html">Todo List</a></p>
+              </div>
+            </div>
+                    <h2>Packages:</h2>
+          <div class="package">
+            <ul>
+                              <li>
+                  <a href="../classtrees_default.html">default</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Bootstrap.html">Bootstrap</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Diff.html">Diff</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_DiffLib.html">DiffLib</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Html5Wiki.html">Html5Wiki</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Library.html">Library</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Setup.html">Setup</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Test.html">Test</a>
+                </li>
+                          </ul>
+          </div>
+                                                                    <h2>Classes:</h2>
+                <ul>
+		    		<li><a href="../default/Markdown_Parser.html">Markdown_Parser</a></li>    	    		<li><a href="../default/WrongController.html">WrongController</a></li>    	  </ul>
+                              </td>
+        <td>
+          <table style="width:750px;" cellpadding="10" cellspacing="10px">
+            <tr>
+              <td valign="top">
+                                                                  <h2>default::Markdown_Parser</h2>
+                                <div class="menu">
+          
+                                    
+                                                                                                                                                                                          [ <a href="../index.html">Index</a> ]
+                      [ <a href="../classtrees_default.html">default classes</a> ]
+            [ <a href="../elementindex_default.html">default elements</a> ]
+                    [ <a href="../elementindex.html">All elements</a> ]
+          [ <a href="../errors.html">Errors</a> ]
+                </div>
+<a name="sec-description"></a>
+<h2>Class Markdown_Parser</h2>
+
+		
+
+
+
+
+
+
+
+
+
+
+  <a name="sec-var-summary"></a>
+  <h2>Member Variables</h2>
+  <table class="summary">
+                                                                                                                                                                                                                                                                                <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $block_gamut
+               = <span class="var-default">array(<br />#<br /># These are all the transformations that form block-level<br /># tags like paragraphs, headers, and list items.<br />#<br />		&quot;doHeaders&quot; =&gt; 10,<br />		&quot;doHorizontalRules&quot; =&gt; 20,<br />		&quot;doLists&quot; =&gt; 40,<br />		&quot;doCodeBlocks&quot; =&gt; 50,<br />		&quot;doBlockQuotes&quot; =&gt; 60,<br />	)</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $document_gamut
+               = <span class="var-default">array(<br /># Strip link definitions, store in hashes.<br />		&quot;stripLinkDefinitions&quot; =&gt; 20,<br />		&quot;runBasicBlockGamut&quot; =&gt; 30,<br />	)</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $empty_element_suffix
+               = <span class="var-default"> MARKDOWN_EMPTY_ELEMENT_SUFFIX</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $em_relist
+               = <span class="var-default">array(<br />		'' =&gt; '(?:(?&lt;!\*)\*(?!\*)|(?&lt;!_)_(?!_))(?=\S)(?![.,:;]\s)',<br />		'*' =&gt; '(?&lt;=\S)(?&lt;!\*)\*(?!\*)',<br />		'_' =&gt; '(?&lt;=\S)(?&lt;!_)_(?!_)',<br />	)</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $em_strong_prepared_relist
+                          </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $em_strong_relist
+               = <span class="var-default">array(<br />		'' =&gt; '(?:(?&lt;!\*)\*\*\*(?!\*)|(?&lt;!_)___(?!_))(?=\S)(?![.,:;]\s)',<br />		'***' =&gt; '(?&lt;=\S)(?&lt;!\*)\*\*\*(?!\*)',<br />		'___' =&gt; '(?&lt;=\S)(?&lt;!_)___(?!_)',<br />	)</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $escape_chars
+               = <span class="var-default"> '\`*_{}[]()&gt;#+-.!'</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $escape_chars_re
+                          </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $html_hashes
+               = <span class="var-default">array()</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $in_anchor
+               = <span class="var-default"> false</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $list_level
+               = <span class="var-default"> 0</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $nested_brackets_depth
+               = <span class="var-default"> 6</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $nested_brackets_re
+                          </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $nested_url_parenthesis_depth
+               = <span class="var-default"> 4</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $nested_url_parenthesis_re
+                          </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $no_entities
+               = <span class="var-default"> false</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $no_markup
+               = <span class="var-default"> false</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $predef_titles
+               = <span class="var-default">array()</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $predef_urls
+               = <span class="var-default">array()</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $span_gamut
+               = <span class="var-default">array(<br />#<br /># These are all the transformations that occur *within* block-level<br /># tags like paragraphs, headers, and list items.<br />#<br /># Process character escapes, code spans, and inline HTML<br /># in one shot.<br />		&quot;parseSpan&quot; =&gt; -30,<br /># Process anchor and image tags. Images must come first,<br /># because ![foo][f] looks like an anchor.<br />		&quot;doImages&quot; =&gt; 10,<br />		&quot;doAnchors&quot; =&gt; 20,<br /># Make links out of things like `&lt;http://example.com/&gt;`<br /># Must come after doAnchors, because you can use &lt; and &gt;<br /># delimiters in inline links like [this](&lt;url&gt;).<br />		&quot;doAutoLinks&quot; =&gt; 30,<br />		&quot;encodeAmpsAndAngles&quot; =&gt; 40,<br />		&quot;doItalicsAndBold&quot; =&gt; 50,<br />		&quot;doHardBreaks&quot; =&gt; 60,<br />	)</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $strong_relist
+               = <span class="var-default">array(<br />		'' =&gt; '(?:(?&lt;!\*)\*\*(?!\*)|(?&lt;!_)__(?!_))(?=\S)(?![.,:;]\s)',<br />		'**' =&gt; '(?&lt;=\S)(?&lt;!\*)\*\*(?!\*)',<br />		'__' =&gt; '(?&lt;=\S)(?&lt;!_)__(?!_)',<br />	)</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $tab_width
+               = <span class="var-default"> MARKDOWN_TAB_WIDTH</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $titles
+               = <span class="var-default">array()</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $urls
+               = <span class="var-default">array()</span>            </code>
+                                  </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            <em>mixed</em>          </td>
+          <td>
+            <code>
+              $utf8_strlen
+               = <span class="var-default"> 'mb_strlen'</span>            </code>
+                                  </td>
+        </tr>
+            </table>
+
+
+  <a name="sec-method-summary"></a>
+  <h2>Method Summary</h2>
+  <table class="summary">
+                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              <tr>
+          <td class="right">
+            <em>public</em>                        <em>Markdown_Parser</em>          </td>
+          <td>
+            <code>
+              <a href="#Markdown_Parser"><b>Markdown_Parser</b></a>(
+               )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#detab"><b>detab</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doAnchors"><b>doAnchors</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doAutoLinks"><b>doAutoLinks</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doBlockQuotes"><b>doBlockQuotes</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doCodeBlocks"><b>doCodeBlocks</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doHardBreaks"><b>doHardBreaks</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doHeaders"><b>doHeaders</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doHorizontalRules"><b>doHorizontalRules</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doImages"><b>doImages</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doItalicsAndBold"><b>doItalicsAndBold</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#doLists"><b>doLists</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#encodeAmpsAndAngles"><b>encodeAmpsAndAngles</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#encodeAttribute"><b>encodeAttribute</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#encodeEmailAddress"><b>encodeEmailAddress</b></a>(
+                                                                                    $addr
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#formParagraphs"><b>formParagraphs</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#handleSpanToken"><b>handleSpanToken</b></a>(
+                                                                                    $token
+                                                    ,                                     &$str
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#hashBlock"><b>hashBlock</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#hashHTMLBlocks"><b>hashHTMLBlocks</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#hashPart"><b>hashPart</b></a>(
+                                                                                    $text
+                                                    ,                   [                  $boundary
+                   = 'X']                               )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#makeCodeSpan"><b>makeCodeSpan</b></a>(
+                                                                                    $code
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#outdent"><b>outdent</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#parseSpan"><b>parseSpan</b></a>(
+                                                                                    $str
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#prepareItalicsAndBold"><b>prepareItalicsAndBold</b></a>(
+               )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#processListItems"><b>processListItems</b></a>(
+                                                                                    $list_str
+                                                    ,                                     $marker_any_re
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#runBasicBlockGamut"><b>runBasicBlockGamut</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#runBlockGamut"><b>runBlockGamut</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#runSpanGamut"><b>runSpanGamut</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#setup"><b>setup</b></a>(
+               )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#stripLinkDefinitions"><b>stripLinkDefinitions</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#teardown"><b>teardown</b></a>(
+               )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#transform"><b>transform</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#unhash"><b>unhash</b></a>(
+                                                                                    $text
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_detab_callback"><b>_detab_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doAnchors_inline_callback"><b>_doAnchors_inline_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doAnchors_reference_callback"><b>_doAnchors_reference_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doAutoLinks_email_callback"><b>_doAutoLinks_email_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doAutoLinks_url_callback"><b>_doAutoLinks_url_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doBlockQuotes_callback"><b>_doBlockQuotes_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doBlockQuotes_callback2"><b>_doBlockQuotes_callback2</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doCodeBlocks_callback"><b>_doCodeBlocks_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doHardBreaks_callback"><b>_doHardBreaks_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doHeaders_callback_atx"><b>_doHeaders_callback_atx</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doHeaders_callback_setext"><b>_doHeaders_callback_setext</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doImages_inline_callback"><b>_doImages_inline_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doImages_reference_callback"><b>_doImages_reference_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_doLists_callback"><b>_doLists_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_hashHTMLBlocks_callback"><b>_hashHTMLBlocks_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_initDetab"><b>_initDetab</b></a>(
+               )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_processListItems_callback"><b>_processListItems_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_stripLinkDefinitions_callback"><b>_stripLinkDefinitions_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_unhash_callback"><b>_unhash_callback</b></a>(
+                                                                                    $matches
+                                                 )
+            </code>
+                      </td>
+        </tr>
+            </table>
+
+
+  <a name="sec-methods"></a>
+  <h2>Methods</h2>
+  <a name='method_detail'></a>
+                                                                                                        
+      <a name="methodMarkdown_Parser" id="Markdown_Parser"><!-- --></a>
+
+    <h3>Markdown_Parser</h3>
+
+    <div class="method-signature">
+      Markdown_Parser
+      Markdown_Parser(
+      )
+    </div>
+
+    
+    
+        
+
+    
+    
+    
+        <a name="methoddetab" id="detab"><!-- --></a>
+
+    <h3>detab</h3>
+
+    <div class="method-signature">
+      void
+      detab(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoAnchors" id="doAnchors"><!-- --></a>
+
+    <h3>doAnchors</h3>
+
+    <div class="method-signature">
+      void
+      doAnchors(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoAutoLinks" id="doAutoLinks"><!-- --></a>
+
+    <h3>doAutoLinks</h3>
+
+    <div class="method-signature">
+      void
+      doAutoLinks(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoBlockQuotes" id="doBlockQuotes"><!-- --></a>
+
+    <h3>doBlockQuotes</h3>
+
+    <div class="method-signature">
+      void
+      doBlockQuotes(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoCodeBlocks" id="doCodeBlocks"><!-- --></a>
+
+    <h3>doCodeBlocks</h3>
+
+    <div class="method-signature">
+      void
+      doCodeBlocks(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoHardBreaks" id="doHardBreaks"><!-- --></a>
+
+    <h3>doHardBreaks</h3>
+
+    <div class="method-signature">
+      void
+      doHardBreaks(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoHeaders" id="doHeaders"><!-- --></a>
+
+    <h3>doHeaders</h3>
+
+    <div class="method-signature">
+      void
+      doHeaders(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoHorizontalRules" id="doHorizontalRules"><!-- --></a>
+
+    <h3>doHorizontalRules</h3>
+
+    <div class="method-signature">
+      void
+      doHorizontalRules(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoImages" id="doImages"><!-- --></a>
+
+    <h3>doImages</h3>
+
+    <div class="method-signature">
+      void
+      doImages(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoItalicsAndBold" id="doItalicsAndBold"><!-- --></a>
+
+    <h3>doItalicsAndBold</h3>
+
+    <div class="method-signature">
+      void
+      doItalicsAndBold(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methoddoLists" id="doLists"><!-- --></a>
+
+    <h3>doLists</h3>
+
+    <div class="method-signature">
+      void
+      doLists(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodencodeAmpsAndAngles" id="encodeAmpsAndAngles"><!-- --></a>
+
+    <h3>encodeAmpsAndAngles</h3>
+
+    <div class="method-signature">
+      void
+      encodeAmpsAndAngles(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodencodeAttribute" id="encodeAttribute"><!-- --></a>
+
+    <h3>encodeAttribute</h3>
+
+    <div class="method-signature">
+      void
+      encodeAttribute(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodencodeEmailAddress" id="encodeEmailAddress"><!-- --></a>
+
+    <h3>encodeEmailAddress</h3>
+
+    <div class="method-signature">
+      void
+      encodeEmailAddress(
+                                  
+          $addr
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$addr</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodformParagraphs" id="formParagraphs"><!-- --></a>
+
+    <h3>formParagraphs</h3>
+
+    <div class="method-signature">
+      void
+      formParagraphs(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodhandleSpanToken" id="handleSpanToken"><!-- --></a>
+
+    <h3>handleSpanToken</h3>
+
+    <div class="method-signature">
+      void
+      handleSpanToken(
+                                  
+          $token
+                            ,           
+          &$str
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$token</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>&$str</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodhashBlock" id="hashBlock"><!-- --></a>
+
+    <h3>hashBlock</h3>
+
+    <div class="method-signature">
+      void
+      hashBlock(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodhashHTMLBlocks" id="hashHTMLBlocks"><!-- --></a>
+
+    <h3>hashHTMLBlocks</h3>
+
+    <div class="method-signature">
+      void
+      hashHTMLBlocks(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodhashPart" id="hashPart"><!-- --></a>
+
+    <h3>hashPart</h3>
+
+    <div class="method-signature">
+      void
+      hashPart(
+                                  
+          $text
+                            ,           [
+          $boundary
+           = 'X']              )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$boundary</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodmakeCodeSpan" id="makeCodeSpan"><!-- --></a>
+
+    <h3>makeCodeSpan</h3>
+
+    <div class="method-signature">
+      void
+      makeCodeSpan(
+                                  
+          $code
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$code</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodoutdent" id="outdent"><!-- --></a>
+
+    <h3>outdent</h3>
+
+    <div class="method-signature">
+      void
+      outdent(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodparseSpan" id="parseSpan"><!-- --></a>
+
+    <h3>parseSpan</h3>
+
+    <div class="method-signature">
+      void
+      parseSpan(
+                                  
+          $str
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$str</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodprepareItalicsAndBold" id="prepareItalicsAndBold"><!-- --></a>
+
+    <h3>prepareItalicsAndBold</h3>
+
+    <div class="method-signature">
+      void
+      prepareItalicsAndBold(
+      )
+    </div>
+
+    
+    
+        
+
+    
+    
+    
+        <a name="methodprocessListItems" id="processListItems"><!-- --></a>
+
+    <h3>processListItems</h3>
+
+    <div class="method-signature">
+      void
+      processListItems(
+                                  
+          $list_str
+                            ,           
+          $marker_any_re
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$list_str</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                      <tr>
+              <td><code>$marker_any_re</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodrunBasicBlockGamut" id="runBasicBlockGamut"><!-- --></a>
+
+    <h3>runBasicBlockGamut</h3>
+
+    <div class="method-signature">
+      void
+      runBasicBlockGamut(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodrunBlockGamut" id="runBlockGamut"><!-- --></a>
+
+    <h3>runBlockGamut</h3>
+
+    <div class="method-signature">
+      void
+      runBlockGamut(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodrunSpanGamut" id="runSpanGamut"><!-- --></a>
+
+    <h3>runSpanGamut</h3>
+
+    <div class="method-signature">
+      void
+      runSpanGamut(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodsetup" id="setup"><!-- --></a>
+
+    <h3>setup</h3>
+
+    <div class="method-signature">
+      void
+      setup(
+      )
+    </div>
+
+    
+    
+        
+
+    
+    
+    
+        <a name="methodstripLinkDefinitions" id="stripLinkDefinitions"><!-- --></a>
+
+    <h3>stripLinkDefinitions</h3>
+
+    <div class="method-signature">
+      void
+      stripLinkDefinitions(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodteardown" id="teardown"><!-- --></a>
+
+    <h3>teardown</h3>
+
+    <div class="method-signature">
+      void
+      teardown(
+      )
+    </div>
+
+    
+    
+        
+
+    
+    
+    
+        <a name="methodtransform" id="transform"><!-- --></a>
+
+    <h3>transform</h3>
+
+    <div class="method-signature">
+      void
+      transform(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="methodunhash" id="unhash"><!-- --></a>
+
+    <h3>unhash</h3>
+
+    <div class="method-signature">
+      void
+      unhash(
+                                  
+          $text
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$text</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_detab_callback" id="_detab_callback"><!-- --></a>
+
+    <h3>_detab_callback</h3>
+
+    <div class="method-signature">
+      void
+      _detab_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doAnchors_inline_callback" id="_doAnchors_inline_callback"><!-- --></a>
+
+    <h3>_doAnchors_inline_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doAnchors_inline_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doAnchors_reference_callback" id="_doAnchors_reference_callback"><!-- --></a>
+
+    <h3>_doAnchors_reference_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doAnchors_reference_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doAutoLinks_email_callback" id="_doAutoLinks_email_callback"><!-- --></a>
+
+    <h3>_doAutoLinks_email_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doAutoLinks_email_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doAutoLinks_url_callback" id="_doAutoLinks_url_callback"><!-- --></a>
+
+    <h3>_doAutoLinks_url_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doAutoLinks_url_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doBlockQuotes_callback" id="_doBlockQuotes_callback"><!-- --></a>
+
+    <h3>_doBlockQuotes_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doBlockQuotes_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doBlockQuotes_callback2" id="_doBlockQuotes_callback2"><!-- --></a>
+
+    <h3>_doBlockQuotes_callback2</h3>
+
+    <div class="method-signature">
+      void
+      _doBlockQuotes_callback2(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doCodeBlocks_callback" id="_doCodeBlocks_callback"><!-- --></a>
+
+    <h3>_doCodeBlocks_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doCodeBlocks_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doHardBreaks_callback" id="_doHardBreaks_callback"><!-- --></a>
+
+    <h3>_doHardBreaks_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doHardBreaks_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doHeaders_callback_atx" id="_doHeaders_callback_atx"><!-- --></a>
+
+    <h3>_doHeaders_callback_atx</h3>
+
+    <div class="method-signature">
+      void
+      _doHeaders_callback_atx(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doHeaders_callback_setext" id="_doHeaders_callback_setext"><!-- --></a>
+
+    <h3>_doHeaders_callback_setext</h3>
+
+    <div class="method-signature">
+      void
+      _doHeaders_callback_setext(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doImages_inline_callback" id="_doImages_inline_callback"><!-- --></a>
+
+    <h3>_doImages_inline_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doImages_inline_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doImages_reference_callback" id="_doImages_reference_callback"><!-- --></a>
+
+    <h3>_doImages_reference_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doImages_reference_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_doLists_callback" id="_doLists_callback"><!-- --></a>
+
+    <h3>_doLists_callback</h3>
+
+    <div class="method-signature">
+      void
+      _doLists_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_hashHTMLBlocks_callback" id="_hashHTMLBlocks_callback"><!-- --></a>
+
+    <h3>_hashHTMLBlocks_callback</h3>
+
+    <div class="method-signature">
+      void
+      _hashHTMLBlocks_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_initDetab" id="_initDetab"><!-- --></a>
+
+    <h3>_initDetab</h3>
+
+    <div class="method-signature">
+      void
+      _initDetab(
+      )
+    </div>
+
+    
+    
+        
+
+    
+    
+    
+        <a name="method_processListItems_callback" id="_processListItems_callback"><!-- --></a>
+
+    <h3>_processListItems_callback</h3>
+
+    <div class="method-signature">
+      void
+      _processListItems_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_stripLinkDefinitions_callback" id="_stripLinkDefinitions_callback"><!-- --></a>
+
+    <h3>_stripLinkDefinitions_callback</h3>
+
+    <div class="method-signature">
+      void
+      _stripLinkDefinitions_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+        <a name="method_unhash_callback" id="_unhash_callback"><!-- --></a>
+
+    <h3>_unhash_callback</h3>
+
+    <div class="method-signature">
+      void
+      _unhash_callback(
+                                  
+          $matches
+                        )
+    </div>
+
+    
+          <h4>Parameters:</h4>
+      <table class="detail">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Type</th>
+            <th class="desc">Description</th>
+          </tr>
+        </thead>
+        <tbody>
+                      <tr>
+              <td><code>$matches</code></td>
+              <td><em></em></td>
+              <td>
+                              </td>
+            </tr>
+                  </tbody>
+      </table>
+    
+        
+
+    
+    
+    
+  
+<p class="notes">
+  Located in <a class="field" href="_library---Markdown---Parser.php.html">/library/Markdown/Parser.php</a> 
+  [<span class="field">line 62</span>]
+</p>
+
+                <div class="credit">
+                  Documentation generated on Fri, 03 Jun 2011 09:35:58 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

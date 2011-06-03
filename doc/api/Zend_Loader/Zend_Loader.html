@@ -1,0 +1,659 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Docs For Class Zend_Loader</title>
+    <link rel="stylesheet" type="text/css" href="../media/style.css" />
+    <meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'/>
+  </head>
+  <body>
+  
+    <h1>Generated Documentation :: Docs For Class Zend_Loader</h1>
+
+    <table width="100%">
+      <tr valign="top">
+        <td class="menu">
+                      <div class="package">
+              <div id="ric">
+                                  <p><a href="../ric_README.html">README</a></p>
+                              </div>
+            </div>
+                                <div class="package">
+              <div id="todolist">
+                <p><a href="../todolist.html">Todo List</a></p>
+              </div>
+            </div>
+                    <h2>Packages:</h2>
+          <div class="package">
+            <ul>
+                              <li>
+                  <a href="../classtrees_default.html">default</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Application.html">Application</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Html5Wiki.html">Html5Wiki</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Library.html">Library</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Test.html">Test</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Web.html">Web</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend.html">Zend</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_Config.html">Zend_Config</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_Db.html">Zend_Db</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_Loader.html">Zend_Loader</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_Locale.html">Zend_Locale</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_package.html">Zend_package</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_Translate.html">Zend_Translate</a>
+                </li>
+                              <li>
+                  <a href="../classtrees_Zend_Version.html">Zend_Version</a>
+                </li>
+                          </ul>
+          </div>
+                                                        <h2>Interfaces:</h2>
+                <ul>
+	<li>Autoloader	    <ul>		<li><a href="../Zend_Loader/Autoloader/Zend_Loader_Autoloader_Interface.html">Zend_Loader_Autoloader_Interface</a></li>    </ul></li>	  </ul>
+  <ul>
+	<li>PluginLoader	    <ul>		<li><a href="../Zend_Loader/PluginLoader/Zend_Loader_PluginLoader_Interface.html">Zend_Loader_PluginLoader_Interface</a></li>    </ul></li>	  </ul>
+                                      <h2>Classes:</h2>
+                <ul>
+	<li>Autoloader	    <ul>		<li><a href="../Zend_Loader/Autoloader/Zend_Loader_Autoloader.html">Zend_Loader_Autoloader</a></li>    </ul></li>	    <ul>		<li><a href="../Zend_Loader/Autoloader/Zend_Loader_Autoloader_Resource.html">Zend_Loader_Autoloader_Resource</a></li>    </ul></li>	  </ul>
+  <ul>
+		    		<li><a href="../Zend_Loader/Zend_Loader.html">Zend_Loader</a></li>    	    		<li><a href="../Zend_Loader/Zend_Loader_Exception.html">Zend_Loader_Exception</a></li>    	  </ul>
+  <ul>
+	<li>PluginLoader	    <ul>		<li><a href="../Zend_Loader/PluginLoader/Zend_Loader_PluginLoader.html">Zend_Loader_PluginLoader</a></li>    </ul></li>	    <ul>		<li><a href="../Zend_Loader/PluginLoader/Zend_Loader_PluginLoader_Exception.html">Zend_Loader_PluginLoader_Exception</a></li>    </ul></li>	  </ul>
+                              </td>
+        <td>
+          <table style="width:750px;" cellpadding="10" cellspacing="10px">
+            <tr>
+              <td valign="top">
+                                                                  <h2>Zend_Loader::Zend_Loader</h2>
+                                <div class="menu">
+          
+                                                                                                                                                                                                                                          
+                                                                                                                        [ <a href="../index.html">Index</a> ]
+                      [ <a href="../classtrees_Zend_Loader.html">Zend_Loader classes</a> ]
+            [ <a href="../elementindex_Zend_Loader.html">Zend_Loader elements</a> ]
+                    [ <a href="../elementindex.html">All elements</a> ]
+          [ <a href="../errors.html">Errors</a> ]
+                </div>
+<a name="sec-description"></a>
+<h2>Class Zend_Loader</h2>
+
+<p>Static methods for loading classes and files.</p>		
+
+
+
+
+  <strong>Author(s):</strong>
+  <ul>
+                          </ul>
+
+  <table>
+    	  		<tr>
+		  <td>
+		    <strong>Copyright:</strong>&nbsp;&nbsp;
+		  </td>
+		  <td>Copyright (c) 2005-2011 Zend Technologies USA Inc. (http://www.zend.com)</td>
+		</tr>
+	      	  		<tr>
+		  <td>
+		    <strong>License:</strong>&nbsp;&nbsp;
+		  </td>
+		  <td><a href="http://framework.zend.com/license/new-bsd">New BSD License</a></td>
+		</tr>
+	        </table>
+
+
+
+
+
+
+
+  <a name="sec-method-summary"></a>
+  <h2>Method Summary</h2>
+  <table class="summary">
+                  <tr>
+          <td class="right">
+            <em>public</em>            static
+                        <em>string|false</em>          </td>
+          <td>
+            <code>
+              <a href="#autoload"><b>autoload</b></a>(
+                                                                                    $class
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">spl_autoload() suitable implementation for supporting class autoloading.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            static
+                        <em>array</em>          </td>
+          <td>
+            <code>
+              <a href="#explodeIncludePath"><b>explodeIncludePath</b></a>(
+                                                                  [                  $path
+                   = null]                               )
+            </code>
+            <br /><div style="margin-left: 20px">Explode an include path into an array</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            static
+                        <em>boolean</em>          </td>
+          <td>
+            <code>
+              <a href="#isReadable"><b>isReadable</b></a>(
+                                                                                    $filename
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Returns TRUE if the $filename is readable, or FALSE otherwise.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            static
+                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#loadClass"><b>loadClass</b></a>(
+                                                                                    $class
+                                                    ,                   [                  $dirs
+                   = null]                               )
+            </code>
+            <br /><div style="margin-left: 20px">Loads a class from a PHP file.  The filename must be formatted  as &quot;$class.php&quot;.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            static
+                        <em>boolean</em>          </td>
+          <td>
+            <code>
+              <a href="#loadFile"><b>loadFile</b></a>(
+                                                                                    $filename
+                                                    ,                   [                  $dirs
+                   = null]                                  ,                   [                  $once
+                   = false]                               )
+            </code>
+            <br /><div style="margin-left: 20px">Loads a PHP file.  This is a wrapper for PHP's include() function.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>public</em>            static
+                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#registerAutoload"><b>registerAutoload</b></a>(
+                                                                  [                  $class
+                   = 'Zend_Loader']                                  ,                   [                  $enabled
+                   = true]                               )
+            </code>
+            <br /><div style="margin-left: 20px">Register autoload() with spl_autoload()</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>protected</em>            static
+                        <em>boolean</em>          </td>
+          <td>
+            <code>
+              <a href="#_includeFile"><b>_includeFile</b></a>(
+                                                                                    $filespec
+                                                    ,                   [                  $once
+                   = false]                               )
+            </code>
+            <br /><div style="margin-left: 20px">Attempt to include() the file.</div>          </td>
+        </tr>
+                        <tr>
+          <td class="right">
+            <em>protected</em>            static
+                        <em>void</em>          </td>
+          <td>
+            <code>
+              <a href="#_securityCheck"><b>_securityCheck</b></a>(
+                                                                                    $filename
+                                                 )
+            </code>
+            <br /><div style="margin-left: 20px">Ensure that filename does not contain exploits</div>          </td>
+        </tr>
+                                                                                                </table>
+
+
+  <a name="sec-methods"></a>
+  <h2>Methods</h2>
+  <a name='method_detail'></a>
+      <a name="methodautoload" id="autoload"><!-- --></a>
+
+    <h3>autoload</h3>
+
+    <div class="method-signature">
+      static string|false
+      autoload(
+                                  string
+          $class
+                        )
+    </div>
+
+      <p>spl_autoload() suitable implementation for supporting class autoloading.</p><div><p>Attach to spl_autoload() using the following:  <ol><li><div class="src-line">&nbsp;<a href="http://www.php.net/spl_autoload_register">spl_autoload_register</a><span class="src-sym">(</span><span class="src-key">array</span><span class="src-sym">(</span><span class="src-str">'Zend_Loader'</span><span class="src-sym">,&nbsp;</span><span class="src-str">'autoload'</span><span class="src-sym">))</span><span class="src-sym">;</span></div></li>
+</ol></p></div>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$class</code></td>
+                <td><em>string</em></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+      
+        <a name="methodexplodeIncludePath" id="explodeIncludePath"><!-- --></a>
+
+    <h3>explodeIncludePath</h3>
+
+    <div class="method-signature">
+      static array
+      explodeIncludePath(
+                                  [string|null
+          $path
+           = null]              )
+    </div>
+
+      <p>Explode an include path into an array</p><div><p>If no path provided, uses current include_path. Works around issues that  occur when the path includes stream schemas.</p></div>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$path</code></td>
+                <td><em>string|null</em></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+      
+        <a name="methodisReadable" id="isReadable"><!-- --></a>
+
+    <h3>isReadable</h3>
+
+    <div class="method-signature">
+      static boolean
+      isReadable(
+                                  string
+          $filename
+                        )
+    </div>
+
+      <p>Returns TRUE if the $filename is readable, or FALSE otherwise.</p><div><p>This function uses the PHP include_path, where PHP's is_readable()  does not.</p><p>Note from ZF-2900:  If you use custom error handler, please check whether return value   from error_reporting() is zero or not.  At mark of fopen() can not suppress warning if the handler is used.</p></div>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$filename</code></td>
+                <td><em>string</em></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+      
+        <a name="methodloadClass" id="loadClass"><!-- --></a>
+
+    <h3>loadClass</h3>
+
+    <div class="method-signature">
+      static void
+      loadClass(
+                                  string
+          $class
+                            ,           [string|array
+          $dirs
+           = null]              )
+    </div>
+
+      <p>Loads a class from a PHP file.  The filename must be formatted  as &quot;$class.php&quot;.</p><div><p>If $dirs is a string or an array, it will search the directories  in the order supplied, and attempt to load the first matching file.</p><p>If $dirs is null, it will split the class name at underscores to  generate a path hierarchy (e.g., &quot;Zend_Example_Class&quot; will map  to &quot;Zend/Example/Class.php&quot;).</p><p>If the file was not found in the $dirs, or if no $dirs were specified,  it will attempt to load it from PHP's include_path.</p></div>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$class</code></td>
+                <td><em>string</em></td>
+                <td>
+                                      <ul><li>The full class name of a Zend component.</li></ul>
+                                  </td>
+              </tr>
+                          <tr>
+                <td><code>$dirs</code></td>
+                <td><em>string|array</em></td>
+                <td>
+                                      - OPTIONAL Either a path or an array of paths                              to search.
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+              <h4>Exceptions:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code><a href="../Zend/Zend_Exception.html">Zend_Exception</a></code></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+        <a name="methodloadFile" id="loadFile"><!-- --></a>
+
+    <h3>loadFile</h3>
+
+    <div class="method-signature">
+      static boolean
+      loadFile(
+                                  string
+          $filename
+                            ,           [string|array
+          $dirs
+           = null]                  ,           [boolean
+          $once
+           = false]              )
+    </div>
+
+      <p>Loads a PHP file.  This is a wrapper for PHP's include() function.</p><div><p>$filename must be the complete filename, including any  extension such as &quot;.php&quot;.  Note that a security check is performed that  does not permit extended characters in the filename.  This method is  intended for loading Zend Framework files.</p><p>If $dirs is a string or an array, it will search the directories  in the order supplied, and attempt to load the first matching file.</p><p>If the file was not found in the $dirs, or if no $dirs were specified,  it will attempt to load it from PHP's include_path.</p><p>If $once is TRUE, it will use include_once() instead of include().</p></div>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$filename</code></td>
+                <td><em>string</em></td>
+                <td>
+                                  </td>
+              </tr>
+                          <tr>
+                <td><code>$dirs</code></td>
+                <td><em>string|array</em></td>
+                <td>
+                                      - OPTIONAL either a path or array of paths                        to search.
+                                  </td>
+              </tr>
+                          <tr>
+                <td><code>$once</code></td>
+                <td><em>boolean</em></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+              <h4>Exceptions:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code><a href="../Zend/Zend_Exception.html">Zend_Exception</a></code></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+        <a name="methodregisterAutoload" id="registerAutoload"><!-- --></a>
+
+    <h3>registerAutoload</h3>
+
+    <div class="method-signature">
+      static void
+      registerAutoload(
+                                  [string
+          $class
+           = 'Zend_Loader']                  ,           [boolean
+          $enabled
+           = true]              )
+    </div>
+
+      <p>Register autoload() with spl_autoload()</p>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$class</code></td>
+                <td><em>string</em></td>
+                <td>
+                                      (optional)
+                                  </td>
+              </tr>
+                          <tr>
+                <td><code>$enabled</code></td>
+                <td><em>boolean</em></td>
+                <td>
+                                      (optional)
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+              <h4>Exceptions:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code><a href="../Zend/Zend_Exception.html">Zend_Exception</a></code></td>
+                <td>
+                                      if spl_autoload() is not found or if the specified class does not have an autoload() method.
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+        <a name="method_includeFile" id="_includeFile"><!-- --></a>
+
+    <h3>_includeFile</h3>
+
+    <div class="method-signature">
+      static boolean
+      _includeFile(
+                                  string
+          $filespec
+                            ,           [boolean
+          $once
+           = false]              )
+    </div>
+
+      <p>Attempt to include() the file.</p><div><p>include() is not prefixed with the @ operator because if  the file is loaded and contains a parse error, execution  will halt silently and this is difficult to debug.</p><p>Always set display_errors = Off on production servers!</p></div>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$filespec</code></td>
+                <td><em>string</em></td>
+                <td>
+                                  </td>
+              </tr>
+                          <tr>
+                <td><code>$once</code></td>
+                <td><em>boolean</em></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+      
+        <a name="method_securityCheck" id="_securityCheck"><!-- --></a>
+
+    <h3>_securityCheck</h3>
+
+    <div class="method-signature">
+      static void
+      _securityCheck(
+                                  string
+          $filename
+                        )
+    </div>
+
+      <p>Ensure that filename does not contain exploits</p>      
+              <h4>Parameters:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code>$filename</code></td>
+                <td><em>string</em></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+              <h4>Exceptions:</h4>
+        <table class="detail">
+          <thead>
+            <tr>
+              <th>Type</th>
+              <th class="desc">Description</th>
+            </tr>
+          </thead>
+          <tbody>
+                          <tr>
+                <td><code><a href="../Zend/Zend_Exception.html">Zend_Exception</a></code></td>
+                <td>
+                                  </td>
+              </tr>
+                      </tbody>
+        </table>
+      
+      
+      
+      
+  
+                
+<p class="notes">
+  Located in <a class="field" href="_library---Zend---Loader.php.html">/library/Zend/Loader.php</a> 
+  [<span class="field">line 30</span>]
+</p>
+
+                <div class="credit">
+                  Documentation generated on Mon, 02 May 2011 21:52:57 +0200 by <a href="http://www.phpdoc.org">phpDocumentor 1.4.3</a>
+                </div>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>
