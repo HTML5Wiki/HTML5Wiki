@@ -99,7 +99,7 @@ class Test_Functional_WikiTest extends Test_Functional_SeleniumTestCase {
 		$this->type('css=#versionComment', '');
 		
 		$this->click('css=#article-save');
-		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".message.error") !== null && selenium.browserbot.getCurrentWindow().jQuery(".message.error").length > 0', 10000);
+		$this->waitForCondition('selenium.browserbot.getCurrentWindow().jQuery(".messages-container .error") !== null && selenium.browserbot.getCurrentWindow().jQuery(".messages-container .error").length > 0', 10000);
 		$this->captureEntirePageScreenshot('/tmp/selenium-testCreatePageDoNotEnterAnythingFails.png');
 		
 		$this->assertElementPresent('css=#txtTitle.error');
