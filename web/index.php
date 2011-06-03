@@ -39,7 +39,10 @@ error_reporting(E_ALL | E_STRICT);
 /**
  * Setup paths
  */
-$systemBasePath = realpath(dirname(__FILE__) . '/../');
+$systemBasePath = realpath(dirname(__FILE__));
+if(file_exists('library/') === false && is_dir('library/') === false) {
+	$systemBasePath .= '/..';
+}
 $libraryPath = $systemBasePath . DIRECTORY_SEPARATOR . 'library' . DIRECTORY_SEPARATOR;
 $applicationPath = $systemBasePath . DIRECTORY_SEPARATOR . 'Application' . DIRECTORY_SEPARATOR;
 $configPath	= $systemBasePath . DIRECTORY_SEPARATOR . 'config' . DIRECTORY_SEPARATOR;
