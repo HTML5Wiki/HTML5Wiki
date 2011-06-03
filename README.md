@@ -11,17 +11,10 @@ This application was built as part of a software engineering project at the HSR 
 Requirements
 ------------
 For running HTML5Wiki in your environment, it has to fullfil the following requriements:
-<<<<<<< HEAD
 
 - Apache with mod_rewrite available (or a comparable HTTP server)
 - PHP 5.2 or better
 - MySQL 5 or better
-=======
-* Apache with mod_rewrite available (or a comparable HTTP server)
-* PHP 5.2 or better
-* MySQL 5 or better
->>>>>>> 2c31263b17bdb53d0b35a3e19c7f1713222d8176
-
 
 Installation
 ------------
@@ -38,19 +31,11 @@ For HTML5Wikis own license and any information about used third-party libraries,
 Contributors
 ------------
 The HTML5Wiki core team:
-<<<<<<< HEAD
 
 - Alexandre Joly
 - Manuel Alabor
 - Michael Weibel
 - Nicolas Karrer
 - Roman Brechbühl
-=======
-* Alexandre Joly
-* Manuel Alabor
-* Michael Weibel
-* Nicolas Karrer
-* Roman Brechbühl
->>>>>>> 2c31263b17bdb53d0b35a3e19c7f1713222d8176
 
 If you are interested into enhance and develop HTML5Wiki, please know you are welcome! Have a look at our git repository at https://github.com/HTML5Wiki/HTML5Wiki.
