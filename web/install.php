@@ -46,7 +46,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	const INSTALLATION_TYPE_WEB = 'useWeb';
 	const INSTALLATION_TYPE_ROOT = 'useRoot';
 	const FILE_CONFIG = '../config/config.php';
-	const FILE_DATABASE_SCHEMA = 'data/sql/html5wiki_schema.sql';
+	const FILE_DATABASE_SCHEMA = '../data/sql/html5wiki_schema.sql';
 	const FOLDER_WEB = '../web/';
 	const FOLDER_ROOT = '../';
 	
@@ -139,22 +139,13 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	 * @return true/false
 	 */
 	protected function testWritePermissions($stepData) {
-		$configWriteable = $this->testIfConfigWriteable();
-		$parentWriteable = $this->testIfParentWritable();
-
-		if($configWriteable === false || $parentWriteable === false) {
+		$writePermissions = is_writable('../web/') && is_writable('../');
+		
+		if($writePermissions) {
 			$this->addMessage('info', 'No write permissions', 'The installation wizard has recognized that he has no or partially no write permissions.</p><p>You can try to fix this by changing the permissions on your server (<em>chmod 777</em>) and restart the wizard.</p><p>If not, you\'ll have to do some configuration steps by yourself. If you choose this variant, the installation wizard will tell you exactly the steps you have to do.');
 		}
-
-		return ($configWriteable && $parentWriteable);
-	}
-
-	private function testIfConfigWriteable() {
-		return is_writable(self::FILE_CONFIG);
-	}
-
-	private function testIfParentWritable() {
-		return is_writeable(self::FOLDER_ROOT);
+		
+		return ($writePermissions);
 	}
 
 
@@ -228,7 +219,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 		$database_password = $this->wizardData[self::PROPERTY_DATABASE_PASSWORD];
 		
 		/* Create config string: */
-		$config = '&lt;?php $config = array('. "\n"
+		$config = '<?php $config = array('. "\n"
 				. '\'wikiName\' => \''. $wikiname. '\','. "\n"
 				. '\'databaseAdapter\' => \'PDO_MYSQL\','. "\n"
 				. '\'database\' => array('. "\n"
@@ -251,7 +242,7 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 		$configOk = $this->writeFile(self::FILE_CONFIG, $config);
 		
 		if($configOk === false) {
-			$this->addMessage('error','Could not create configuration file', 'Please create the file <em>config/config.php</em> by yourself and copy paste the following configuration data into it:</p><p class="white-paper">'. nl2br($config));
+			$this->addMessage('error','Could not create configuration file', 'Please create the file <em>config/config.php</em> by yourself and copy paste the following configuration data into it:</p><p class="white-paper">'. nl2br(htmlentities($config)));
 		}
 		
 		return $configOk;
@@ -446,14 +437,10 @@ class Html5Wiki_InstallationWizard extends InstallationWizard {
 	private function writeFile($targetFile, $content) {
 		$ok = true;
 		
-		if(is_writeable($targetFile)) {
-			$fh = fopen($targetFile, 'w');
-			if($fh) {
-				if(fwrite($fh, $content)) fclose($fh);
-				else $ok = false;
-			} else {
-				$ok = false;
-			}
+		$fh = fopen($targetFile, 'w');
+		if($fh) {
+			if(fwrite($fh, $content)) fclose($fh);
+			else $ok = false;
 		} else {
 			$ok = false;
 		}
