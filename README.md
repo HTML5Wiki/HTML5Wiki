@@ -46,4 +46,5 @@ To start the tests, first copy test/TestConfiguration.php.sample to test/TestCon
 If you want to run the functional tests, configure in your hosts-file the "selenium.local"-host to point to your selenium server.
 
 After that, your ready to run:
+
     $ phpunit -c test/testsuite.xml
