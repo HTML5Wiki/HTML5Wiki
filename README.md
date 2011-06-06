@@ -39,3 +39,11 @@ The HTML5Wiki core team:
 - Roman Brechbühl
 
 If you are interested into enhance and develop HTML5Wiki, please know you are welcome! Have a look at our git repository at https://github.com/HTML5Wiki/HTML5Wiki.
+
+Tests
+-----
+To start the tests, first copy test/TestConfiguration.php.sample to test/TestConfiguration.php and modify the configuration according to your needs.
+If you want to run the functional tests, configure in your hosts-file the "selenium.local"-host to point to your selenium server.
+
+After that, your ready to run:
+    $ phpunit -c test/testsuite.xml
